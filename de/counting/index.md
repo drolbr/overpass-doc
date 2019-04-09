@@ -1,4 +1,3 @@
-[Startseite](../index.md)  
 vorher: [Objekte Finden](../criteria/index.md)  
 weiter: [Daten Analysieren](../analysis/index.md)  
 

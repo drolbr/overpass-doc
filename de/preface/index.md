@@ -1,4 +1,3 @@
-[Startseite](../index.md)  
 weiter: [Verwendung](../targets/index.md)  
 
 ---

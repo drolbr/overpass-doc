@@ -1,4 +1,3 @@
-[Startseite](../index.md)  
 vorher: [Daten Analysieren](../analysis/index.md)  
 
 ---

@@ -1,4 +1,3 @@
-[Startseite](../index.md)  
 vorher: [Räumliche Datenauswahl](../full_data/index.md)  
 weiter: [Objekte Zählen](../counting/index.md)  
 
