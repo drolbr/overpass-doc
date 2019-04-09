@@ -3,7 +3,7 @@ Handbuch zur Overpass API
 
 [Einleitung](preface/index.md)  
 Welche Aufgaben erfüllt die Overpass API im OpenStreetMap-Ökosystem?
-Was sind OpenStreetMap-Daten und was sind Abfragen und Formate?
+Was sind OpenStreetMap-Daten und was sind Abfragen?
 
 [Verwendung](targets/index.md)  
 Wie muss eine Abfrage konfiguriert werden, damit der Ergebnis verwendbar ist?

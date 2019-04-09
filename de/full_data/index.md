@@ -1,6 +1,7 @@
 [Startseite](../index.md)  
 vorher: [Verwendung](../targets/index.md)  
 weiter: [Objekte Finden](../criteria/index.md)  
+
 ---
 
 Räumliche Datenauswahl
