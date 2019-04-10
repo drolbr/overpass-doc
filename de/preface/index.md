@@ -1,7 +1,3 @@
-weiter: [Verwendung](../targets/index.md)  
-
----
-
 Einleitung
 ==========
 

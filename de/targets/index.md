@@ -1,8 +1,3 @@
-vorher: [Einleitung](../preface/index.md)  
-weiter: [Räumliche Datenauswahl](../full_data/index.md)  
-
----
-
 Verwendung
 ==========
 

@@ -1,7 +1,3 @@
-vorher: [Daten Analysieren](../analysis/index.md)  
-
----
-
 Mehr Infos
 ==========
 
@@ -21,7 +17,7 @@ Enthält z.B. die Liste der verfügbaren öffentlichen Instanzen einschließlich
 [Mailingliste (akzeptiert mehrere Sprachen, auch Deutsch)](https://listes.openstreetmap.fr/wws/info/overpass)  
 Mailingliste, auf der direkt Fragen gestellt oder Störungen und Bugs gemeldet werden können.
 
-[Blog (englisch)](https://dev.overpass-api.de/blog/)
+[Blog (englisch)](https://dev.overpass-api.de/blog/)  
 Rolands Blog, in dem er spezielle Themen vertieft und die Features neuer Versionen vorstellt.
 
 [Installation eigener Instanz (englisch)](https://dev.overpass-api.de/no_frills.html)  

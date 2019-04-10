@@ -1,8 +1,3 @@
-vorher: [Objekte Zählen](../counting/index.md)  
-weiter: [Mehr Infos](../more_info/index.md)  
-
----
-
 Daten Analysieren
 =================
 
