@@ -1,19 +1,13 @@
-vorher: [Verwendung](../targets/index.md)  
-weiter: [Objekte Finden](../criteria/index.md)  
-
----
-
 Räumliche Datenauswahl
 ======================
 
 Erläuterung, wie man alle Daten in einem räumlich begrenzten Gebiet bekommt.
 
-[Map und Bbox](bbox.md)  
-Der einfachste Weg, um an OpenStreetMap-Daten in einem Ausschnitt zu kommen.
+((bbox.md))
 
-[OSM-Datenmodell](osm_types.md)  
-Um die verschiedenen Varianten für volle OpenStreetMap-Daten zu erklären,
-werden hier die Details des OpenStreetMap-Datenmodells erklärt.
+((osm_types.md))
+
+((map_apis.md))
 
 [Polygon und Around](polygon.md)  
 Neben der Bounding-Box gibt es weitere, dem Zielgebiet besser anpassbare Begrenzungsrahmen.
