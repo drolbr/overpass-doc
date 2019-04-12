@@ -68,8 +68,8 @@ echo >>$TARGET
   cat <$1 | sed 's/^/x/g' | sed 's/$/x/g';
 } | while read LINE
 do
-  if [[ ${LINE:1:2} == "((" ]]; then
-    INCLUDE=${LINE:3:$((${#LINE}-6))} 
+  if [[ ${LINE:1:12} == "[LINK_STUB](" ]]; then
+    INCLUDE=${LINE:13:$((${#LINE}-15))} 
     { echo "$INCLUDE"; cat "$(dirname $1)/$INCLUDE"; } | awk -f "$SCRIPT_DIR/explain_link.awk"
   else
     echo "${LINE:1:$((${#LINE}-2))}"
@@ -82,7 +82,7 @@ echo '</html>' >>$TARGET
 
 LAST=
 LASTBUTONE=
-for I in $(cat <$1 | grep -E '^\(\(' | awk '{ print substr($0,3,length($0)-4); }'); do
+for I in $(cat <$1 | grep -E '^\[LINK_STUB\]\(' | awk '{ print substr($0,13,length($0)-13); }'); do
   if [[ -n $LAST ]]; then
     $0 "$(dirname $1)/$LAST" "$2" "$LASTBUTONE" "$I" "$TITLE"
   fi

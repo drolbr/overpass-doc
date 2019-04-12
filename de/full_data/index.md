@@ -3,11 +3,11 @@ Räumliche Datenauswahl
 
 Erläuterung, wie man alle Daten in einem räumlich begrenzten Gebiet bekommt.
 
-((bbox.md))
+[LINK_STUB](bbox.md)
 
-((osm_types.md))
+[LINK_STUB](osm_types.md)
 
-((map_apis.md))
+[LINK_STUB](map_apis.md)
 
 [Polygon und Around](polygon.md)  
 Neben der Bounding-Box gibt es weitere, dem Zielgebiet besser anpassbare Begrenzungsrahmen.

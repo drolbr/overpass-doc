@@ -1,16 +1,16 @@
 Mode d'emploi d'Overpass API
 ============================
 
-((preface/index.md))
+[LINK_STUB](preface/index.md)
 
-((targets/index.md))
+[LINK_STUB](targets/index.md)
 
-((full_data/index.md))
+[LINK_STUB](full_data/index.md)
 
-((criteria/index.md))
+[LINK_STUB](criteria/index.md)
 
-((counting/index.md))
+[LINK_STUB](counting/index.md)
 
-((analysis/index.md))
+[LINK_STUB](analysis/index.md)
 
-((more_info/index.md))
+[LINK_STUB](more_info/index.md)

@@ -3,11 +3,11 @@ Toutes donées dans un region
 
 Obtenir un extrait par des critères seulement spatiales.
 
-((bbox.md))
+[LINK_STUB](bbox.md)
 
-((osm_types.md))
+[LINK_STUB](osm_types.md)
 
-((map_apis.md))
+[LINK_STUB](map_apis.md)
 
 [Polygon et Around](polygon.md)  
 En plus de bounding box, il y a des autres critères qui peut encercler une region bût plus precisement.
