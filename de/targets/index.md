@@ -29,12 +29,12 @@ damit man sie mit einer Tabellenkalkulation verarbeiten kann.
 Überblick über mögliche Varianten.
 
 [Osmoscope und MapRoulette](osmoscope.md)  
-Erstes Beispiel für mehr Anwendungsbezug:
-Abfragen für vorhandene Services 
+Overpass API im Backend einer Website:
+Abfragen für bekannte vorhandene Services.
 
 [OpenLayers und Leaflet](openlayers.md)  
-Zweites Beispiel:
-eine Webkarte wie [OpenLevelUp](https://openlevelup.net/) selbst bauen,
+Overpass API im Backend einer eigenen statischen Website:
+Eine Webkarte wie [OpenLevelUp](https://openlevelup.net/) selbst bauen,
 indem die Overpass API aus OpenLayers oder Leaflet angesteuert wird.
 
 [Skripte](scripts.md)  

@@ -18,8 +18,8 @@ Suche nach Objekten anhand mehrerer Tags.
 [Keys, Verneinung und Co](per_key.md)  
 Zu weiteren möglichen Suchkriterien wie Verneinung oder nur Keys.
 
-[Zahlwerte](numbers.md)  
-Hilfsmittel zum Umgang mit Tags, die Zahlwerte enthalten.
+[Zahlwert](numbers.md)  
+Hilfsmittel zum Umgang mit Tags, die Zahlwerte im Value enthalten.
 
 [Semikolon-Listen](lrs.md)  
 Hilfsmittel zum Umgang mit Tags, die mehrere Semikolon-getrennte Werte enthalten.

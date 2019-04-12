@@ -9,9 +9,9 @@ Zu Erinnerung: Wer direkt und einfach globale Ergebnisse möchte,
 sollte [Taginfo](https://taginfo.openstreetmap.org/) nutzen.
 
 [Alle Values eines Tags](values.md)  
-Alle vorkommenden Werte eine Tags auflisten oder auswerten.
+Alle in einem Suchergebnis vorkommenden Werte eine Tags auflisten oder auswerten.
 
-[Alle Keys](values.md)  
+[Alle Keys](keys.md)  
 Alle vorkommenden Keys in einer Auswahl auflisten oder auswerten.
 Weitere Aufteilung der Keys wiederum nach ihren Werten.
 
