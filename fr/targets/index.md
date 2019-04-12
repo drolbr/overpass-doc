@@ -28,11 +28,11 @@ Pour beaucoup des applications on veut une feuille de calcul avec ou sans les co
 pour qu'on peut la mettre dans un tableur.
 Vue globale sur des variantes disponibles.
 
-[Osmoscope und MapRoulette](osmoscope.md)  
+[Osmoscope et MapRoulette](osmoscope.md)  
 Overpass API dans le back-end d'une site web:
 Des requêtes pour systèmes courantes.
 
-[OpenLayers und Leaflet](openlayers.md)  
+[OpenLayers et Leaflet](openlayers.md)  
 Overpass API dans le back-end d'une site web:
 Mettre en place une site web spatiale comme [OpenLevelUp](https://openlevelup.net/).
 On ça peut faire en emprutant Overpass API par OpenLayers ou Leaflet.
