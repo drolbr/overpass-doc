@@ -40,10 +40,10 @@ Für diese gibt es zwei Abstufungen, die Geometrie auf traditionellem Weg mitzul
 
 Einen möglichst geringen Extra-Aufwand an Daten zieht es nach sich, nur die Koordinaten der Nodes anzufordern.
 Das Kommando `node(w)` fordert nach der Ausgabe der Ways an, die in den Ways referenzierten Nodes zu finden;
-der Modus `out skel qt` reduziert den Datenumfang auf die Koordinaten pur: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%3B%0A%3E%3B%0Aout%20skel%20qt%3B)
+der Modus `out skel` reduziert den Datenumfang auf die Koordinaten pur; der Zusatz `qt` spart den Aufwand für das Sortieren der Ausgabe: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%20qt%3B%0A%3E%3B%0Aout%20skel%20qt%3B)
 
     way(51.477,-0.001,51.478,0.001);
-    out;
+    out qt;
     node(w);
     out skel qt;
 
@@ -51,7 +51,7 @@ Ich empfehle wiederum, sich die Ausgabe im Tab _Data_ oben rechts anzuschauen.
 Die Nodes sieht man erst, wenn man herunterscrollt.
 
 Das ist zwar schon näher am originalen Datenmodell,
-aber as gibt Programme, die auch damit noch nicht zurechtkommen.
+aber es gibt Programme, die auch damit noch nicht zurechtkommen.
 Es gibt die Konvention, Nodes strikt vor Ways und die Elemente untereinander nach Id zu sortieren.
 Dann müssen wir die Nodes ergänzend zu den Ways laden, bevor wir etwas ausgeben;
 dies leistet das Idiom `(._; node(w););` bestehend aus den drei Kommandos `._`, `node(w)` und `(...)`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0A%28%2E%5F%3B%20%3E%3B%29%3B%0Aout%3B)
@@ -94,18 +94,18 @@ Möglichst nur die Koordinaten bekommt man, indem man die Relationen ausgibt und
 Das benötigt zwei Pfade, da Relationen einerseits Nodes als Member haben können,
 andererseits Ways und diese wiederum Nodes als Member.
 Insgesamt müssten wir dazu vier Kommandos benutzen.
-Weil es aber ein so häufiger Fall ist, gibt es dafür ein besonders kurzes Sammelkommando `>`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%3B%0A%3E%3B%0Aout%20skel%20qt%3B)
+Weil es aber ein so häufiger Fall ist, gibt es dafür ein besonders kurzes Sammelkommando `>`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%20qt%3B%0A%3E%3B%0Aout%20skel%20qt%3B)
 
     relation(51.477,-0.001,51.478,0.001);
-    out;
+    out qt;
     >;
     out skel qt;
 
 Gegenüber der vorhergehenden Ausgabe hat sich die Datenmenge etwa verdoppelt,
 da immer Verweis und Verweisziel enthalten sein müssen.
 
-Die ganz kompatible Variante mit mehr Datenaufwand;
-diese bildet das Idiom `(._; >;);` aus den drei Kommandos `._`, `>` und `(...)`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0A%28%2E%5F%3B%20%3E%3B%29%3B%0Aout%3B)
+Die ganz kompatible Variante erfordert noch mehr Datenaufwand.
+Diese bildet das Idiom `(._; >;);` aus den drei Kommandos `._`, `>` und `(...)`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0A%28%2E%5F%3B%20%3E%3B%29%3B%0Aout%3B)
 
     relation(51.477,-0.001,51.478,0.001);
     (._; >;);
@@ -137,7 +137,50 @@ Eine vollständige Fassung gibt es unten im Abschnitt _Alles zusammen_.
 
 ## Relationen auf Relationen
 
-...
+Um das Problem mit Relationen auf Relationen vorzuführen,
+müssen wir die Bounding-Box nicht einmal besonders vergrößern.
+Wir starten mit der Abfrage von oben ohne Relatione auf Relationen: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%0A%28%2E%5F%3B%20%3E%3B%29%3B%0Aout%3B)
+
+    relation(51.47,-0.01,51.48,0.01);
+    (._; >;);
+    out;
+
+Jetzt ersetzen wir die Auflösung ab den Relationen abwärts durch
+
+* eine Rückwärtsauflösung auf Relationen von Relationen
+* die vollständige Vorwärtsauflösung der gefundenen Relationen bis zu den Koordinaten
+
+Dies sind die Kommandos `rel(br)` und `>>`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%0A%28%20rel%28br%29%3B%20%3E%3E%3B%29%3B%0Aout%3B)
+
+    relation(51.47,-0.01,51.48,0.01);
+    ( rel(br); >>;);
+    out;
+
+Je nach System wird dies ihren Browser verlangsamen oder eine Warnmeldung produzieren.
+Wir haben eine Ecke im Vorort Greenwich gewollt und tatsächlich Daten aus fast ganz London bezogen,
+da es eine Sammelrelation _Quietways_ gibt.
+Da hat die sowieso schon große Datenmenge wiederum vervielfacht.
+
+Selbst wenn es hier irgendwann keine Sammelrelation mehr geben sollte,
+wie dies auch für unsere Testregion mit etwa hundert Metern Kantenlänge gilt:
+Wollen Sie ernsthaft Ihre Anwendung dafür anfällig machen,
+dass sie nicht mehr funktioniert,
+sobald irgendein ein unbedarfter Mapper im Zielgebiet eine oder mehrere Sammelrelationen anlegt?
+
+Daher rate ich recht dringend davon ab, mit Relationen auf Relationen zu arbeiten.
+Die Datenstruktur schafft das Risiko,
+ungewollt sehr große Datenmengen miteinander zu verbinden.
+
+Wenn man unbedingt Relationen auf Relationen verarbeiten will,
+dann ist eine eher beherrschbare Lösung,
+nur die Relationen zu laden,
+aber keine Vorwärtsauflösung mehr durchzuführen.
+Dazu ergänzen wir die letzte Abfrage aus dem Absatz _Relationen_ um die Rückwärtsauflösung `rel(br)`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20node%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%0A%20%20way%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%20%29%3B%0A%28%2E%5F%3B%20%3C%3B%20rel%28br%29%3B%20%29%3B%0Aout%3B)
+
+    ( node(51.47,-0.01,51.48,0.01);
+      way(51.47,-0.01,51.48,0.01); );
+    (._; <; rel(br); );
+    out;
 
 ## Alles zusammen
 
