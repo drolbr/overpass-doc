@@ -16,12 +16,129 @@ Hier geht es darum, wie das Vervollständigen von Ways und Relationen im Hinblic
 
 ## Ways und Nodes
 
-...
+Bei Nodes ist eine nutzbare Geometrie einfach zu bekommen:
+Alle Ausgabemodi außer `out ids` und `out tags` haben per Definition die Koordinaten der Nodes dabei.
+
+Bei der Kombination mit Ways gibt es dagegen bereits mehrere Möglichkeiten je nach Situation:
+Im einfachsten Fall kann ihr Programm ergänzende Koordinaten an den Ways verarbeiten.
+Sie können sich den Unterschied z.b. in Overpass Turbo veranschaulichen,
+indem Sie die Resultate der beiden nachfolgenden Abfragen im Tab _Data_ (oben rechts) vergleichen:
+[Ohne Koordinaten](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%3B)
+
+    way(51.477,-0.001,51.478,0.001);
+    out;
+
+und [mit Koordinaten](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%20geom%3B)
+
+    way(51.477,-0.001,51.478,0.001);
+    out geom;
+
+Im originalen Datenmodell von OpenStreetMap sind an Ways jedoch keine Koordinaten vorgesehen.
+Die Ways haben ja bereits Verweise auf Ids von Nodes.
+Daher gibt es auch nach wie vor Programme, die Koordinaten an Ways nicht verarbeiten können.
+Für diese gibt es zwei Abstufungen, die Geometrie auf traditionellem Weg mitzuliefern.
+
+Einen möglichst geringen Extra-Aufwand an Daten zieht es nach sich, nur die Koordinaten der Nodes anzufordern.
+Das Kommando `node(w)` fordert nach der Ausgabe der Ways an, die in den Ways referenzierten Nodes zu finden;
+der Modus `out skel qt` reduziert den Datenumfang auf die Koordinaten pur: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%3B%0A%3E%3B%0Aout%20skel%20qt%3B)
+
+    way(51.477,-0.001,51.478,0.001);
+    out;
+    node(w);
+    out skel qt;
+
+Ich empfehle wiederum, sich die Ausgabe im Tab _Data_ oben rechts anzuschauen.
+Die Nodes sieht man erst, wenn man herunterscrollt.
+
+Das ist zwar schon näher am originalen Datenmodell,
+aber as gibt Programme, die auch damit noch nicht zurechtkommen.
+Es gibt die Konvention, Nodes strikt vor Ways und die Elemente untereinander nach Id zu sortieren.
+Dann müssen wir die Nodes ergänzend zu den Ways laden, bevor wir etwas ausgeben;
+dies leistet das Idiom `(._; node(w););` bestehend aus den drei Kommandos `._`, `node(w)` und `(...)`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0A%28%2E%5F%3B%20%3E%3B%29%3B%0Aout%3B)
+
+    way(51.477,-0.001,51.478,0.001);
+    (._; node(w););
+    out;
+
+Nodes und Ways gemeinsam erläutern wir im finalen Abschnitt.
 
 ## Relationen
 
-...
+Wie schon bei Ways ist der einfachere Fall im Umgang mit Relationen,
+dass das Zielprogramm integrierte Geometrie direkt auswerten kann.
+Dazu nocheinmal den passenden Direktvergleich:
+[Ohne Koordinaten](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%3B)
+
+    relation(51.477,-0.001,51.478,0.001);
+    out;
+
+und [mit Koordinaten](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%20geom%3B)
+
+    relation(51.477,-0.001,51.478,0.001);
+    out geom;
+
+Im Gegensatz zu Ways werden die Daten um eine Größenordnung mehr:
+Es liegt daran, dass wir in der Variante ohne Koordinaten von Ways nur die Id sehen,
+während tatsächlich jeder Way aus mehreren Nodes besteht und damit entsprechend viele Koordinaten hat.
+
+Relations mit überwiegend Ways als Member sind auch der Regelfall.
+Es gibt daher den im Absatz _Ausgabebegrenzung_ auf [Bounding-Boxen](bbox.md) beschriebenen Mechanismus,
+die zu liefernde Geometrie auf eine Bounding Box einzuschränken: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%20geom%28%7B%7Bbbox%7D%7D%29%3B)
+
+    relation(51.477,-0.001,51.478,0.001);
+    out geom({{bbox}});
+
+Auch für Relationen sind jedoch im originalen Datenmodell von OpenStreetMap keine Koordinaten vorgehesen.
+Für Programme, die das originale Datenmodell benötigen, gibt es zunächst wieder zwei Abstufungen.
+Möglichst nur die Koordinaten bekommt man, indem man die Relationen ausgibt und dann ihre Referenzen auflöst.
+Das benötigt zwei Pfade, da Relationen einerseits Nodes als Member haben können,
+andererseits Ways und diese wiederum Nodes als Member.
+Insgesamt müssten wir dazu vier Kommandos benutzen.
+Weil es aber ein so häufiger Fall ist, gibt es dafür ein besonders kurzes Sammelkommando `>`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%3B%0A%3E%3B%0Aout%20skel%20qt%3B)
+
+    relation(51.477,-0.001,51.478,0.001);
+    out;
+    >;
+    out skel qt;
+
+Gegenüber der vorhergehenden Ausgabe hat sich die Datenmenge etwa verdoppelt,
+da immer Verweis und Verweisziel enthalten sein müssen.
+
+Die ganz kompatible Variante mit mehr Datenaufwand;
+diese bildet das Idiom `(._; >;);` aus den drei Kommandos `._`, `>` und `(...)`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0A%28%2E%5F%3B%20%3E%3B%29%3B%0Aout%3B)
+
+    relation(51.477,-0.001,51.478,0.001);
+    (._; >;);
+    out;
+
+Gibt es eine Lösung, um auch hier die Menge erhaltener Koordinaten auf die Bounding-Box zu beschränken?
+Da eine Relation in einer Bounding-Box enthalten ist,
+wenn mindestens eines ihrer Member in der Bounding-Box enthalten ist,
+können wir dies erreichen,
+indem wir nach den Membern fragen und zu den Relationen auflösen.
+Hier hilft das Kommando `<`:
+es ist eine Abkürzung, um alle Ways und Relationen zu finden,
+die die vorgegebenen Nodes oder Ways als Member haben.
+Wir suchen also nach allen Nodes und Ways in der Bounding-Box.
+Dann behalten wir diese per Kommando `._` und suchen alle Relationen,
+die diese als Member haben: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20node%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0A%20%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0A%28%2E%5F%3B%20%3C%3B%29%3B%0Aout%3B)
+
+    ( node(51.477,-0.001,51.478,0.001);
+      way(51.477,-0.001,51.478,0.001); );
+    (._; <;);
+    out;
+
+Die Member der Relation erkennt man an der abweichenden Farbe in der Anzeige.
+Noch besser findet man die Relation in der Anzeige _Daten_.
+
+Die meisten Member der Relationen laden wir also gar nicht, sondern nur die in der Bounding-Box befindlichen.
+Diese Abfrage ist nicht ganz praxistauglich, da wir zu den Ways nicht alle benutzten Nodes laden.
+Eine vollständige Fassung gibt es unten im Abschnitt _Alles zusammen_.
 
 ## Relationen auf Relationen
+
+...
+
+## Alles zusammen
 
 ...
