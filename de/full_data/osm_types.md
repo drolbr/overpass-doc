@@ -184,4 +184,66 @@ Dazu ergänzen wir die letzte Abfrage aus dem Absatz _Relationen_ um die Rückw�
 
 ## Alles zusammen
 
-...
+Wir stellen hier die am ehesten sinnvollen Varianten zusammen.
+
+Wenn Ihr Zielprogramm mit Koordinaten am Objekt umgehen kann,
+dann können Sie alle Nodes, Ways und Relations in der Bounding Box komplett wie folgt bekommen: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20node%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0A%20%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aout%20geom%20qt%3B%0A%3C%3B%0Aout%20qt%3B)
+
+    ( node(51.477,-0.001,51.478,0.001);
+      way(51.477,-0.001,51.478,0.001); );
+    out geom qt;
+    <;
+    out qt;
+
+Dies sammelt
+
+* alle Nodes in der Bounding-Box (Selektion Zeile 1, Ausgabe Zeile 3)
+* alle Ways in der Bounding-Box, auch solche, die die Bounding Box nur ohne Node durchschneiden (Selektion Zeile 2, Ausgabe Zeil 3)
+* alle Relationen, die mindestens eine Node oder Way in der Bounding-Box als Member haben, ohne eigenständige Geometrie (Selektion Zeile 4, Ausgabe Zeile 5)
+
+Die gleichen Daten ganz ohne Relationen erhalten Sie, wenn Sie nur die Zeilen 1 bis 3 als Abfrage verwenden.
+
+Relationen auf Relationen erhalten Sie, wenn Sie Zeile 4 durch die Sammlung von Relationen und Relationen auf Relationen ergänzen: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20node%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%0A%20%20way%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%20%29%3B%0Aout%20geom%20qt%3B%0A%28%20%3C%3B%20rel%28br%29%3B%20%29%3B%0Aout%20qt%3B)
+
+    ( node(51.47,-0.01,51.48,0.01);
+      way(51.47,-0.01,51.48,0.01); );
+    out geom qt;
+    ( <; rel(br); );
+    out qt;
+
+Alternativ können Sie die Daten auch im strikt traditionellen Format mit Sortierung nach Eleementtypen und nur indirekter Geometrie ausgeben.
+Dies erfordert insbesondere, die Vorwärtsauflösung der Ways, um alle Nodes für die Geometrie zu bekommen.
+Dann müssen wir das Kommando `<` durch eine präzisere Variante ersetzen,
+da sonst das Kommando `<` Wege an den hinzugefügen Nodes aufsammelt.
+Die erste Variante wird dann zu: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20node%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0A%20%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0A%20%20node%28w%29%3B%20%29%3B%0A%28%20%2E%5F%3B%0A%20%20%28%0A%20%20%20%20rel%28bn%29%2D%3E%2Ea%3B%0A%20%20%20%20rel%28bw%29%2D%3E%2Ea%3B%0A%20%20%29%3B%20%29%3B%0Aout%3B)
+
+    ( node(51.477,-0.001,51.478,0.001);
+      way(51.477,-0.001,51.478,0.001);
+      node(w); );
+    ( ._;
+      (
+        rel(bn)->.a;
+        rel(bw)->.a;
+      ); );
+    out;
+
+Hier sind Zeilen 4 bis 8 für die Relationen zuständig.
+Ohne Zeilen 4 bis 8, aber mit Zeile 9 für die Ausgabe erhält man dann nur Nodes und Ways.
+
+Umgekehrt können Relationen auf Relationen gesammelt werden,
+indem Zeile 8 entsprechend durch die neue Zeile 9 ergänzt wird: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20node%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%0A%20%20way%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%0A%20%20node%28w%29%3B%20%29%3B%0A%28%20%2E%5F%3B%0A%20%20%28%0A%20%20%20%20rel%28bn%29%2D%3E%2Ea%3B%0A%20%20%20%20rel%28bw%29%2D%3E%2Ea%3B%0A%20%20%29%3B%0A%20%20rel%28br%29%3B%20%29%3B%0Aout%3B)
+
+    ( node(51.47,-0.01,51.48,0.01);
+      way(51.47,-0.01,51.48,0.01);
+      node(w); );
+    ( ._;
+      (
+        rel(bn)->.a;
+        rel(bw)->.a;
+      );
+      rel(br); );
+    out;
+
+Weitere Varianten existieren,
+auch wenn sie eher historische Bedeutung haben.
+Zwei stellen wir im [nächsten Unterkapitel](map_apis.md) vor.
