@@ -4,9 +4,10 @@ Einleitung
 Welche Aufgaben erfüllt die Overpass API im OpenStreetMap-Ökosystem?
 Was sind OpenStreetMap-Daten und was sind Abfragen?
 
-[OpenStreetMap-Datenmodell](osm_data_model.md)  
-Um die Funktionsweise der Overpass API zu verstehen,
-wird hier zunächst das OpenStreetMap-Datenmodell vorgestellt.
+[OpenStreetMap und die Overpass API](preface.md)  
+...
+
+[LINK_STUB](osm_data_model.md)
 
 [Rohdaten finden](mission.md)  
 Das Konzept der Overpass API:

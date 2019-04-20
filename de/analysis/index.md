@@ -20,6 +20,9 @@ Solche Objekte tauchen in keinen Renderings auf und sind häufig Tagging-Irrtüm
 Fahndung nach unüblichen Tags.
 Zwar sind diese meist harmlos, können aber auf einen Anlass zum Neumappen hinweisen.
 
+[Daten wiederherstellen](museum.md)
+...
+
 [Timeline](timeline.md)  
 Alle Versionen eines Objektes sichten:
 Neben der auch auf der [Hauptseite](https://openstreetmap.org/) verfügbaren Funktionalität
