@@ -146,7 +146,7 @@ Diese Texte werden jedoch nicht in der Overpass API verarbeitet.
 
 Auf diese Weise sind dann auch Objekte in ihrer Gesamtheit jeweils einem Benutzer zugeordnet.
 Es handelt sich um den letzten Bearbeiter.
-Objekte mit höherer Versionsnummer als 1 werden daher in der Regel Eigenschaften aus früheren Versionen behalten haben,
+Objekte mit höherer Versionsnummer als 1 haben daher in der Regel Eigenschaften aus früheren Versionen behalten,
 die nicht dem aktuellen Bearbeiter zuzurechnen sind.
 
 ## Layer und Konzepte

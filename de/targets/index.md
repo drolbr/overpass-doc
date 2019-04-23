@@ -5,9 +5,7 @@ Wie muss eine Abfrage konfiguriert werden, damit der Ergebnis verwendbar ist?
 Beispiele für viele beliebte Programme und Zwecke ohne Anspruch auf Vollständigkeit.
 Erläuterung der Datenformate und ihrer Varianten.
 
-[Datenformate](formats.md)  
-Es gibt verschiedene Datenformate, um OpenStreetMap-Daten zu transportieren.
-Wir stellen alle vor, die einen unmittelbaren Anwendungszweck haben.
+[LINK_STUB](formats.md)
 
 [Overpass Turbo](turbo.md)  
 Vorstellung der Varianten anhand des Standardtools [Overpass Turbo](https://overpass-turbo.eu/).

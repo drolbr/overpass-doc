@@ -74,7 +74,7 @@ do
   else
     echo "${LINE:1:$((${#LINE}-2))}"
   fi
-done | sed 's/\([[][^:]*\)\.md\b/\1\.html/g' | markdown | sed 's/href=\"https:/target=\"_blank\" rel=\"noopener\" href=\"https:/g' >>$TARGET
+done | sed 's/\([[][^:[]*\)\.md\b/\1\.html/g' | markdown | sed 's/href=\"https:/target=\"_blank\" rel=\"noopener\" href=\"https:/g' >>$TARGET
 
 echo >>$TARGET
 echo '</body>' >>$TARGET

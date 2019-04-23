@@ -1,0 +1,135 @@
+Datenformate
+============
+
+Es gibt verschiedene Datenformate, um OpenStreetMap-Daten zu transportieren.
+Wir stellen alle vor, die einen unmittelbaren Anwendungszweck haben.
+
+## Abgrenzung
+
+Die Datentypen sind bereits im [passenden Abschnitt der Einleitung](../preface/osm_data_model.md) eingeführt worden.
+Sie sollten hier also bereits mit Nodes, Ways und Relations vertraut sein.
+
+Dieser Abschnitt erläutern zum einen Ausgabeformate.
+Zum anderen werden die verschiedenen möglichen Detailsgrade vorgestellt.
+Welches Tool welches Ausgabeformat benötigt ist jeweils im Abschnitt zum Tool erläutert.
+
+Dem häufigen Problem, die Geometrie von OpenStreetMap-Objekten zu Vervollständigen,
+ist [der Abschnitt zum Datenmodell](../full_data/osm_types.md) im Kapitel [Räumliche Datenauswahl](../full_data/index.md) gewidmet.
+
+## Traditionelle Detailgrade
+
+Zunächst zu den Detailgraden:
+Während die Ausgabeformate über eine pro Abfrage globale Einstellung gesteuert werden,
+werden die Detailgrade bei jedem Ausgabe-Kommando über dessen Parameter gesteuert.
+Dadurch ist es möglich, verschiedene Dateigrade in einer Anfrage zu mischen;
+diese Fähigkeit wird für die jeweils optimale Datenmenge [einiger Geometrievarianten](../full_data/index.md) benötigt.
+Bei den [Anwendungen](index.md) ist dies jeweils vermerkt.
+
+Wir geben zu den Detailgraden jeweils auch ein Beispiel rund um den Londoner Vorort Greenwich.
+Das Beispiel ist dabei hauptsächlich so gewählt, dass es nur überschaubar wenige Nodes, Ways und Relations liefert,
+damit man sich die Daten gut im Tab _Daten_ von OVerpass Turbo anschauen kann.
+
+Für die originalen OpenStreetMap-Detailgrade gibt es eine Hierarchie sie zuzuschalten:
+
+Das Kommando _out ids_ [liefert](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%5Bname%3D%22Blackheath%20Avenue%22%5D%3B%0A%20%20node%28w%29%3B%0A%20%20relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aout%20ids%3B):
+
+    ( way(51.477,-0.001,51.478,0.001)[name="Blackheath Avenue"];
+      node(w);
+      relation(51.477,-0.001,51.478,0.001); );
+    out ids;
+
+* die Ids der Objekte
+
+Das Kommando _out skel_ [liefert](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%5Bname%3D%22Blackheath%20Avenue%22%5D%3B%0A%20%20node%28w%29%3B%0A%20%20relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aout%20skel%3B) zusätzlich die nötigen Informationen,
+um die Geometrie aufzubauen:
+
+    ( way(51.477,-0.001,51.478,0.001)[name="Blackheath Avenue"];
+      node(w);
+      relation(51.477,-0.001,51.478,0.001); );
+    out skel;
+
+* bei Nodes deren Koordinate
+* bei Ways und Relations die Liste der Member
+
+Das Kommando _out_ (ohne Zusätze) [liefert](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%5Bname%3D%22Blackheath%20Avenue%22%5D%3B%0A%20%20node%28w%29%3B%0A%20%20relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aout%3B) die vollständen Geodaten, also zusätzlich:
+
+    ( way(51.477,-0.001,51.478,0.001)[name="Blackheath Avenue"];
+      node(w);
+      relation(51.477,-0.001,51.478,0.001); );
+    out;
+
+* die Tags aller Objekte
+
+Das Kommando _out meta_ [liefert](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%5Bname%3D%22Blackheath%20Avenue%22%5D%3B%0A%20%20node%28w%29%3B%0A%20%20relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aout%20meta%3B) zusätzlich:
+
+    ( way(51.477,-0.001,51.478,0.001)[name="Blackheath Avenue"];
+      node(w);
+      relation(51.477,-0.001,51.478,0.001); );
+    out meta;
+
+* die Version pro Objekt
+* den Zeitstempel pro Objekt
+
+Schlussendlich liefert das Kommando _out attribution_ die folgenden Daten mit:
+
+* die Changeset-Id
+* die User-Id
+* den Usernamen zu dieser User-Id
+
+Dieser letzte Detailgrad betrifft allerdings Daten, die nach herrschender Meinung unter den Datenschutz fallen.
+Daher ist dafür ein [erhöhter Aufwand](../analysis/per_user.md) nötig.
+Da diese Daten für keines der in diesem Kapitel diskutierten Anwendungen erforderlich sind,
+verzichten wir hier auf ein Beispiel.
+
+## Varianten
+
+Es ist möglich, drei Detailgrade an zusätzlicher Geometrie zuzuschalten.
+Alle Kombinationen zwischen den gerade vorgestellten Detailgraden und den zusätzlichen Geometrie-Detailgraden sind möglich.
+
+Das Flag _center_ schaltet pro Objekt eine einzelne Koordinate zu.
+Diese hat keine besondere mathematische Bedeutung,
+sondern liegt einfach in der Mitte der das Objekt einschließenden Bounding-Box: [Beispiel 1](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%5Bname%3D%22Blackheath%20Avenue%22%5D%3B%0A%20%20node%28w%29%3B%0A%20%20relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aout%20ids%20center%3B)
+
+    ( way(51.477,-0.001,51.478,0.001)[name="Blackheath Avenue"];
+      node(w);
+      relation(51.477,-0.001,51.478,0.001); );
+    out ids center;
+
+[Beispiel 2](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%5Bname%3D%22Blackheath%20Avenue%22%5D%3B%0A%20%20node%28w%29%3B%0A%20%20relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aout%20center%3B)
+
+    ( way(51.477,-0.001,51.478,0.001)[name="Blackheath Avenue"];
+      node(w);
+      relation(51.477,-0.001,51.478,0.001); );
+    out center;
+
+Das Flag _bb_ (für _Bounding-Box_) schaltet pro Objekt die einschließende Bounding-Box zu: [Beispiel](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%5Bname%3D%22Blackheath%20Avenue%22%5D%3B%0A%20%20node%28w%29%3B%0A%20%20relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aout%20ids%20bb%3B)
+
+    ( way(51.477,-0.001,51.478,0.001)[name="Blackheath Avenue"];
+      node(w);
+      relation(51.477,-0.001,51.478,0.001); );
+    out ids bb;
+
+Das Flag _geom_ (für _Geometrie_) ergänzt die vollen Koordinaten.
+Dafür ist als Mindest-Detailgrad die Stufe _skel_ notwendig,
+es funktioniert also bis einschließlich _attribution_: [Beispiel](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%5Bname%3D%22Blackheath%20Avenue%22%5D%3B%0A%20%20node%28w%29%3B%0A%20%20relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aout%20skel%20geom%3B)
+
+    ( way(51.477,-0.001,51.478,0.001)[name="Blackheath Avenue"];
+      node(w);
+      relation(51.477,-0.001,51.478,0.001); );
+    out skel geom;
+
+TODO: geom beschränkt
+TODO: tags
+...
+
+## JSON und GeoJSON
+
+Nun zu den Datenformaten:
+Während die Detailgrade pro Ausgabe-Kommando gewählt werden können,
+wird das Ausgabeformat nur einmal global pro Abfrage festgelegt.
+
+...
+
+## CSV
+
+...
