@@ -149,6 +149,41 @@ Es handelt sich um den letzten Bearbeiter.
 Objekte mit höherer Versionsnummer als 1 haben daher in der Regel Eigenschaften aus früheren Versionen behalten,
 die nicht dem aktuellen Bearbeiter zuzurechnen sind.
 
-## Layer und Konzepte
+## Layer, Kategorien, Identitäten
 
-...
+Thematische Layer gibt es dagegen in OpenStreetMap nicht,
+und dies auch aus gutem Grund.
+Für die einen gehören Supermärkte zusammen mit Postämtern, Banken und Geldautomaten zu den Orten,
+an denen man Bargeld bekommt.
+Für die nächsten bilden Supermärkte dagegen mit Bäckereien und Fleischern eine Gruppe,
+weil man dort Lebensmittel einkaufen kann.
+
+Daher spielt die Klassifikation nur eine untergeordnete Rolle in OpenStreetMap.
+Es werden stattdessen lieber objektive Eigenschaften gemappt.
+Streitigkeiten über Klassifikation sind so weitgehend vermieden worden,
+und die meisten Mapper können ihre Weltsicht ohne große Verrenkungen abbilden.
+
+Eine ebenfalls häufig erwartete Struktur sind Kategorien,
+egal ob sehr generell wie weltweit alle Filialen einer Fast-Food-Kette
+oder speziell wie alle Briefkästen in Hessen.
+
+OpenStreetMap ist eine räumliche Datenbank.
+Listen aller Objekte mit einer speziellen Eingeschaft in einem beschränkten Gebiet lassen sich gezielt filtern.
+Die Overpass API ist übrigens eines der dafür geeingeneten Tools,
+und [Objekte Filtern](../criteria/index.md) das zuständige Kapitel.
+
+Listen weltweit aller Objekte mit einer Eigenschaft haben dagegen allenfalls eine schwache räumliche Relevanz.
+Zwar hat jede Filiale einen Standort,
+aber die Fast-Food-Kette an sich erhält ihre räumliche Information ausschließlich vermittels der Filialen.
+
+Zuletzt muss auch das Konzept der Identität eine Objektes hinter seinen Raumbezug zurücktreten.
+Wie schon in Bzug auf den Layer haben verschiedene Mapper verschiedene Sichtweisen dazu,
+was zu einer so komplexen Anlage wie einem großen Bahnhof dazugehört.
+Nur Gleise und Bahnsteige? Das Empfangsgebäude, oder nur, wenn es für Reisende geöffnet ist oder der Bahngesellschaft gehört? Der Bahnhofsvorplatz, die nach dem Bahnhof benannte Umsteigehaltestelle?
+Die Weichen im Vorfeld des Bahnhofs?
+
+Wenn eine Bezugnahme auf die Darstellung eines Objekt der materiellen Welt genommen wird,
+geht dies am Besten mit einer Koordinate.
+Ortsfeste Anlagen ziehen per Definition nicht um,
+und die Lagegenauigkeit in OpenStreetMap ist so gut,
+dass eine Koordinate des Zielobjekts die beste Identifikation ist.
