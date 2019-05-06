@@ -7,6 +7,9 @@ Erläuterung der Datenformate und ihrer Varianten.
 
 [LINK_STUB](formats.md)
 
+[Fehlermeldungen](errors.md)  
+Mögliche Fehlermeldungen von der Overpass API und ihre Bedeutung.
+
 [Overpass Turbo](turbo.md)  
 Das Standardtool zum Entwicklen von Abfragen.
 
@@ -34,6 +37,9 @@ Abfragen für bekannte vorhandene Services.
 Overpass API im Backend einer eigenen statischen Website:
 Eine Webkarte wie [OpenLevelUp](https://openlevelup.net/) selbst bauen,
 indem die Overpass API aus OpenLayers oder Leaflet angesteuert wird.
+
+[Permanent-ID](permanent_id.md)  
+Ein Ansatz, Objekte anhand von Eigenschaften und grober Position sicher zu identifizieren.
 
 [Skripte](scripts.md)  
 Die Overpass API lässt es auch zu, Daten mit Skripten maschinell abzurufen.

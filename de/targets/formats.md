@@ -10,7 +10,7 @@ Die Datentypen sind bereits im [passenden Abschnitt der Einleitung](../preface/o
 Sie sollten hier also bereits mit Nodes, Ways und Relations vertraut sein.
 
 Dieser Abschnitt erläutert zum einen Ausgabeformate.
-Zum anderen werden die verschiedenen möglichen Detailsgrade vorgestellt.
+Zum anderen werden die verschiedenen möglichen Detailgrade vorgestellt.
 Welches Tool welches Ausgabeformat benötigt ist jeweils im Abschnitt zum Tool erläutert.
 
 Dem häufigen Problem, die Geometrie von OpenStreetMap-Objekten zu Vervollständigen,

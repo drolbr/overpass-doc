@@ -65,7 +65,12 @@ echo >>$TARGET
     echo 'x---x'
     echo 'xx'
   fi
-  cat <$1 | sed 's/^/x/g' | sed 's/$/x/g';
+  cat <$1 | sed 's/^/x/g' | sed 's/$/x/g'
+  if [[ -n $SUCC_PAGE ]]; then
+    echo
+    echo 'x---x'
+    echo "x$TR_NEXT: [$SUCC_TITLE](${DIRPREFIX}$SUCC_PAGE)  x"
+  fi
 } | while read LINE
 do
   if [[ ${LINE:1:12} == "[LINK_STUB](" ]]; then

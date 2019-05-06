@@ -8,13 +8,9 @@ Was sind OpenStreetMap-Daten und was sind Abfragen?
 
 [LINK_STUB](osm_data_model.md)
 
-[Glossar](glossary.md)  
-...
+[LINK_STUB](glossary.md)
 
-[Rohdaten finden](mission.md)  
-Das Konzept der Overpass API:
-Eine Nur-Lesen-Spiegelung der vollen OpenStreetMap-Daten
-mit dem Ziel, diese nach möglichst jedem Kriterium durchsuchen zu können.
+[LINK_STUB](design.md)
 
 [Grundsätze](assertions.md)  
 Die Overpass API wird Tagging-Schemata weder fördern noch behindern.

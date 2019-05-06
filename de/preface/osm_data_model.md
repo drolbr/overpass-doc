@@ -37,8 +37,8 @@ Es sind zwei Grundtypen von Tags etabliert:
 _Klassifizierende Tags_ haben einen von wenigen Schlüsseln,
 zu jedem der wenigen Schlüssel existieren auch nur überschaubar viele Werte.
 Davon abweichende Werte werden als Fehler angesehen.
-So wird das komplette öffentliche Straßennetz für Kraftfahrzeuge mit dem Schlüssel _highway_ und einem von weniger als 20 gängigen Werten identifziert.
-Für Gebäude wird zumeist nur _building_ mit Wert _yes_ gesetzt.
+So wird das komplette öffentliche Straßennetz für Kraftfahrzeuge mit dem Schlüssel [highway](https://taginfo.openstreetmap.org/keys/highway) und einem von weniger als 20 gängigen Werten identifziert.
+Für Gebäude wird zumeist nur [building](https://taginfo.openstreetmap.org/keys/building) mit Wert _yes_ gesetzt.
 
 Vereinzelt treten in solchen Tags auch semikolon-getrennte Werte auf.
 Dies ist ein allgemein zumindest geduldeter Ansatz, mehrere Werte zum gleichen Key am selben Objekt einzutragen.
