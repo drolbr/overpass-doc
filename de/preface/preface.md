@@ -14,7 +14,7 @@ und auch Geschäfte und Restaruants mit Namen und Öffnungszeiten sind hochwillk
 Generell wird in OpenStreetMap alles eingetragen,
 das vor Ort beobachtbar ist.
 Eine Straße hat ein Straßenschild, ein Restuarant hat ein Schild über der Tür hängen.
-Bei einem Fluss oder einer Eisenbahnstrecke lassen sich die Bzeiechnungen meist indirekt aus Hinweisschildern ablesen.
+Bei einem Fluss oder einer Eisenbahnstrecke lassen sich die Bezeichnungen meist indirekt aus Hinweisschildern ablesen.
 
 Sehr vereinzelte Ausnahmen vom Sichtbarkeitserfordernis gibt es.
 Die einzige uneingeschränkt akzeptierte Ausnahme sind Staats-, Landes- und Gemeindegrenzen.

@@ -215,33 +215,36 @@ Alternativ können Sie die Daten auch im strikt traditionellen Format mit Sortie
 Dies erfordert insbesondere, die Vorwärtsauflösung der Ways, um alle Nodes für die Geometrie zu bekommen.
 Dann müssen wir das Kommando `<` durch eine präzisere Variante ersetzen,
 da sonst das Kommando `<` Wege an den hinzugefügen Nodes aufsammelt.
-Die erste Variante wird dann zu: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20node%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0A%20%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0A%20%20node%28w%29%3B%20%29%3B%0A%28%20%2E%5F%3B%0A%20%20%28%0A%20%20%20%20rel%28bn%29%2D%3E%2Ea%3B%0A%20%20%20%20rel%28bw%29%2D%3E%2Ea%3B%0A%20%20%29%3B%20%29%3B%0Aout%3B)
+Die erste Variante wird dann zu: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20node%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%0A%20%20way%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%20%29%3B%0A%28%20%2E%5F%3B%0A%20%20%28%0A%20%20%20%20rel%28bn%29%2D%3E%2Ea%3B%0A%20%20%20%20rel%28bw%29%2D%3E%2Ea%3B%0A%20%20%29%3B%20%29%3B%0A%28%20%2E%5F%3B%0A%20%20node%28w%29%3B%20%29%3B%0Aout%3B)
 
-    ( node(51.477,-0.001,51.478,0.001);
-      way(51.477,-0.001,51.478,0.001);
-      node(w); );
+    ( node(51.47,-0.01,51.48,0.01);
+      way(51.47,-0.01,51.48,0.01); );
     ( ._;
       (
         rel(bn)->.a;
         rel(bw)->.a;
       ); );
+    ( ._;
+      node(w); );
     out;
 
-Hier sind Zeilen 4 bis 8 für die Relationen zuständig.
-Ohne Zeilen 4 bis 8, aber mit Zeile 9 für die Ausgabe erhält man dann nur Nodes und Ways.
+Hier sind Zeilen 3 bis 7 für die Relationen zuständig.
+Ohne Zeilen 4 bis 8, aber mit Zeilen 9 bis 11 für die Vervollständigung der Ways und die Ausgabe
+erhält man dann nur Nodes und Ways.
 
 Umgekehrt können Relationen auf Relationen gesammelt werden,
-indem Zeile 8 entsprechend durch die neue Zeile 9 ergänzt wird: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20node%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%0A%20%20way%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%0A%20%20node%28w%29%3B%20%29%3B%0A%28%20%2E%5F%3B%0A%20%20%28%0A%20%20%20%20rel%28bn%29%2D%3E%2Ea%3B%0A%20%20%20%20rel%28bw%29%2D%3E%2Ea%3B%0A%20%20%29%3B%0A%20%20rel%28br%29%3B%20%29%3B%0Aout%3B)
+indem Zeile 7 entsprechend durch die neue Zeile 8 ergänzt wird: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20node%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%0A%20%20way%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%20%29%3B%0A%28%20%2E%5F%3B%0A%20%20%28%0A%20%20%20%20rel%28bn%29%2D%3E%2Ea%3B%0A%20%20%20%20rel%28bw%29%2D%3E%2Ea%3B%0A%20%20%29%3B%0A%20%20rel%28br%29%3B%20%29%3B%0A%28%20%2E%5F%3B%0A%20%20node%28w%29%3B%20%29%3B%0Aout%3B)
 
     ( node(51.47,-0.01,51.48,0.01);
-      way(51.47,-0.01,51.48,0.01);
-      node(w); );
+      way(51.47,-0.01,51.48,0.01); );
     ( ._;
       (
         rel(bn)->.a;
         rel(bw)->.a;
       );
       rel(br); );
+    ( ._;
+      node(w); );
     out;
 
 Weitere Varianten existieren,
