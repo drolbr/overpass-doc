@@ -14,7 +14,4 @@ Was sind OpenStreetMap-Daten und was sind Abfragen?
 
 [LINK_STUB](assertions.md)
 
-[Allmende](commons.md)  
-Es gibt eine öffentliche Instanz, die größtmögliche Ressourcen bereitstellt,
-aber auch gegen Übernutzung verteidigt.
-Großnutzer können leicht eine eigene Instanz aufsetzen.
+[LINK_STUB](commons.md)

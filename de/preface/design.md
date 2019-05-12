@@ -6,7 +6,7 @@ Eine Nur-Lesen-Spiegelung der vollen OpenStreetMap-Daten
 in eine Datenbank mit zugeschnittener Abfragesprache
 zum Zweck, diese nach möglichst jedem Kriterium durchsuchen zu können.
 
-# Anweisung für Anweisung
+## Anweisung für Anweisung
 
 Die meisten fortgeschrittenen Anwendungsfälle für Abfragen erfordern relative Auswahlen.
 Ein gutes Beispiel sind Supermärkte,
@@ -23,7 +23,7 @@ auch in formaler Sprache wird das nicht besser.
 Daher folgt die Abfragesprache der Ovepass API stattdessen einem Schritt-für-Schritt-Paradigma,
 der sogenannten _imperativen Programmierung_.
 Zu jedem Zeitpunkt wird nur eine überschaubare Aufgabe gelöst,
-und die komplexe Aufgabe durch Aneinanderreihung erreicht.
+und die komplexe Aufgabe durch Aneinanderreihung bewältigt.
 Das Herangehen ist dann wie folgt:
 
 * Wähle alle Bahnhöfe im Zielgebiet aus
@@ -31,7 +31,7 @@ Das Herangehen ist dann wie folgt:
 * Gib die Liste der Supermärkte aus
 
 Das ergibt Zeile für Zeile folgende Abfrage.
-Sie können sie jetzt [ausführen](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=nwr%5Bpublic_transport%3Dstation%5D%28%7B%7Bbbox%7D%7D%29%3B%0Anwr%5Bshop%3Dsupermarket%5D%28around%3A100%29%3B%0Aout%20center%3B):
+Sie können sie jetzt [ausführen](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=13&Q=nwr%5Bpublic_transport%3Dstation%5D%28%7B%7Bbbox%7D%7D%29%3B%0Anwr%5Bshop%3Dsupermarket%5D%28around%3A100%29%3B%0Aout%20center%3B):
 
     nwr[public_transport=station]({{bbox}});
     nwr[shop=supermarket](around:100);
@@ -48,7 +48,7 @@ aber die entstehende Zwei-Zeilen-Lösung spiegelt die klare Aufgabenteilung wide
 - Die Auswahlanweisung oder -anweisungen legen fest, _was_ ausgegeben wird.
 - Die Ausgabeanweisung _out_ legt fest, _wie_ die angewählten Objekte ausgegeben werden. Details dazu bei den [Ausgabeformaten](../targets/formats.md)
 
-# Statements, Conditionals
+## Statements, Conditionals
 
 Wir vergleichen die Abfrage nach einfach nur den Supermärkten im Sichtbarkeitsbereich
 
@@ -103,7 +103,7 @@ Etwas komplizierter arbeitet ``(around:100)``.
 Es benötigt eine Vorgabe und lässt genau alle Objekte zu,
 die zu irgendeinem der Vorgabe-Objekte einen Abstand von höchstens 100 Metern haben.
 
-# Block-Statements
+## Block-Statements
 
 Wie kann man eine Oder-Verknpüfung erreichen?
 [Auf diese Weise](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=%28%0A%20%20nwr%5Bpublic%5Ftransport%3Dstation%5D%28%7B%7Bbbox%7D%7D%29%3B%0A%20%20nwr%5Bshop%3Dsupermarket%5D%28%7B%7Bbbox%7D%7D%29%3B%0A%29%3B%0Aout%20center%3B) findet man alle Objekte, die ein Supermarkt _oder_ ein Bahnhof sind:
@@ -133,13 +133,18 @@ Es gibt zahlreiche weitere Block-Statements:
 * _complete_ erfüllt Aufgaben einer _while_-Schleife.
 * Weitere Block-Statements erlauben es, gelöschte oder überholte Daten wieder zurückzuholen.
 
-# Evaluators und Deriveds
+## Evaluators und Deriveds
 
 Nicht geklärt ist damit,
 wie im Block-Statement _if_ oder auch _for_ die Bedingungen formuliert werden können.
 
 Der dafür genutzte Mechanismus hilft aber auch für andere Aufgaben.
-Man kann damit z.B. eine [Liste aller Straßennamen](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%5Bout%3Acsv%28name%29%5D%3B%0Away%5Bhighway%5D%28%7B%7Bbbox%7D%7D%29%3B%0Afor%20%28t%5B%22name%22%5D%29%0A%7B%0A%20%20make%20Beispiel%20name%3D%5F%2Eval%3B%0A%20%20out%3B%0A%7D) in einem Gebiet erstellen:
+Man kann damit z.B. eine [Liste aller Straßennamen](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%5Bout%3Acsv%28name%29%5D%3B%0Away%5Bhighway%5D%28%7B%7Bbbox%7D%7D%29%3B%0Afor%20%28t%5B%22name%22%5D%29%0A%7B%0A%20%20make%20Beispiel%20name%3D%5F%2Eval%3B%0A%20%20out%3B%0A%7D) in einem Gebiet erstellen.
+(Die Meldung _Nur unstrukturierte Daten erhalten_ ist normal,
+da Overpass Turbo zwar JSON und XML, aber kein CSV verarbeiten kann.
+CSV ist jedoch das für eine Liste oder Tabelle nötige Format.
+Klicken Sie bitte oben rechts auf den Reiter _Daten_
+bzw. auf Mobiltelefonen scrollen Sie bitte nach unten.)
 
     [out:csv(name)];
     way[highway]({{bbox}});
@@ -226,7 +231,7 @@ Die erzeugten Objekte können Sie sehen, wenn Sie als Ausgabeformat es bei XML [
       out;
     }
 
-# Mehrere Auswahlen gleichzeitig
+## Mehrere Auswahlen gleichzeitig
 
 In vielen Fällen kommt man aber mit einer einzigen Auswahl nicht aus.
 Daher können Auswahlen auch in benannten Variablen abgelegt
@@ -273,24 +278,24 @@ Der Ablauf mit Datenfluss nocheinmal im Detail:
 
 - Vor Beginn der Ausführung sind alle Auswahlen leer.
 - Zuerst wird Zeile 1 ausgeführt.
-  Wegen ``->.all_stations`` sind danach alle Bahnhöfe als _all\_stations_ ausgewählt;
+  Wegen ``->.all_stations`` sind danach alle Bahnhöfe als ``all_stations`` ausgewählt;
   die Standardauswahl bleibt dagegen leer.
 - Zeilen 2 bis 5 sind ein Block-Statement vom Typ _difference_,
   und dieses führt zunächst seinen Ausweisungblock aus.
   Daher wird als nächstes Zeile 3 ``nwr[shop=supermarket]({{bbox}})`` ausgeführt.
   Zeile 3 hat keine Umleitung,
   so dass danach alle Supermärkte in der Standard-Auswahl ausgewählt sind.
-  Die Auswahl _all\_stations_ wird nicht erwähnt und bleibt daher erhalten.
+  Die Auswahl ``all_stations`` wird nicht erwähnt und bleibt daher erhalten.
 - Das Block-Statement _difference_ greift das Ergebnis seines ersten Operanden ab,
   also von Zeile 3.
 - Zeile 4 benutzt die Standarauswahl per ``._`` als Einschränkung für sein Ergebnis,
-  und zusätzlich wird per ``(around.all_stations:300)`` die Auswahl _all\_stations_ als Quelle für die Umkreissuche _around_ herangezogen.
+  und zusätzlich wird per ``(around.all_stations:300)`` die Auswahl ``all_stations`` als Quelle für die Umkreissuche _around_ herangezogen.
   Das Ergebnis ist die neue Standard-Auswahl und ersetzt daher die vorherige Standard-Auswahl.
-  Die Auswahl _all\_stations_ bleibt unverändert.
+  Die Auswahl ``all_stations`` bleibt unverändert.
 - Das Block-Statement _difference_ greift das Ergebnis seines ersten Operanden ab,
   also von Zeile 4.
 - Das Block-Statement _difference_ bildet jetzt die Differenz der beiden abgegriffenen Ergebnisse.
   Da nichts anderes gefordert ist, wird das Ergebnis die neue Standard-Auswahl.
-  Die Auswahl _all\_stations_ bleibt nach wie vor unverändert.
+  Die Auswahl ``all_stations`` bleibt nach wie vor unverändert.
 - Zuletzt wird Zeile 5 ausgeführt.
   Ohne besondere Angabe verwendet ``out`` als Quelle die Standard-Auswahl.

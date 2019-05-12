@@ -9,11 +9,11 @@ Wo befindet sich darin die Overpass API?
 OpenStreetMap ist zunächst einmal eine Datenbank weltweiter Geodaten.
 Dabei handelt es sich um Geobasisdaten,
 z.B. Straßen, Eisenbahnlinien, Gewässer sollen vollständig vorhanden sein,
-und auch Geschäfte und Restaruants mit Namen und Öffnungszeiten sind hochwillkommen.
+und auch Geschäfte und Restaurants mit Namen und Öffnungszeiten sind hochwillkommen.
 
 Generell wird in OpenStreetMap alles eingetragen,
 das vor Ort beobachtbar ist.
-Eine Straße hat ein Straßenschild, ein Restuarant hat ein Schild über der Tür hängen.
+Eine Straße hat ein Straßenschild, ein Restaurant hat ein Schild über der Tür hängen.
 Bei einem Fluss oder einer Eisenbahnstrecke lassen sich die Bezeichnungen meist indirekt aus Hinweisschildern ablesen.
 
 Sehr vereinzelte Ausnahmen vom Sichtbarkeitserfordernis gibt es.

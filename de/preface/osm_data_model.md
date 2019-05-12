@@ -88,7 +88,7 @@ Grundsätzlich ist jedes Member ein Paar aus einem Verweis auf ein Node, ein Way
 Die ursprüngliche Aufgabe von Relations ist die Speicherung von Abbiegeverboten gewesen,
 mit dementsprechend nur wenigen Membern.
 Mittlerweile werden sie aber auch für Staats- und Gemeindegrenzen, Multipolygone oder Routen verwendet.
-Ihre Erscheinnungsformen sind daher sehr vielfältig,
+Ihre Erscheinungsformen sind daher sehr vielfältig,
 und vor allem Grenz- und Routenrelationen können auch Ausmaße von hunderten und tausenden Kilometern erreichen.
 
 Eine Geometrie für Relations entsteht erst durch die Interpretation des Datennutzers.
@@ -177,7 +177,7 @@ Zwar hat jede Filiale einen Standort,
 aber die Fast-Food-Kette an sich erhält ihre räumliche Information ausschließlich vermittels der Filialen.
 
 Zuletzt muss auch das Konzept der Identität eine Objektes hinter seinen Raumbezug zurücktreten.
-Wie schon in Bzug auf den Layer haben verschiedene Mapper verschiedene Sichtweisen dazu,
+Wie schon in Bezug auf den Layer haben verschiedene Mapper verschiedene Sichtweisen dazu,
 was zu einer so komplexen Anlage wie einem großen Bahnhof dazugehört.
 Nur Gleise und Bahnsteige? Das Empfangsgebäude, oder nur, wenn es für Reisende geöffnet ist oder der Bahngesellschaft gehört? Der Bahnhofsvorplatz, die nach dem Bahnhof benannte Umsteigehaltestelle?
 Die Weichen im Vorfeld des Bahnhofs?
