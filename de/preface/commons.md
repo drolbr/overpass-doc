@@ -106,12 +106,64 @@ Im [Abschnitt über OpenLayers und Leaflet](../targets/openlayers.md) gibt es ei
 
 Die Grund für diesen Mechanismus sind Skripte in Endlosschleife:
 viele führen je eine Abfrage parallel aus und werden dann sinnvoll verzögert,
-die ihre Abfragen entsprechend verzögert Antworten erhalten.
+da ihre Abfragen entsprechend verzögert Antworten erhalten.
 
-Falls langlaufende Abfragen in der Größenordnung von Minuten die Slot belegt haben,
+Falls langlaufende Abfragen in der Größenordnung von Minuten den Slot belegt haben,
 gibt die Status-Abfrage ab Zeile 6 Auskunft darüber,
 wann welcher Slot wieder verfügbar ist.
 
+Wegen des Rate-Limits abgelehnte Abfragen werden mit dem [HTTP-Statuscode 429](https://tools.ietf.org/html/rfc6585#section-4) beantwortet.
+
 ### Timeout und Maxsize
 
-...
+unabhängig von diesem Rate-Limit gibt es einen zweiten Mechanismus;
+er bevorzugt kleine Abfragen vor großen Abfragen,
+damit viele Nutzer mit kleinen Abfragen auch dann noch bedient werden können,
+wenn die Kapazität für die Nutzer mit den größen Abfragen zusammen nicht mehr reicht.
+
+Es gibt zwei Kriterien dafür, pro Laufzeit und pro Speicherbedarf.
+Jede Abfrage enthält eine Deklaration zu ihrer erwarteten Maximallaufzeit und zu ihrem erwarteten maximalen Speicherbedarf.
+Die Deklaration der Maximallaufzeit kann explizit durch ein vorangestelltes ``[timeout:...]`` erfolgen;
+die Deklaration des maximalen Speicherbedarfs durch ein vorangestelltes ``[maxsize:...]``.
+
+Überschreitet eine Abfrage ihre deklarierte Maximallaufzeit oder ihren deklarierten maximalen Speicherbedarf,
+so wird sie vom Server abgebrochen.
+Dieses [Beispiel](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=10&Q=%5Btimeout%3A3%5D%3B%0Anwr%5Bshop%3Dsupermarket%5D%28%7B%7Bbbox%7D%7D%29%3B%0Aout%20center%3B) bricht nach 3 Sekunden ab:
+
+    [timeout:3];
+    nwr[shop=supermarket]({{bbox}});
+    out center;
+
+Das [gleiche Beispiel mit mehr Zeit](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=10&Q=%5Btimeout%3A90%5D%3B%0Anwr%5Bshop%3Dsupermarket%5D%28%7B%7Bbbox%7D%7D%29%3B%0Aout%20center%3B) funktioniert:
+
+    [timeout:90];
+    nwr[shop=supermarket]({{bbox}});
+    out center;
+
+Ist bei einer Abfrage keine Maximallaufzeit deklariert,
+so wird eine Maximallaufzeit von 180 Sekunden gesetzt.
+Für den maximalen Speicherbedarf ist der Defaultwert 536870912;
+dies entspricht 512 MiB.
+
+Der Server lässt nun eine Abfrage genau dann zu,
+wenn sie in beiden Kriterien höchstens die Hälfte der noch verfügbaren Ressourcen belegt.
+Für den maximalen Speicherbedarf ist der Wert z.B. 12 GiB.
+Wenn also gerade 8 Abfragen zu 512 MiB laufen,
+so sind 4 GiB belegt.
+Eine weitere Abfrage würde also genau dann zugelassen,
+wenn sie weniger als 4 GiB anfordert.
+Mit dieser neunten Abfrage zusammen wäre dann noch 4 GiB frei,
+so dass dann nur noch eine weitere Abfrage zu weniger als 2 GiB akzeptiert würde.
+
+Bei der Laufzeit verhält es sich entsprechend.
+Der übliche Gesamtwert für zulässige Zeiteinheiten sind 262144.
+Es wird also eine Abfrage mit Maximallaufzeit 1 Tag recht bequem zugelassen,
+aber jede weitere parallele Abfrage mit einer so langen Maximallaufzeit dann abgelehnt.
+Der Rate-Limit-Mechanismus sorgt dann mit der anschließenden Beruhigungszeit in der Größenordnung von Tagen dafür,
+dass nicht immer derselbe Nutzer eine so lange Maximallaufzeit anfordern kann.
+
+Wie beim Rate-Limit lehnt der Server zu große Abfragen nicht sofort ab,
+sondern wartet 15 Sekunden,
+ob nicht in der Zwischenzeit genügend andere Abfragen beendet worden sind.
+
+Wegen unzureichender Ressourcen abgelehnte Abfragen werden mit dem [HTTP-Statuscode 504](https://tools.ietf.org/html/rfc7231#section-6.6.5) beantwortet.
