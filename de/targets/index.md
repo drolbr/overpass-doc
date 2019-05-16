@@ -7,9 +7,6 @@ Erläuterung der Datenformate und ihrer Varianten.
 
 [LINK_STUB](formats.md)
 
-[Fehlermeldungen](errors.md)  
-Mögliche Fehlermeldungen von der Overpass API und ihre Bedeutung.
-
 [Overpass Turbo](turbo.md)  
 Das Standardtool zum Entwicklen von Abfragen.
 
