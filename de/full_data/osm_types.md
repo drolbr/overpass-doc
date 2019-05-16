@@ -1,5 +1,5 @@
-OSM-Datenmodell
-===============
+Geometrien
+==========
 
 Um die verschiedenen Varianten für volle OpenStreetMap-Daten zu erklären,
 werden hier die Details des OpenStreetMap-Datenmodells erklärt.

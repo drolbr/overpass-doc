@@ -1,7 +1,7 @@
 Anhang
 ======
 
-Andere Orte, an denen mehr Informationen über Overpass API zu finden sind.
+Informationen zum Nachschlagen: Fehlermeldungen, Installationsanweisungen, Links
 
 [LINK_STUB](links.md)
 

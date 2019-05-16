@@ -14,7 +14,7 @@ Zum anderen werden die verschiedenen möglichen Detailgrade vorgestellt.
 Welches Tool welches Ausgabeformat benötigt ist jeweils im Abschnitt zum Tool erläutert.
 
 Dem häufigen Problem, die Geometrie von OpenStreetMap-Objekten zu Vervollständigen,
-ist [der Abschnitt zum Datenmodell](../full_data/osm_types.md) im Kapitel [Räumliche Datenauswahl](../full_data/index.md) gewidmet.
+ist [der Abschnitt zu Geometrien](../full_data/osm_types.md) im Kapitel [Räumliche Datenauswahl](../full_data/index.md) gewidmet.
 
 ## Traditionelle Detailgrade
 

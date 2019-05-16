@@ -17,7 +17,7 @@ Darüberhinaus gibt es verschiedene Datenformate, um diese Daten zu repräsentie
 Diese werden im Abschnitt [Datenformate](../targets/formats.md) erläutert.
 
 Besondere Erklärung benötigt auch das Zusammenspiel der Objekttypen im Hinblick auf nutzbare Geometrie.
-Einen praxistauglichen Leitfaden gibt dafür der Abschnitt [OSM-Datenmodell](../full_data/osm_types.md).
+Einen praxistauglichen Leitfaden gibt dafür der Abschnitt [Geometrien](../full_data/osm_types.md).
 
 ## Tags
 

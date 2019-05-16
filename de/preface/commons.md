@@ -40,10 +40,10 @@ dass weder 10000 Abfragen pro Tag noch 1 GB Downloadvolumen pro Tag überschreit
 
 Zu den Zielen gehört aber auch, den Betrieb einer eigenen Instanz möglichst einfach zu gestalten.
 Wer seinen Bedarf auf mehr als die obigen Nutzungsgrenzen schätzt,
-lese also bitte den nachfolgenden Absatz.
+lese also bitte die [Installations-Instruktionen](../more_info/setup.md).
 
 Wer dagegen mehr über die automatische Lastbegrenzung wissen will oder muss,
-lese bitte den letzten Absatz.
+lese bitte den folgenden Absatz.
 
 ## Regeln
 
