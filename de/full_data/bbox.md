@@ -50,7 +50,62 @@ da wir dies in der Abfrage so spezifiziert haben.
 
 ## Ausgabebegrenzung
 
-...
+Eine zweite Situation, in der Bounding-Boxen vorkommen,
+ist bei der Ausgabebegrenzung mit ``out geom``.
+Möchte man einen _Way_ oder eine _Relation_ auf der Karte visualisieren,
+so muss die Overpass API [explizit anweisen](../targets/formats.md),
+das Objekt entgegen der OSM-Konventionen mit Koordinaten auszustatten.
+
+Im Falle von Relationen kann dies zu großen Datenmengen führen.
+So wird in [diesem Beispiel](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%20geom%3B) ungefragt Geometrie quer durch England ausgeliefert,
+obwohl nur ein paar hundert Quadratmeter im Fokus gewesen sind:
+
+    relation(51.477,-0.001,51.478,0.001);
+    out geom;
+
+Die Datenmenge kann eingeschränkt werden,
+indem bei der Ausgabe [explizit](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%20geom%2851%2E47%2C%2D0%2E01%2C51%2E49%2C0%2E01%29%3B) nur Koordinaten aus einer übergebenen Bounding-Box angefordert werden:
+
+    relation(51.477,-0.001,51.478,0.001);
+    out geom(51.47,-0.01,51.49,0.01);
+
+Die Bounding-Box wird direkt hinter ``geom`` notiert.
+Sie kann sowohl gleich als auch verschieden von Bounding-Boxen aus vorangehenden Statements sein.
+In diesem Fall haben wir uns durch verschiedene Bounding-Boxen zu einem sehr breiten Reserverand entschieden.
+
+Zu einzeln vorkommenden _Nodes_ werden dabei die Koordinaten genau dann mitgeliefert,
+wenn diese innerhalb der Bounding-Box liegen.
+
+Bei _Ways_ nicht nur die Koordinaten aller _Nodes_ in der Bounding-Box mitgeliefert,
+sondern auch die jeweils nächste und vorausgehende Koordinate,
+auch wenn sie bereits außerhalb der Bounding-Box liegt.
+Um dies [im Beispiel](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=18&Q=way%5Bname%3D%22Blackheath%20Avenue%22%5D%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%20geom%2851%2E477%2C%2D0%2E002%2C51%2E479%2C0%2E002%29%3B) zu sehen, bitte nach dem Ausführen auf _Daten_ oben rechts klicken;
+Herumschieben der Karte zeigt auch, wo abgeschnitten worden ist:
+
+    way[name="Blackheath Avenue"](51.477,-0.001,51.478,0.001);
+    out geom(51.477,-0.002,51.479,0.002);
+
+Nur ein Teil der _Nodes_ im _Way_ hat hier Koordinaten.
+
+Die mit Koordinaten versehenen Abschnitte des Ways [können unzusammenhängend](https://overpass-turbo.eu/?lat=51.4735&lon=-0.007&zoom=17&Q=way%5Bname%3D%22Hyde%20Vale%22%5D%3B%0Aout%20geom%2851%2E472%2C%2D0%2E009%2C51%2E475%2C%2D0%2E005%29%3B) sein,
+auch bei einem einzelnen Way:
+
+    way[name="Hyde Vale"];
+    out geom(51.472,-0.009,51.475,-0.005);
+
+Es reicht dazu eine mäßige Kurve aus der Bounding-Box und wieder hinein wie in diesem Beispiel.
+
+Bei _Relations_ werden _Ways_ mit allen ihren _Nodes_ expandiert,
+wenn zumindest eine der _Nodes_ dieses Ways innerhalb der Bounding-Box liegt.
+Andere _Ways_ werden nicht expandiert.
+Innerhalb dieser _Ways_ werden wie bei einzelnen _Ways_ die _Nodes_ innerhalb der Bounding Box plus eine Extra-_Node_ mit Koordinaten versehen.
+
+Ebenso wie bei der Bounding-Box als Filter haben die meisten Programme einen Mechanismus,
+um die Bounding Box selbsttätig einzufügen.
+Bei [Overpass Turbo](../targets/turbo.md) tut dies wie oben ``{{bbox}}``, [(Beispiel)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%28%7B%7Bbbox%7D%7D%29%3B%0Aout%20geom%28%7B%7Bbbox%7D%7D%29%3B):
+
+    relation({{bbox}});
+    out geom({{bbox}});
 
 ## Globale Bounding-Box
 
