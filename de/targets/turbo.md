@@ -3,6 +3,7 @@ Overpass Turbo
 
 Das Standardtool zum Entwicklen von Abfragen.
 
+<a name="overview"/>
 ## Überblick
 
 Overpass Turbo ist eine Website,
@@ -31,6 +32,7 @@ Dazu sei auf die [Dokumentation](https://wiki.openstreetmap.org/wiki/DE:Overpass
 Dies gilt insbesondere zum Query-Generator _Wizard_.
 Zu _Styles_ gibt es weiter unten einige illustrierende Beispiele.
 
+<a name="basics"/>
 ## Rüstzeug
 
 Die Sicht der Website ist in mehrere Teile aufgeteilt;
@@ -99,6 +101,7 @@ Auf zwei nützliche Extras sei hingewiesen:
   aber die verfügbare Suche nach Ortsnamen reicht in der Regel,
   um den Kartenausschnitt schnell am richtigen Ort zu plazieren.
 
+<a name="symbols"/>
 ## Legende
 
 Die [Dokumentation](https://wiki.openstreetmap.org/wiki/DE:Overpass_turbo) erläutert die Farben bereits.
@@ -108,10 +111,10 @@ ob es ein Punkt, Linie, Fläche, eine Zusammensetzung davon, etwas Abstraktes od
 In den OpenStreetMap-Datenstrukturen ist es auf irgendeine Weise modelliert;
 diese kann, aber muss nicht zwingend mit ihrer Erwartung übereinstimmen.
 
-Die Overpass API bietet [Hilfsmittel](formats.md),
+Die Overpass API bietet [Hilfsmittel](formats.md#extras),
 um von der OpenStreetMap-Modellierung zu einer zu wechseln,
 die besser zur Darstellung passt;
-sei es durch Beschaffen der Koordinaten oder auch geometrische Vereinfachung oder [Zuschnitt](../full_data/bbox.md).
+sei es durch Beschaffen der Koordinaten oder auch geometrische Vereinfachung oder [Zuschnitt](../full_data/bbox.md#crop).
 Overpass Turbo muss nun in jedem Fall eine möglichst gute Darstellung liefern,
 egal, ob die Modellierung in OpenStreetMap noch naheliegend ist,
 und egal, ob das in der Abfrage gewählte Ausgabeformat sinnvoll zu den Daten passt.
@@ -159,7 +162,7 @@ in die zurückgelieferten Daten selbst per Reiter _Daten_ hineinzuschauen.
 
 Ist dagegen die Linie oder Umrandung der Fläche gestrichelt,
 so ist die Geometrie des Objekts unvollständig.
-Das ist zumeist ein gewollter Effekt der [Ausgabebegrenzung](../full_data/bbox.md) ([Beispiel](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=16&Q=%28%0A%20%20way%2851%2E475%2C%2D0%2E002%2C51%2E478%2C0%2E003%29%5Bhighway%3Dunclassified%5D%3B%0A%20%20rel%28bw%29%3B%0A%29%3B%0Aout%20geom%2851%2E475%2C%2D0%2E002%2C51%2E478%2C0%2E003%29%3B)):
+Das ist zumeist ein gewollter Effekt der [Ausgabebegrenzung](../full_data/bbox.md#crop) ([Beispiel](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=16&Q=%28%0A%20%20way%2851%2E475%2C%2D0%2E002%2C51%2E478%2C0%2E003%29%5Bhighway%3Dunclassified%5D%3B%0A%20%20rel%28bw%29%3B%0A%29%3B%0Aout%20geom%2851%2E475%2C%2D0%2E002%2C51%2E478%2C0%2E003%29%3B)):
 
     (
       way(51.475,-0.002,51.478,0.003)[highway=unclassified];
@@ -179,7 +182,7 @@ aber [vergessen](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=%28%0A
     out;
 
 Die Abfrage kann durch ``out geom`` [repariert](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=%28%0A%20%20node%2851%2E475%2C%2D0%2E003%2C51%2E478%2C0%2E003%29%3B%0A%20%20way%28bn%29%3B%0A%29%3B%0Aout%20geom%3B) werden;
-mehr Möglichkeiten sind im Abschnitt zu [Geometrien](../full_data/osm_types.md) erklärt:
+mehr Möglichkeiten sind im Abschnitt zu [Geometrien](../full_data/osm_types.md#nodes_ways) erklärt:
 
     (
       node(51.475,-0.003,51.478,0.003);
@@ -187,6 +190,14 @@ mehr Möglichkeiten sind im Abschnitt zu [Geometrien](../full_data/osm_types.md)
     );
     out geom;
 
+<a name="convenience"/>
+## Komfort
+
+...
+{{bbox}}
+Teilen
+
+<a name="limitations"/>
 ## Schranken
 
 Overpass Turbo beherrscht zwar nahezu alle Ausgabearten der Overpass API.
@@ -195,7 +206,7 @@ Es gibt aber dennoch ein paar Grenzen:
 Pro Objekt-Id und -Typ zeigt Overpass Turbo nur ein Objekt an.
 Daher lassen sich [Diffs](../target/diffs.md) nicht sinnvoll mit Overpass Turbo anzeigen.
 
-Overpass Turbo zeigt [GeoJSON](../targets/formats.md) direkt von der Overpass API nicht an.
+Overpass Turbo zeigt [GeoJSON](../targets/formats.md#json) direkt von der Overpass API nicht an.
 Overpass Turbo bringt sein eigenes Konvertierungsmodul für GeoJSON mit,
 und Martin hält die Benutzer-Verwirrung für zu groß,
 wenn beide Mechanismen parallel im Einsatz sind.

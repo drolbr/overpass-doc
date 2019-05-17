@@ -46,7 +46,7 @@ aber die entstehende Zwei-Zeilen-Lösung spiegelt die klare Aufgabenteilung wide
     out center;
 
 - Die Auswahlanweisung oder -anweisungen legen fest, _was_ ausgegeben wird.
-- Die Ausgabeanweisung _out_ legt fest, _wie_ die angewählten Objekte ausgegeben werden. Details dazu bei den [Ausgabeformaten](../targets/formats.md)
+- Die Ausgabeanweisung _out_ legt fest, _wie_ die angewählten Objekte ausgegeben werden. Details dazu bei den [Ausgabeformaten](../targets/formats.md#faithful)
 
 ## Statements, Conditionals
 

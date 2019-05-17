@@ -138,7 +138,7 @@ wenn eine für langfristige Untersützung geeignete Form gefunden ist.
 
 Eine über das Internet erreichbare Infrastuktur zu sein bedeutet auch,
 vernüftiges Lastverhalten auch bei unvernüftigen Anfragemustern zu behalten.
-Mehr dazu im [nächsten Abschnitt](commons.md).
+Mehr dazu im [nächsten Abschnitt](commons.md#magnitudes).
 
 ## Offen
 

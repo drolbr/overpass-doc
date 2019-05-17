@@ -44,7 +44,7 @@ und es wird davon der Detailgrad mit Version und Zeitstempel ausgegeben.
 
 Nicht enthalten sind Ways, die die Bounding-Box nur durchlaufen ohne dort einen Node zu haben.
 Wie man dieses Problem behebt,
-ist im [vorhergehenden Unterkapitel](osm_types.md) erläutert, insbesondere im Abschnitt _Alles zusammen_.
+ist im [vorhergehenden Unterkapitel](osm_types.md#full) erläutert, insbesondere im Abschnitt _Alles zusammen_.
 
 ## Xapi
 

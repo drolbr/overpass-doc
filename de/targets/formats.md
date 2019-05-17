@@ -4,6 +4,7 @@ Datenformate
 Es gibt verschiedene Datenformate, um OpenStreetMap-Daten zu transportieren.
 Wir stellen alle vor, die einen unmittelbaren Anwendungszweck haben.
 
+<a name="scope"/>
 ## Abgrenzung
 
 Die Datentypen sind bereits im [passenden Abschnitt der Einleitung](../preface/osm_data_model.md) eingeführt worden.
@@ -16,13 +17,14 @@ Welches Tool welches Ausgabeformat benötigt ist jeweils im Abschnitt zum Tool e
 Dem häufigen Problem, die Geometrie von OpenStreetMap-Objekten zu Vervollständigen,
 ist [der Abschnitt zu Geometrien](../full_data/osm_types.md) im Kapitel [Räumliche Datenauswahl](../full_data/index.md) gewidmet.
 
+<a name="faithful"/>
 ## Traditionelle Detailgrade
 
 Zunächst zu den Detailgraden:
 Während die Ausgabeformate über eine pro Abfrage globale Einstellung gesteuert werden,
 werden die Detailgrade bei jedem Ausgabe-Kommando über dessen Parameter gesteuert.
 Dadurch ist es möglich, verschiedene Dateigrade in einer Anfrage zu mischen;
-diese Fähigkeit wird für die jeweils optimale Datenmenge [einiger Geometrievarianten](../full_data/index.md) benötigt.
+diese Fähigkeit wird für die jeweils optimale Datenmenge [einiger Geometrievarianten](../full_data/osm_types.md#full) benötigt.
 Bei den [Anwendungen](index.md) ist dies jeweils vermerkt.
 
 Wir geben zu den Detailgraden jeweils auch ein Beispiel rund um den Londoner Vorort Greenwich.
@@ -81,6 +83,7 @@ Daher ist dafür ein [erhöhter Aufwand](../analysis/per_user.md) nötig.
 Da diese Daten für keines der in diesem Kapitel diskutierten Anwendungen erforderlich sind,
 verzichten wir hier auf ein Beispiel.
 
+<a name="extras"/>
 ## Varianten
 
 Es ist möglich, drei Detailgrade an zusätzlicher Geometrie zuzuschalten.
@@ -121,7 +124,7 @@ es funktioniert also bis einschließlich _attribution_: [Beispiel](https://overp
 Wir haben jetzt allerdings jetzt nicht nur einige hundert Meter in einem Park von Greenwich
 sondern auch mehrere hundert Kilometer Fußweg im Osten Englands zurückerhalten.
 Dies ist ein generelles Problem von Relations.
-Als Abhilfe gibt es eine Bounding-Box auch für das Ausgabe-Kommando, [siehe dort](../full_data/bbox.md).
+Als Abhilfe gibt es eine Bounding-Box auch für das Ausgabe-Kommando, [siehe dort](../full_data/bbox.md#crop).
 
 Zuletzt gibt es noch das Ausgabeformat _tags_.
 Dieses basiert auf _ids_ und zeigt zusätzlich Tags, aber keine Geometrien oder Strukturen an.
@@ -139,6 +142,7 @@ Es ist aber auch mit den beiden Geometriestufen _center_ und _bb_ [kombinierbar]
       relation(51.477,-0.001,51.478,0.001); );
     out tags center;
 
+<a name="json"/>
 ## JSON und GeoJSON
 
 Nun zu den Datenformaten:
@@ -174,6 +178,7 @@ Abgeleitete Objekte [in GeoJSON](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&
 
 Die Erzeugung abgeleiteter Objekte ist ein großer Themenkomplex mit [eigenem Kapitel](../counting/index.md).
 
+<a name="csv"/>
 ## CSV
 
 Oft ist es nützlich, Daten in Tabellenform organisieren zu können.

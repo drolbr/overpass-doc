@@ -3,6 +3,7 @@ Bounding-Boxen
 
 Der einfachste Weg, um an OpenStreetMap-Daten in einem Ausschnitt zu kommen.
 
+<a name="filter"/>
 ## Suchkriterium
 
 Der einfachste Weg, an alle Daten in einer Bounding-Box zu kommen, ist,
@@ -48,12 +49,13 @@ Es werden zwar formal vollständige Objekte geliefert,
 aber diese Objekte haben hier unvollständige Geometrien,
 da wir dies in der Abfrage so spezifiziert haben.
 
+<a name="crop"/>
 ## Ausgabebegrenzung
 
 Eine zweite Situation, in der Bounding-Boxen vorkommen,
 ist bei der Ausgabebegrenzung mit ``out geom``.
 Möchte man einen _Way_ oder eine _Relation_ auf der Karte visualisieren,
-so muss die Overpass API [explizit anweisen](../targets/formats.md),
+so muss die Overpass API [explizit anweisen](../targets/formats.md#extras),
 das Objekt entgegen der OSM-Konventionen mit Koordinaten auszustatten.
 
 Im Falle von Relationen kann dies zu großen Datenmengen führen.
@@ -102,11 +104,12 @@ Innerhalb dieser _Ways_ werden wie bei einzelnen _Ways_ die _Nodes_ innerhalb de
 
 Ebenso wie bei der Bounding-Box als Filter haben die meisten Programme einen Mechanismus,
 um die Bounding Box selbsttätig einzufügen.
-Bei [Overpass Turbo](../targets/turbo.md) tut dies wie oben ``{{bbox}}``, [(Beispiel)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%28%7B%7Bbbox%7D%7D%29%3B%0Aout%20geom%28%7B%7Bbbox%7D%7D%29%3B):
+Bei [Overpass Turbo](../targets/turbo.md#convenience) tut dies wie oben ``{{bbox}}``, [(Beispiel)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%28%7B%7Bbbox%7D%7D%29%3B%0Aout%20geom%28%7B%7Bbbox%7D%7D%29%3B):
 
     relation({{bbox}});
     out geom({{bbox}});
 
+<a name="global"/>
 ## Globale Bounding-Box
 
 ...

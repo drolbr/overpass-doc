@@ -102,7 +102,7 @@ haben aber keine praktische Relevanz.
 Hier steigt das Risiko weiter, dass man sich große Datenmengen bereits dann einhandelt,
 wenn man nur die Referenzen einer einzelnen Relation auflöst.
 Es gibt so viele je nach Kontext sinnvolle Ansätze, die Referenzen von Relations gezielt teilweise aufzulösen,
-dass dem [ein ganzes Unterkapitel](../full_data/osm_types.md) gewidmet ist.
+dass dem [ein eigener Absatz](../full_data/osm_types.md#rels_on_rels) gewidmet ist.
 
 ## Flächen
 

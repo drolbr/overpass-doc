@@ -5,6 +5,7 @@ Es gibt eine öffentliche Instanz, die größtmögliche Ressourcen bereitstellt,
 aber auch gegen Übernutzung verteidigt.
 Großnutzer können leicht eine eigene Instanz aufsetzen.
 
+<a name="magnitudes"/>
 ## Größenordnungen
 
 Ziel der öffentlichen Instanzen ist es,
@@ -45,6 +46,7 @@ lese also bitte die [Installations-Instruktionen](../more_info/setup.md).
 Wer dagegen mehr über die automatische Lastbegrenzung wissen will oder muss,
 lese bitte den folgenden Absatz.
 
+<a name="quotas"/>
 ## Regeln
 
 Die automatische Lastbegrenzung ordnet Abfragen (anonymen) Benutzern zu

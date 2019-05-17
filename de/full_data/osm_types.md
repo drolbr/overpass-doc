@@ -4,6 +4,7 @@ Geometrien
 Um die verschiedenen Varianten für volle OpenStreetMap-Daten zu erklären,
 werden hier die Details des OpenStreetMap-Datenmodells erklärt.
 
+<a name="scope"/>
 ## Abgrenzung
 
 Die Datentypen sind bereits im [passenden Abschnitt der Einleitung](../preface/osm_data_model.md) eingeführt worden.
@@ -14,6 +15,7 @@ Ebenfalls dort wird darauf eingegangen, welche Detailgrade hinsichtlich Struktur
 
 Hier geht es darum, wie das Vervollständigen von Ways und Relationen im Hinblick auf die Bounding-Boxen diesen eine nutzbare Geometrie verschafft.
 
+<a name="nodes_ways"/>
 ## Ways und Nodes
 
 Bei Nodes ist eine nutzbare Geometrie einfach zu bekommen:
@@ -62,6 +64,7 @@ dies leistet das Idiom `(._; node(w););` bestehend aus den drei Kommandos `._`, 
 
 Nodes und Ways gemeinsam erläutern wir im finalen Abschnitt.
 
+<a name="rels"/>
 ## Relationen
 
 Wie schon bei Ways ist der einfachere Fall im Umgang mit Relationen,
@@ -82,7 +85,7 @@ Es liegt daran, dass wir in der Variante ohne Koordinaten von Ways nur die Id se
 während tatsächlich jeder Way aus mehreren Nodes besteht und damit entsprechend viele Koordinaten hat.
 
 Relations mit überwiegend Ways als Member sind auch der Regelfall.
-Es gibt daher den im Absatz _Ausgabebegrenzung_ auf [Bounding-Boxen](bbox.md) beschriebenen Mechanismus,
+Es gibt daher den im Absatz _Ausgabebegrenzung_ auf [Bounding-Boxen](bbox.md#crop) beschriebenen Mechanismus,
 die zu liefernde Geometrie auf eine Bounding Box einzuschränken: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%20geom%28%7B%7Bbbox%7D%7D%29%3B)
 
     relation(51.477,-0.001,51.478,0.001);
@@ -135,6 +138,7 @@ Die meisten Member der Relationen laden wir also gar nicht, sondern nur die in d
 Diese Abfrage ist nicht ganz praxistauglich, da wir zu den Ways nicht alle benutzten Nodes laden.
 Eine vollständige Fassung gibt es unten im Abschnitt _Alles zusammen_.
 
+<a name="rels_on_rels"/>
 ## Relationen auf Relationen
 
 Um das Problem mit Relationen auf Relationen vorzuführen,
@@ -182,6 +186,7 @@ Dazu ergänzen wir die letzte Abfrage aus dem Absatz _Relationen_ um die Rückw�
     (._; <; rel(br); );
     out;
 
+<a name="full"/>
 ## Alles zusammen
 
 Wir stellen hier die am ehesten sinnvollen Varianten zusammen.
