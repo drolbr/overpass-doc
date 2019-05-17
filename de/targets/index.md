@@ -7,8 +7,7 @@ Erläuterung der Datenformate und ihrer Varianten.
 
 [LINK_STUB](formats.md)
 
-[Overpass Turbo](turbo.md)  
-Das Standardtool zum Entwicklen von Abfragen.
+[LINK_STUB](turbo.md)
 
 [uMap](umap.md)  
 Daten und Geometrien pur, um eine thematische Karte mit [uMap](https://umap.openstreetmap.fr/) selbst zu gestalten.
