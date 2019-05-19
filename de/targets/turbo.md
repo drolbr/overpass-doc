@@ -26,11 +26,11 @@ Daher fragt Overpass Turbo nach,
 wenn es eine große Ergebnismenge erhalten hat,
 ob der Endbenutzer das Risiko eingehen will, den Browser einfrieren zu lassen.
 
-Es gibt einige beliebte und sinnvolle Features,
+Es gibt viele beliebte und sinnvolle Features,
 die aber den Rahmen dieses Handbuchs übersteigen.
 Dazu sei auf die [Dokumentation](https://wiki.openstreetmap.org/wiki/DE:Overpass_turbo) zu Overpass Turbo verwiesen.
-Dies gilt insbesondere zum Query-Generator _Wizard_.
-Zu _Styles_ gibt es weiter unten einige illustrierende Beispiele.
+Dies gilt insbesondere für _Styles_ und zum Query-Generator _Wizard_.
+Dieses Handbuch beschränkt sich auf die unmittelbare Wechselwirkung mit der Abfragesprache.
 
 <a name="basics"/>
 ## Rüstzeug
@@ -193,9 +193,27 @@ mehr Möglichkeiten sind im Abschnitt zu [Geometrien](../full_data/osm_types.md#
 <a name="convenience"/>
 ## Komfort
 
-...
-{{bbox}}
-Teilen
+Overpass Turbo bietet einige Komfortfunktionen.
+
+Es kann die Bounding-Box des aktuellen Fensters automatisch in eine Query einfügen.
+Dazu ersetzt Overpass Turbo jedes Vorkommen der Zeichenfolge ``{{bbox}}`` durch die vier Ränder,
+so dass eine gültige Bounding-Box entsteht.
+
+Man kann die übertragene Bounding-Box sogar sehen,
+wenn man sie an einer anderen als der üblichen Stelle [einfügt](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=make%20Beispiel%20Infotext%3D%22Die%20aktuelle%20Bounding%2DBox%20ist%20%7B%7Bbbox%7D%7D%22%3B%0Aout%3B) (und nach dem Ausführen auf _Daten_ klickt):
+
+    make Beispiel Infotext="Die aktuelle Bounding-Box ist {{bbox}}";
+    out;
+
+Eine zweite nützliche Funktion verbirgt sich hinter der Schaltfläche _Teilen_ oben links.
+Dies erzeugt einen Link,
+unter dem sich dauerhaft die zu dem Zeitpunkt eingegebene Abfrage abrufen lässt.
+Auch wenn jemand Drittes den Link aufruft und die Abfrage editiert,
+dann bleibt trotzdem die originale Abfrage unter dem Link erhalten.
+
+Es lässt sich ebenfalls auch per Checkbox die aktuelle Kartenansicht mitgeben.
+Dies meint Zentrum der Ansicht und Zoomstufe,
+d.h. auf verschieden großen Bildschirmen sind verschiedene Kartenausschnitte sichtbar.
 
 <a name="limitations"/>
 ## Schranken
