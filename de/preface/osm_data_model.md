@@ -19,6 +19,7 @@ Diese werden im Abschnitt [Datenformate](../targets/formats.md) erläutert.
 Besondere Erklärung benötigt auch das Zusammenspiel der Objekttypen im Hinblick auf nutzbare Geometrie.
 Einen praxistauglichen Leitfaden gibt dafür der Abschnitt [Geometrien](../full_data/osm_types.md).
 
+<a name="tags"/>
 ## Tags
 
 Die Sachdaten in OpenStreetMap sind kurzen Textschnipseln abgelegt, sogenannte _Tags_.
@@ -59,6 +60,7 @@ Die wichtigsten Quellen für etablierte Keys und Values sind
 
 Das komplette Kapitel [Objekte finden](../criteria/index.md) ist der Suche anhand von Tags gewidmet.
 
+<a name="nwr"/>
 ## Nodes, Ways, Relations
 
 OpenStreetMap hat drei Objekttypen, von denen jeder eine beliebige Anzahl Tags tragen kann.
@@ -104,6 +106,7 @@ wenn man nur die Referenzen einer einzelnen Relation auflöst.
 Es gibt so viele je nach Kontext sinnvolle Ansätze, die Referenzen von Relations gezielt teilweise aufzulösen,
 dass dem [ein eigener Absatz](../full_data/osm_types.md#rels_on_rels) gewidmet ist.
 
+<a name="areas"/>
 ## Flächen
 
 Flächen haben im OpenStreetMap keine eigenständige Datenstruktur.
@@ -125,6 +128,7 @@ Wie bei Ways wird die Fläche durch den Umriss beschrieben.
 Die in der Relation referenzierten Ways müssen dazu aneinanderpassen und geschlossene Ringe bilden.
 Mehr Informationen zu den [Konventionen](https://github.com/osmlab/fixing-polygons-in-osm/blob/master/doc/background.md).
 
+<a name="metas"/>
 ## Metadaten
 
 OpenStreetMap ist ein vollständiges Versionskontrollsystem.
@@ -149,6 +153,7 @@ Es handelt sich um den letzten Bearbeiter.
 Objekte mit höherer Versionsnummer als 1 haben daher in der Regel Eigenschaften aus früheren Versionen behalten,
 die nicht dem aktuellen Bearbeiter zuzurechnen sind.
 
+<a name="declined"/>
 ## Layer, Kategorien, Identitäten
 
 Thematische Layer gibt es dagegen in OpenStreetMap nicht,

@@ -4,6 +4,7 @@ Grundsätze
 Die Overpass API wird Tagging-Schemata weder fördern noch behindern.
 Es ist Rückwärtskompatibilität für Jahrzehnte beabsichtigt.
 
+<a name="local"/>
 ## Lokal schnell
 
 Die Overpass API ist darauf ausgelegt,
@@ -14,6 +15,7 @@ aber hat dann keinen Vorteil gegenüber einer generischen Datenbank.
 An vielen Abschnitten in diesem Handbuch wird daher auf Tools verwiesen,
 die für den jeweiligen Anwendungszweck stärker optimiert sind.
 
+<a name="faithful"/>
 ## Treue zum Datenmodell
 
 Das OpenStreetMap-Datenmodell hat zwar durch seine Einfachheit maßgeblich zum Erfolg von OpenStreetMap beigetragen.
@@ -44,6 +46,7 @@ Damit verschieben sich die Gewichte:
 faktisch fehlerhafte Modellierungen können dann auch als solche gezeigt werden.
 Und für faktrentreue Modellierungen kann zumindest der Gesamtzusammenhang gezeigt werden.
 
+<a name="tags"/>
 ## Tagging-Neutralität
 
 Es liegt im Wesen des Menschen, dass sich dann bald das gegenteilige Phänomen zeigt:
@@ -84,11 +87,12 @@ Es gibt allerdings auch zahlreiche nach wie vor kontroverse Meinungen:
   Die Adresse kann dann an jedem der beiden Objekte oder auch an beiden gemappt sein.
 
 Um ein unversell akzeptiertes Tool zu schaffen,
-halte ich mich aus solchen Dissenzen heraus.
+halte ich mich aus solchen Dissensen heraus.
 
 Die Overpass API ist daher strikt neutral bzgl. Tagging,
 d.h. kein Tag bekommt eine besondere Behandlung.
 
+<a name="nd"/>
 ## Unverletzlichkeit
 
 Ein anderes Problem in diesem Zusammenhang ist das Bestreben,
@@ -106,6 +110,7 @@ dass sie nicht direkt zurückgeschrieben werden können.
 Bei Edits in verschiedenen Automatisierungsgraden kann die Overpass API trotzdem hilfreich sein.
 Beispiele dafür sind im Abschnitt [JOSM](../targets/josm.md) zu finden.
 
+<a name="ql"/>
 ## Allzweck-Abfragesprache
 
 Geodaten bringen mit dem Konzept _Räumliche Nähe_ ihr eigenes Ordnungskriterium mit.
@@ -125,6 +130,7 @@ Diese sollen bedient werden,
 indem die Sprache möglichst logisch rigide und orthgonal ist,
 so dass nahezu alles mit allem kombinieren lässt.
 
+<a name="infrastructure"/>
 ## Infrastruktur
 
 Die Overpass API ist als Infrastruktur konzipiert.
@@ -140,6 +146,7 @@ Eine über das Internet erreichbare Infrastuktur zu sein bedeutet auch,
 vernüftiges Lastverhalten auch bei unvernüftigen Anfragemustern zu behalten.
 Mehr dazu im [nächsten Abschnitt](commons.md#magnitudes).
 
+<a name="libre"/>
 ## Offen
 
 Die Overpass API lässt sich an den [Vier Freiheiten](https://www.gnu.org/philosophy/free-sw.de.html) von Open Source messen.

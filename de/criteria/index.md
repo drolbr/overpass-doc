@@ -4,13 +4,9 @@ Objekte Finden
 Der häufigste Anwendungsfall für die Overpass API:
 Auffinden von Daten anhand von Suchkriterien wie Tags, grobem Ort oder anderen Kriterien.
 
-[Alternativen](nominatim.md)  
-Die Overpass API sucht nach tatsächlichen OpenStreetMap-Daten.
-Manchmal wird aber auch eher eine intelligente Suche benötigt, das Geocodieren.
-Das können [Nominatim](https://wiki.openstreetmap.org/wiki/Nominatim) und andere besser.
+[LINK_STUB](nominatim.md)
 
-[per Tag](per_tag.md)  
-Suche nach allen Objekten, die ein bestimmtes Tag besitzen.
+[LINK_STUB](per_tag.md)
 
 [Und- und Oder-Verknüpfung](union.md)  
 Suche nach Objekten anhand mehrerer Tags.
