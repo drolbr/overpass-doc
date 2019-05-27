@@ -137,14 +137,104 @@ Auch hier kann und sollte der Typ der _Query_-Anweisung zwischen _node_, _way_ u
 <a name="regex"/>
 ## Speziell
 
-...
+Im Fall _Frankfurt_ sind wir bereits auf das Problem gestoßen,
+dass wir unscharf nach einem Wert suchen wollen.
+Ein sehr mächtiges Werkzeug dafür sind _reguläre Ausdrücke_.
+Eine systematische Einführung in reguläre Ausdrücke übersteigt den Umfang dieses Handbuchs,
+aber es gibt zumindest Beispiele für ein paar gängige Fälle.
 
-<!--
-Hinweis auf reguläre Ausdrücke
-enthält
-beginnt mit, endet mit
-Groß-/Kleinschreibweise
-Einzelzeichen
-Alternativen
--->
+In vielen Fällen kennen wir den Anfang eines Namens.
+Z.B. suchen wir hier nach Straßen, deren Name mit _Emmy_ [beginnt](https://overpass-turbo.eu/?lat=0.0&lon=0.0&zoom=1&Q=way%5Bname%7E%22%5EEmmy%22%5D%3B%0Aout%20geom%3B):
 
+    way[name~"^Emmy"];
+    out geom;
+
+Das wichtigste Zeichen in der ganzen Abfrage ist die Tilde ``~``.
+Diese zeigt im Filter in der ersten Zeile an,
+dass die Werte mit einem regulären Ausdruck verglichen werden sollen.
+Es werden jetzt alle für den Key ``name`` in der Datenbank existierenden Values mit dem regulären Ausdruck hinter der Tilde abgeglichen.
+
+Das zweitwichtigste Zeichen ist das Caret im Ausdruck ``^Emmy``;
+dieses ist Bestandteil des regulären Ausdrucks
+und sorgt dafür, dass nur Werte passen, die mit ``Emmy`` beginnen.
+Insgesamt steht dort also:
+
+Finde alle Objekte vom Typ _way_,
+die ein Tag mit Key ``name`` und einem Value besitzen,
+der mit ``Emmy`` beginnt.
+
+In der zweiten Zeile steht dann noch eine passende [Ausgabeanweisung](../targets/formats.html#extras).
+
+Ebenso kann man nach Werten suchen,
+die auf einem bestimmten Wert [enden](https://overpass-turbo.eu/?lat=0.0&lon=0.0&zoom=1&Q=way%5Bname%7E%22Noether%24%22%5D%3B%0Aout%20geom%3B), z.B. _Noether_:
+
+    way[name~"Noether$"];
+    out geom;
+
+Die Tilde ``~`` zeigt wieder den Filter nach einem regulären Ausdruck an.
+Das Dollarzeichen ``$`` innerhalb des regulären Ausdrucks definiert,
+dass der Wert mit ``Noether`` enden soll.
+
+Die [Lupe](../targets/turbo.md#basics) als Komfortfunktion in _Overpass Turbo_ zoomt auf den nur einen Treffer in Paris.
+
+Es ist auch möglich, nach einer Teilzeichenkette zu suchen,
+die irgendwo [in der Mitte](https://overpass-turbo.eu/?lat=0.0&lon=0.0&zoom=1&Q=way%5Bname%7E%22Noether%22%5D%3B%0Aout%20geom%3B) steht:
+
+    way[name~"Noether"];
+    out geom;
+
+Dazu schreibt man einfach die Teilzeichenkette ohne zusätzliche Zeichen.
+
+Etwas schwieriger wird es,
+wenn man zwei (oder mehr) Teilzeichenketten finden will,
+z.B. Vor- und Nachnamen,
+aber nicht weiß, was dazwischen steht.
+Bei _Emmy Noether_ kommt sowohl der Bindestrich als auch das Leerzeichen vor.
+Dazu kann man alle in Frage kommenden Zeichen (zwei oder auch mehr) in eckige Klammern [einschließen](https://overpass-turbo.eu/?lat=0.0&lon=0.0&zoom=1&Q=way%5Bname%7E%22Emmy%5B%20%2D%5DNoether%22%5D%3B%0Aout%20geom%3B):
+
+    way[name~"Emmy[ -]Noether"];
+    out geom;
+
+Alternativ kann man auch gleich [alle Zeichen](https://overpass-turbo.eu/?lat=0.0&lon=0.0&zoom=1&Q=way%5Bname%7E%22Emmy%2ENoether%22%5D%3B%0Aout%20geom%3B) zulassen:
+
+    way[name~"Emmy.Noether"];
+    out geom;
+
+Das entscheidende Zeichen ist hier der einzelne Punkt ``.``.
+Er vertritt ein einzelnes beliebiges Zeichen.
+
+Manchmal ist es auch nötig,
+[beliebig viele Zwischenzeichen zuzulassen](https://overpass-turbo.eu/?lat=0.0&lon=0.0&zoom=1&Q=way%5Bname%7E%22Johann%2E%2ABach%22%5D%3B%0Aout%20geom%3B).
+Damit sucht man dann also nach zwei getrennten Teilstrings.
+Ein Beispiel ist der Komponist _Bach_;
+er hat nach _Johann_ noch mehr Vornamen:
+
+    way[name~"Johann.*Bach"];
+    out geom;
+
+Hier wirken die beiden Sonderzeichen Punkt ``.`` und Stern ``*`` zusammen.
+Der Punkt passt auf ein beliebiges Zeichen,
+und der Stern bedeutet,
+dass das vorangehende Zeichen beliebig oft (gar nicht, einmal oder mehrmals) wiederholt werden darf.
+
+Ergänzt wird das durch das Fragezeichen.
+Dann darf ein Zeichen [null oder einmal](https://overpass-turbo.eu/?lat=0.0&lon=0.0&zoom=1&Q=way%5Bname%7E%22Gerh%3Fardo%3F%2EMercator%22%5D%3B%0Aout%20geom%3B) vorkommen.
+Das hilft uns bei _Gerhard_ bzw. _Gerard_ bzw. _Gerardo Mercator_:
+
+    way[name~"Gerh?ardo?.Mercator"];
+    out geom;
+
+Zuletzt soll noch der Fall erwähnt werden,
+der [gleich](union.md) bei _Und_ und _Oder_ wiederkommt:
+Finde einen [Wert aus einer Liste](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=way%5Bhighway%7E%22%5E%28trunk%7Cprimary%7Csecondary%7Ctertiary%29%24%22%5D%28%7B%7Bbbox%7D%7D%29%3B%0Aout%20geom%3B) wie z.B. die Standardwerte _trunk_, _primary_, _secondary_, _tertiary_ für Hauptverkehrsstraßen!
+
+    way[highway~"^(trunk|primary|secondary|tertiary)$"]({{bbox}});
+    out geom;
+
+Uns interessiert der Filter ``[highway~"^(trunk|primary|secondary|tertiary)$"]``;
+das Zeichen ``~`` zeigt den regulären Ausdruck an.
+Im regulären Ausdruck bedeuten das Caret am Anfang und das Dollarzeichen am Ende,
+dass der volle _Value_ und nicht nur eine Teilzeichenkette auf den Wert dazwischen passen muss.
+Der senkrechte Strich ``|`` steht für _oder_,
+und die Klammern sorgen dafür,
+dass Caret und Dollarzeichen nicht nur auf einen Wert wirken.
