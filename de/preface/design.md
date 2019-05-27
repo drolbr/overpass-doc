@@ -6,6 +6,7 @@ Eine Nur-Lesen-Spiegelung der vollen OpenStreetMap-Daten
 in eine Datenbank mit zugeschnittener Abfragesprache
 zum Zweck, diese nach möglichst jedem Kriterium durchsuchen zu können.
 
+<a name="sequential"/>
 ## Anweisung für Anweisung
 
 Die meisten fortgeschrittenen Anwendungsfälle für Abfragen erfordern relative Auswahlen.
@@ -48,6 +49,7 @@ aber die entstehende Zwei-Zeilen-Lösung spiegelt die klare Aufgabenteilung wide
 - Die Auswahlanweisung oder -anweisungen legen fest, _was_ ausgegeben wird.
 - Die Ausgabeanweisung _out_ legt fest, _wie_ die angewählten Objekte ausgegeben werden. Details dazu bei den [Ausgabeformaten](../targets/formats.md#faithful)
 
+<a name="statements"/>
 ## Statements, Conditionals
 
 Wir vergleichen die Abfrage nach einfach nur den Supermärkten im Sichtbarkeitsbereich
@@ -103,6 +105,7 @@ Etwas komplizierter arbeitet ``(around:100)``.
 Es benötigt eine Vorgabe und lässt genau alle Objekte zu,
 die zu irgendeinem der Vorgabe-Objekte einen Abstand von höchstens 100 Metern haben.
 
+<a name="block_statements"/>
 ## Block-Statements
 
 Wie kann man eine Oder-Verknpüfung erreichen?
@@ -133,6 +136,7 @@ Es gibt zahlreiche weitere Block-Statements:
 * _complete_ erfüllt Aufgaben einer _while_-Schleife.
 * Weitere Block-Statements erlauben es, gelöschte oder überholte Daten wieder zurückzuholen.
 
+<a name="evaluators"/>
 ## Evaluators und Deriveds
 
 Nicht geklärt ist damit,
@@ -231,6 +235,7 @@ Die erzeugten Objekte können Sie sehen, wenn Sie als Ausgabeformat es bei XML [
       out;
     }
 
+<a name="sets"/>
 ## Mehrere Auswahlen gleichzeitig
 
 In vielen Fällen kommt man aber mit einer einzigen Auswahl nicht aus.

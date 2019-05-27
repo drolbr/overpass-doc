@@ -10,6 +10,7 @@ Auffinden von Daten anhand von Suchkriterien wie Tags, grobem Ort oder anderen K
 
 [Und- und Oder-Verknüpfung](union.md)  
 Suche nach Objekten anhand mehrerer Tags.
+<!-- mehrere Areas -->
 
 [Keys, Verneinung und Co](per_key.md)  
 Zu weiteren möglichen Suchkriterien wie Verneinung oder nur Keys.
@@ -28,3 +29,6 @@ Weitergehende Suchkriterien wie Suche per Länge, Version, Changest-Nummer oder 
 
 [Verketten](chaining.md)  
 Wie man mehrere Suchkriterien verkettet, so dass man nach Objekten relativ zu anderen Objekten suchen kann.
+<!--
+Wertgleichheit via Evaluator
+-->

@@ -41,7 +41,9 @@ wenn sie trotzdem das Objekt findet.
 Eine interpretierende Suche ist Aufgabe eines Geocoders, z.B. [Nominatim](nominatim.md).
 
 Es gibt trotzdem Abfragen dafür, z.B. durch _reguläre Ausdrücke_.
-Wir können nach allen Objekten [suchen](https://overpass-turbo.eu/?lat=0.0&lon=0.0&zoom=1&Q=nwr%5Bname%7E%22%5EFrankfurt%22%5D%3B%0Aout%20center%3B), deren Name mit _Frankfurt_ beginnt:
+Wir können nach allen Objekten [suchen](https://overpass-turbo.eu/?lat=0.0&lon=0.0&zoom=1&Q=nwr%5Bname%7E%22%5EFrankfurt%22%5D%3B%0Aout%20center%3B), deren Name mit _Frankfurt_ beginnt;
+wegen der vielen Treffer dauert die Suche lange,
+aber die Ergebnisgröße ist in diesem Fall trotz Warnmeldung noch harmlos:
 
     nwr[name~"^Frankfurt"];
     out center;
@@ -77,7 +79,7 @@ Die Overpass API ergänzt jedoch die Anführungszeichen stillschweigend,
 wenn klar ist, dass dies gemeint ist.
 Mit Sonderzeichen kann das nicht funktionieren,
 da die Sonderzeichen ja auch eine andere Bedeutung haben könnten
-und der Benutzer sich an einer anderen Stelle beim Aufschreiben der Anfrage vertippt hat.
+und der Benutzer sich an einer anderen Stelle beim Aufschreiben der Anfrage vertippt haben könnte.
 
 Anführungszeichen in Values werden formuliert,
 indem man ihnen einen Backslash voranstellt.
@@ -85,13 +87,52 @@ indem man ihnen einen Backslash voranstellt.
 <a name="local"/>
 ## Lokal
 
-...
+Möchte man nach allen Objekten mit einem Tag in einem Gebiet suchen,
+so ist dies eigentlich eine Kombination mehrerer Operatoren;
+dies wird bei [und/oder-Kombinationen](union.md) und [Verketten](chaining.md) systematisch beschrieben.
+Hier geht es daher nur um einige Standardfälle.
 
-<!--
-Typen n,w,r,nwr
-mit/ohne Bounding-Box
-Anführungszeichen
--->
+Alle Objekte in einem eindeutigen Ort sind z.B. [alle Cafés in Köln](https://overpass-turbo.eu/?lat=50.95&lon=6.95&zoom=10&Q=area%5Bname%3D%22K%C3%B6ln%22%5D%3B%0Anwr%5Bamenity%3Dcafe%5D%28area%29%3B%0Aout%20geom%3B):
+
+    area[name="Köln"];
+    nwr[amenity=cafe](area);
+    out center;
+
+Die genaue Funktionsweise der ersten Zeile wird unter [Areas](../full_data/polygon.md) erklärt.
+Uns interessiert vor allem die zweite Zeile:
+Dies ist eine _Query_ mit Zieltyp _nwr_ (d.h. wir suchen nach _Nodes_, _Ways_ und _Relations_);
+es ist dann zum einen der Filter ``[amenity=cafe]`` gesetzt,
+d.h. wir lassen nur Objekte zu, bei denen das Tag mit Key _amenity_ existiert und auf den Wert _cafe_ gesetzt ist.
+Zum zweiten ist der das Gebiet einschränkende Filter ``(area)`` gesetzt.
+
+Der Filter ``(area)`` wirkt [durch Aneinanderreihung](../preface/design.md#sequential).
+
+Auf diese Weise suchen wir Obekte bei denen die Tag-Bedingung und die räumliche Bedingung zutrifft.
+Diese stehen, wieder [per Aneinanderreihung](../preface/design.md#sequential),
+dann in der nachfolgenden Zeile zur Ausgabe bereit.
+
+Wenn Ihnen dies zu kompliziert ist,
+gibt es aber auch einen einfacheren Weg:
+Sie können [per Bounding-Box](../full_data/bbox.md#filter) räumlich einschränken und dies mit dem Filter nach einem Tag kombinieren ([Beispiel](https://overpass-turbo.eu/?lat=50.95&lon=6.95&zoom=10&Q=nwr%5Bamenity%3Dcafe%5D%28%7B%7Bbbox%7D%7D%29%3B%0Aout%20center%3B)):
+
+    nwr[amenity=cafe]({{bbox}});
+    out center;
+
+Das zentrale Element ist auch hier die mit _nwr_ beginnende Zeile:
+der Filter ``[amenity=cafe]`` wirkt wie im vorhergehenden Beispiel;
+den Filter ``({{bbox}})`` befüllt [Overpass Turbo](../targets/turbo.md#convenience) für uns mit der aktuell sichtbaren Bounding-Box.
+
+Die Reihenfolge der beiden Filter ist [egal](https://overpass-turbo.eu/?lat=50.95&lon=6.95&zoom=10&Q=nwr%28%7B%7Bbbox%7D%7D%29%5Bamenity%3Dcafe%5D%3B%0Aout%20center%3B):
+
+    nwr({{bbox}})[amenity=cafe];
+    out center;
+
+hat das gleiche Ergebnis wie die Abfrage vorher.
+
+Auch hier kann und sollte der Typ der _Query_-Anweisung zwischen _node_, _way_ und _relation_ passend gewählt werden, z.B. [nur Ways](https://overpass-turbo.eu/?lat=50.94&lon=6.95&zoom=14&Q=way%5Brailway%3Drail%5D%28%7B%7Bbbox%7D%7D%29%3B%0Aout%20geom%3B) für Gleise:
+
+    way[railway=rail]({{bbox}});
+    out geom;
 
 <a name="regex"/>
 ## Speziell
@@ -107,11 +148,3 @@ Einzelzeichen
 Alternativen
 -->
 
-<a name="equal"/>
-## Relative Suche
-
-...
-
-<!--
-Wertgleichheit via Evaluator
--->
