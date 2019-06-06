@@ -3,6 +3,7 @@ Verketten
 
 Wie man mehrere Suchkriterien verkettet, so dass man nach Objekten relativ zu anderen Objekten suchen kann.
 
+<a name="lateral"/>
 ## Indirekte Filter
 
 Beispiele für indirekte Filter haben wir bereits bei [Areas](../full_data/area.md) und [Around](../full_data/polygon.md) gesehen.
@@ -124,6 +125,7 @@ Das ganze funktioniert auch [mit Relations](https://overpass-turbo.eu/?lat=53.65
     way(around:0)[bridge=yes];
     out geom;
 
+<a name="topdown"/>
 ## Benutzte Objekte
 
 Einer völlig anderen Anwendung für Verkettung sind wir in Abschnitten [Relationen](../full_data/osm_types.md#rels) und [Relationen auf Relationen](../full_data/osm_types.md#rels_on_rels) in [Geometrien](../full_data/osm_types.md) begegnet:
@@ -260,6 +262,7 @@ Ebenso [mit dem Pfeil](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=14&Q=%2
     );
     out;
 
+<a name="difference"/>
 ## Differenz
 
 ...
@@ -267,6 +270,7 @@ Ebenso [mit dem Pfeil](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=14&Q=%2
   TODO: Differenz wegen ._-Falle
 -->
 
+<a name="equality"/>
 ## Tags gleichen Wertes
 
 ...
