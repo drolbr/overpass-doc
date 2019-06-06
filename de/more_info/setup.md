@@ -4,7 +4,7 @@ Eigene Instanz aufsetzen
 Wie kann ich eine eigene Instanz aufsetzen,
 um beliebig viele Abfragen ausführen zu können?
 
-In Englisch ist eine [kurze](https://overpass-api.de/no_fills.html) und eine [lange](https://overpass-api.de/full_installation.html) Anleitung verfügbar.
+In Englisch ist eine [kurze](https://overpass-api.de/no_frills.html) und eine [lange](https://overpass-api.de/full_installation.html) Anleitung verfügbar.
 Es sind drei Schritte erforderlich:
 
 1. Die Software installieren

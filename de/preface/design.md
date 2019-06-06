@@ -281,26 +281,26 @@ sprechen wir sie über ihren Namen ``_`` (einfacher Unterstrich) an.
 
 Der Ablauf mit Datenfluss nocheinmal im Detail:
 
-- Vor Beginn der Ausführung sind alle Auswahlen leer.
-- Zuerst wird Zeile 1 ausgeführt.
+* Vor Beginn der Ausführung sind alle Auswahlen leer.
+* Zuerst wird Zeile 1 ausgeführt.
   Wegen ``->.all_stations`` sind danach alle Bahnhöfe als ``all_stations`` ausgewählt;
   die Standardauswahl bleibt dagegen leer.
-- Zeilen 2 bis 5 sind ein Block-Statement vom Typ _difference_,
+* Zeilen 2 bis 5 sind ein Block-Statement vom Typ _difference_,
   und dieses führt zunächst seinen Ausweisungblock aus.
   Daher wird als nächstes Zeile 3 ``nwr[shop=supermarket]({{bbox}})`` ausgeführt.
   Zeile 3 hat keine Umleitung,
   so dass danach alle Supermärkte in der Standard-Auswahl ausgewählt sind.
   Die Auswahl ``all_stations`` wird nicht erwähnt und bleibt daher erhalten.
-- Das Block-Statement _difference_ greift das Ergebnis seines ersten Operanden ab,
+* Das Block-Statement _difference_ greift das Ergebnis seines ersten Operanden ab,
   also von Zeile 3.
-- Zeile 4 benutzt die Standarauswahl per ``._`` als Einschränkung für sein Ergebnis,
+* Zeile 4 benutzt die Standarauswahl per ``._`` als Einschränkung für sein Ergebnis,
   und zusätzlich wird per ``(around.all_stations:300)`` die Auswahl ``all_stations`` als Quelle für die Umkreissuche _around_ herangezogen.
   Das Ergebnis ist die neue Standard-Auswahl und ersetzt daher die vorherige Standard-Auswahl.
   Die Auswahl ``all_stations`` bleibt unverändert.
-- Das Block-Statement _difference_ greift das Ergebnis seines ersten Operanden ab,
+* Das Block-Statement _difference_ greift das Ergebnis seines ersten Operanden ab,
   also von Zeile 4.
-- Das Block-Statement _difference_ bildet jetzt die Differenz der beiden abgegriffenen Ergebnisse.
+* Das Block-Statement _difference_ bildet jetzt die Differenz der beiden abgegriffenen Ergebnisse.
   Da nichts anderes gefordert ist, wird das Ergebnis die neue Standard-Auswahl.
   Die Auswahl ``all_stations`` bleibt nach wie vor unverändert.
-- Zuletzt wird Zeile 5 ausgeführt.
+* Zuletzt wird Zeile 5 ausgeführt.
   Ohne besondere Angabe verwendet ``out`` als Quelle die Standard-Auswahl.

@@ -8,18 +8,12 @@ Auffinden von Daten anhand von Suchkriterien wie Tags, grobem Ort oder anderen K
 
 [LINK_STUB](per_tag.md)
 
-[Und- und Oder-Verknüpfung](union.md)  
-Suche nach Objekten anhand mehrerer Tags.
-<!-- mehrere Areas -->
+[LINK_STUB](chaining.md)
+
+[LINK_STUB](union.md)
 
 [Keys, Verneinung und Co](per_key.md)  
 Zu weiteren möglichen Suchkriterien wie Verneinung oder nur Keys.
-
-[Verketten](chaining.md)  
-Wie man mehrere Suchkriterien verkettet, so dass man nach Objekten relativ zu anderen Objekten suchen kann.
-<!--
-Wertgleichheit via Evaluator
--->
 
 [Zahlwert](numbers.md)  
 Hilfsmittel zum Umgang mit Tags, die Zahlwerte im Value enthalten.

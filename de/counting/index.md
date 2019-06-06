@@ -21,3 +21,8 @@ Hinweise zu deren sinnvoller Verwendung.
 
 [Alle Auswertekriterien](more_evals.md)  
 Zusammenstellung der übrigen existierenden Auswahlkriterien.
+
+...
+<!--
+Mischdiskussion um Typen und Abgeleitetes
+-->
