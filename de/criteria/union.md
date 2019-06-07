@@ -6,8 +6,8 @@ Suche nach Objekten anhand mehrerer Tags.
 <a name="intersection"/>
 ## Und-Verknüpfung
 
-Zunächst wollen wir zwei oder mehr Bedingungen verknpüfen,
-so dass nur Objekte gefunden werden, die alle Bedingungen erfüllen.
+Zunächst wollen wir zwei oder mehr Bedingungen so verknüpfen,
+dass nur Objekte gefunden werden, die alle Bedingungen erfüllen.
 Einige Beispiele für Und-Verknüpfungen haben wir bereits gesehen:
 [Tag und Bounding-Box](per_tag.md#local),
 [Tag und Gebiet, Tag und zwei Gebiete sowie zwei Tags](chaining.md#lateral)
@@ -56,12 +56,63 @@ es wird sich immer das Ergebnis ändern, da jeder der sechs Tag-Filter und auch 
       [oneway=yes];
     out geom;
 
+Auf überraschende Weise trifft das übrigens auch auf unser Geldautomaten-Beispiel zu:
+Oft reicht es, gezielt nach einem speziellen Tag zu suchen,
+denn an allen Objekten mit dem speziellen Tag steht auch das allgemeine Tag:
+
+* An über 95% aller Objekte mit einem Tag ``admin_level`` steht [laut Taginfo](https://taginfo.openstreetmap.org/tags/boundary=administrative#combinations) (Zahl und Balken in den Spalten ganz rechts) das Tag ``boundary=administrative``.
+* An über 99% aller Objekte mit einem Tag ``fence_type`` steht [laut Taginfo](https://taginfo.openstreetmap.org/tags/barrier=fence#combinations) das Tag ``barrier=fence``.
+
+Eine [Suche nach](https://overpass-turbo.eu/?lat=51.473&lon=0.0&zoom=14&Q=nwr%5Bbarrier%3Dfence%5D%5Bfence%5Ftype%3Dwood%5D%28%7B%7Bbbox%7D%7D%29%3B%0Aout%20geom%3B) Zäunen (``barrier=fence``) mit Eigenschaft ``fence_type=wood`` liefert dann auch praktisch das gleiche Ergebnis ...
+
+    nwr[barrier=fence][fence_type=wood]({{bbox}});
+    out geom;
+
+... wie eine [Suche nach](https://overpass-turbo.eu/?lat=51.473&lon=0.0&zoom=14&Q=nwr%5Bfence%5Ftype%3Dwood%5D%28%7B%7Bbbox%7D%7D%29%3B%0Aout%20geom%3B) nur ``fence_type=wood``:
+
+    nwr[fence_type=wood]({{bbox}});
+    out geom;
+
+Bei den Geldautomaten haben wir dagegen mehr Treffer,
+wenn wir nur nach ``atm=yes`` [suchen](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=nwr%5Batm%3Dyes%5D%28%7B%7Bbbox%7D%7D%29%3B%0Aout%20center%3B):
+
+    nwr[atm=yes]({{bbox}});
+    out center;
+
+Fachlich ist das durchaus überzeugend:
+Geldautomaten können eben auch an Tankstellen, in Einkaufszentren oder anderen Gebäuden stehen.
+
 <a name="union"/>
 ## Oder-Verknüfung
 
+Wir wollen nun zwei oder mehr Bedingungen so verknüpfen,
+dass alle Objekte gefunden werden, die mindestens eine der Bedingungen erfüllen.
+Auch hier haben wir schon einige Beispiele gesehen:
+[Alle Objekte in Bounding-Boxen](../targets/formats.md#faithful),
+[Ergänzung benutzter Objekte](chaining.md#topdown),
+[Als Beispiel eines Block-Statements](../preface/design.md#block_statements)
+
+Für unser Beispiel von oben müssen wir das Problem lösen,
+sowohl alleine stehende Geldautomaten als auch solche in Banken [zu finden](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=%28%0A%20%20nwr%5Bamenity%3Datm%5D%28%7B%7Bbbox%7D%7D%29%3B%0A%20%20nwr%5Batm%3Dyes%5D%28%7B%7Bbbox%7D%7D%29%3B%0A%29%3B%0Aout%20center%3B):
+
+    (
+      nwr[amenity=atm]({{bbox}});
+      nwr[atm=yes]({{bbox}});
+    );
+    out center;
+
+Unsere Verknpüfung übernimmt das _Union_-Statement in den Zeilen 1 bis 4.
+Es führt seinen inneren Block aus.
+Zeile 2 schreibt als Ergebnis in das Set ``_`` alle Objekte,
+die ein Tag ``amenity`` mit Wert ``atm`` haben und in der von [Overpass-Turbo](../targets/turbo.md#convenience) befüllten Bounding-Box liegen.
+_Union_ behält eine Kopie dieses Ergebnisses.
+Zeile 3 schreibt als Ergebnis in das Set ``_`` alle Objekte,
+die ein Tag ``atm`` mit Wert ``yes`` haben und in der erneut von _Overpass-Turbo_ befüllten Bounding-Box liegen.
+Danach schreibt _Union_ ins Set ``_`` als Ergebnis alle Objekte,
+die in mindestens einem der Teilergebnisse vorkommen - die gewünschte _Oder-Verknüpfung_.
+
 ...
 
-<!-- einfacher Fall -->
 <!-- Typenmischung -->
 <!-- Hinweis auf Regex -->
 <!-- Hinweis auf Evals -->
