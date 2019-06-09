@@ -22,9 +22,9 @@ Es ist eine anspruchsvolle Aufgabe,
 aus einem Text zuverlässig einen konkreten Ort zu ermitteln.
 Daher fällt dies auch eigentlich einem Geocoder zu, z.B. [Nominatim](../criteria/nominatim.md#nominatim),
 und wird hier nicht vertieft.
-Mit den Ergebnissen von Nominatim kann dann meist schon die im nächsten Abschnitt beschriebene Suche um Koordinaten benutzt werden.
+Mit den Ergebnissen von Nominatim kann schon die im nächsten Abschnitt beschriebene Suche um Koordinaten benutzt werden.
 
-Es gibt aber genug Beispiele, bei denen schon der Name das richtige Objekt [liefert](https://overpass-turbo.eu/?lat=51.0&lon=10.0&zoom=6&Q=nwr%5Bname%3D%22K%C3%B6lner%20Dom%22%5D%3B%0Aout%20geom%3B):
+Es gibt aber genug Beispiele, bei denen bereits der Name das richtige Objekt [liefert](https://overpass-turbo.eu/?lat=51.0&lon=10.0&zoom=6&Q=nwr%5Bname%3D%22K%C3%B6lner%20Dom%22%5D%3B%0Aout%20geom%3B):
 
     nwr[name="Kölner Dom"];
     out geom;
@@ -104,13 +104,80 @@ dies schrumpft die _Relations_ auf eine handhabbare Größe.
 <a name="absolute_around"/>
 ## Around-Filter mit Koordinaten
 
-...
-<!--
-  Um Punkt
-  Um Pfad
--->
+Im Umkreis kann auch anhand von Koordinaten statt vorhandener Objekte gesucht werden.
+Ein Beispiel nahe Greenwich [auf dem Nullmeridian](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=15&Q=nwr%28around%3A100%2C51%2E477%2C0%2E0%29%3B%0Aout%20geom%3B):
+
+    nwr(around:100,51.477,0.0);
+    out geom;
+
+Es kommt ein Filter in Zeile 1 zum Einsatz:
+es werden alle Objekte im Set ``_`` abgelegt,
+die höchstens 100 Meter Abstand zu der gegebenen Koordinate haben.
+Zeile 2 gibt das Set ``_`` aus.
+
+Es gelten die gleichen Vorsichtshinweise wie bei allen anderen Volldaten-Suchen mit _Relations_:
+sehr schnell hat man sehr viele Daten.
+Die Reduktionstechniken von [Bounding-Boxen](osm_types.md#full) und [aus dem letzten Abschnitt](polygon.md#around) greifen hier aber ebenfalls.
+
+Es gibt aber keinen Zwang nach _Relations_ zu suchen.
+Man kann auch nur nach _Nodes_, [nur nach _Ways_](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=15&Q=way%28around%3A100%2C51%2E477%2C0%2E0%29%3B%0Aout%20geom%3B) ...
+
+    way(around:100,51.477,0.0);
+    out geom;
+
+... oder nach [_Nodes_ und _Ways_](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=15&Q=%28%0A%20%20node%28around%3A100%2C51%2E477%2C0%2E0%29%3B%0A%20%20way%28around%3A100%2C51%2E477%2C0%2E0%29%3B%0A%29%3B%0Aout%20geom%3B) suchen:
+
+    (
+      node(around:100,51.477,0.0);
+      way(around:100,51.477,0.0);
+    );
+    out geom;
+
+Hier nutzen wir ein _Union_-Statement (wird [später](../criteria/union.md#union) eingeführt),
+um die Ergebnisse der Umkreissuche nach _Nodes_ und der Umkreissuche nach _Ways_ zusammenzuführen.
+Zeile 2 und Zeile 3 filtern je einen Objekttyp anhand eines _Around_-Filters,
+und _Union_ fügt die Ergebnisse beider _Query_-Statements im Set ``_`` zusammen.
+
+Damit werden auch Umkreise mit einem Radius von 1000 Metern und mehr durchführbar.
+
+Relationen kann man jetzt ähnlich wie oben ohne Geometrie wieder [hinzunehmen](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=15&Q=%28%0A%20%20node%28around%3A1000%2C51%2E477%2C0%2E0%29%3B%0A%20%20way%28around%3A1000%2C51%2E477%2C0%2E0%29%3B%0A%29%3B%0Aout%20geom%3B%0Arel%28%3C%29%3B%0Aout%3B):
+
+    (
+      node(around:1000,51.477,0.0);
+      way(around:1000,51.477,0.0);
+    );
+    out geom;
+    rel(<);
+    out;
+
+In Zeile 5 steht als Eingabe im Set ``_`` noch das Ergebnis des _Union_-Statements zur Verfügung.
+Der Filter ``(<)`` lässt nur Objekte zu,
+die auf mindestens ein Objekt in der Eingabe referenzieren -
+das sind genau die Relationen, die einen Bezug zum Suchgebiet haben.
+
+Um mit Suchen umzugehen,
+die nicht gut in Bounding-Boxen passen,
+stellen wir hier noch die Umkreissuche um einen Linienzug vor.
+Dazu definiert man einen Pfad über zwei oder mehr Koordinaten,
+und es werden alle Objekte gefunden,
+deren Abstand [geringer](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=13&Q=%28%0A%20%20node%28around%3A100%2C51%2E477%2C0%2E0%2C51%2E46%2C%2D0%2E03%29%3B%0A%20%20way%28around%3A100%2C51%2E477%2C0%2E0%2C51%2E46%2C%2D0%2E03%29%3B%0A%29%3B%0Aout%20geom%3B%0Arel%28%3C%29%3B%0Aout%3B) als der angegebene Radius ist:
+
+    (
+      node(around:100,51.477,0.0,51.46,-0.03);
+      way(around:100,51.477,0.0,51.46,-0.03);
+    );
+    out geom;
+    rel(<);
+    out;
+
+Gegenüber der vorangehenden Abfrage haben sich nur die Zeilen 2 und 3 geändert;
+die Koordinaten werden jeweils mit Kommata getrennt aneinandergehängt.
 
 <a name="polygon"/>
 ## Polygone als Begrenzung
 
+Eine weitere Methode,
+um mit Suchgebieten umzugehen,
+die nur schlecht in Bounding-Boxen passen,
+ist die Suche anhand eines Polygons.
 ...
