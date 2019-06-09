@@ -9,8 +9,7 @@ Erläuterung, wie man alle Daten in einem räumlich begrenzten Gebiet bekommt.
 
 [LINK_STUB](map_apis.md)
 
-[Polygon und Around](polygon.md)  
-Neben der Bounding-Box gibt es weitere, dem Zielgebiet besser anpassbare Begrenzungsrahmen.
+[LINK_STUB](polygon.md)
 
 [Suche per Area](area.md)  
 Alle Daten in einem benannten Gebiet wie z.B. einer Stadt oder einem Bundesland.

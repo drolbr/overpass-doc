@@ -187,16 +187,16 @@ Das zu vergessen ist dann eine beliebte Quelle von Fehlern.
 <a name="full"/>
 ## Gemischte Logik
 
+<!--
+highway mixed + name
+-->
+
 ...
 
+<!-- Hinweis auf Evals -->
 <!-- [](../preface/design.md#evaluators) -->
 
 <!-- Around, mehrere Areas -->
-<!--
-highway mixed + name
-Around
-Kreuzung
--->
+
 <!-- Normalformen -->
 <!-- Negation? -->
-<!-- Hinweis auf Evals -->

@@ -98,7 +98,7 @@ Alle Objekte in einem eindeutigen Ort sind z.B. [alle Cafés in Köln](https://o
     nwr[amenity=cafe](area);
     out center;
 
-Die genaue Funktionsweise der ersten Zeile wird unter [Areas](../full_data/polygon.md) erklärt.
+Die genaue Funktionsweise der ersten Zeile wird unter [Areas](../full_data/area.md) erklärt.
 Uns interessiert vor allem die zweite Zeile:
 Dies ist eine _Query_ mit Zieltyp _nwr_ (d.h. wir suchen nach _Nodes_, _Ways_ und _Relations_);
 es ist dann zum einen der Filter ``[amenity=cafe]`` gesetzt,
@@ -238,3 +238,9 @@ dass der volle _Value_ und nicht nur eine Teilzeichenkette auf den Wert dazwisch
 Der senkrechte Strich ``|`` steht für _oder_,
 und die Klammern sorgen dafür,
 dass Caret und Dollarzeichen nicht nur auf einen Wert wirken.
+
+<a name="numbers"/>
+## Per Zahlwert
+
+...
+<!-- Hilfsmittel zum Umgang mit Tags, die Zahlwerte im Value enthalten. -->

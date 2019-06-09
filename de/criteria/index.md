@@ -15,9 +15,6 @@ Auffinden von Daten anhand von Suchkriterien wie Tags, grobem Ort oder anderen K
 [Keys, Verneinung und Co](per_key.md)  
 Zu weiteren möglichen Suchkriterien wie Verneinung oder nur Keys.
 
-[Zahlwert](numbers.md)  
-Hilfsmittel zum Umgang mit Tags, die Zahlwerte im Value enthalten.
-
 [Semikolon-Listen](lrs.md)  
 Hilfsmittel zum Umgang mit Tags, die mehrere Semikolon-getrennte Werte enthalten.
 
