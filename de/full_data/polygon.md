@@ -180,4 +180,86 @@ Eine weitere Methode,
 um mit Suchgebieten umzugehen,
 die nur schlecht in Bounding-Boxen passen,
 ist die Suche anhand eines Polygons.
-...
+
+Zwar decken [Areas](area.md) bereits sehr viele Anwendungsfälle ab,
+indem sie die Suche in exakt einem benannten Gebiet erlauben.
+Aber wenn es darum geht, solche Gebiete etwas zu erweitern oder auch beliebige Freiformen zu schneiden,
+muss zwangsläufig die Flächenbegrenzung als explizites Polygon übergeben werden.
+
+Zur Illustration zunächst eine Suche nur nach Nodes [mit einem Dreieck als Grenze](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=14&Q=node%28poly%3A%2251%2E47%20%2D0%2E01%2051%2E477%200%2E01%2051%2E484%20%2D0%2E01%22%29%3B%0Aout%20geom%3B),
+um die Polygonform gut auf der Karte sehen zu können:
+
+    node(poly:"51.47 -0.01 51.477 0.01 51.484 -0.01");
+    out geom;
+
+In Zeile 1 suchen wir nach _Nodes_,
+und der Filter ``(poly:...)`` lässt nur solche Objekte zu,
+die innerhalb des in den Anführungsreichen notierten Polygons liegen.
+Das Polygon ist eine Liste von Koordinaten der Form Breitengrad-Längengrad,
+wobei zwischen den Zahlwerten nur Leerzeichen liegen dürfen.
+Nach der letzten Koordinate ergänzt Overpass API die schließende Kante.
+
+Sehr viele Daten liefert wieder einmal die [Suche nach allen drei Objektarten](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=14&Q=nwr%28poly%3A%2251%2E47%20%2D0%2E01%2051%2E477%200%2E01%2051%2E484%20%2D0%2E01%22%29%3B%0Aout%20geom%3B):
+
+    nwr(poly:"51.47 -0.01 51.477 0.01 51.484 -0.01");
+    out geom;
+
+Wie schon [zuvor](polygon.md#around) kann dies durch die beiden Schritte _Nodes_ plus _Ways_ und Rückwärtsauflösen der _Relations_ eingehegt werden;
+die Datenersparnis entsteht nur dadurch, dass zu den _Relations_ [die Geometrie weggelassen wird](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=14&Q=%28%0A%20%20node%28poly%3A%2251%2E47%20%2D0%2E01%2051%2E477%200%2E01%2051%2E484%20%2D0%2E01%22%29%3B%0A%20%20way%28poly%3A%2251%2E47%20%2D0%2E01%2051%2E477%200%2E01%2051%2E484%20%2D0%2E01%22%29%3B%0A%29%3B%0Aout%20geom%3B%0Arel%28%3C%29%3B%0Aout%3B):
+
+    (
+      node(poly:"51.47 -0.01 51.477 0.01 51.484 -0.01");
+      way(poly:"51.47 -0.01 51.477 0.01 51.484 -0.01");
+    );
+    out geom;
+    rel(<);
+    out;
+
+Können auch Löcher und mehrere Komponenten realisiert werden?
+
+Mehrere Komponenten können per _Union_-Statement realisiert werden.
+Da _Union_-Statements beliebig viele Unterstatements haben können,
+können wir die _Query_-Statements für die Komponenten einfach hintereinander schreiben,
+hier gleich für [die _Nodes_-und-_Ways_-Variante](https://overpass-turbo.eu/?lat=51.487&lon=0.0&zoom=13&Q=%28%0A%20%20node%28poly%3A%2251%2E47%20%2D0%2E01%2051%2E477%200%2E01%2051%2E484%20%2D0%2E01%22%29%3B%0A%20%20way%28poly%3A%2251%2E47%20%2D0%2E01%2051%2E477%200%2E01%2051%2E484%20%2D0%2E01%22%29%3B%0A%20%20node%28poly%3A%2251%2E491%20%2D0%2E01%2051%2E498%20%2D0%2E03%2051%2E505%20%2D0%2E01%22%29%3B%0A%20%20way%28poly%3A%2251%2E491%20%2D0%2E01%2051%2E498%20%2D0%2E03%2051%2E505%20%2D0%2E01%22%29%3B%0A%29%3B%0Aout%20geom%3B%0Arel%28%3C%29%3B):
+
+    (
+      node(poly:"51.47 -0.01 51.477 0.01 51.484 -0.01");
+      way(poly:"51.47 -0.01 51.477 0.01 51.484 -0.01");
+      node(poly:"51.491 -0.01 51.498 -0.03 51.505 -0.01");
+      way(poly:"51.491 -0.01 51.498 -0.03 51.505 -0.01");
+    );
+    out geom;
+    rel(<);
+    out;
+
+Der Umriss wird hier jeweils zweimal angegeben;
+dies lässt sich im Moment leider nicht sinnvoll vermeiden.
+
+Entsprechend könnte es für Löcher naheliegend sein,
+das Block-Statement [Difference](../criteria/chaining.md#difference) zu verwenden.
+Dann schneidet man allerdings auch Objekte weg,
+die teilweise im Loch und teilweise im umgebenden Polygon liegen,
+denn Difference würde diese Objekte im Loch ja finden.
+
+Stattdessen funktioniert es,
+den zum ersten Punkt des Lochs nächstgelegenen Punkt der Außenlinie zu verdoppeln
+und den Linienzug mit gedoppeltem Start- und Endpunkt dazwischen einzufügen.
+
+Wenn wir z.B. aus dem Dreieck ``51.47 -0.01 51.477 0.01 51.484 -0.01``
+das Dreieck ``51.483 -0.0093 51.471 -0.0093 51.477 0.008`` ausschneiden wollen, dann
+
+* duplizieren wir zunächst den nächstgelegenen Punkt ``51.484 -0.01``,
+  erhalten also ``51.47 -0.01 51.477 0.01 51.484 -0.01 51.484 -0.01``
+* wiederholen den ersten Punkt des Lochs ``51.483 -0.0093`` am Ende,
+  erhalten also fürs Loch ``51.483 -0.0093 51.471 -0.0093 51.477 0.008 51.483 -0.0093``
+* fügen das Loch zwischen den beiden Kopien des duplizierten Punktes ein:
+  ``51.47 -0.01 51.477 0.01 51.484 -0.01 51.483 -0.0093 51.471 -0.0093 51.477 0.008 51.483 -0.0093 51.484 -0.01``
+
+Zur Illustration die [fertige Abfrage für Nodes](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=14&Q=node%28poly%3A%2251%2E47%20%2D0%2E01%2051%2E477%200%2E01%2051%2E484%20%2D0%2E01%0A%20%2051%2E483%20%2D0%2E0093%2051%2E471%20%2D0%2E0093%2051%2E477%200%2E008%0A%20%2051%2E483%20%2D0%2E0093%2051%2E484%20%2D0%2E01%22%29%3B%0Aout%20geom%3B).
+Sie funktioniert auch für alle anderen Objekttypen und kann mit _Union_ kombiniert werden,
+aber dann sieht man schlechter das tatsächlich durch das Polygon ausgewählte Gebiet:
+
+    node(poly:"51.47 -0.01 51.477 0.01 51.484 -0.01
+      51.483 -0.0093 51.471 -0.0093 51.477 0.008
+      51.483 -0.0093 51.484 -0.01");
+    out geom;
