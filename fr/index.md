@@ -1,4 +1,4 @@
-Mode d'emploi d'Overpass API
+Mode d'emploi d'API Overpass
 ============================
 
 [LINK_STUB](preface/index.md)

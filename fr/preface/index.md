@@ -1,23 +1,17 @@
 Introduction
 ============
 
-Lesquelles tâches accomplit l'Overpass API dans le mouvance d'OpenStreetMap?
+Lesquelles tâches accomplit l'API Overpass dans le mouvance d'OpenStreetMap?
 Qu'est-ce que sont des données OpenStreetMap et qu'est-ce que est une requête?
 
-[Modèle de données d'OpenStreetMap](osm_data_model.md)  
-En preparatant la comprehension d'Overpass API
-il faut d'abord introduire le modêle données d'OpenStreetMap.
+[LINK_STUB](preface.md)
 
-[Requêter de données originale](mission.md)  
-La mission d'Overpass API:
-Elle garde une copie exacte de les données d'OpenStreetMap complét,
-pour le but de pouvoir les requêter des les plus possiblement toutes criterions.
+[LINK_STUB](osm_data_model.md)
 
-[Principes](assertions.md)  
-Overpass API ni favorisera ni genera n'importe pas lequel schéma de tagging.
-On vise de rester rétrocompatible pour plusieurs décades.
+[LINK_STUB](glossary.md)
 
-[Mutualisation](commons.md)  
-Il y a des instances publiques qui offrent toutes leurs résources,
-mais aussi protegent contre surexploitation.
-Des utilisateurs en grande masse doivent pouvoir facilement mettre sur place leur meme instance.
+[LINK_STUB](design.md)
+
+[LINK_STUB](assertions.md)
+
+[LINK_STUB](commons.md)

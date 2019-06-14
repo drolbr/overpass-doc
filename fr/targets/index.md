@@ -5,13 +5,11 @@ Common est-que c'un requête doit être configurer pour que le résultat va bien
 Des examples pour beaucoup des applications courantes sans prentention être complet.
 Explication de les formats de données et les variantes de les formats.
 
-[Formats de données](formats.md)  
-Il y a plusieur formats de données pour porter des objets d'OpenStreetMap.
-Nous presenterions toutes les formats qu'ont un application immediate.
+[LINK_STUB](formats.md)
 
-[Overpass Turbo](turbo.md)  
-Introduction des variantes des formats à l'aide de l'util [Overpass Turbo](https://overpass-turbo.eu/).
+[LINK_STUB](turbo.md)
 
+<!--
 [uMap](umap.md)  
 Purement des données et géométries pour créer une carte thématique avec [uMap](https://umap.openstreetmap.fr/).
 
@@ -43,3 +41,4 @@ Il faut faire attention à quelque particularités.
 
 [Diffs](diffs.md)  
 Le format special de diff et de diff augmenté pour poursuivre des changes.
+-->

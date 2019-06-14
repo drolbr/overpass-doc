@@ -1,5 +1,5 @@
-Toutes donées dans un region
-============================
+Toutes des données dans un region
+=================================
 
 Obtenir un extrait par des critères seulement spatiales.
 
@@ -9,9 +9,9 @@ Obtenir un extrait par des critères seulement spatiales.
 
 [LINK_STUB](map_apis.md)
 
-[Polygon et Around](polygon.md)  
-En plus de bounding box, il y a des autres critères qui peut encercler une region bût plus precisement.
+[LINK_STUB](polygon.md)
 
+<!--
 [Requêter par Area](area.md)  
 Toutes donées dans un region nommé comme un ville ou un département.
 
@@ -23,3 +23,4 @@ Des méchanismes sont expliquées, y compris des conseilles pour les gérer.
 [Alternatives](other_sources.md)  
 Overpass API n'est pas toujour le solution optimale.
 Des alternatives, par example [Geofabrik](https://download.geofabrik.de/) sont introduites.
+-->
