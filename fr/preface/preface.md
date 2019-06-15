@@ -21,7 +21,7 @@ Le seul exception qui est accepté par tout le monde est les contours des pays, 
 Les données personelles sont jamais enregristrées.
 Par example, on ne copie pas des noms sur de plaques de sonnette vers OpenStreetMap.
 
-Ceci permet, en commun avec la [licence de données libre] (https://wiki.osmfoundation.org/wiki/Licence),
+Ceci permet, en commun avec la [licence de données libre](https://wiki.osmfoundation.org/wiki/Licence),
 télécharger et traiter les données OpenStreetMap dans leur intégralité.
 En principe, cela peut être utilisé pour répondre à des questions telles que
 
@@ -67,6 +67,6 @@ et c'est l'objet de tout ce manuel pour expliquer le langage de requête.
 En fait, l'API Overpass est conçue
 pour répondre aux demandes d'autres logiciels via la Toile.
 C'est aussi la raison d'être du composant de nom [API](https://fr.wikipedia.org/wiki/Interface_de_programmation).
-Pour de nombreux programmes d'exemple populaires, la connexion directe est expliquée dans le chapitre [Utilisation](.../targets/index.md).
+Pour de nombreux programmes d'exemple populaires, la connexion directe est expliquée dans le chapitre [Utilisation](../targets/index.md).
 
 <!-- Traduit avec www.DeepL.com/Translator, partiellement redigé -->
