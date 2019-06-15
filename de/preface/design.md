@@ -50,7 +50,7 @@ aber die entstehende Zwei-Zeilen-Lösung spiegelt die klare Aufgabenteilung wide
 - Die Ausgabeanweisung _out_ legt fest, _wie_ die angewählten Objekte ausgegeben werden. Details dazu bei den [Ausgabeformaten](../targets/formats.md#faithful)
 
 <a name="statements"/>
-## Statements, Conditionals
+## Statements, Filter
 
 Wir vergleichen die Abfrage nach einfach nur den Supermärkten im Sichtbarkeitsbereich
 
@@ -273,7 +273,7 @@ dass diese Variable als Quelle anstelle der letzten Auswahl verwendet wird.
 Damit wäre ``nwr[shop=supermarket]({{bbox}})(around.all_stations:300)`` das richtige Statement,
 um die genau zu entfernenen Supermärkte anzuwählen.
 Zur Verkürzung der Laufzeit nutzen wir aber lieber die Auswahl des unmittelbar vorhergehenden Statements in Zeile 3 - dort stehen ja genau die Supermärkte in der Bounding-Box drin.
-Dies passiert mittels des _Conditionals_ ``._``.
+Dies passiert mittels des _Filters_ ``._``.
 Es schränkt die Auswahl auf solche Ergebnisse ein,
 die beim Start des Statements in der Eingabe stehen.
 Da wir hier die Standardeingabe benutzt haben,

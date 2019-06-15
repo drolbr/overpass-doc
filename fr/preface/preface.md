@@ -1,7 +1,7 @@
 OpenStreetMap et l'API Overpass
 ===============================
 
-Comment fonctionne OpenStreetMap?
+Comment fonctionne le mouvement OpenStreetMap?
 Où là-dedans se trouve l'API Overpass?
 
 ## Qu'est-ce que est OpenStreetMap?
@@ -20,56 +20,51 @@ Le seul exception qui est accepté par tout le monde est les contours des pays, 
 Les données personelles sont jamais enregristrées.
 Par example, on ne copie pas des noms sur de plaques de sonnette vers OpenStreetMap.
 
-Ça permet en conjunction avec 
-...
-<!--
-Dies erlaubt, zusammen mit der [freien Datenlizenz](https://wiki.osmfoundation.org/wiki/Licence),
-die OpenStreetMap-Daten in komplett herunterzuladen und weiterzuverarbeiten.
-Damit lassen sich im Prinzip Fragen beantworten wie
+Ceci permet, en commun avec la [licence de données libre] (https://wiki.osmfoundation.org/wiki/Licence),
+télécharger et traiter les données OpenStreetMap dans leur intégralité.
+En principe, cela peut être utilisé pour répondre à des questions telles que
 
-1. Wo liegt Stadt X, Fluss Y, Restaurant Z?
-1. Was liegt in der Nähe von X oder in X?
-1. Wie komme ich zu Fuß, mit dem Fahrrad oder per PKW von Punkt X nach Punkt Y?
+1. Où se trouve la ville X, la rivière Y, le restaurant Z ?
+1. Qu'est-ce qui est près de X ou dans X ?
+1. comment se rendre du point X au point Y à pied, en vélo ou en voiture ?
 
-Ebenso lässt sich damit auf viele verschiedene Weisen eine Weltkarte zeichnen.
-Um die grundsätzliche Eignung der Daten beurteilen zu können,
-ist über eine [Beispielkarte](https://openstreetmap.org) hinaus auch ein Beispielwerkzeug zum _Geocoding_ implementiert.
-Es heißt [Nominatim](https://wiki.openstreetmap.org/wiki/Nominatim), beantwortet Frage (1) von oben,
-und es kann zusätzlich auch zu einer Koordinate eine Adresse angeben, sogenanntes _Reverse Geocoding_.
-Ebenso sind über die Haupt-Website [openstreetmap.org](https://openstreetmap.org/) auch Werkzeuge für sogenanntes _Routing_ verfügbar.
-Diese beantworten, wie man von Punkt X nach Punkt Y kommt.
+Il peut également être utilisé pour dessiner une carte du monde d'une multitude des différentes manières.
+Afin de pouvoir juger de l'adéquation de base des données,
+est un [exemple de carte](https://openstreetmap.org) et un outil d'exemple pour _geocoding_.
+Il s'appelle [Nominatim](https://wiki.openstreetmap.org/wiki/Nominatim), répond à la question (1) ci-dessus,
+et il peut également spécifier une adresse en plus d'une coordonnée, appelée _Reverse Geocoding_.
+Des outils de _routage_ sont également disponibles sur le site Web principal [openstreetmap.org](https://openstreetmap.org/).
+Ces réponses indiquent comment se rendre d'un point X à un point Y.
 
-Allerdings sind es sehr viele Daten,
-und es werden in jeder Minute Änderungen durch Mapper in den Daten eingetragen.
-Die Daten en-bloc herunterzuladen und zu verarbeiten ist daher für sehr viele Fragestellungen unpraktikabel.
-Um zumindest im Prinzip jedem unabhängig von OpenStreetMap die Datenverarbeitung zu ermöglichen,
-gibt es zusätzlich zum [Gesamtdatenbestand](https://planet.openstreetmap.org/) auch jede Minute eine Datei mit den Updates.
--->
+Cependant, il y a beaucoup de données,
+et chaque minute des changements sont entrés dans les données par des mappers.
+Le téléchargement et le traitement des données en bloc sont donc impraticables pour de nombreuses questions.
+Au moins en principe pour permettre à chacun de traiter les données indépendamment d'OpenStreetMap,
+il y a en plus de [l'ensemble de données total](https://planet.openstreetmap.org/) également chaque minute un fichier avec les mises à jour.
 
 ## Qu'est-ce que est l'API Overpass?
 
-...
-<!--
-Die Overpass API hält diese Daten vor, spielt die Updates ein
-und stellt die Daten zum Durchsuchen zur Verfügung.
-Einerseits gibt es [öffentliche Instanzen](https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances), an die die Abfrage geschickt werden kann.
-Andererseits ist Overpass API auch [freie Software](https://github.com/drolbr/Overpass-API),
-so dass jedermann eine eigene Instanz betreiben kann.
+L'API Overpass stocke ces données et les met à jour.
+et met les données à disposition pour la recherche.
+D'une part, il existe des [instances publiques](https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances) auxquelles la requête peut être envoyée.
+D'autre part, l'API d'Overpass est aussi un [logiciel libre](https://github.com/drolbr/Overpass-API),
+pour que chacun puisse gérer sa propre instance.
 
-Zum ersten Kennenlernen bietet sich das Frontend [Overpass Turbo](https://overpass-turbo.eu) an.
-Dort werden die Daten auch gleich auf einer Karte angezeigt.
-Als [Beispiel](https://overpass-turbo.eu/?lat=0.0&lon=0.0&zoom=2&Q=nwr%5Bname%3D%22Sylt%22%5D%3B%0Aout%20center%3B) suchen wir nach allem, was den Namen Sylt hat:
-Dazu wird der Abfragetext
+Le frontend [Overpass Turbo](https://overpass-turbo.eu) est un bon endroit pour apprendre à le connaître pour la première fois.
+Les données y sont également affichées sur une carte.
+Comme [exemple](https://overpass-turbo.eu/?lat=0.0&lon=0.0&zoom=2&Q=nwr%5Bname%3D%22Sylt%22%5D%3B%0Aout%20center%3B), nous cherchons tout ce qui porte le nom de Sylt:
+Il faut mettre le texte de la requête
 
     nwr[name="Sylt"];
     out center;
 
-in den Textbereich links eingetragen und per Klick auf "Ausführen" die Abfrage an die Overpass API gesendet.
-Die Abfragesprache ist mächtig, aber auch umfangreich,
-und es ist Gegenstand dieses gesamten Handbuchs die Abfragesprache zu erläutern.
+dans la zone de texte à gauche et la requête est envoyée à l'API Overpass en cliquant sur "Exécuter".
+Le langage de requête est expressif, mais pas facile,
+et c'est l'objet de tout ce manuel pour expliquer le langage de requête.
 
-Tatsächlich ist die Overpass API aber vor allem darauf ausgelegt,
-auf Abfragen anderer Software über das Internet zu antworten.
-Das ist auch der Grund für den Namensbestandteil [API](https://de.wikipedia.org/wiki/Programmierschnittstelle).
-Für viele beliebte Beispielprogramme wird daher die direkte Anbindung im Kapitel [Verwendung](../targets/index.md) erläutert.
--->
+En fait, l'API Overpass est conçue
+pour répondre aux demandes d'autres logiciels via la Toile.
+C'est aussi la raison d'être du composant de nom [API](https://fr.wikipedia.org/wiki/Interface_de_programmation).
+Pour de nombreux programmes d'exemple populaires, la connexion directe est expliquée dans le chapitre [Utilisation](.../targets/index.md).
+
+<!-- Traduit avec www.DeepL.com/Translator, partiellement redigé -->

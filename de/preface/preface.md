@@ -1,7 +1,7 @@
 OpenStreetMap und die Overpass API
 ==================================
 
-Wie funktioniert OpenStreetMap?
+Wie funktioniert die Bewegung OpenStreetMap?
 Wo befindet sich darin die Overpass API?
 
 ## Was ist OpenStreetMap?
@@ -53,7 +53,7 @@ Einerseits gibt es [öffentliche Instanzen](https://wiki.openstreetmap.org/wiki/
 Andererseits ist Overpass API auch [freie Software](https://github.com/drolbr/Overpass-API),
 so dass jedermann eine eigene Instanz betreiben kann.
 
-Zum ersten Kennenlernen bietet sich das Frontend [Overpass Turbo](https://overpass-turbo.eu) an.
+Zum ersten Kennenlernen bietet sich das Frontend [Overpass Turbo](https://overpass-turbo.eu/) an.
 Dort werden die Daten auch gleich auf einer Karte angezeigt.
 Als [Beispiel](https://overpass-turbo.eu/?lat=0.0&lon=0.0&zoom=2&Q=nwr%5Bname%3D%22Sylt%22%5D%3B%0Aout%20center%3B) suchen wir nach allem, was den Namen Sylt hat:
 Dazu wird der Abfragetext
