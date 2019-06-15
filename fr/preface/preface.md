@@ -4,6 +4,7 @@ OpenStreetMap et l'API Overpass
 Comment fonctionne le mouvement OpenStreetMap?
 Où là-dedans se trouve l'API Overpass?
 
+<a name="osm"/>
 ## Qu'est-ce que est OpenStreetMap?
 
 OpenStreetMap est premièrement une base des données géographiques de le monde entier.
@@ -42,6 +43,7 @@ Le téléchargement et le traitement des données en bloc sont donc impraticable
 Au moins en principe pour permettre à chacun de traiter les données indépendamment d'OpenStreetMap,
 il y a en plus de [l'ensemble de données total](https://planet.openstreetmap.org/) également chaque minute un fichier avec les mises à jour.
 
+<a name="overpass"/>
 ## Qu'est-ce que est l'API Overpass?
 
 L'API Overpass stocke ces données et les met à jour.
