@@ -1,7 +1,7 @@
 Par Tag
 =======
 
-Requêter pour tous les objects qui possedent un tag particulier.
+Requêter pour tous les objets qui possèdent un tag particulier.
 
 <a name="global"/>
 ## Globalement

@@ -1,7 +1,7 @@
 Opérations ET et OU
 ===================
 
-Requêtes à des objets par des attributs plusieures.
+Requêtes sur des objets via des attributs multiples.
 
 <a name="intersection"/>
 ## Opération ET
@@ -191,7 +191,7 @@ Das zu vergessen ist dann eine beliebte Quelle von Fehlern.
 -->
 
 <a name="full"/>
-## Logique Assemblée
+## Logique d'assemblage
 
 ...
 <!--

@@ -1,8 +1,8 @@
 Enchainer
 =========
 
-Comment on enchaine plusieures instructions de mainère que
-on peut requêter par des critères relatives à des autres objets.
+Comment on peut enchainer plusieures instructions de manière à pouvoir 
+requêter par des critères relatifs à d'autres objets.
 
 <a name="lateral"/>
 ## Filtres indirects
@@ -270,13 +270,13 @@ Ebenso [mit dem Pfeil](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=14&Q=%2
 -->
 
 <a name="difference"/>
-## Difference
+## Différence
 
 ...
 <!--  TODO: Differenz wegen ._-Falle -->
 
 <a name="equality"/>
-## Attributs à même valeurs
+## Attributs à même valeur
 
 ...
 <!-- TODO: Wertgleichheit via Evaluator -->
