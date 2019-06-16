@@ -1,25 +1,25 @@
 Compter des objets
 ==================
 
-Quand on veut les statisques plus locales ou plus particulières
-que sont disponibles sur [Taginfo](https://taginfo.openstreetmap.org/).
-Aides pour compter des objets par leurs qualités ou grouper autrement.
+Quand on veut les statistiques plus locales ou plus particulières
+que celles qui sont disponibles sur [Taginfo](https://taginfo.openstreetmap.org/).
+Aides pour compter des objets selon leurs qualité ou en les groupant autrement.
 
 [Taginfo](taginfo.md)  
 Rappel: Si on veut des résultats globales directs ou sans configuration
 on doit utiliser [Taginfo](https://taginfo.openstreetmap.org/).
 
-[Tous valeurs d'un tagué](values.md)  
-Lister tous valeurs d'un tagué ou evaluer-les.
+[Toutes les valeurs d'un tag](values.md)  
+Lister tous valeurs d'un tag ou les évaluer.
 
 [Tous clés](keys.md)  
-Lister tous clés apparaisant à au moins un objet dans une selection.
-Ou les evaluer.
-Les partitionner poursuivrament par leur valeurs respectifs.
+Lister toutes les clés apparaissant au moins dans un objet dans une sélection.
+Ou les évaluer.
+Les partitionner suivant leurs valeurs respectives.
 
-[Par longeur, par utilisateur ou autre chose](more_criteria.md)  
-Quelque plusieur criterions pour partager.
-Conseil pour l'emploi raisonnable.
+[Par longueur, par utilisateur ou suivant un autre critère](more_criteria.md)  
+Quelques critères pour partager.
+Conseils pour un usage raisonnable.
 
-[Tous autres criterions](more_evals.md)  
-Récapitulation des les autres criterions pour partager.
+[Tous les autres critères](more_evals.md)  
+Récapitulatif des autres critères pour partager.
