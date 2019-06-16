@@ -1,10 +1,10 @@
 Overpass Turbo
 ==============
 
-L'outil standard pour developper des requêtes.
+L'outil standard pour développer des requêtes.
 
 <a name="overview"/>
-## Bref Aperçu
+## Bref aperçu
 
 ...
 <!--
