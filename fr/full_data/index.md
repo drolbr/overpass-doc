@@ -1,5 +1,5 @@
-Toutes des données dans un région
-=================================
+Toutes les données dans une région
+==================================
 
 Obtenir un extrait par des critères uniquement spatiaux.
 
