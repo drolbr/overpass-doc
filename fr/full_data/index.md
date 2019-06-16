@@ -1,7 +1,7 @@
-Toutes des données dans un region
+Toutes des données dans un région
 =================================
 
-Obtenir un extrait par des critères seulement spatiales.
+Obtenir un extrait par des critères uniquement spatiaux.
 
 [LINK_STUB](bbox.md)
 

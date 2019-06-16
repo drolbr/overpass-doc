@@ -1,12 +1,12 @@
 Autres APIs disponibles
 =======================
 
-En plus de les requêtes configurables ciblémentes,
+En plus des requêtes configurables précédentes,
 il y a aussi quelques requêtes d'API
 qui marchent déjà avec seulement des cordonnées
-et qui retournent des données dans leur configuration particuliere.
+et qui retournent des données dans une configuration particulière.
 
-## L'export de site openstreetmap.org
+## L'export du site openstreetmap.org
 
 ...
 <!--
