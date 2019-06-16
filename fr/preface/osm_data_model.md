@@ -1,8 +1,8 @@
 Modèle de données d'OpenStreetMap
 =================================
 
-En preparatant la comprehension d'API Overpass
-il faut d'abord introduire le modêle données d'OpenStreetMap.
+Pour permettre la compréhension de l'API Overpass, 
+il faut d'abord introduire le modêle de données d'OpenStreetMap.
 
 <!--
 In diesem Abschnitt führen wir die grundlegenden Datenstrukturen in OpenStreetMap ein.

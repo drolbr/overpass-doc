@@ -1,8 +1,8 @@
 Introduction
 ============
 
-Lesquelles tâches accomplit l'API Overpass dans le mouvance d'OpenStreetMap?
-Qu'est-ce que sont des données OpenStreetMap et qu'est-ce que est une requête?
+Quelles sont les tâches accomplies par l'API Overpass dans l'écosystème d'OpenStreetMap?
+Qu'est-ce que sont des données OpenStreetMap et qu'est-ce qu'une requête?
 
 [LINK_STUB](preface.md)
 
