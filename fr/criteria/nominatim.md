@@ -1,9 +1,9 @@
 Alternatives
 ============
 
-L'Overpass API travaille toujours sur les données d'OpenStreetMap originales.
+L'API Overpass travaille toujours sur les données d'OpenStreetMap originales.
 Souvent on veut plutôt une interprétation intelligente, par example du géocodage.
-Le service _Nominatim_ et plusieurs autres services sont mieux adaptés à cette tâche que l'Overpass API.
+Le service _Nominatim_ et plusieurs autres services sont mieux adaptés à cette tâche que l'API Overpass.
 
 <a name="nominatim"/>
 ## Nominatim

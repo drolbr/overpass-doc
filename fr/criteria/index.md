@@ -1,7 +1,7 @@
 Trouver des objets
 ==================
 
-La tâche la plus fréquente de l'Overpass API:
+La tâche la plus fréquente de l'API Overpass:
 Trouver des données par des critères commes possédant un tag particulier, situé proche d'un endroit ou d'autres critères.
 
 [LINK_STUB](nominatim.md)

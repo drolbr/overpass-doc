@@ -1,7 +1,7 @@
 Modèle d'exécution
 ==================
 
-La mission d'Overpass API:
+La mission de l'API Overpass:
 
 Elle garde une copie exacte de les données d'OpenStreetMap complète,
 afin de les interroger selon de nombreux critères très divers.
