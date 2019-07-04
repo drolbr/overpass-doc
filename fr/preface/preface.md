@@ -8,18 +8,20 @@ Où là-dedans se trouve l'API Overpass?
 ## Qu'est-ce que est OpenStreetMap?
 
 OpenStreetMap est premièrement une base des données géographiques de le monde entier.
-Les routes, rues, chemins de fér et eaux sont probablement présents complètement,
-et aussi les boutiques, restaurants leur noms et heures d'overture y compris sont très bienvenues.
+Il s'agit de géodonnées de base,
+p. ex. les routes, rues, les voies ferrées, les plans d'eau devraient être entièrement disponibles,
+ainsi que les magasins et restaurants avec noms et heures d'ouverture sont les bienvenus.
 
-En général, tous qu'on peut observer sur place peuvent être ajoutés à OpenStreetMap.
-Pour example pour le nom, une rue a une plaque, un restaurant a un panneau sur la porte.
-Les noms d'un fleuve ou d'une ligne de chemin de fér sont souvent disponible de des panneaus explicatifs.
+En général, tout est saisi dans OpenStreetMap, qui est observable sur place.
+Pour example pour le nom, une rue a une panneau de nom, un restaurant a un panneau au-dessus de la porte.
+Dans le cas d'une rivière ou d'une voie ferrée, les désignations peuvent généralement être lues indirectement sur des panneaux d'information.
 
-Quelque exceptions existent mais ils sont rares.
-Le seul exception qui est accepté par tout le monde est les contours des pays, régions et villes.
+Il existe des exceptions à l'exigence de visibilité mais ils sont rares.
+Les seules exceptions pleinement acceptées sont les frontières des États, des régions et des municipalités.
 
-Les données personelles sont jamais enregristrées.
-Par example, on ne copie pas des noms sur de plaques de sonnette vers OpenStreetMap.
+Les données personelles ne seront jamais enregristrées.
+Par example, ce n'est pas permis dans OpenStreetMap,
+pour copie des noms de les plaques de sonnette et les entrer dans OpenStreetMap.
 
 Ceci permet, en commun avec la [licence de données libre](https://wiki.osmfoundation.org/wiki/Licence),
 télécharger et traiter les données OpenStreetMap dans leur intégralité.
@@ -46,7 +48,7 @@ il y a en plus de [l'ensemble de données total](https://planet.openstreetmap.or
 <a name="overpass"/>
 ## Qu'est-ce que est l'API Overpass?
 
-L'API Overpass stocke ces données et les met à jour.
+L'API Overpass stocke ces données, les met à jour
 et met les données à disposition pour la recherche.
 D'une part, il existe des [instances publiques](https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances) auxquelles la requête peut être envoyée.
 D'autre part, l'API d'Overpass est aussi un [logiciel libre](https://github.com/drolbr/Overpass-API),
@@ -60,7 +62,7 @@ Il faut mettre le texte de la requête
     nwr[name="Sylt"];
     out center;
 
-dans la zone de texte à gauche et la requête est envoyée à l'API Overpass en cliquant sur "Exécuter".
+dans la zone de texte à gauche et la requête est envoyée à l'API Overpass en cliquant sur _Exécuter_.
 Le langage de requête est expressif, mais pas facile,
 et c'est l'objet de tout ce manuel pour expliquer le langage de requête.
 

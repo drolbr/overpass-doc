@@ -23,14 +23,13 @@ Einen praxistauglichen Leitfaden gibt dafür der Abschnitt [Geometrien](../full_
 ## Tags
 
 Die Sachdaten in OpenStreetMap sind kurzen Textschnipseln abgelegt, sogenannte _Tags_.
-_Tags_ bestehen immer aus einem Schlüssel und einem Wert.
-Jedes Objekt kann zu jedem Schlüssel nur einen Wert besitzen.
-Außer einer Höchstlänge von 255 Zeichen gibt es keine weitergehende Beschränkung.
+_Tags_ bestehen immer aus einem _Schlüssel_ und einem _Wert_.
+Jedes Objekt kann zu jedem _Schlüssel_ nur einen _Wert_ besitzen.
+Außer einer Höchstlänge von 255 Zeichen jeweils für Schlüssel und Wert gibt es keine weitergehende Beschränkung.
 
-Formal sind alle Tags gleichwertig.
-Tatsächlich hat die Möglichkeit,
-Tags völlig spontan und frei nach Zweckmäßigkeit vergeben zu können,
-höchstwahrscheinlich maßgeblich zum Erfolg von OpenStreetMap beigetragen.
+Formal sind alle Tags gleichwertig,
+Tags können völlig spontan und frei nach Zweckmäßigkeit vergeben werden;
+dies dürfte maßgeblich zum Erfolg von OpenStreetMap beigetragen haben.
 
 De facto sind fast nur Schlüssel mit lateinischen Kleinbuchstaben und vereinzelt den Sonderzeichen `:` und `\_` in Gebrauch.
 Es sind zwei Grundtypen von Tags etabliert:

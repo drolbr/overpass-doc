@@ -1,44 +1,43 @@
 Modèle de données d'OpenStreetMap
 =================================
 
-En preparatant la comprehension d'API Overpass
-il faut d'abord introduire le modêle données d'OpenStreetMap.
+Comprendre le fonctionnement de l'API Overpass,
+d'abord le modèle de données OpenStreetMap est présenté ici.
 
-<!--
-In diesem Abschnitt führen wir die grundlegenden Datenstrukturen in OpenStreetMap ein.
-OpenStreetMap enthält vor allem drei Arten von Daten:
+Dans cette section, nous présentons les structures de données de base dans OpenStreetMap.
+OpenStreetMap contient principalement trois types de données:
 
-* Geometrien, eigentlich Koordinaten und Verweise, verorten die Objekte im Raum.
-* Sachdaten als kurze Textschnipsel geben den Objekten eine Bedeutung.
-* Metadaten erlauben es, Herkunft und Entstehung der Daten nachzuvollziehen.
+* Géométries, coordonnées et références réellement, localisent les objets dans l'espace.
+* Les données factuelles sous forme de courts extraits de texte donnent un sens aux objets.
+* Les métadonnées permettent de retracer l'origine et l'origine des données.
 
-Sämtliche Abfragekriterien zielen auf Eigenschaften dieser Datenstrukturen ab.
+Tous les critères de requête visent les propriétés de ces structures de données.
 
-Darüberhinaus gibt es verschiedene Datenformate, um diese Daten zu repräsentieren.
-Diese werden im Abschnitt [Datenformate](../targets/formats.md) erläutert.
+De plus, il existe différents formats de données pour représenter ces données.
+Celles-ci sont expliquées dans la section [Formats de données](../targets/formats.md).
 
-Besondere Erklärung benötigt auch das Zusammenspiel der Objekttypen im Hinblick auf nutzbare Geometrie.
-Einen praxistauglichen Leitfaden gibt dafür der Abschnitt [Geometrien](../full_data/osm_types.md).
--->
+L'interaction des types d'objets par rapport à la géométrie utilisable
+nécessite également une explication particulière.
+La section [Géométries](../full_data/osm_types.md) fournit un guide pratique à cet effet.
 
 <a name="tags"/>
 ## Attributs
 
+Les données factuelles dans OpenStreetMap sont stockées dans de courts extraits de texte, appelés _Attributs_.
+Les _attributs_ sont toujours composés d'une _clé_ et d'une _valeur_.
+Chaque objet ne peut avoir qu'une seule _valeur_ pour chaque _clé_.
+En dehors d'une longueur maximale de 255 caractères pour chaque clé et chaque valeur, il n'y a pas d'autre restriction.
+
+Formellement, toutes les Attributs sont égales,
+Les étiquettes peuvent être attribuées spontanément et librement;
+cela aurait dû contribuer de manière significative au succès d'OpenStreetMap.
+
+De facto, on n'utilise presque que des touches avec des lettres minuscules latines et parfois les caractères spéciaux `:` et `\_`.
+Deux types d'étiquettes de base sont établis :
+
 ...
+<!-- Traduit avec www.DeepL.com/Translator -->
 <!--
-Die Sachdaten in OpenStreetMap sind kurzen Textschnipseln abgelegt, sogenannte _Tags_.
-_Tags_ bestehen immer aus einem Schlüssel und einem Wert.
-Jedes Objekt kann zu jedem Schlüssel nur einen Wert besitzen.
-Außer einer Höchstlänge von 255 Zeichen gibt es keine weitergehende Beschränkung.
-
-Formal sind alle Tags gleichwertig.
-Tatsächlich hat die Möglichkeit,
-Tags völlig spontan und frei nach Zweckmäßigkeit vergeben zu können,
-höchstwahrscheinlich maßgeblich zum Erfolg von OpenStreetMap beigetragen.
-
-De facto sind fast nur Schlüssel mit lateinischen Kleinbuchstaben und vereinzelt den Sonderzeichen `:` und `\_` in Gebrauch.
-Es sind zwei Grundtypen von Tags etabliert:
-
 _Klassifizierende Tags_ haben einen von wenigen Schlüsseln,
 zu jedem der wenigen Schlüssel existieren auch nur überschaubar viele Werte.
 Davon abweichende Werte werden als Fehler angesehen.

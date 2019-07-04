@@ -1,5 +1,5 @@
-Des Géométries
-==============
+Géométries
+==========
 
 Pour expliquer des variantes diverses pour des données entiers d'OpenStreetMap,
 des détails des modèles des données d'OpenStreetMap sont introduit ici.

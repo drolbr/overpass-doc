@@ -63,7 +63,7 @@ Dazu wird der Abfragetext
     nwr[name="Sylt"];
     out center;
 
-in den Textbereich links eingetragen und per Klick auf "Ausführen" die Abfrage an die Overpass API gesendet.
+in den Textbereich links eingetragen und per Klick auf _Ausführen_ die Abfrage an die Overpass API gesendet.
 Die Abfragesprache ist mächtig, aber auch umfangreich,
 und es ist Gegenstand dieses gesamten Handbuchs die Abfragesprache zu erläutern.
 
