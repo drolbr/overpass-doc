@@ -74,7 +74,7 @@ Da Nodes das einzige Element mit Koordinate sind,
 werden die meisten auch nur als Koordinate in Ways genutzt und haben daher keine Tags.
 
 _Ways_ bestehen neben Id und Tags noch aus einer Folge von Verweisen auf Nodes.
-Auf diese Weise bekommen Ways sowohl eine Geometrie, indem man die Koordinaten der Ways nutzt.
+Auf diese Weise bekommen Ways sowohl eine Geometrie, indem man die Koordinaten der Nodes nutzt.
 Sie bekommen aber auch eine Topologie;
 zwei Ways sind verbunden, wenn beide an je einer Stelle auf dasselbe Node verweisen.
 

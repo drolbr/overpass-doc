@@ -33,64 +33,62 @@ Les étiquettes peuvent être attribuées spontanément et librement;
 cela aurait dû contribuer de manière significative au succès d'OpenStreetMap.
 
 De facto, on n'utilise presque que des touches avec des lettres minuscules latines et parfois les caractères spéciaux `:` et `\_`.
-Deux types d'étiquettes de base sont établis :
+Deux types d'_attributs_ de base sont établis:
 
-...
-<!-- Traduit avec www.DeepL.com/Translator -->
-<!--
-_Klassifizierende Tags_ haben einen von wenigen Schlüsseln,
-zu jedem der wenigen Schlüssel existieren auch nur überschaubar viele Werte.
-Davon abweichende Werte werden als Fehler angesehen.
-So wird das komplette öffentliche Straßennetz für Kraftfahrzeuge mit dem Schlüssel [highway](https://taginfo.openstreetmap.org/keys/highway) und einem von weniger als 20 gängigen Werten identifziert.
-Für Gebäude wird zumeist nur [building](https://taginfo.openstreetmap.org/keys/building) mit Wert _yes_ gesetzt.
+Les _attributs de classification_ ont l'une des quelques _clés_,
+pour chacune des quelques _clés_, il n'y a aussi que des _valeurs_ gérables.
+Les _valeurs_ qui s'en écartent sont considérées comme des erreurs.
+Ainsi, l'ensemble du réseau routier public pour les véhicules automobiles est identifié par la clé [highway](https://taginfo.openstreetmap.org/keys/highway) et l'une de moins de 20 valeurs communes.
+Pour les bâtiments, seul [building](https://taginfo.openstreetmap.org/keys/building) avec la valeur _yes_ est généralement saisi.
 
-Vereinzelt treten in solchen Tags auch semikolon-getrennte Werte auf.
-Dies ist ein allgemein zumindest geduldeter Ansatz, mehrere Werte zum gleichen Key am selben Objekt einzutragen.
+Occasionnellement, des _valeurs_ séparées par des points-virgules apparaissent également dans ces _attributs_.
+Il s'agit d'une approche généralement au moins tolérée pour saisir plusieurs _valeurs_ pour la même _clé_ sur le même objet.
 
-_Beschreibende Tags_ haben dagegen nur feste Keys,
-während der Value Freitext in Groß- und Kleinschreibung ist und durchaus Sonderzeichen enthalten kann.
-Der wichtigste Anwendungsfall sind Namen.
-Dazu können Beschreibungen, Bezeichner oder auch Größenangaben kommen.
+Les _attributs descriptives_, par contre, n'ont que des clés fixes,
+alors que la _valeur_ est un texte libre en majuscules et minuscules et bien peut contenir des caractères spéciaux.
+Les cas d'utilisation les plus importants sont les noms.
+Des descriptions, des identificateurs ou des spécifications de taille peuvent également être utilisés.
 
-Die wichtigsten Quellen für etablierte Keys und Values sind
+Les sources les plus importantes pour les clés et les valeurs établies sont les suivantes
 
-* das [OSM-Wiki](https://wiki.openstreetmap.org/wiki/Map_Features).
-  Es hat längere Beschreibungstexte.
-  Mitunter bilden die Texte eher den Wunsch des Dokumentierenden als den tatsächlichen Gebrauch ab.
+* le [OSM-Wiki](https://wiki.openstreetmap.org/wiki/Map_Features).
+  Il a des textes de description plus longs.
+  Parfois, les textes reflètent le souhait du documentateur plutôt que l'utilisation réelle.
 * [Taginfo](https://taginfo.openstreetmap.org/).
-  Zählt Tags nach tatsächlichem Vorkommen aus.
-  Bietet Links auf für das jeweilige Tag relevante Ressourcen.
+  Compter les étiquettes en fonction de l'occurrence réelle.
+  Fournit des liens vers des ressources pertinentes à l'étiquette.
 
-Das komplette Kapitel [Objekte finden](../criteria/index.md) ist der Suche anhand von Tags gewidmet.
--->
+Le chapitre complet [Trouver des objets](../criteria/index.md) est consacré à la recherche par _attributs_.
 
 <a name="nwr"/>
 ## Nœuds, Chemins et Relations
 
+OpenStreetMap possède trois types d'objets, dont chacun peut porter un nombre illimité de _attributs_.
+Les trois types d'objet sont fondamentalement constitués d'un identifiant;
+c'est toujours un nombre naturel.
+La combinaison du type d'objet et de l'identifiant est unique,
+mais pas seulement l'identifiant sans type.
+
+Les _nœuds_ ont toujours une coordonnée en plus de l'identifiant et des attributs.
+Ils peuvent représenter un point d'intérêt ou un petit objet.
+Parce que les nœuds sont le seul élément avec une coordonnée,
+la plupart d'entre eux ne sont utilisés que comme coordonnées dans les _chemins_
+et n'ont donc pas de attributs.
+
+Les _chemins_ sont constituées d'identifiant et des attributs ainsi que d'une séquence de références à des _nœuds_.
+De cette façon, les chemins obtient à la fois une géométrie en utilisant les coordonnées des _nœuds_.
+Mais ils obtiennent aussi une topologie;
+deux chemins sont connectées si les deux pointent vers le même nœud.
+
+Les chemins peuvent se référer au même nœud plusieurs fois.
+Le cas ordinaire est un chemin fermé,
+où le premier et le dernier nœud correspondent.
+Tous les autres cas sont techniquement possibles,
+mais des contenus indésirables.
+
 ...
+<!-- Traduit avec www.DeepL.com/Translator, partiellement redigé -->
 <!--
-OpenStreetMap hat drei Objekttypen, von denen jeder eine beliebige Anzahl Tags tragen kann.
-Alle drei Objekttypen bestehen grundsätzlich aus einer Id;
-dies ist stets eine natürliche Zahl.
-Die Kombination aus Objekttyp und Id ist eindeutig,
-jedoch nicht die Id alleine.
-
-_Nodes_ haben neben Id und Tags auch stets eine Koordinate.
-Sie können einen Point-of-Interest oder ein Objekt mit geringer Ausdehnung repräsentieren.
-Da Nodes das einzige Element mit Koordinate sind,
-werden die meisten auch nur als Koordinate in Ways genutzt und haben daher keine Tags.
-
-_Ways_ bestehen neben Id und Tags noch aus einer Folge von Verweisen auf Nodes.
-Auf diese Weise bekommen Ways sowohl eine Geometrie, indem man die Koordinaten der Ways nutzt.
-Sie bekommen aber auch eine Topologie;
-zwei Ways sind verbunden, wenn beide an je einer Stelle auf dasselbe Node verweisen.
-
-Ways können auf dieselbe Node mehrfach verweisen.
-Der Standardfall hierfür ist ein geschlossener Weg,
-bei dem erste und letzte Node übereinstimmen.
-Alle übrigen Fälle sind zwar technisch möglich,
-aber fachlich unerwünscht.
-
 _Relations_ bestehen neben Id und Tags noch aus einer Folge von Verweisen auf ihre _Members_.
 Grundsätzlich ist jedes Member ein Paar aus einem Verweis auf ein Node, ein Way oder eine Relation und eine Rolle.
 Die ursprüngliche Aufgabe von Relations ist die Speicherung von Abbiegeverboten gewesen,
