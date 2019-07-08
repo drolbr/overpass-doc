@@ -1,7 +1,7 @@
 Glossaire
 =========
 
-Pour OpenStreetMap et pour l'API Overpass plusieurs mots-clef sont expliqués.
+Il explique de nombreux mots-clés pour OpenStreetMap et pour l'API Overpass.
 
 ### Attribut
 
@@ -30,7 +30,7 @@ Bestandteil eines _Tags_,
 und zwar die Schlüssel-Zeichenkette, der ein _Value_ (d.h. Wert) zugeordnet wird.
 -->
 
-### Élément Dérivé
+### Élément dérivé
 
 ...
 <!--
@@ -42,7 +42,7 @@ Sie ermöglichen damit, Tags umzuschreiben oder Geometrien zu vereinfachen.
 
 ### Ensemble
 
-cf. variable
+Voir variable
 
 ### Évaluation
 
@@ -86,7 +86,7 @@ ohne Tags normalerweise nur Bestandteil eines _Ways_,
 um jenen mit Koordinaten auszustatten.
 -->
 
-### Rectangle de Délimitation
+### Rectangle englobant
 
 ...
 <!--

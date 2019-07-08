@@ -1,9 +1,9 @@
 Mutualisation
 =============
 
-Il y a des instances publiques qui offrent toutes leurs résources,
-mais aussi protegent contre surexploitation.
-Des utilisateurs en grande masse doivent pouvoir facilement mettre sur place leur meme instance.
+Il y a des instances publiques qui mettent à disposition toutes leurs ressources,
+mais aussi qui veillent à se protéger de leur surexploitation.
+Les gros utilisateurs doivent pouvoir facilement mettre en place leur propre instance.
 
 <a name="magnitudes"/>
 ## Ordres de grandeur
@@ -63,7 +63,7 @@ Es gibt derzeit zwei voneinander unabhängige öffentliche Instanzen,
 Wir beginnen mit der Erläuterung dieser Status-Abfragen.
 -->
 
-### Nombre des requêtes
+### Nombre de requêtes
 
 ...
 <!--
@@ -121,7 +121,7 @@ wann welcher Slot wieder verfügbar ist.
 Wegen des Rate-Limits abgelehnte Abfragen werden mit dem [HTTP-Statuscode 429](https://tools.ietf.org/html/rfc6585#section-4) beantwortet.
 -->
 
-### Durée et Taille maximales
+### Durée et taille maximales
 
 ...
 <!--

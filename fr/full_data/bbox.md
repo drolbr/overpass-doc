@@ -1,10 +1,10 @@
-Rectangle de délimitation
-=========================
+Rectangle englobant
+===================
 
-Obtenir des données d'OpenStreetMap dans un extrait par la façon la plus simple.
+Obtenir des données d'OpenStreetMap dans un extrait de la façon la plus simple.
 
 <a name="filter"/>
-## Le Filter
+## Le filtre
 
 ...
 <!--
