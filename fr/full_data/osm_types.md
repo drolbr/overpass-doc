@@ -1,8 +1,8 @@
-Géométries
-==========
+Des géométries
+==============
 
-Pour expliquer des variantes diverses pour des données entiers d'OpenStreetMap,
-des détails des modèles des données d'OpenStreetMap sont introduit ici.
+Pour expliquer les variantes pour les données complètes d'OpenStreetMap,
+des détails des modèles des données d'OpenStreetMap sont introduits ici.
 
 <a name="scope"/>
 ## Démarcation
@@ -19,7 +19,7 @@ Hier geht es darum, wie das Vervollständigen von Ways und Relationen im Hinblic
 -->
 
 <a name="nodes_ways"/>
-## Chemins et Nœuds
+## Chemins et nœuds
 
 ...
 <!--
@@ -199,7 +199,7 @@ Dazu ergänzen wir die letzte Abfrage aus dem Absatz _Relationen_ um die Rückw�
 -->
 
 <a name="full"/>
-## Tous objects ensembles
+## Tous les objets ensemble
 
 ...
 <!--

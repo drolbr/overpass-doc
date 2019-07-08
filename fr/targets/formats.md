@@ -1,8 +1,8 @@
 Formats de données
 ==================
 
-Il y a plusieur formats de données pour porter des objets d'OpenStreetMap.
-Nous presenterions toutes les formats qu'ont un application immediate.
+Il y a plusieurs formats de données pour récupérer des objets d'OpenStreetMap.
+Nous présenterons tous les formats qui ont une application immédiate.
 
 <a name="scope"/>
 ## Démarcation
@@ -21,7 +21,7 @@ ist [der Abschnitt zu Geometrien](../full_data/osm_types.md) im Kapitel [Räumli
 -->
 
 <a name="faithful"/>
-## Niveaus de verbosité traditionelles
+## Niveaux de verbosité traditionnels
 
 ...
 <!--

@@ -1,11 +1,11 @@
 Principes
 =========
 
-Overpass API ni favorisera ni genera n'importe pas lequel schéma de tagging.
-On vise de rester rétrocompatible pour plusieurs décades.
+L'API Overpass ne fera ni la promotion ni n'interférera avec les schémas de balisage.
+La rétrocompatibilité est prévue pour des décennies.
 
 <a name="local"/>
-## Localement Rapide
+## Localement rapide
 
 ...
 <!--
@@ -19,7 +19,7 @@ die für den jeweiligen Anwendungszweck stärker optimiert sind.
 -->
 
 <a name="faithful"/>
-## Fidèle à la Modèle des données
+## Fidèle au modèle de données
 
 ...
 <!--
@@ -53,7 +53,7 @@ Und für faktrentreue Modellierungen kann zumindest der Gesamtzusammenhang gezei
 -->
 
 <a name="tags"/>
-## Neutre entre des attributs
+## Neutre avec les attributs
 
 ...
 <!--
@@ -102,7 +102,7 @@ d.h. kein Tag bekommt eine besondere Behandlung.
 -->
 
 <a name="nd"/>
-## Invulnéarbilité
+## Invulnérabilité
 
 ...
 <!--
@@ -123,7 +123,7 @@ Beispiele dafür sind im Abschnitt [JOSM](../targets/josm.md) zu finden.
 -->
 
 <a name="ql"/>
-## Langage multifonctionelle
+## Langage multifonctionnel
 
 ...
 <!--
@@ -172,7 +172,7 @@ Mehr dazu im [nächsten Abschnitt](commons.md#magnitudes).
 Die Overpass API lässt sich an den [Vier Freiheiten](https://www.gnu.org/philosophy/free-sw.de.html) von Open Source messen.
 -->
 
-### Fonctionner, Distribuer
+### Fonctionner, distribuer
 
 ...
 <!--
@@ -188,7 +188,7 @@ den Ressourcenbedarf der Software so zu bemessen,
 dass geeignete Hardware leicht zu bekommen ist.
 -->
 
-### Modifier, Cultiver
+### Modifier, cultiver
 
 ...
 <!--

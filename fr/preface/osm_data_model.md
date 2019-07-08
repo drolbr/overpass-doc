@@ -1,8 +1,8 @@
 Modèle de données d'OpenStreetMap
 =================================
 
-Comprendre le fonctionnement de l'API Overpass,
-d'abord le modèle de données OpenStreetMap est présenté ici.
+Pour permettre la compréhension de l'API Overpass, 
+il faut d'abord introduire le modêle de données d'OpenStreetMap.
 
 Dans cette section, nous présentons les structures de données de base dans OpenStreetMap.
 OpenStreetMap contient principalement trois types de données:

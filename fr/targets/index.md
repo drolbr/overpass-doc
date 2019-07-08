@@ -1,9 +1,9 @@
 Utilisation
 ===========
 
-Common est-que c'un requête doit être configurer pour que le résultat va bien?
-Des examples pour beaucoup des applications courantes sans prentention être complet.
-Explication de les formats de données et les variantes de les formats.
+Comment est ce qu'une requête doit être configurée pour que le résultat soit celui attendu?
+Des exemples pour beaucoup d'applications courantes sans prétention à être complets.
+Explication des formats de données et les variantes de ces formats.
 
 [LINK_STUB](formats.md)
 

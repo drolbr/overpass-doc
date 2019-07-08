@@ -1,12 +1,13 @@
-Modèle d'Exécution
+Modèle d'exécution
 ==================
 
-La mission d'Overpass API:
-Elle garde une copie exacte de les données d'OpenStreetMap complét,
-pour le but de pouvoir les requêter par des criterions le plus diverses que possible.
+La mission de l'API Overpass:
+
+Elle garde une copie exacte de les données d'OpenStreetMap complète,
+afin de les interroger selon de nombreux critères très divers.
 
 <a name="sequential"/>
-## Instruction après Instruction
+## Séquences
 
 ...
 <!--
@@ -52,7 +53,7 @@ aber die entstehende Zwei-Zeilen-Lösung spiegelt die klare Aufgabenteilung wide
 -->
 
 <a name="statements"/>
-## Instructions et Filtres 
+## Instructions et filtres 
 
 ...
 <!--
@@ -111,7 +112,7 @@ die zu irgendeinem der Vorgabe-Objekte einen Abstand von höchstens 100 Metern h
 -->
 
 <a name="block_statements"/>
-## Instructions de Bloc
+## Instructions de bloc
 
 ...
 <!--
@@ -145,7 +146,7 @@ Es gibt zahlreiche weitere Block-Statements:
 -->
 
 <a name="evaluators"/>
-## Evaluations et Éléments Dérivées
+##  Évaluations et éléments dérivées
 
 ...
 <!--
@@ -247,7 +248,7 @@ Die erzeugten Objekte können Sie sehen, wenn Sie als Ausgabeformat es bei XML [
 -->
 
 <a name="sets"/>
-## Plusieurs Selections en Parallèle
+## Plusieurs sélections en parallèle
 
 ...
 <!--

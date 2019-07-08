@@ -1,8 +1,8 @@
-Polygon et Around
-=================
+Polygone et autour
+==================
 
-En plus de la rectangle de délimitation,
-il y a des autres critères qui peut encercler une region bût plus precisement.
+En plus du rectangle englobant,
+il y a d'autres critères pour délimiter une région plus précisément.
 
 <!--
 Koordinaten in Breiten- und Längengrad sind zwar als Konzept gut verständlich,
@@ -108,7 +108,7 @@ dies schrumpft die _Relations_ auf eine handhabbare Größe.
 -->
 
 <a name="absolute_around"/>
-## Autor des coordonnées
+## Autour des coordonnées
 
 ...
 <!--
