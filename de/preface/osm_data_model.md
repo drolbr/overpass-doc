@@ -178,7 +178,7 @@ und [Objekte Filtern](../criteria/index.md) das zuständige Kapitel.
 
 Listen weltweit aller Objekte mit einer Eigenschaft haben dagegen allenfalls eine schwache räumliche Relevanz.
 Zwar hat jede Filiale einen Standort,
-aber die Fast-Food-Kette an sich erhält ihre räumliche Information ausschließlich vermittels der Filialen.
+aber die Fast-Food-Kette an sich erhält ihre räumliche Information ausschließlich vermittels dieser Filialen.
 
 Zuletzt muss auch das Konzept der Identität eine Objektes hinter seinen Raumbezug zurücktreten.
 Wie schon in Bezug auf den Layer haben verschiedene Mapper verschiedene Sichtweisen dazu,

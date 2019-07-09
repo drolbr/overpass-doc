@@ -86,123 +86,116 @@ où le premier et le dernier nœud correspondent.
 Tous les autres cas sont techniquement possibles,
 mais des contenus indésirables.
 
-...
-<!-- Traduit avec www.DeepL.com/Translator, partiellement redigé -->
-<!--
-_Relations_ bestehen neben Id und Tags noch aus einer Folge von Verweisen auf ihre _Members_.
-Grundsätzlich ist jedes Member ein Paar aus einem Verweis auf ein Node, ein Way oder eine Relation und eine Rolle.
-Die ursprüngliche Aufgabe von Relations ist die Speicherung von Abbiegeverboten gewesen,
-mit dementsprechend nur wenigen Membern.
-Mittlerweile werden sie aber auch für Staats- und Gemeindegrenzen, Multipolygone oder Routen verwendet.
-Ihre Erscheinungsformen sind daher sehr vielfältig,
-und vor allem Grenz- und Routenrelationen können auch Ausmaße von hunderten und tausenden Kilometern erreichen.
+Les _relations_ se composent d'identifiant et des attributs ainsi que d'une séquence de références à leurs _membres_.
+Fondamentalement, chaque membre est une paire de références à un nœud, un chemin ou une relation et un rôle.
+La tâche originelle de relations était le stockage des interdictions de tournées,
+avec, par conséquent, peu de membres.
+Entre-temps, ils sont également utilisés pour les frontières des états et des municipalités, les multipolygones ou les routes.
+Leurs manifestations sont donc très diverses,
+et surtout, les relations frontalières et routières peuvent aussi atteindre des centaines et des milliers de kilomètres.
 
-Eine Geometrie für Relations entsteht erst durch die Interpretation des Datennutzers.
-Allgemein anerkannt sind Interpretationen, die Multipolygone und Routen korrekt deuten:
-Wie schon bei Ways werden solche Relations als Flächen verstanden, deren Member geschlossene Ringe formen.
-Interpretationen beginnen bei der Frage, inwiefern für diese Deutung das Tag _area_=_yes_ notwendig ist.
-Bei anderen Relations, z.B. Routen und Abbiegeverboten, ist die Geometrie die Summe der Geometrien ihrer Member vom Typ Node und Way.
+Une géométrie des relations n'est créée que par l'interprétation de l'utilisateur des données.
+Les interprétations généralement acceptées sont celles
+qui interprètent correctement les multipolygones et les routes:
+Comme pour les chemins, de telles relations sont comprises comme des domaines dont les membres forment des cercles fermés.
+Les interprétations commencent par la question de savoir dans quelle mesure l'attribut _area_=_yes_ est nécessaire pour cette interprétation.
+Pour d'autres relations, par exemple les routes et les interdictions de virage, la géométrie est la somme des géométries de ses membres de type _nœud_ et _chemin_.
 
-Relations auf Relations sind technisch möglich,
-haben aber keine praktische Relevanz.
-Hier steigt das Risiko weiter, dass man sich große Datenmengen bereits dann einhandelt,
-wenn man nur die Referenzen einer einzelnen Relation auflöst.
-Es gibt so viele je nach Kontext sinnvolle Ansätze, die Referenzen von Relations gezielt teilweise aufzulösen,
-dass dem [ein eigener Absatz](../full_data/osm_types.md#rels_on_rels) gewidmet ist.
--->
+Les relations sur les relations sont techniquement possibles,
+mais n'ont aucune pertinence pratique.
+Ceci augmente le risque que de grandes quantités de données soient déjà échangées,
+si vous ne résolvez que les références d'une seule relation.
+Selon le contexte, il existe tant d'approches utiles pour suivre partiellement et de manière ciblée les références des relations,
+qu'un [paragraphe distinct](../full_data/osm_types.md#rels_on_rels) lui est consacré.
 
 <a name="areas"/>
 ## Surfaces
 
-...
-<!--
-Flächen haben im OpenStreetMap keine eigenständige Datenstruktur.
-Sie werden stattdessen durch geschlossene _ways_ oder _relations_ abgebildet.
-Die Tags sind zur Unterscheidung zwischen Fläche und aus anderen Gründen geschlossenem Weg relevant,
-im einfachsten Fall durch das Tag _area_=_yes_.
+Les surfaces n'ont pas de structure de données indépendante dans OpenStreetMap.
+Au lieu de cela, ils sont représentés par des _chemins_ ou _relations_ fermées.
+Les attributs sont pertinentes pour distinguer la surface et le chemin fermé pour autre raison,
+dans le cas le plus simple par l'attribut _area_=_yes_.
 
-Geschlossene Ways werden verwendet,
-wenn die Fläche zusammenhängend ist und keine Löcher hat.
-Ein Way ist geschlossen, wenn sein erster und letzter Eintrag auf das gleiche Node verweisen.
+Les chemins fermées sont utilisées,
+si la surface est continue et sans trous.
+Un chemin est fermé si ses première et dernière entrées pointent vers le même nœud.
 
-Relations werden verwendet,
-wenn ein einzelner Way nicht mehr ausreicht.
-Neben Löchern oder getrennten Flächenteilen passiert dies noch,
-wenn der Rand aus mehreren Ways gebildet werden soll.
-Das ist eigentlich nur bei Grenzen großer Gebiete (Städte, Bundesländer, Staaten) üblich.
+Les relations sont utilisées,
+quand une seule chemin ne suffit plus.
+En plus des trous ou des parties de surface séparées, cela se produit également,
+si la bordure doit être formée de plusieurs chemins.
+Ceci n'est en fait courant que pour les frontières de grandes structures (villes, régions, pays).
 
-Wie bei Ways wird die Fläche durch den Umriss beschrieben.
-Die in der Relation referenzierten Ways müssen dazu aneinanderpassen und geschlossene Ringe bilden.
-Mehr Informationen zu den [Konventionen](https://github.com/osmlab/fixing-polygons-in-osm/blob/master/doc/background.md).
--->
+Comme pour les chemins, la surface est décrite par le contour.
+Les chemins référencées dans la relation doivent s'emboîter et former des boucles fermés.
+Plus d'informations sur les [Conventions](https://github.com/osmlab/fixing-polygons-in-osm/blob/master/doc/background.md).
 
 <a name="metas"/>
 ## Métadonnées
 
-...
-<!--
-OpenStreetMap ist ein vollständiges Versionskontrollsystem.
-Daher werden sowohl alte Objektzustände gespeichert
-als auch die nötigen Daten, um Änderungen Benutzern zuzuweisen.
+OpenStreetMap est un système complet de gestion de versions.
+Par conséquent, les anciens états d'objet restont enregistrés
+et les données nécessaires pour affecter les modifications aux utilisateurs.
 
-Im einzelnen gibt es pro Objekt und Zustand eine _Versionsnummer_ und einen _Zeitstempel_.
-Alte Zustände mit alten Versionsnummern werden dabei gesichert.
-Daher gibt es in der Overpass API [spezielle Methoden](../analysis/museum.md), um auf alte Datenstände zuzugreifen.
-Ohne besondere Konfiguration wird immer auf den aktuellen Daten gearbeitet.
+Il y a un _numéro de version_ et un _horodatage_ pour chaque objet et état.
+Les anciens états avec d'anciens numéros de version sont sauvegardés.
+Par conséquent, il existe des [méthodes spéciales](.../analysis/museum.md) dans l'API Overpass pour accéder aux anciens états de données.
+Sans configuration spéciale, les données actuelles sont toujours utilisées.
 
-Änderungen werden zudem zu _Changesets_ zusammengefasst.
-Diese sind dem hochladenden Benutzer zugeordnet.
-Die Zusammenfassung nimmt die Editier-Software automatisch vor,
-und in der Regel entsteht ein Changeset pro Hochladevorgang.
+Les modifications sont également combinées à _groupes de modifications_.
+Celles-ci sont affectées à l'utilisateur de téléchargement.
+Le logiciel d'édition fait automatiquement le résumé,
+et il y a généralement un groupe de modifications par téléchargement.
 
-_Changesets_ haben wiederum Tags und es kann Diskussionen zu Changesets geben.
-Diese Texte werden jedoch nicht in der Overpass API verarbeitet.
+Les _groupes de modifications_ ont des attributs
+et il peut y avoir des discussions sur les groupes de modifications.
+Toutefois, ces textes ne sont pas traités dans l'API Overpass.
 
-Auf diese Weise sind dann auch Objekte in ihrer Gesamtheit jeweils einem Benutzer zugeordnet.
-Es handelt sich um den letzten Bearbeiter.
-Objekte mit höherer Versionsnummer als 1 haben daher in der Regel Eigenschaften aus früheren Versionen behalten,
-die nicht dem aktuellen Bearbeiter zuzurechnen sind.
--->
+Ainsi, les objets sont également affectés à un utilisateur dans leur intégralité.
+C'est le dernier utilisateur.
+Les objets dont le numéro de version est supérieur à 1 conservent donc généralement les propriétés des versions antérieures,
+qui ne sont pas attribuables à l'utilisateur actuel.
 
 <a name="declined"/>
 ## Calques, Catégories, Identités
 
-...
-<!--
-Thematische Layer gibt es dagegen in OpenStreetMap nicht,
-und dies auch aus gutem Grund.
-Für die einen gehören Supermärkte zusammen mit Postämtern, Banken und Geldautomaten zu den Orten,
-an denen man Bargeld bekommt.
-Für die nächsten bilden Supermärkte dagegen mit Bäckereien und Fleischern eine Gruppe,
-weil man dort Lebensmittel einkaufen kann.
+Cependant, il n'y a pas de calques thématiques dans OpenStreetMap,
+et pour une bonne raison.
+Pour certains, les supermarchés, les bureaux de poste, les banques et les distributeurs automatiques de billets ne sont que quelques-uns des endroits,
+où vous pouvez obtenir de billets.
+Pour le prochain, les supermarchés forment un groupe avec les boulangeries et les boucheries,
+parce qu'y on peut acheter des aliments.
 
-Daher spielt die Klassifikation nur eine untergeordnete Rolle in OpenStreetMap.
-Es werden stattdessen lieber objektive Eigenschaften gemappt.
-Streitigkeiten über Klassifikation sind so weitgehend vermieden worden,
-und die meisten Mapper können ihre Weltsicht ohne große Verrenkungen abbilden.
+Par conséquent, la classification ne joue qu'un rôle subordonné dans OpenStreetMap.
+Au lieu de cela, les propriétés objectives sont cartographiées.
+Les litiges sur la classification ont ainsi été largement évités,
+et la plupart des cartographes peuvent montrer leur vision du monde sans grandes contorsions.
 
-Eine ebenfalls häufig erwartete Struktur sind Kategorien,
-egal ob sehr generell wie weltweit alle Filialen einer Fast-Food-Kette
-oder speziell wie alle Briefkästen in Hessen.
+Une structure qui est aussi souvent attendue sont les catégories,
+que ce soit très généralement ou mondialement toutes les branches d'une chaîne de restauration rapide
+ou surtout comme toutes les boîtes aux lettres de Languedoc.
 
-OpenStreetMap ist eine räumliche Datenbank.
-Listen aller Objekte mit einer speziellen Eingeschaft in einem beschränkten Gebiet lassen sich gezielt filtern.
-Die Overpass API ist übrigens eines der dafür geeingeneten Tools,
-und [Objekte Filtern](../criteria/index.md) das zuständige Kapitel.
+OpenStreetMap est une base de données spatiales.
+Les listes de tous les objets ayant une propriété spécifique dans une zone restreinte peuvent être calculées.
+D'ailleurs, l'API Overpass est l'un des outils appropriés à cette fin,
+et [Trouver des objets](../criteria/index.md) le chapitre approprié.
 
-Listen weltweit aller Objekte mit einer Eigenschaft haben dagegen allenfalls eine schwache räumliche Relevanz.
-Zwar hat jede Filiale einen Standort,
-aber die Fast-Food-Kette an sich erhält ihre räumliche Information ausschließlich vermittels der Filialen.
+Les listes de tous les objets ayant une propriété dans le monde entier, par contre, ont au mieux une faible pertinence spatiale.
+Chaque succursale a un emplacement,
+mais la chaîne de restauration rapide elle-même reçoit ses informations spatiales exclusivement par l'intermédiaire des cettes succursales.
 
-Zuletzt muss auch das Konzept der Identität eine Objektes hinter seinen Raumbezug zurücktreten.
-Wie schon in Bezug auf den Layer haben verschiedene Mapper verschiedene Sichtweisen dazu,
-was zu einer so komplexen Anlage wie einem großen Bahnhof dazugehört.
-Nur Gleise und Bahnsteige? Das Empfangsgebäude, oder nur, wenn es für Reisende geöffnet ist oder der Bahngesellschaft gehört? Der Bahnhofsvorplatz, die nach dem Bahnhof benannte Umsteigehaltestelle?
-Die Weichen im Vorfeld des Bahnhofs?
+Enfin, le concept de l'identité d'un objet doit aussi reculer derrière sa référence spatiale.
+Comme c'est déjà le cas pour la couche, les différents utilisateurs ont des vues différentes sur celle-ci,
+qui fait partie d'une installation aussi complexe qu'une grande gare ferroviaire.
+Que des rails et des quais?
+Le bâtiment d'accueil, ou seulement s'il est ouvert aux voyageurs ou s'il appartient à la compagnie ferroviaire?
+Le parvis de la gare, l'arrêt de transfert du nom de la gare?
+Les points autour de la gare?
 
-Wenn eine Bezugnahme auf die Darstellung eines Objekt der materiellen Welt genommen wird,
-geht dies am Besten mit einer Koordinate.
-Ortsfeste Anlagen ziehen per Definition nicht um,
-und die Lagegenauigkeit in OpenStreetMap ist so gut,
-dass eine Koordinate des Zielobjekts die beste Identifikation ist.
--->
+Lorsqu'il est fait référence à la représentation d'un objet du monde matériel,
+il est préférable d'utiliser une coordonnée.
+Par définition, les installations fixes ne bougent pas,
+et la précision de position dans OpenStreetMap est si bonne
+que la position est déjà la meilleure identification.
+
+<!-- Traduit avec www.DeepL.com/Translator, partiellement redigé -->
