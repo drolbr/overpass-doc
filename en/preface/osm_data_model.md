@@ -7,13 +7,13 @@ the data model of OpenStreetMap is introduced here ahead of everything else.
 In this section we introduce the basic data structures of OpenStreetMap.
 OpenStreetMap foremost contains three kinds of data:
 
-* Geometries, more precisely coordinates and references to coordinates, locate the objects on Earth's surface.
+* Geometries, more precisely coordinates and references to the coordinates, locate the objects on Earth's surface.
 * Short bits of text give each object a semantical meaning.
 * Meta data facilitates to attribute the sources to the data.
 
-All selection criterions of the query language deal with properties of these data structures.
+All selection criteria of the query language deal with properties of these data structures.
 
-In addition, multiple dataformats can represent the data.
+In addition, multiple data formats can represent the data.
 These data formats are presented in the section [Data Formats](../targets/formats.md).
 
 Handling the different object type such that it results in manageable geometry deserves a tutorial.
@@ -22,31 +22,31 @@ This tutorial is the section [Geometries](../full_data/osm_types.md).
 <a name="tags"/>
 ## Tags
 
-The semantical data of OpenStreetMap is encoded in short bits of text, so called _tags_.
+The semantical data of OpenStreetMap are encoded in short bits of text, so called _tags_.
 _Tags_ always consist of a _key_ and a _value_.
 Each object can have for each _key_ at most one _value_.
 Beside a length restriction to 255 characters for each key and value no further constraints apply.
 
 The data model does not distinguish any particular tag or key.
-Tags can be chosen spotaneously and to best expedience;
+Tags can be chosen spontaneously and to best expedience;
 this policy is highly likely to have promoted the success of OpenStreetMap.
 
 Latin lowercase letters and rarely the special characters `:` and `\_` virtually exclusively prevail amongst the keys.
 The tags fall into the two informal categories:
 
-_Classifying tags_ have one of few keys,
+_Classifying tags_ have one of a few keys,
 and for each key only few values exist.
-Deviating values are percieved as errorneous.
+Deviating values are perceived as erroneous.
 For example, the public road grid for motorized vehicles is identified by the key [highway](https://taginfo.openstreetmap.org/keys/highway) and one of fewer than 20 customary values.
 
-In such tags, a value occasionally accomodates multiple customary values concatenated by semicolon.
-This is an in general at least tolerated practice to set multiple values for a single key on the same object.
+In such tags, a value occasionally accommodates multiple customary values concatenated by semicolon.
+This is a generally at least tolerated practice to set multiple values for a single key on the same object.
 
 _Describing tags_ have only fixed keys
 while anything is accepted in the value
-including lowercase and uppercase letters as well as numbers, special charcters, and interpunctation.
+including lowercase and uppercase letters as well as numbers, special characters, and punctuation marks.
 Names are the most prominent use case.
-But descriptions, identifiers, or even sized as well are commonplace.
+But descriptions, identifiers, or even sizes as well are commonplace.
 
 The most generally acclaimed sources for key's and value's semantics are:
 
@@ -62,104 +62,91 @@ The complete chapter [Find Objects](../criteria/index.md) is devoted to search o
 <a name="nwr"/>
 ## Nodes, Ways, Relations
 
-...
-<!--
-OpenStreetMap hat drei Objekttypen, von denen jeder eine beliebige Anzahl Tags tragen kann.
-Alle drei Objekttypen bestehen grundsätzlich aus einer Id;
-dies ist stets eine natürliche Zahl.
-Die Kombination aus Objekttyp und Id ist eindeutig,
-jedoch nicht die Id alleine.
+OpenStreetMap has three types of objects.
+Every object can carry an arbitrary number of tags.
+Also, every object has an id.
+The combination of type and id is unique, but the id alone is not.
 
-_Nodes_ haben neben Id und Tags auch stets eine Koordinate.
-Sie können einen Point-of-Interest oder ein Objekt mit geringer Ausdehnung repräsentieren.
-Da Nodes das einzige Element mit Koordinate sind,
-werden die meisten auch nur als Koordinate in Ways genutzt und haben daher keine Tags.
+_Nodes_ are defined as a coordinate in addition to the id and tags.
+A node can represent a point of interest, or an object of minuscule extent.
+Because nodes are the only type of object that has a coordinate,
+most of the nodes serve only as a coordinate for an intermediate point within a way
+and carry no tags.
 
-_Ways_ bestehen neben Id und Tags noch aus einer Folge von Verweisen auf Nodes.
-Auf diese Weise bekommen Ways sowohl eine Geometrie, indem man die Koordinaten der Nodes nutzt.
-Sie bekommen aber auch eine Topologie;
-zwei Ways sind verbunden, wenn beide an je einer Stelle auf dasselbe Node verweisen.
+_Ways_ consists of a sequence of references to nodes in addition to the id and tags.
+This way ways get a geometry by using the coordinates of the referenced nodes.
+But they also get a topology:
+two ways are connected if both point at a position to the same node.
 
-Ways können auf dieselbe Node mehrfach verweisen.
-Der Standardfall hierfür ist ein geschlossener Weg,
-bei dem erste und letzte Node übereinstimmen.
-Alle übrigen Fälle sind zwar technisch möglich,
-aber fachlich unerwünscht.
+Ways can refer to the same node multiple times.
+The common case for this is a closed way where the first and last entry point to the same node.
+All other cases are syntactically correct but semantically deprecated.
 
-_Relations_ bestehen neben Id und Tags noch aus einer Folge von Verweisen auf ihre _Members_.
-Grundsätzlich ist jedes Member ein Paar aus einem Verweis auf ein Node, ein Way oder eine Relation und eine Rolle.
-Die ursprüngliche Aufgabe von Relations ist die Speicherung von Abbiegeverboten gewesen,
-mit dementsprechend nur wenigen Membern.
-Mittlerweile werden sie aber auch für Staats- und Gemeindegrenzen, Multipolygone oder Routen verwendet.
-Ihre Erscheinungsformen sind daher sehr vielfältig,
-und vor allem Grenz- und Routenrelationen können auch Ausmaße von hunderten und tausenden Kilometern erreichen.
+_Relations_ have a sequence of members in addition to the id and tags.
+Each member is a pair of a reference to a node, a way or a relation and a so-called role.
+The role is a text string.
+Relations have been invented to represent turn restrictions
+thus having few members.
+Nowadays, they also serve as boundaries of countries, counties, multipolygons, and routes.
+Therefore, their formal structure wildly varies,
+and in particular boundary and route relations can extend over hundreds or thousands of kilometers.
 
-Eine Geometrie für Relations entsteht erst durch die Interpretation des Datennutzers.
-Allgemein anerkannt sind Interpretationen, die Multipolygone und Routen korrekt deuten:
-Wie schon bei Ways werden solche Relations als Flächen verstanden, deren Member geschlossene Ringe formen.
-Interpretationen beginnen bei der Frage, inwiefern für diese Deutung das Tag _area_=_yes_ notwendig ist.
-Bei anderen Relations, z.B. Routen und Abbiegeverboten, ist die Geometrie die Summe der Geometrien ihrer Member vom Typ Node und Way.
+The geometry of relations only manifests by the interpretation of the data user.
+The multipolygon interpretation has found general acclaim:
+like for ways, such relations are understood as an area if the members form closed rings.
+Interpretations start at the question whether the presence of the tag _area_=_yes_ is required for this.
+Other relations like routes or turn restrictions obtain their geometry as the sum of the geometries of their members of type node and way.
 
-Relations auf Relations sind technisch möglich,
-haben aber keine praktische Relevanz.
-Hier steigt das Risiko weiter, dass man sich große Datenmengen bereits dann einhandelt,
-wenn man nur die Referenzen einer einzelnen Relation auflöst.
-Es gibt so viele je nach Kontext sinnvolle Ansätze, die Referenzen von Relations gezielt teilweise aufzulösen,
-dass dem [ein eigener Absatz](../full_data/osm_types.md#rels_on_rels) gewidmet ist.
--->
+Relations on top of relations are technically possible,
+but have little practical relevance.
+With relations on relations the risk is further elevated
+to end up with large amounts of data already if just the members of a single relation are resolved.
+For that reason there are so many different approaches depending on context to resolve references of relations partially
+that a [whole section](../full_data/osm_types.md#rels_on_rels) is dedicated to that.
 
 <a name="areas"/>
 ## Areas
 
-...
-<!--
-Flächen haben im OpenStreetMap keine eigenständige Datenstruktur.
-Sie werden stattdessen durch geschlossene _ways_ oder _relations_ abgebildet.
-Die Tags sind zur Unterscheidung zwischen Fläche und aus anderen Gründen geschlossenem Weg relevant,
-im einfachsten Fall durch das Tag _area_=_yes_.
+Areas do not have an explicit data structure in OpenStreetMap.
+They are instead modeled by closed _ways_ or _relations_.
+Tags do matter to distinguish areas from ways closed for other reasons,
+in the simplest case by the tag _area_=_yes_.
 
-Geschlossene Ways werden verwendet,
-wenn die Fläche zusammenhängend ist und keine Löcher hat.
-Ein Way ist geschlossen, wenn sein erster und letzter Eintrag auf das gleiche Node verweisen.
+Closed ways are used if the area is contiguous and does not have holes.
+A way is closed if its first and last reference point to the same node.
 
-Relations werden verwendet,
-wenn ein einzelner Way nicht mehr ausreicht.
-Neben Löchern oder getrennten Flächenteilen passiert dies noch,
-wenn der Rand aus mehreren Ways gebildet werden soll.
-Das ist eigentlich nur bei Grenzen großer Gebiete (Städte, Bundesländer, Staaten) üblich.
+Relations are used if a way does no longer suffice for the area.
+Beside holes and disjoint parts this also happens
+when the boundary of the area is supposed to be assembled of multiple ways.
+This is applicable virtually only to boundaries of large areas (cities, counties, countries).
 
-Wie bei Ways wird die Fläche durch den Umriss beschrieben.
-Die in der Relation referenzierten Ways müssen dazu aneinanderpassen und geschlossene Ringe bilden.
-Mehr Informationen zu den [Konventionen](https://github.com/osmlab/fixing-polygons-in-osm/blob/master/doc/background.md).
--->
+Like with ways the area is defined by its boundary.
+The in the relation referenced ways therefore must fit and sum up to closed rings.
+More information on the [conventions](https://github.com/osmlab/fixing-polygons-in-osm/blob/master/doc/background.md).
 
 <a name="metas"/>
 ## Meta Data
 
-...
-<!--
-OpenStreetMap ist ein vollständiges Versionskontrollsystem.
-Daher werden sowohl alte Objektzustände gespeichert
-als auch die nötigen Daten, um Änderungen Benutzern zuzuweisen.
+OpenStreetMap is a full-fledged version control system.
+Old versions are retained as well as all the data necessary to assign changes to users.
 
-Im einzelnen gibt es pro Objekt und Zustand eine _Versionsnummer_ und einen _Zeitstempel_.
-Alte Zustände mit alten Versionsnummern werden dabei gesichert.
-Daher gibt es in der Overpass API [spezielle Methoden](../analysis/museum.md), um auf alte Datenstände zuzugreifen.
-Ohne besondere Konfiguration wird immer auf den aktuellen Daten gearbeitet.
+There always is per object and state a _version number_ and _timestamp_.
+Old states with old version numbers are retained.
+Therefore the Overpass API is capable by [special methods](../analysis/museum.md) to access old states.
+Unless on special request, it always operates on current data.
 
-Änderungen werden zudem zu _Changesets_ zusammengefasst.
-Diese sind dem hochladenden Benutzer zugeordnet.
-Die Zusammenfassung nimmt die Editier-Software automatisch vor,
-und in der Regel entsteht ein Changeset pro Hochladevorgang.
+In addition, changed are grouped to _changesets_.
+These are associated to the uploading mapper.
+The grouping is done automatically by the editing software
+and in general one changeset per upload event is created.
 
-_Changesets_ haben wiederum Tags und es kann Diskussionen zu Changesets geben.
-Diese Texte werden jedoch nicht in der Overpass API verarbeitet.
+_Changesets_ again carry tags and it is possible to discuss changesets with multiple mappers.
+These texts are not processed by the Overpass API.
 
-Auf diese Weise sind dann auch Objekte in ihrer Gesamtheit jeweils einem Benutzer zugeordnet.
-Es handelt sich um den letzten Bearbeiter.
-Objekte mit höherer Versionsnummer als 1 haben daher in der Regel Eigenschaften aus früheren Versionen behalten,
-die nicht dem aktuellen Bearbeiter zuzurechnen sind.
--->
+This way each object as a whole is at any moment assigned to a single mapper.
+That mapper is always the mapper who has uploaded the most recent version.
+Objects with higher version number than 1 therefore usually keep properties from earlier versions,
+although those properties are not attributable to the current mapper.
 
 <a name="declined"/>
 ## Layers, Categories, Identities

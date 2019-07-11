@@ -88,6 +88,7 @@ mais des contenus indésirables.
 
 Les _relations_ se composent d'identifiant et des attributs ainsi que d'une séquence de références à leurs _membres_.
 Fondamentalement, chaque membre est une paire de références à un nœud, un chemin ou une relation et un rôle.
+Un rôle est un sequence de caractères.
 La tâche originelle de relations était le stockage des interdictions de tournées,
 avec, par conséquent, peu de membres.
 Entre-temps, ils sont également utilisés pour les frontières des états et des municipalités, les multipolygones ou les routes.

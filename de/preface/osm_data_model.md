@@ -85,7 +85,8 @@ Alle übrigen Fälle sind zwar technisch möglich,
 aber fachlich unerwünscht.
 
 _Relations_ bestehen neben Id und Tags noch aus einer Folge von Verweisen auf ihre _Members_.
-Grundsätzlich ist jedes Member ein Paar aus einem Verweis auf ein Node, ein Way oder eine Relation und eine Rolle.
+Jedes Member ist ein Paar aus einem Verweis auf ein Node, ein Way oder eine Relation und eine Rolle;
+die Rolle ist wiederum eine Zeichenkette.
 Die ursprüngliche Aufgabe von Relations ist die Speicherung von Abbiegeverboten gewesen,
 mit dementsprechend nur wenigen Membern.
 Mittlerweile werden sie aber auch für Staats- und Gemeindegrenzen, Multipolygone oder Routen verwendet.
