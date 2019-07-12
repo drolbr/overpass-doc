@@ -6,7 +6,7 @@ Sowohl für OpenStreetMap als auch für die Overpass API werden einige benutzte 
 ### Abfrage
 
 Der formalisierte Text,
-der vom Client (z.B. aus dem Textfenster von _Overpass Turbo_) an den Server gesendet wird.
+der vom Client (z.B. aus _Overpass Turbo_ heraus) an den Server gesendet wird.
 Der Inhalt der Abfrage entscheidet alleine darüber,
 was aus den OpenStreetMap abgerufen wird.
 
@@ -45,7 +45,7 @@ und zwar die Schlüssel-Zeichenkette, der ein _Value_ (d.h. Wert) zugeordnet wir
 
 ### Node
 
-Ein spezieller Typ _Objekt_ im Datenmodell von OpenStreetMap.
+Ein spezifischer Typ von Objekt im Datenmodell von OpenStreetMap.
 Repräsentiert eine einzelne Koordinate.
 Mit Tags ist er ein abgrenzbares Objekt,
 ohne Tags normalerweise nur Bestandteil eines _Ways_,
@@ -53,7 +53,7 @@ um jenen mit Koordinaten auszustatten.
 
 ### Relation
 
-Ein spezieller Typ _Objekt_ im Datenmodell von OpenStreetMap.
+Ein spezifischer Typ von Objekt im Datenmodell von OpenStreetMap.
 Modelliert Dinge,
 die nicht schon allein mit Nodes und Ways modelliert werden können.
 
@@ -88,7 +88,7 @@ um bei der Ausführung Objekt-Auswahlen von Statement zu Statement weitergeben z
 
 ### Way
 
-Ein spezieller Typ _Objekt_ im Datenmodell von OpenStreetMap.
+Ein spezifischer Typ von Objekt im Datenmodell von OpenStreetMap.
 Repräsentiert einen Linienzug.
 Falls es sich um einen geschlossenen Linienzug handelt,
 kann dies auch eine Fläche sein.

@@ -5,40 +5,28 @@ Il explique de nombreux mots-clés pour OpenStreetMap et pour l'API Overpass.
 
 ### Attribut
 
-...
-<!--
-Datenstruktur in OpenStreetMap und Overpass API, um Sachdaten zu speichern.
-Jedes _Tag_ besteht aus einem _Key_ und einem _Value_
-und ist Bestandteil eines Objekts, d.h. Node, Way, Relation oder Derived.
--->
+Un _attribut_ est une structure de données dans OpenStreetMap et Overpass API pour stocker des données factuelles.
+Chaque _attribut_ se compose d'une _clé_ et d'une _valeur_
+et fait partie d'un objet, c'est-à-dire nœud, chemin, relation ou élément dérivé.
 
 ### Chemin
 
-...
-<!--
-Ein spezieller Typ _Objekt_ im Datenmodell von OpenStreetMap.
-Repräsentiert einen Linienzug.
-Falls es sich um einen geschlossenen Linienzug handelt,
-kann dies auch eine Fläche sein.
--->
+Un _chemin_ est un type spécifique d'objet dans le modèle de données d'OpenStreetMap.
+Il représente une ligne polygonale.
+Si c'est une ligne polygonale fermée,
+il peut aussi s'agir d'une surface.
 
 ### Clé
 
-...
-<!--
-Bestandteil eines _Tags_,
-und zwar die Schlüssel-Zeichenkette, der ein _Value_ (d.h. Wert) zugeordnet wird.
--->
+Un _clé_ est partie d'un _tag_,
+il est la chaîne de caractères à laquelle une _valeur_ est affectée.
 
 ### Élément dérivé
 
-...
-<!--
-Ein spezieller Typ _Objekt_ in den Daten der Overpass API.
-Im Gegensatz zu _Nodes_, _Ways_ und _Relations_ kommen Deriveds nicht aus den OpenStreetMap-Daten,
-sondern werden zur Laufzeit erzeugt.
-Sie ermöglichen damit, Tags umzuschreiben oder Geometrien zu vereinfachen.
--->
+Un type spécifique d'objet dans les données de l'API Overpass.
+Contrairement aux _nœuds_, _chemins_ et _relations_, les dérivés ne proviennent pas des données OpenStreetMap,
+mais sont générés au moment de l'exécution.
+Ils permettent de réécrire des attributs ou de simplifier des géométries.
 
 ### Ensemble
 
@@ -46,88 +34,63 @@ Voir variable
 
 ### Évaluation
 
-...
-<!--
-Dies meint einen der möglichen Bausteine einer Abfrage.
-Ein _Evaluator_ wird im Rahmen eines Statements, Block-Statements oder des speziellen Filters _if_ aufgerufen.
-Je nach seinem Typ wirkt er entweder auf alle durch eine _Set-Variable_ ausgewählte Objekte oder auf jedes Objekt einzeln.
-Er liefert je nach seinem Typ eine Zahl, eine Zeichenkette oder eine Geometrie.
--->
+Il s'agit d'un des blocs possibles d'une requête.
+Un _évaluation_ est evalué dans le contexte d'une instruction, d'une instruction de bloc ou du filtre spécial _if_.
+Selon son type, il agit soit sur tous les objets sélectionnés par une _variable d'ensemble_, soit sur chaque objet individuellement.
+Selon son type, il retourne un nombre, une chaîne de caractères ou une géométrie.
 
 ### Filtre
 
-...
-<!--
-Dies meint einen der möglichen Bausteine einer Abfrage.
-_Filter_ sind stets Bestandteile eines _query_-Statements und filtern dort die anzuwählenden Objekte.
-Sie wirken per Und-Verknüpfung zusammen;
-es werden also immer genau die Objekte gefunden, die alle _Filter_ des jeweiligen _query_-Statements erfüllen.
--->
+Il s'agit d'un des blocs possibles d'une requête.
+Les _filtres_ sont toujours des composants d'une instruction _query_ et filtrent les objets qui doivent y être sélectionnés.
+Ils agissent toujours ensemble par AND.
+Cela signifie que le système trouve toujours exactement les objets qui remplissent tous les _filtres_ de l'instruction _query_ correspondante.
 
 ### Instruction
 
-...
-<!--
-Dies meint einen der möglichen Bausteine einer Abfrage.
-_Statements_ sind solche Teile, die eigenständig ausgeführt werden können.
-Es wird weiter unterschieden in _Block-Statements_ (s.o.) und einfache Statements.
-Die beiden wichtigsten Vertreter sind _query_ zur Anwahl von OpenStreetMap-Objekten
-und _print_ zur Ausgabe von angewählten OpenStreetMap-Objekten.
--->
+Il s'agit d'un des blocs possibles d'une requête.
+Les _instructions_ sont les parties qui peuvent être exécutées indépendamment.
+Une autre distinction est faite entre des _instructions de bloc_ (voir ci-dessus) et les _instructions simples_.
+Les deux instructions les plus importantes sont _query_ pour sélectionner les objets d'OpenStreetMap
+et _print_ pour ajouter les objets OpenStreetMap sélectionnés à la réponse.
 
 ### Nœud
 
-...
-<!--
-Ein spezieller Typ _Objekt_ im Datenmodell von OpenStreetMap.
-Repräsentiert eine einzelne Koordinate.
-Mit Tags ist er ein abgrenzbares Objekt,
-ohne Tags normalerweise nur Bestandteil eines _Ways_,
-um jenen mit Koordinaten auszustatten.
--->
+Un type d'objet spécifique dans le modèle de données d'OpenStreetMap.
+Représente une coordonnée unique.
+Ayant des attributs, c'est un objet délimitable,
+sans attributs n'est normalement qu'une partie d'un _chemin_,
+pour lui fournir des coordonnées.
 
 ### Rectangle englobant
 
-...
-<!--
-Eine Bounding-Box wird durch zwei Längengradangaben und zwei Breitengradangaben beschrieben.
-Sie besteht aus allen Koordinaten,
-deren Breitengrad zwischen den beiden Breitengradangaben
-und deren Längengrad zwischen den beiden Längengradangaben liegt.
--->
+Une _rectangle englobant_ est décrite par deux spécifications de longitude et deux spécifications de latitude.
+Il se compose de toutes les coordonnées,
+dont la latitude se situe entre les deux valeurs de latitude
+et dont la longitude se situe entre les deux spécifications de longitude.
 
 ### Requête
 
-...
-<!--
-Der formalisierte Text,
-der vom Client (z.B. aus dem Textfenster von _Overpass Turbo_) an den Server gesendet wird.
-Der Inhalt der Abfrage entscheidet alleine darüber,
-was aus den OpenStreetMap abgerufen wird.
--->
+Le texte formalisé,
+qui est envoyé du client (par exemple de _Overpass Turbo_) au serveur.
+Seul le contenu de la requête décide,
+qui est récupéré à partir de l'OpenStreetMap.
 
 ### Relation
 
-...
-<!--
-Ein spezieller Typ _Objekt_ im Datenmodell von OpenStreetMap.
-Modelliert Dinge,
-die nicht schon allein mit Nodes und Ways modelliert werden können.
--->
+Un type d'objet spécifique dans le modèle de données d'OpenStreetMap.
+Modélise des choses,
+qui ne peut pas être modélisé avec des noeuds et des moyens seuls.
 
 ### Valeur
 
-...
-<!--
-Bestandteil eines _Tags_,
-und zwar die Wert-Zeichenkette, die dem _Key_ (d.h. Schlüssel) zugeordnet wird.
--->
+Partie d'un _tag_,
+est la chaîne de caractères affectée à la _clé_.
 
 ### Variable
 
-...
-<!--
-Eine Variable ist bei der Overpass API immer eine _Set-Variable_.
-_Set-Variablen_ werden benutzt,
-um bei der Ausführung Objekt-Auswahlen von Statement zu Statement weitergeben zu können.
--->
+Une variable dans l'API Overpass est toujours une _variable d'ensemble_.
+Les _variable d'ensemble_ sont utilisées,
+pour pouvoir passer des sélections d'objets d'une instruction à l'autre pendant l'exécution.
+
+<!-- Traduit avec www.DeepL.com/Translator, partiellement redigé -->
