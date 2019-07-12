@@ -175,7 +175,6 @@ et la plupart des cartographes peuvent montrer leur vision du monde sans grandes
 Une structure qui est aussi souvent attendue sont les catégories,
 que ce soit très généralement ou mondialement toutes les branches d'une chaîne de restauration rapide
 ou surtout comme toutes les boîtes aux lettres de Languedoc.
-
 OpenStreetMap est une base de données spatiales.
 Les listes de tous les objets ayant une propriété spécifique dans une zone restreinte peuvent être calculées.
 D'ailleurs, l'API Overpass est l'un des outils appropriés à cette fin,

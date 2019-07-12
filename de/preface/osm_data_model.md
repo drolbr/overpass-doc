@@ -171,7 +171,6 @@ und die meisten Mapper können ihre Weltsicht ohne große Verrenkungen abbilden.
 Eine ebenfalls häufig erwartete Struktur sind Kategorien,
 egal ob sehr generell wie weltweit alle Filialen einer Fast-Food-Kette
 oder speziell wie alle Briefkästen in Hessen.
-
 OpenStreetMap ist eine räumliche Datenbank.
 Listen aller Objekte mit einer speziellen Eingeschaft in einem beschränkten Gebiet lassen sich gezielt filtern.
 Die Overpass API ist übrigens eines der dafür geeingeneten Tools,

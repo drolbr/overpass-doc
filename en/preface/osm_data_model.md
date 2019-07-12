@@ -151,42 +151,41 @@ although those properties are not attributable to the current mapper.
 <a name="declined"/>
 ## Layers, Categories, Identities
 
-...
-<!--
-Thematische Layer gibt es dagegen in OpenStreetMap nicht,
-und dies auch aus gutem Grund.
-Für die einen gehören Supermärkte zusammen mit Postämtern, Banken und Geldautomaten zu den Orten,
-an denen man Bargeld bekommt.
-Für die nächsten bilden Supermärkte dagegen mit Bäckereien und Fleischern eine Gruppe,
-weil man dort Lebensmittel einkaufen kann.
+By contrast, thematic layers do not exist in OpenStreetMap,
+and they are absent for a reason.
+For some people supermarkets are together with post offices, banks and ATMs are locations
+where one can obtain cash.
+For other mappers, supermarkets constitute a group rather together with bakeries and butchers
+because one can buy food there.
 
-Daher spielt die Klassifikation nur eine untergeordnete Rolle in OpenStreetMap.
-Es werden stattdessen lieber objektive Eigenschaften gemappt.
-Streitigkeiten über Klassifikation sind so weitgehend vermieden worden,
-und die meisten Mapper können ihre Weltsicht ohne große Verrenkungen abbilden.
+Therefore, classification plays only a marginal role in OpenStreetMap.
+It is rather preferable to record objective properties.
+Disputes at large have been prevented,
+and most mappers can record their point of view without substantial distortions.
 
-Eine ebenfalls häufig erwartete Struktur sind Kategorien,
-egal ob sehr generell wie weltweit alle Filialen einer Fast-Food-Kette
-oder speziell wie alle Briefkästen in Hessen.
+Another often expected structures are categories,
+no matter whether very general like all branches of a fast food chain
+or all post boxes in Scotland.
+OpenStreetMap is a spatial database.
+Lists of all objects with a special property in a limited area can be computed.
+By the way, Overpass API is one of the tools intended to deliver that,
+the chapter [Find Objects](../criteria/index.md) explains how to do that.
 
-OpenStreetMap ist eine räumliche Datenbank.
-Listen aller Objekte mit einer speziellen Eingeschaft in einem beschränkten Gebiet lassen sich gezielt filtern.
-Die Overpass API ist übrigens eines der dafür geeingeneten Tools,
-und [Objekte Filtern](../criteria/index.md) das zuständige Kapitel.
+Lists of worldwidely all objects with a property have at best a weak spatial relevance.
+Although each branch has a location,
+the fast food chain as a whole obtains its spatial information solely through its branches.
 
-Listen weltweit aller Objekte mit einer Eigenschaft haben dagegen allenfalls eine schwache räumliche Relevanz.
-Zwar hat jede Filiale einen Standort,
-aber die Fast-Food-Kette an sich erhält ihre räumliche Information ausschließlich vermittels dieser Filialen.
+Finally, the concept of identity leaves precedence to its spatial manifestation.
+Similar to the issue with layers, different mappers have different ideas
+what belongs to a thing as complex as a large railway station.
+Only tracks and platforms?
+The reception building as well, or only if it caters passengers needs,
+or only if the railway company owns the building?
+The place before the station, the bus stop that is named after the railway station?
+The points that by railway operating rules are associated with the station even if substantially far away?
 
-Zuletzt muss auch das Konzept der Identität eine Objektes hinter seinen Raumbezug zurücktreten.
-Wie schon in Bezug auf den Layer haben verschiedene Mapper verschiedene Sichtweisen dazu,
-was zu einer so komplexen Anlage wie einem großen Bahnhof dazugehört.
-Nur Gleise und Bahnsteige? Das Empfangsgebäude, oder nur, wenn es für Reisende geöffnet ist oder der Bahngesellschaft gehört? Der Bahnhofsvorplatz, die nach dem Bahnhof benannte Umsteigehaltestelle?
-Die Weichen im Vorfeld des Bahnhofs?
-
-Wenn eine Bezugnahme auf die Darstellung eines Objekt der materiellen Welt genommen wird,
-geht dies am Besten mit einer Koordinate.
-Ortsfeste Anlagen ziehen per Definition nicht um,
-und die Lagegenauigkeit in OpenStreetMap ist so gut,
-dass eine Koordinate des Zielobjekts die beste Identifikation ist.
--->
+If one needs an anchor to point at a certain object on the ground,
+then it is best to use a coordinate.
+Stationary objects do not move by their very definition
+and the positional accuracy in OpenStreetMap is good enough
+such that a coordinate is the best anchor for linking.
