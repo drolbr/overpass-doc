@@ -1,10 +1,9 @@
 Laufzeitmodell
 ==============
 
-Das Konzept der Overpass API:
-Eine Nur-Lesen-Spiegelung der vollen OpenStreetMap-Daten
-in eine Datenbank mit zugeschnittener Abfragesprache
-zum Zweck, diese nach möglichst jedem Kriterium durchsuchen zu können.
+Nach welchen Regeln führt die Overpass API eine Abfrage aus?
+Die Vorstellung der einzelnen Bausteine schafft das Verständnis,
+wie diese in Abfragen zusammenwirken.
 
 <a name="sequential"/>
 ## Anweisung für Anweisung
@@ -46,8 +45,8 @@ aber die entstehende Zwei-Zeilen-Lösung spiegelt die klare Aufgabenteilung wide
     nwr[shop=supermarket]({{bbox}});
     out center;
 
-- Die Auswahlanweisung oder -anweisungen legen fest, _was_ ausgegeben wird.
-- Die Ausgabeanweisung _out_ legt fest, _wie_ die angewählten Objekte ausgegeben werden. Details dazu bei den [Ausgabeformaten](../targets/formats.md#faithful)
+* Die Auswahlanweisung oder -anweisungen legen fest, _was_ ausgegeben wird.
+* Die Ausgabeanweisung _out_ legt fest, _wie_ die angewählten Objekte ausgegeben werden. Details dazu bei den [Ausgabeformaten](../targets/formats.md#faithful)
 
 <a name="statements"/>
 ## Statements, Filter
@@ -105,6 +104,9 @@ Etwas komplizierter arbeitet ``(around:100)``.
 Es benötigt eine Vorgabe und lässt genau alle Objekte zu,
 die zu irgendeinem der Vorgabe-Objekte einen Abstand von höchstens 100 Metern haben.
 
+Hier greift die Schritt-für-Schritt-Ausführung:
+Der Filter ``(around:100)`` erhält hier als Eingabe exakt die in der vorhergehenden Zeile ausgewählten Bahnhöfe.
+
 <a name="block_statements"/>
 ## Block-Statements
 
@@ -130,7 +132,8 @@ Es gibt zahlreiche weitere Block-Statements:
 
 * Das Block-Statement _difference_ erlaubt, eine Auswahl aus einer anderen auszuschneiden.
 * _if_ führt seinen Block nur aus, wenn die im Kopf stehende Bedingung erfüllt ist.
-  Auch ein zweite _else_-Block ist möglich.
+  Auch ein zweiter Block ist möglich;
+  dieser wird ausgeführt, wenn die Bedingung zu falsch auswertet.
 * _foreach_ führt seinen Block einmal pro Objekt in seiner Eingabe aus.
 * _for_ fasst die Objekte erst zu Gruppen zusammen und führt dann seinen Block einmal pro Gruppe aus.
 * _complete_ erfüllt Aufgaben einer _while_-Schleife.
@@ -297,7 +300,7 @@ Der Ablauf mit Datenfluss nocheinmal im Detail:
   und zusätzlich wird per ``(around.all_stations:300)`` die Auswahl ``all_stations`` als Quelle für die Umkreissuche _around_ herangezogen.
   Das Ergebnis ist die neue Standard-Auswahl und ersetzt daher die vorherige Standard-Auswahl.
   Die Auswahl ``all_stations`` bleibt unverändert.
-* Das Block-Statement _difference_ greift das Ergebnis seines ersten Operanden ab,
+* Das Block-Statement _difference_ greift das Ergebnis seines zweiten Operanden ab,
   also von Zeile 4.
 * Das Block-Statement _difference_ bildet jetzt die Differenz der beiden abgegriffenen Ergebnisse.
   Da nichts anderes gefordert ist, wird das Ergebnis die neue Standard-Auswahl.
