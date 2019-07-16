@@ -68,7 +68,7 @@ Das wichtigste Zeichen ist das Semikolon; es beendet jeweils ein _Statement_.
 Zeilenumbrüche, Leerzeichen (und Tabulatoren) sind dafür und auch für die Syntax insgesamt irrelevant.
 Diese _Statements_ werden nacheinander in der Reihenfolge ausgeführt,
 in der sie aufgeschrieben sind.
-Im beiden Abfragen gibt es also zusammen vier Statements:
+In beiden Abfragen gibt es also zusammen vier Statements:
 
 * ``nwr[shop=supermarket]({{bbox}});``
 * ``nwr[public_transport=station]({{bbox}});``
@@ -147,11 +147,6 @@ wie im Block-Statement _if_ oder auch _for_ die Bedingungen formuliert werden k�
 
 Der dafür genutzte Mechanismus hilft aber auch für andere Aufgaben.
 Man kann damit z.B. eine [Liste aller Straßennamen](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%5Bout%3Acsv%28name%29%5D%3B%0Away%5Bhighway%5D%28%7B%7Bbbox%7D%7D%29%3B%0Afor%20%28t%5B%22name%22%5D%29%0A%7B%0A%20%20make%20Beispiel%20name%3D%5F%2Eval%3B%0A%20%20out%3B%0A%7D) in einem Gebiet erstellen.
-(Die Meldung _Nur unstrukturierte Daten erhalten_ ist normal,
-da Overpass Turbo zwar JSON und XML, aber kein CSV verarbeiten kann.
-CSV ist jedoch das für eine Liste oder Tabelle nötige Format.
-Klicken Sie bitte oben rechts auf den Reiter _Daten_
-bzw. auf Mobiltelefonen scrollen Sie bitte nach unten.)
 
     [out:csv(name)];
     way[highway]({{bbox}});
@@ -262,8 +257,8 @@ die [nicht in der Nähe](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&
     out center;
 
 In Zeile 3 wählt das Statement ``nwr[shop=supermarket]({{bbox}})`` alle Supermärkte in der Bounding-Box aus.
-Wir wollen davon eine Teilmenge abziehen und verwendet daher ein Block-Statement vom Typ _difference_;
-dieses ist an den drei Komponenten ``(`` in Zeile 3, ``-`` in Zeile 4 und ``);`` in Zeile 5 zu erkennen.
+Wir wollen davon eine Teilmenge abziehen und verwenden daher ein Block-Statement vom Typ _difference_;
+dieses ist an den drei Komponenten ``(`` in Zeile 2, ``-`` in Zeile 4 und ``);`` in Zeile 5 zu erkennen.
 
 Wir müssen Supermärkte in der Nähe von Bahnhöfen auswählen.
 Dazu müssen wir wie oben vorher die Bahnhöfe gewählt haben;

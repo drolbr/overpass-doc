@@ -24,6 +24,7 @@ OpenStreetMap-Daten nach QGIS bekommen.
 Für viele Anwendungen ist es interessant, eine Tabelle mit oder ohne Koordindaten zu bekommen,
 damit man sie mit einer Tabellenkalkulation verarbeiten kann.
 Überblick über mögliche Varianten.
+<!-- Bsp. mit for-Schleife -->
 
 [Osmoscope und MapRoulette](osmoscope.md)  
 Overpass API im Backend einer Website:

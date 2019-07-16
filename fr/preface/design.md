@@ -1,128 +1,118 @@
 Modèle d'exécution
 ==================
 
-...
-<!--
-Nach welchen Regeln führt die Overpass API eine Abfrage aus?
-Die Vorstellung der einzelnen Bausteine schafft das Verständnis,
-wie diese in Abfragen zusammenwirken.
--->
+Selon quelles règles l'API Overpass exécute-t-elle une requête?
+La présentation des différents éléments constitutifs favorise la compréhension,
+comment ils interagissent dans les requêtes.
 
 <a name="sequential"/>
 ## Séquences
 
-...
-<!--
-Die meisten fortgeschrittenen Anwendungsfälle für Abfragen erfordern relative Auswahlen.
-Ein gutes Beispiel sind Supermärkte,
-die nahe an einem Bahnhof liegen.
-Die Supermärkte sind mit den Bahnhöfen nur dadurch verbunden,
-dass sie räumlich nahe beieinander sind.
+La plupart des cas d'utilisation de requêtes avancées nécessitent des sélections relatives.
+Les supermarchés qui sont près d'une gare en sont un bon exemple.
+Les supermarchés ne sont reliés aux gares que par cette qualité,
+qu'ils sont spatialement proches l'un de l'autre.
 
-Dem Satzbau zufolge suchen wir eigentlich erst Supermärkte,
-suchen dann an jedem Supermarkt nach Bahnhöfen in der Nähe
-und behalten nur Supermärkte in der Auswahl, bei denen wir einen Bahnhof gefunden haben.
-Diese Herangehensweise führt bei natürlicher Sprache schnell zu Relativsatzungetümen;
-auch in formaler Sprache wird das nicht besser.
+D'après le tour de phrase, on cherche d'abord les supermarchés,
+puis cherchez dans tous les supermarchés les gares ferroviaires à proximité
+et ne garder que les supermarchés où nous avons trouvé une gare.
+Cette approche conduit rapidement à des monstruosités relatives en langage naturel;
+même en langage formel, cela ne s'améliore pas.
 
-Daher folgt die Abfragesprache der Ovepass API stattdessen einem Schritt-für-Schritt-Paradigma,
-der sogenannten _imperativen Programmierung_.
-Zu jedem Zeitpunkt wird nur eine überschaubare Aufgabe gelöst,
-und die komplexe Aufgabe durch Aneinanderreihung bewältigt.
-Das Herangehen ist dann wie folgt:
+Par conséquent, le langage de requête de l'API Ovepass suit plutôt un paradigme pas a pas,
+de la soi-disant _programmation impérative_.
+Une seule tâche gérable est résolue à la fois,
+et maîtrisé la tâche complexe en les enchaînant.
+L'approche est alors la suivante:
 
-* Wähle alle Bahnhöfe im Zielgebiet aus
-* Ersetze die Auswahl durch alle Supermärkte in der Nähe dieser Bahnhöfe
-* Gib die Liste der Supermärkte aus
+* Sélectionner toutes les stations dans la zone cible
+* Remplacez la sélection par tous les supermarchés situés à proximité de ces gares.
+* Retournez la liste des supermarchés
 
-Das ergibt Zeile für Zeile folgende Abfrage.
-Sie können sie jetzt [ausführen](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=13&Q=nwr%5Bpublic_transport%3Dstation%5D%28%7B%7Bbbox%7D%7D%29%3B%0Anwr%5Bshop%3Dsupermarket%5D%28around%3A100%29%3B%0Aout%20center%3B):
+Il en résulte la requête suivante ligne par ligne.
+Vous pouvez maintenant l'[exécuter](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=13&Q=nwr%5Bpublic_transport%3Dstation%5D%28%7B%7Bbbox%7D%7D%29%3B%0Anwr%5Bshop%3Dsupermarket%5D%28around%3A100%29%3B%0Aout%20center%3B):
 
     nwr[public_transport=station]({{bbox}});
     nwr[shop=supermarket](around:100);
     out center;
 
-Die Details der Syntax werden später erläutert.
+Les détails de la syntaxe seront expliqués plus loin.
 
-Für einfachere Fälle mag man zwar eine noch einfachere Syntax wünschen,
-aber die entstehende Zwei-Zeilen-Lösung spiegelt die klare Aufgabenteilung wider:
+Pour des cas plus simples, vous pourriez vouloir une syntaxe encore plus simple,
+mais la solution à deux lignes qui en résulte reflète la répartition claire des tâches:
 
     nwr[shop=supermarket]({{bbox}});
     out center;
 
-- Die Auswahlanweisung oder -anweisungen legen fest, _was_ ausgegeben wird.
-- Die Ausgabeanweisung _out_ legt fest, _wie_ die angewählten Objekte ausgegeben werden. Details dazu bei den [Ausgabeformaten](../targets/formats.md#faithful)
--->
+* L'instruction ou les instructions de sélection déterminent _ce qui_ est édité.
+* L'instruction _out_ détermine _comment_ les objets sélectionnés sont édités. Détails à propos [les formats de sortie](../targets/formats.md#faithful)
 
 <a name="statements"/>
 ## Instructions et filtres 
 
-...
-<!--
-Wir vergleichen die Abfrage nach einfach nur den Supermärkten im Sichtbarkeitsbereich
+Nous comparons la requête pour les supermarchés uniquement dans la zone de visibilité
 
     nwr[shop=supermarket]({{bbox}});
     out center;
 
-mit der obigen Abfrage
+avec la requête ci-dessus
 
     nwr[public_transport=station]({{bbox}});
     nwr[shop=supermarket](around:100);
     out center;
 
-um die einzelnen Komponenten zu identifizieren.
+pour identifier les composants individuels.
 
-Das wichtigste Zeichen ist das Semikolon; es beendet jeweils ein _Statement_.
-Zeilenumbrüche, Leerzeichen (und Tabulatoren) sind dafür und auch für die Syntax insgesamt irrelevant.
-Diese _Statements_ werden nacheinander in der Reihenfolge ausgeführt,
-in der sie aufgeschrieben sind.
-Im beiden Abfragen gibt es also zusammen vier Statements:
+Le caractère le plus important est le point-virgule; il termine une _instruction_ à la fois.
+Les sauts de ligne, les espaces (et les tabulations) ne sont pas pertinents pour ceci et pour la syntaxe dans son ensemble.
+Ces _statements_ sont exécutés l'un après l'autre dans l'ordre,
+où ils sont écrits.
+Ainsi, dans les deux requêtes, il y a quatre instructions ensemble:
 
 * ``nwr[shop=supermarket]({{bbox}});``
 * ``nwr[public_transport=station]({{bbox}});``
 * ``nwr[shop=supermarket](around:100);``
 * ``out center;``
 
-Das Statement ``out center`` ist ein Ausgabestatement ohne weitere Unterstrukturen.
-Die Möglichkeiten, das Ausgabeformat zu steuern, werden im Abschnitt [Datenformate](../targets/formats.md) thematisiert.
+L'instruction ``out center`` est une instruction de sortie sans autres sous-structures.
+Les possibilités de contrôle du format de sortie sont discutées dans la section [Formats de données](../targets/formats.md).
 
-Die übrigen _Statements_ sind alle _query_-Statements, d.h. sie dienen dazu Objekte anzuwählen.
-Dies gilt für alle mit ``nwr`` beginnenden Statements und weitere spezielle Schlüsselwörter.
-Sie haben hier mehrfach auftretende Unterstrukturen:
+Les _statements_ restants sont tous des instructions de type _query_,
+c'est-à-dire qu'ils sont utilisés pour sélectionner des objets.
+Ceci s'applique à tous les énoncés commençant par ``nwr`` et autres mots-clés spéciaux.
+Ils ont plusieurs sous-structures ici:
 
-* ``[shop=supermarket]`` und ``[public_transport=station]``
+* ``[shop=supermarket]`` et ``[public_transport=station]``
 * ``({{bbox}})``
 * ``(around:100)``
 
-Alle Unterstrukturen eines _query_-Statements filtern die anzuwählenden Objekte und heißen daher _Filter_.
-Es ist möglich, beliebig viele Filter in einem Statement zu kombinieren;
-das _query_-Statement wählt genau solche Objekte an,
-die alle Filter erfüllen.
-Die Reihenfolge der Filter spielt keine Rolle,
-denn die Filter eines Statements werden gleichzeitig angewendet.
+Toutes les sous-structures d'une instruction _query_ filtrent les objets à sélectionner
+et sont donc appelées _filter_.
+Il est possible de combiner n'importe quel nombre de filtres dans une instruction de type _query_;
+l'instruction sélectionne exactement ces objets,
+qui remplissent tous les filtres.
+L'ordre des filtres n'a pas d'importance,
+car les filtres d'une instruction sont appliqués simultanément.
 
-Während ``[shop=supermarket]`` und ``[public_transport=station]`` alle Objekte zulassen,
-die ein spezifisches Tag besitzen (Supermärkte im einen Fall, Bahnhöfe im anderen),
-dienen ``({{bbox}})`` und ``(around:100)`` der räumlichen Filterung.
+Alors que ``[shop=supermarket]`` et ``[public_transport=station]`` permettent tous les objets,
+qui ont un qualité précis (supermarchés dans un cas, gares dans l'autre),
+``({{bbox}}})`` et ``(around:100)`` sont utilisés pour le filtrage spatial.
 
-Der Filter ``({{bbox}})`` lässt genau solche Objekte zu,
-die ganz oder teilweise in der übergebenen Bounding-Box liegen.
+Le filtre ``({{bbox}})`` permet exactement de tels objets,
+qui se trouvent en tout ou en partie dans le rectangle englobant.
 
-Etwas komplizierter arbeitet ``(around:100)``.
-Es benötigt eine Vorgabe und lässt genau alle Objekte zu,
-die zu irgendeinem der Vorgabe-Objekte einen Abstand von höchstens 100 Metern haben.
+Le filtre ``(around:100)`` marche un peu plus compliqués.
+Il a besoin d'un input et accepte exactement tous les objets,
+qui ne sont pas à plus de 100 mètres de l'un des objets de input.
 
-Hier greift die Schritt-für-Schritt-Ausführung:
-Der Filter ``(around:100)`` erhält hier als Eingabe exakt die in der vorhergehenden Zeile ausgewählten Bahnhöfe.
--->
+C'est là que l'exécution pas à pas prend effet:
+Le filtre ``(around:100)`` reçoit ici comme input exactement les stations sélectionnées dans la ligne précédente.
 
 <a name="block_statements"/>
 ## Instructions de bloc
 
-...
-<!--
-Wie kann man eine Oder-Verknpüfung erreichen?
-[Auf diese Weise](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=%28%0A%20%20nwr%5Bpublic%5Ftransport%3Dstation%5D%28%7B%7Bbbox%7D%7D%29%3B%0A%20%20nwr%5Bshop%3Dsupermarket%5D%28%7B%7Bbbox%7D%7D%29%3B%0A%29%3B%0Aout%20center%3B) findet man alle Objekte, die ein Supermarkt _oder_ ein Bahnhof sind:
+Comment réaliser une opération _ou_?
+[De cette façon](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=%28%0A%20%20nwr%5Bpublic%5Ftransport%3Dstation%5D%28%7B%7Bbbox%7D%7D%29%3B%0A%20%20nwr%5Bshop%3Dsupermarket%5D%28%7B%7Bbbox%7D%7D%29%3B%0A%29%3B%0Aout%20center%3B), vous pouvez trouver tous les objets qui sont un supermarché _ou_ une gare:
 
     (
       nwr[public_transport=station]({{bbox}});
@@ -130,146 +120,137 @@ Wie kann man eine Oder-Verknpüfung erreichen?
     );
     out center;
 
-Hier bilden die beiden _query_-Statements einen Block innerhalb einer größeren Struktur.
-Die durch die Klammern gekennzeichnete Struktur heißt daher _Block-Statement_.
+Ici, les deux instructions de requête forment un bloc dans une structure plus grande.
+La structure indiquée par les crochets s'appelle donc une _instruction de bloc_.
 
-Diese spezielle Block-Struktur heißt _union_,
-und sie dient dazu, mehrere Statements so zu verknüpfen,
-dass sie alle Objekte anwählt,
-die in irgendeinem der Statements im Block gefunden werden.
-Es muss mindestens eine und es können beliebig viele Statements im Block stehen.
+Cette structure de bloc spéciale s'appelle _union_,
+et il est utilisé pour lier plusieurs instructions de cette façon,
+qu'il sélectionne tous les objets
+trouvées dans l'une ou plusieurs des instructions du bloc.
+Il doit y en avoir au moins une et il peut y avoir un nombre illimité d'instructions dans le bloc.
 
-Es gibt zahlreiche weitere Block-Statements:
+Il y a de nombreuses autres _instructions de bloc_:
 
-* Das Block-Statement _difference_ erlaubt, eine Auswahl aus einer anderen auszuschneiden.
-* _if_ führt seinen Block nur aus, wenn die im Kopf stehende Bedingung erfüllt ist.
-  Auch ein zweiter Block ist möglich;
-  dieser wird ausgeführt, wenn die Bedingung zu falsch auswertet.
-* _foreach_ führt seinen Block einmal pro Objekt in seiner Eingabe aus.
-* _for_ fasst die Objekte erst zu Gruppen zusammen und führt dann seinen Block einmal pro Gruppe aus.
-* _complete_ erfüllt Aufgaben einer _while_-Schleife.
-* Weitere Block-Statements erlauben es, gelöschte oder überholte Daten wieder zurückzuholen.
--->
+* L'instruction _difference_ vous permet de couper une sélection à partir d'une autre.
+* _if_ n'exécute son bloc que si la condition de l'en-tête évalue à _vrai_.
+  Un deuxième bloc est également possible;
+  ceci est exécuté si la condition évalue à _fausse_.
+* _foreach_ exécute son bloc une fois par objet dans son input.
+* _for_ regroupe d'abord les objets et exécute ensuite son bloc une fois par groupe.
+* _complete_ exécute les tâches d'une boucle _while_.
+* Des autres instructions de bloc permettent de récupérer des données supprimées ou obsolètes.
 
 <a name="evaluators"/>
 ##  Évaluations et éléments dérivées
 
-...
-<!--
-Nicht geklärt ist damit,
-wie im Block-Statement _if_ oder auch _for_ die Bedingungen formuliert werden können.
+Ce n'est pas encore expliqué,
+comment les conditions peuvent être formulées dans l'instructions de bloc _if_ ou _for_.
 
-Der dafür genutzte Mechanismus hilft aber auch für andere Aufgaben.
-Man kann damit z.B. eine [Liste aller Straßennamen](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%5Bout%3Acsv%28name%29%5D%3B%0Away%5Bhighway%5D%28%7B%7Bbbox%7D%7D%29%3B%0Afor%20%28t%5B%22name%22%5D%29%0A%7B%0A%20%20make%20Beispiel%20name%3D%5F%2Eval%3B%0A%20%20out%3B%0A%7D) in einem Gebiet erstellen.
-(Die Meldung _Nur unstrukturierte Daten erhalten_ ist normal,
-da Overpass Turbo zwar JSON und XML, aber kein CSV verarbeiten kann.
-CSV ist jedoch das für eine Liste oder Tabelle nötige Format.
-Klicken Sie bitte oben rechts auf den Reiter _Daten_
-bzw. auf Mobiltelefonen scrollen Sie bitte nach unten.)
+Toutefois, le mécanisme utilisé à cette fin est également utile pour d'autres tâches.
+Par exemple, vous pouvez créer une [liste de tous les noms de rues](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%5Bout%3Acsv%28name%29%5D%3B%0Away%5Bhighway%5D%28%7B%7Bbbox%7D%7D%29%3B%0Afor%20%28t%5B%22name%22%5D%29%0A%7B%0A%20%20make%20Saisie%20name%3D%5F%2Eval%3B%0A%20%20out%3B%0A%7D) dans une zone.
 
     [out:csv(name)];
     way[highway]({{bbox}});
     for (t["name"])
     {
-      make Beispiel name=_.val;
+      make Saisie name=_.val;
       out;
     }
 
-Die Zeilen 2 und 6 enthalten die einfachen Statements ``way[highway]({{bbox}})`` bzw. ``out``.
-Mit ``[out:csv(name)]`` in Zeile 1 wird das Ausgabeformat gesteuert ([siehe dort](../targets/csv.md)).
-Die Zeilen 3, 4 und 7 bilden das Block-Statement ``for (t["name"])``;
-dieses muss wissen, nach welchem Kriterium es gruppieren soll.
+Les lignes 2 et 6 contiennent les phrases simples ``way[highway]({{bbox}})`` et ``out`` respectivement.
+Avec ``[out:csv(name)]`` dans la ligne 1, le format de sortie est contrôlé ([voir là](../targets/csv.md)).
+Les lignes 3, 4 et 7 forment l'instruction de bloc ``for (t["name"])``;
+elle doit savoir, selon quel critère elle doit regrouper les objets selectionnés.
 
-Dies wird durch den _Evaluator_ ``t["name"]`` beantwortet.
-Ein _Evaluator_ ist ein Ausdruck,
-der im Rahmen der Ausführung eines Statements ausgewertet sind.
+L'_évaluation_ ``t["name"]`` répond à cette question.
+Une _évaluation_ est une expression,
+qui est évalués au cours de l'exécution d'une instruction.
 
-Hier handelt es sich um einen Ausdruck, der pro Element ausgewertet wird,
-da _for_ pro Element Informationen benötigt.
-Der Ausdruck ``t["name"]`` wertet zu einem Objekte den Wert von dessen Tag mit Schlüssel _name_ aus.
-Hat das Objekt kein Tag mit Schlüssel _name_,
-so liefert der Ausdruck eine leere Zeichenkette als Wert.
+C'est une expression qui est évaluée pour chaque élément,
+puisque _for_ nécessite des informations par élément.
+L'expression ``t["name"]`` évalue la valeur de l'attribut avec la clé _name_ d'un objet.
+Si l'objet n'a pas d'attribut avec la clé _name_,
+l'expression évalue à une chaîne des caractère vide.
 
-Zeile 5 enthält mit ``_.val`` ebenfalls einen _Evaluator_.
-Hier geht es darum, den auszugebenden Wert zu erzeugen.
-Das Statement _make_ erzeugt stets nur ein Objekt aus potentiell vielen Objekten,
-daher darf der Wert von ``_.val`` nicht von einzelnen Objekten abhängen.
-Der Evalutor ``_.val`` liefert innerhalb einer Schleife den Wert des aktuellen Schleifenausdrucks,
-hier also den Wert des Tags _name_ aller hier einschlägigen Objekte.
+La ligne 5 contient également une évaluation avec ``_.val``.
+Ceci permet de générer la valeur à éditer.
+L'instruction _make_ crée toujours un seul objet à partir de plusieurs objets potentiels,
+la valeur de ``_.val`` ne doit donc pas dépendre d'objets individuels.
+L'évaluation ``_.val`` retourne la valeur de l'expression de la boucle courante dans une boucle,
+ici la valeur de l'attribut _name_ de tous les objets pertinents.
 
-Wenn ein unabhängiger Wert erwartet, aber ein objektabhängiger Wert angegeben wird,
-führt dies zu einer Fehlermeldung.
-Das passiert z.B., wenn wir uns die Längen der Straßen ausgeben lassen wollten:
-[Probieren](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%5Bout%3Acsv%28length%2Cname%29%5D%3B%0Away%5Bhighway%5D%28%7B%7Bbbox%7D%7D%29%3B%0Afor%20%28t%5B%22name%22%5D%29%0A%7B%0A%20%20make%20Beispiel%20name%3D%5F%2Eval%2Clength%3Dlength%28%29%3B%0A%20%20out%3B%0A%7D) Sie es bitte aus:
+Si une valeur indépendante est attendue, mais qu'une valeur dépendante de l'objet est spécifiée,
+un message d'erreur s'affiche.
+Cela se produit, par exemple, si nous voulions afficher la longueur des routes:
+[Essayez-le](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%5Bout%3Acsv%28length%2Cname%29%5D%3B%0Away%5Bhighway%5D%28%7B%7Bbbox%7D%7D%29%3B%0Afor%20%28t%5B%22name%22%5D%29%0A%7B%0A%20%20make%20Saisie%20name%3D%5F%2Eval%2Clength%3Dlength%28%29%3B%0A%20%20out%3B%0A%7D), s'il vous plaît:
 
     [out:csv(length,name)];
     way[highway]({{bbox}});
     for (t["name"])
     {
-      make Beispiel name=_.val,length=length();
+      make Saisie name=_.val,length=length();
       out;
     }
 
-Die verschiedene Segmente einer Straße gleichen Namens können verschiedene Längen haben.
-Wir können dies beheben, indem wir vorgeben, auf welche Art die Objekte zusammengefasst werden sollen.
-Häufig möchte man [eine Liste](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%5Bout%3Acsv%28length%2Cname%29%5D%3B%0Away%5Bhighway%5D%28%7B%7Bbbox%7D%7D%29%3B%0Afor%20%28t%5B%22name%22%5D%29%0A%7B%0A%20%20make%20Beispiel%20name%3D%5F%2Eval%2Clength%3Dset%28length%28%29%29%3B%0A%20%20out%3B%0A%7D):
+Les différents segments d'une rue portant le même nom peuvent avoir des longueurs différentes.
+Nous pouvons résoudre ce problème en spécifiant comment les objets doivent être regroupés.
+Souvent, on veut [une liste](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%5Bout%3Acsv%28length%2Cname%29%5D%3B%0Away%5Bhighway%5D%28%7B%7Bbbox%7D%7D%29%3B%0Afor%20%28t%5B%22name%22%5D%29%0A%7B%0A%20%20make%20Saisie%20name%3D%5F%2Eval%2Clength%3Dset%28length%28%29%29%3B%0A%20%20out%3B%0A%7D):
 
     [out:csv(length,name)];
     way[highway]({{bbox}});
     for (t["name"])
     {
-      make Beispiel name=_.val,length=set(length());
+      make Saisie name=_.val,length=set(length());
       out;
     }
 
-In diesem speziellen Fall dürfte aber Summieren [sinnvoller sein](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%5Bout%3Acsv%28length%2Cname%29%5D%3B%0Away%5Bhighway%5D%28%7B%7Bbbox%7D%7D%29%3B%0Afor%20%28t%5B%22name%22%5D%29%0A%7B%0A%20%20make%20Beispiel%20name%3D%5F%2Eval%2Clength%3Dsum%28length%28%29%29%3B%0A%20%20out%3B%0A%7D):
+Dans ce cas particulier, cependant, [la sommation](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%5Bout%3Acsv%28length%2Cname%29%5D%3B%0Away%5Bhighway%5D%28%7B%7Bbbox%7D%7D%29%3B%0Afor%20%28t%5B%22name%22%5D%29%0A%7B%0A%20%20make%20Saisie%20name%3D%5F%2Eval%2Clength%3Dsum%28length%28%29%29%3B%0A%20%20out%3B%0A%7D) est probablement plus utile:
 
     [out:csv(length,name)];
     way[highway]({{bbox}});
     for (t["name"])
     {
-      make Beispiel name=_.val,length=sum(length());
+      make Saisie name=_.val,length=sum(length());
       out;
     }
 
-Das Statement _make_ erzeugt immer genau ein neues Objekt, ein sogenanntes _Derived_ (von englisch: abgeleitet).
-Warum überhaupt ein Objekt, warum nicht einfach ein OpenStreetMap-Objekt?
-Die Gründe dafür variieren von Anwendung zu Anwendung:
-hier brauchen wir etwas, das wir ausgeben können.
-In anderen Fällen möchte man Tags von OpenStreetMap-Objekten ändern und entfernen
-oder die Geometrie des OpenStreetMap-Objekts vereinfachen
-oder braucht einen Träger für spezielle Information.
-Scheinbare OpenStreetMap-Objekte müssen den Regeln für OpenStreetMap-Objekte folgen
-und lassen daher viele hilfreiche Freiheiten nicht zu.
-Vor allem aber könnten sie mit echten OpenStreetMap-Objekten verwechselt und irrtümlich hochgeladen werden.
+L'instruction _make_ crée toujours exactement un nouvel objet, appelé _dérivée_.
+Pourquoi un objet, pourquoi pas juste un objet OpenStreetMap?
+Les raisons varient d'un cas d'utilisation à l'autre:
+ici, nous avons besoin de quelque chose que nous pouvons retourner.
+Dans d'autres cas, on souhaite modifier et supprimer les attributs des objets OpenStreetMap,
+ou simplifier la géométrie de l'objet OpenStreetMap,
+ou a besoin d'un transporteur pour des informations spéciales.
 
-Die erzeugten Objekte können Sie sehen, wenn Sie als Ausgabeformat es bei XML [belassen](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=way%5Bhighway%5D%28%7B%7Bbbox%7D%7D%29%3B%0Afor%20%28t%5B%22name%22%5D%29%0A%7B%0A%20%20make%20Beispiel%20name%3D%5F%2Eval%2Clength%3Dsum%28length%28%29%29%3B%0A%20%20out%3B%0A%7D):
+Les objets OpenStreetMap apparents doivent suivre les règles des objets OpenStreetMap
+et ne permettent donc pas beaucoup de libertés utiles.
+Surtout, ils pourraient être confondus avec de vrais objets OpenStreetMap
+et re-téléchargés à _openstreetmap.org_ par erreur.
+
+Vous pouvez voir les objets générés si vous laissez la requête [à format de sortie XML](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=way%5Bhighway%5D%28%7B%7Bbbox%7D%7D%29%3B%0Afor%20%28t%5B%22name%22%5D%29%0A%7B%0A%20%20make%20Saisie%20name%3D%5F%2Eval%2Clength%3Dsum%28length%28%29%29%3B%0A%20%20out%3B%0A%7D):
 
     way[highway]({{bbox}});
     for (t["name"])
     {
-      make Beispiel name=_.val,length=sum(length());
+      make Saisie name=_.val,length=sum(length());
       out;
     }
--->
 
 <a name="sets"/>
 ## Plusieurs sélections en parallèle
 
-...
-<!--
-In vielen Fällen kommt man aber mit einer einzigen Auswahl nicht aus.
-Daher können Auswahlen auch in benannten Variablen abgelegt
-und so mehrere Auswahl gleichzeitig behalten werden.
+Dans de nombreux cas, cependant, une seule sélection ne suffit pas.
+Par conséquent, les sélections peuvent également être stockées dans des variables nommées
+et ainsi garder plusieurs sélections en même temps.
 
-Wir wollen alle Objekte der einen Art finden,
-die nicht in der Nähe von Objekten der anderen Art sind.
-Praxisnähere Beispiel sind dabei häufig eher Suche nach Fehlern,
-z.B. Bahnsteige ohne Gleise oder Adressen ohne Straße.
-Wir werden uns aber jetzt nicht mit Feinheiten des Taggings auseinandersetzen.
+Nous voulons trouver tous les objets d'un même genre,
+qui ne sont pas près d'objets de l'autre genre.
+Des exemples plus proches à la quotidienne sont souvent la recherche d'erreurs,
+p. ex. quais sans voies ou adresses sans rues.
+Mais nous n'aborderons pas les subtilités de les attributs maintenant.
 
-Wir ermitteln daher alle Supermärkte,
-die [nicht in der Nähe](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=nwr%5Bpublic%5Ftransport%3Dstation%5D%28%7B%7Bbbox%7D%7D%29%2D%3E%2Eall%5Fstations%3B%0A%28%0A%20%20nwr%5Bshop%3Dsupermarket%5D%28%7B%7Bbbox%7D%7D%29%3B%0A%20%20%2D%20nwr%2E%5F%28around%2Eall%5Fstations%3A300%29%3B%0A%29%3B%0Aout%20center%3B) von Bahnhöfen sind:
+Nous enquêtons donc sur tous les supermarchés,
+qui [ne sont pas près](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=nwr%5Bpublic%5Ftransport%3Dstation%5D%28%7B%7Bbbox%7D%7D%29%2D%3E%2Eall%5Fstations%3B%0A%28%0A%20%20nwr%5Bshop%3Dsupermarket%5D%28%7B%7Bbbox%7D%7D%29%3B%0A%20%20%2D%20nwr%2E%5F%28around%2Eall%5Fstations%3A300%29%3B%0A%29%3B%0Aout%20center%3B) des gares:
 
     nwr[public_transport=station]({{bbox}})->.all_stations;
     (
@@ -278,50 +259,51 @@ die [nicht in der Nähe](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&
     );
     out center;
 
-In Zeile 3 wählt das Statement ``nwr[shop=supermarket]({{bbox}})`` alle Supermärkte in der Bounding-Box aus.
-Wir wollen davon eine Teilmenge abziehen und verwendet daher ein Block-Statement vom Typ _difference_;
-dieses ist an den drei Komponenten ``(`` in Zeile 3, ``-`` in Zeile 4 und ``);`` in Zeile 5 zu erkennen.
+Par la ligne 3, la mention ``nwr[shop=supermarket]({{bbox}})`` sélectionne tous les supermarchés dans le rectangle englobant.
+Nous voulons supprimer un sous-ensemble et donc utiliser une instruction de bloc de type _difference_;
+Les trois éléments ``(`` à la ligne 2, ``-`` à la ligne 4 et ``)`` à la ligne 5 permettent de le reconnaître.
 
-Wir müssen Supermärkte in der Nähe von Bahnhöfen auswählen.
-Dazu müssen wir wie oben vorher die Bahnhöfe gewählt haben;
-wir brauchen aber auch alle Supermärkte als Auswahl.
-Daher leiten wir die Auswahl der Bahnhöfe durch die getrennte _Set-Variable_ ``all_stations``.
-Sie wird in Zeile 1 von einem gewöhnlichen Statement ``nwr[public_transport=station]({{bbox}})`` mittels der Syntax ``->.all_stations`` in eben diese Variable geleitet.
-Der Zusatz ``.all_stations`` in ``(around.all_stations:300)`` sorgt dann dafür,
-dass diese Variable als Quelle anstelle der letzten Auswahl verwendet wird.
+Nous devons choisir des supermarchés près des gares.
+Pour ce faire, nous devons choisir les stations comme ci-dessus;
+mais nous avons aussi besoin de tous les supermarchés comme sélection.
+C'est pourquoi nous guidons la sélection des stations par la _variable d'ensemble_ ``all_stations``.
+Dans la ligne 1, la sélection passe d'une instruction ordinaire ``nwr[public_transport=station]({{bbox}})`` à cette variable en utilisant la syntaxe ``->.all_stations``.
+L'ajout ``.all_stations`` dans ``(around.all_stations:300)`` le fera,
+que cette variable est utilisée comme source au lieu de la dernière sélection.
 
-Damit wäre ``nwr[shop=supermarket]({{bbox}})(around.all_stations:300)`` das richtige Statement,
-um die genau zu entfernenen Supermärkte anzuwählen.
-Zur Verkürzung der Laufzeit nutzen wir aber lieber die Auswahl des unmittelbar vorhergehenden Statements in Zeile 3 - dort stehen ja genau die Supermärkte in der Bounding-Box drin.
-Dies passiert mittels des _Conditionals_ ``._``.
-Es schränkt die Auswahl auf solche Ergebnisse ein,
-die beim Start des Statements in der Eingabe stehen.
-Da wir hier die Standardeingabe benutzt haben,
-sprechen wir sie über ihren Namen ``_`` (einfacher Unterstrich) an.
+Cela ferait ``nwr[shop=supermarket]({{bbox}})(around.all_stations:300)`` la bonne instruction,
+pour appeler les supermarchés exacts à retirer.
+Pour raccourcir la durée d'exécution, nous préférons utiliser la sélection de l'instruction précédente à la ligne 3 - c'est exactement là où se trouvent les supermarchés dans la zone de délimitation.
+Ceci se fait au moyen de la _filtre_ ``._``.
+Il limite la sélection à de tels résultats,
+qui sont dans l'entrée au début de l'instruction.
+Depuis que nous avons utilisé l'entrée standard ici,
+nous les appelons par leur nom ``._`` (trait de soulignement simple).
 
-Der Ablauf mit Datenfluss nocheinmal im Detail:
+Le déroulement du processus avec le flux de données en détail:
 
-* Vor Beginn der Ausführung sind alle Auswahlen leer.
-* Zuerst wird Zeile 1 ausgeführt.
-  Wegen ``->.all_stations`` sind danach alle Bahnhöfe als ``all_stations`` ausgewählt;
-  die Standardauswahl bleibt dagegen leer.
-* Zeilen 2 bis 5 sind ein Block-Statement vom Typ _difference_,
-  und dieses führt zunächst seinen Ausweisungblock aus.
-  Daher wird als nächstes Zeile 3 ``nwr[shop=supermarket]({{bbox}})`` ausgeführt.
-  Zeile 3 hat keine Umleitung,
-  so dass danach alle Supermärkte in der Standard-Auswahl ausgewählt sind.
-  Die Auswahl ``all_stations`` wird nicht erwähnt und bleibt daher erhalten.
-* Das Block-Statement _difference_ greift das Ergebnis seines ersten Operanden ab,
-  also von Zeile 3.
-* Zeile 4 benutzt die Standarauswahl per ``._`` als Einschränkung für sein Ergebnis,
-  und zusätzlich wird per ``(around.all_stations:300)`` die Auswahl ``all_stations`` als Quelle für die Umkreissuche _around_ herangezogen.
-  Das Ergebnis ist die neue Standard-Auswahl und ersetzt daher die vorherige Standard-Auswahl.
-  Die Auswahl ``all_stations`` bleibt unverändert.
-* Das Block-Statement _difference_ greift das Ergebnis seines zweiten Operanden ab,
-  also von Zeile 4.
-* Das Block-Statement _difference_ bildet jetzt die Differenz der beiden abgegriffenen Ergebnisse.
-  Da nichts anderes gefordert ist, wird das Ergebnis die neue Standard-Auswahl.
-  Die Auswahl ``all_stations`` bleibt nach wie vor unverändert.
-* Zuletzt wird Zeile 5 ausgeführt.
-  Ohne besondere Angabe verwendet ``out`` als Quelle die Standard-Auswahl.
--->
+* Avant le début de l'exécution, toutes les sélections sont vides.
+* La ligne 1 est exécutée en premier.
+  En raison de ``->.all_stations``, toutes les stations sont alors sélectionnées dans ``.all_stations``;
+  la sélection standard, en revanche, reste vide.
+* Les lignes 2 à 5 sont une instruction de type _difference_,
+  et cette première exécute son bloc d'instruction.
+  Par conséquent, la ligne 3 suivante est ``nwr[shop=supermarket]({{bbox}})``.
+  La ligne 3 n'a pas de redirection,
+  pour que tous les supermarchés soient ensuite sélectionnés dans la sélection standard.
+  La sélection ``all_stations`` n'est pas mentionnée et est donc conservée.
+* L'instruction de bloc _difference_ stocke le résultat de son premier opérande,
+  de la ligne 3.
+* Ligne 4 utilise la sélection standard via ``._`` comme restriction pour son résultat,
+  et en plus la sélection ``all_stations`` est utilisée comme source pour la recherche _around_ via ``(around.all_stations:300)``.
+  Le résultat est la nouvelle sélection standard et remplace donc la sélection standard précédente.
+  La sélection ``all_stations`` reste inchangée.
+* L'instruction de bloc _difference_ stocke le résultat de son deuxième opérande,
+  de la ligne 4.
+* L'instruction de bloc _difference_ forme maintenant la différence entre les deux résultats tapés.
+  Comme rien d'autre n'est nécessaire, le résultat devient la nouvelle sélection par défaut.
+  La sélection ``all_stations`` reste inchangée.
+* Enfin, la ligne 5 est exécutée.
+  Sans spécification spéciale, ``out`` utilise la sélection par défaut comme source.
+
+<!-- Traduit avec www.DeepL.com/Translator, partiellement redigé -->

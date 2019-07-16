@@ -80,7 +80,7 @@ All the other statements are _query_ statements, i.e. they select objects.
 This applies to all statements starting with ``nwr`` and further keywords.
 The statements have substructures appearing multiple times:
 
-* ``[shop=supermarket]`` und ``[public_transport=station]``
+* ``[shop=supermarket]`` and ``[public_transport=station]``
 * ``({{bbox}})``
 * ``(around:100)``
 
@@ -144,11 +144,6 @@ how to state conditions in the block statements _if_ or _for_.
 
 The mechanism used for this is helpful also for other tasks.
 You can e.g. create with this [a list of all street names](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%5Bout%3Acsv%28name%29%5D%3B%0Away%5Bhighway%5D%28%7B%7Bbbox%7D%7D%29%3B%0Afor%20%28t%5B%22name%22%5D%29%0A%7B%0A%20%20make%20Beispiel%20name%3D%5F%2Eval%3B%0A%20%20out%3B%0A%7D) within an area.
-(The message _Only unstructured data ..._ is normal
-because Overpass Turbo can process XML but not CSV.
-But CSV is the inevitable format for a list or table.
-Please click on the tab _Data_ in the upper right corner,
-on mobile phones you instead need to scroll down.)
 
     [out:csv(name)];
     way[highway]({{bbox}});
@@ -263,7 +258,7 @@ that are [not close to](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q
 
 In line 3 the statement ``nwr[shop=supermarket]({{bbox}})`` selects all supermarkets in the bounding box.
 We want to remove a subset from these and thus we use a block statement of type _difference_;
-it can be recognized by the three components ``(`` in line 3, ``-`` in line 4, and ``)`` in line 5.
+it can be recognized by the three components ``(`` in line 2, ``-`` in line 4, and ``)`` in line 5.
 
 We must select all supermarkets close to stations.
 For this purpose, we must select all stations first,
@@ -278,7 +273,7 @@ Thereby ``nwr[shop=supermarket]({{bbox}})(around.all_stations:300)`` is the righ
 to select exactly the supermarkets that we want to remove.
 To speed up the request, we rather use the selection of the previous statement in line 3 -
 there already are selected all supermarkets in the bounding box.
-This happens with the filter ``._``.
+This happens with the _filter_ ``._``.
 It restricts the selection to those objects
 that are already in the default selection at the beginning of the execution of the statement.
 Because we use the standard input here,
