@@ -54,8 +54,8 @@ Es treten Propheten ihrer jeweils vermeitlichen reinen Lehre auf.
 
 Ein Beispiel sind Multipolygone:
 Die zu lösende Problemstellungen sind,
-einerseits Flächen mit Löchern zu modellieren,
-andererseits logisch und tatsächlich aneinanderstoßende Flächen zu modellieren
+einerseits Flächen mit Löchern,
+andererseits logisch und tatsächlich aneinanderstoßende Flächen zu modellieren.
 Z.B. Staaten füllen die gesamte Landmasse, d.h. Landgrenzen gehören immer zu mehreren Staaten.
 Nur mit geschlossenen Wegen ist das aber nicht mehr möglich.
 
@@ -77,12 +77,12 @@ sondern erschwert einfach nur die Bearbeitung und bläht die Datenbasis auf.
 
 Es gibt allerdings auch zahlreiche nach wie vor kontroverse Meinungen:
 
-- Straßenbelgeitende Fußwege können entweder als separate Wege modelliert
+* Straßenbelgeitende Fußwege können entweder als separate Wege modelliert
   oder über ein komplexes Regelwerk durch Tags abgebildet werden
   oder man beschränkt implizite Fußwege auf Fälle mit offensichtlicher Deutung.
-- In Straßen können entweder alle Teile der Straße einen Namen bekommen.
+* In Straßen können entweder alle Teile der Straße einen Namen bekommen.
   Oder man beschränkt den Namen auf maximal eine Fahrbahn des schnellsten Verkehrsmittels je Fahrtrichtung.
-- In Gebäuden mit Geschäften kann das Geschäft das gleiche Objekt wie das Gebäude sein
+* In Gebäuden mit Geschäften kann das Geschäft das gleiche Objekt wie das Gebäude sein
   oder nur ein _Node_ innerhalb des Gebäudes.
   Die Adresse kann dann an jedem der beiden Objekte oder auch an beiden gemappt sein.
 
@@ -140,7 +140,7 @@ Entscheidungen über Schnittstellen,
 inbesondere der Abfragesprache,
 und über benutzte Abhängigkeiten werden voraussichtlich Jahrzehnte nachwirken.
 Daher gibt es Neuerungen auch eher behutsam und erst,
-wenn eine für langfristige Untersützung geeignete Form gefunden ist.
+wenn eine für langfristige Unterstützung geeignete Form gefunden ist.
 
 Eine über das Internet erreichbare Infrastuktur zu sein bedeutet auch,
 vernüftiges Lastverhalten auch bei unvernüftigen Anfragemustern zu behalten.

@@ -157,7 +157,7 @@ Entscheidungen über Schnittstellen,
 inbesondere der Abfragesprache,
 und über benutzte Abhängigkeiten werden voraussichtlich Jahrzehnte nachwirken.
 Daher gibt es Neuerungen auch eher behutsam und erst,
-wenn eine für langfristige Untersützung geeignete Form gefunden ist.
+wenn eine für langfristige Unterstützung geeignete Form gefunden ist.
 
 Eine über das Internet erreichbare Infrastuktur zu sein bedeutet auch,
 vernüftiges Lastverhalten auch bei unvernüftigen Anfragemustern zu behalten.

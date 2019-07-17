@@ -4,7 +4,7 @@ Polygon und Around
 Neben der Bounding-Box gibt es weitere, dem Zielgebiet besser anpassbare Begrenzungsrahmen.
 
 Koordinaten in Breiten- und Längengrad sind zwar als Konzept gut verständlich,
-aber die wenigsten Menschen kennen zu den sie interessiernden Orten die Koordinaten auswendig.
+aber die wenigsten Menschen kennen zu den sie interessierenden Orten die Koordinaten auswendig.
 
 Es wird daher zunächst die indirekte Suche anhand von benannten Objekten vorgestellt.
 Die Suche in Flächen ist dabei einerseits herausragend häufig,
