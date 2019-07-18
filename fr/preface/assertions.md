@@ -1,197 +1,173 @@
 Principes
 =========
 
-L'API Overpass ne fera ni la promotion ni n'interférera avec les schémas de balisage.
+L'API Overpass ne fera ni la promotion ni n'interférera avec les schémas d'attribution.
 La rétrocompatibilité est prévue pour des décennies.
 
 <a name="local"/>
 ## Localement rapide
 
-...
-<!--
-Die Overpass API ist darauf ausgelegt,
-räumlich zusammengehörige Daten schnell zu liefern.
-Räumlich weit entfernte Daten kann die Overpass API zwar auch liefern,
-aber hat dann keinen Vorteil gegenüber einer generischen Datenbank.
+L'API Overpass est conçue à cette fin,
+pour fournir rapidement des données liées à l'espace.
+L'API Overpass peut également fournir des données à distance,
+mais n'a aucun avantage sur une base de données générique.
 
-An vielen Abschnitten in diesem Handbuch wird daher auf Tools verwiesen,
-die für den jeweiligen Anwendungszweck stärker optimiert sind.
--->
+De nombreuses sections de ce manuel se réfèrent donc aux outils,
+qui sont plus fortement optimisés en fonction de l'application respective.
 
 <a name="faithful"/>
 ## Fidèle au modèle de données
 
-...
-<!--
-Das OpenStreetMap-Datenmodell hat zwar durch seine Einfachheit maßgeblich zum Erfolg von OpenStreetMap beigetragen.
-Aber es muss für nahzu jede Anwendung in ein anderes Datenmodell übersetzt werden,
-da sonst die Verarbeitungszeiten zu lang werden.
-Das gilt inbesondere auch fürs Rendern einer Landkarte und umso mehr für Routing und POI-Suche.
+Le modèle de données OpenStreetMap a contribué de manière significative au succès d'OpenStreetMap par sa simplicité.
+Mais il doit être traduit en un modèle de données différent pour presque toutes les applications,
+sinon les délais de traitement seront trop longs.
+C'est particulièrement vrai pour le rendu d'une carte et encore plus pour le routage et la recherche de points d'intérêt.
 
-Keine dieser Konvertierungen ist verlustfrei,
-jedes Folge-Datenmodell betont einige Aspekte, ignoriert andere Aspekte und interpretiert den Rest bestmöglich.
-Damit führt auch eine möglichst faktentreue Modellierung des Mappers in der Karte, beim Routing, der POI-Suche oder anderen Anwendungsfällen häufig zu unerwarteten Ergebnissen.
+Aucune de ces conversions n'est sans perte,
+chaque modèle de données subséquent met l'accent sur certains aspects, ignore d'autres aspects et interprète le reste de la meilleure façon possible.
+Ainsi, une modélisation du mappeur qui est aussi précise que possible sur la carte,
+lors du routage, de la recherche de points d'intérêt ou d'autres cas d'utilisation conduit souvent à des résultats inattendus.
 
-In Reaktion darauf verwenden Mapper dann nicht selten faktenwidrige Modellierungen,
-die aber im bevorzugten Werkzeug schönere Ergebnisse zeigen.
-Dass die Ergebnisse in anderen Werkzeugen schlechter sind,
-bemerkt der Mapper dann meist nicht.
-Diese Praxis ist unter der Redewendung _für den Renderer Taggen_ berüchtigt.
+En réponse, les cartographes utilisent souvent une modélisation inexacte des faits,
+mais qui donnent de plus beaux résultats dans l'outil préféré.
+Que les résultats dans d'autres outils sont pires,
+le cartographe ne s'en rend généralement pas compte.
+Cette pratique est notoire sous l'idiome [Taguer pour le rendu](https://wiki.openstreetmap.org/wiki/FR:Tagging_for_the_renderer).
 
-Das Problem ist,
-dass faktenwidriges Modellieren dann durch ein schönes Kartenbild belohnt
-und faktentreues Modellieren durch ein schlechtes Kartenbild bestraft wird.
-Vor Dritten hat der Mapper es schwer zu begründen,
-warum er faktentreu modelliert.
+Le problème est
+que la modélisation non-factuelle est ensuite récompensée par une belle image cartographique
+et la modélisation factuelle est punie par une mauvaise image de la carte.
+Il est difficile pour l'utlisateur de justifier sa décision à des tiers,
+pourquoi il fait de la modélisation factuelle.
 
-Daher arbeitet die Overpass API auf dem originalen Datenmodell:
-Es ist genau die Aufgabe der Overpass API die Daten so zu zeigen, wie sie in OpenStreetMap modelliert sind.
+Par conséquent, l'API Overpass fonctionne sur le modèle de données d'origine:
+C'est exactement la tâche de l'API Overpass d'afficher les données telles qu'elles sont modélisées dans OpenStreetMap.
 
-Damit verschieben sich die Gewichte:
-faktisch fehlerhafte Modellierungen können dann auch als solche gezeigt werden.
-Und für faktrentreue Modellierungen kann zumindest der Gesamtzusammenhang gezeigt werden.
--->
+Cela déplace les poids:
+Les modèles factuellement incorrects peuvent alors également être présentés comme tels.
+Et pour les modèles qui sont fidèles aux faits, au moins le contexte général peut être montré.
 
 <a name="tags"/>
 ## Neutre avec les attributs
 
-...
-<!--
-Es liegt im Wesen des Menschen, dass sich dann bald das gegenteilige Phänomen zeigt:
-Es treten Propheten ihrer jeweils vermeitlichen reinen Lehre auf.
+C'est dans la nature de l'homme que le phénomène inverse apparaît rapidement:
+Des prophètes de leurs enseignements supposés purs apparaissent.
 
-Ein Beispiel sind Multipolygone:
-Die zu lösende Problemstellungen sind,
-einerseits Flächen mit Löchern zu modellieren,
-andererseits logisch und tatsächlich aneinanderstoßende Flächen zu modellieren
-Z.B. Staaten füllen die gesamte Landmasse, d.h. Landgrenzen gehören immer zu mehreren Staaten.
-Nur mit geschlossenen Wegen ist das aber nicht mehr möglich.
+Les polygones multiples en sont un exemple:
+Les problèmes à résoudre sont,
+d'une part pour modéliser des surfaces avec des trous,
+d'autre part pour modéliser logiquement et effectivement les surfaces adjacentes.
+Par exemple, les États remplissent la totalité de la masse terrestre, c'est-à-dire que les frontières terrestres appartiennent toujours à plusieurs États.
+Toutefois, cela n'est possible plus avec des chemins fermées.
 
-Aus dem Anwendungsfall _Löcher_ ist die Konvention geblieben,
-die relevanten Tags auf dem umschließenden Way zu belassen.
-Das lag damals maßgeblich daran,
-dass der Renderer Schwierigkeiten mit Relationen gehabt hat.
-Gleichzeitig haben einige Verwender Schwierigkeiten mit einigen Besonderheiten,
-was unter der Überschrift _Touching Inner Rings_ ein Thema gewesen ist.
+La convention est restée du cas d'utilisation _trous_,
+pour laisser les attributs pertinentes dans le chemin de clôture.
+À l'époque, c'était en grande partie à cause de cela,
+que le moteur rendu avait des difficultés avec les relations.
+En même temps, certains utilisateurs ont des difficultés avec certaines particularités,
+ce qui a été un sujet sous le titre _anneaux intérieurs touchants_.
 
-In der Summe sind Multipolygon-Relationen ein ständiges Thema gewesen;
-ihre Bearbeitung fordert auch heute noch gute Kenntnisse.
+En résumé, les relations multipolygones ont été un sujet constant;
+leur traitement nécessite encore aujourd'hui une bonne connaissance.
 
-Das haben einige Mapper dahingehend missverstanden,
-dass Relationen das höherwertige Objekt seien
-und haben einfache geschlossene Wege in Multipolygone umgewandelt.
-Das bringt aber gar keinen Vorteil,
-sondern erschwert einfach nur die Bearbeitung und bläht die Datenbasis auf.
+Certains cartographes ont mal compris cela,
+que les relations sont l'objet le plus digne
+et converti de simples chemins fermés en multipolygones.
+Mais cela n'a aucun avantage,
+mais complique simplement le traitement et gonfle la base de données.
 
-Es gibt allerdings auch zahlreiche nach wie vor kontroverse Meinungen:
+Cependant, il y a encore beaucoup d'opinions controversées:
 
-- Straßenbelgeitende Fußwege können entweder als separate Wege modelliert
-  oder über ein komplexes Regelwerk durch Tags abgebildet werden
-  oder man beschränkt implizite Fußwege auf Fälle mit offensichtlicher Deutung.
-- In Straßen können entweder alle Teile der Straße einen Namen bekommen.
-  Oder man beschränkt den Namen auf maximal eine Fahrbahn des schnellsten Verkehrsmittels je Fahrtrichtung.
-- In Gebäuden mit Geschäften kann das Geschäft das gleiche Objekt wie das Gebäude sein
-  oder nur ein _Node_ innerhalb des Gebäudes.
-  Die Adresse kann dann an jedem der beiden Objekte oder auch an beiden gemappt sein.
+* Les sentiers pédestres menant le long des routes peuvent être modélisés comme des chemins séparés,
+  soit être représenté par un ensemble complexe de règles utilisant des attributs,
+  soit on limite les sentiers implicites à des cas d'interprétation évidente.
+* Dans les rues, toutes les parties de la rue peuvent avoir un nom.
+  Vous pouvez également limiter le nom à une voie du moyen de transport le plus rapide par direction.
+* Dans les bâtiments avec magasins, le magasin peut être le même objet que le bâtiment
+  ou un seul _nœud_ dans le bâtiment.
+  L'adresse peut alors être mappée à l'un des deux objets ou aux deux.
 
-Um ein unversell akzeptiertes Tool zu schaffen,
-halte ich mich aus solchen Dissensen heraus.
+Créer un outil pleinement accepté,
+je reste en dehors de tels désaccords.
 
-Die Overpass API ist daher strikt neutral bzgl. Tagging,
-d.h. kein Tag bekommt eine besondere Behandlung.
--->
+L'API Overpass est donc strictement neutre en ce qui concerne l'attribution,
+c'est-à-dire qu'aucun attribut ne bénéficie d'un traitement spécial.
 
-<a name="nd"/>
+<a name="antiwar"/>
 ## Invulnérabilité
 
-...
-<!--
-Ein anderes Problem in diesem Zusammenhang ist das Bestreben,
-Daten automatisch zu ändern.
-So naheliegend die Idee ist, sie führt zu [zahlreichen Problemen](https://www.geofabrik.de/media/2016-07-04-automatische_edits_und_importe_in_osm.pdf).
+Un autre problème dans ce contexte est l'effort
+de modifier les données automatiquement.
+Aussi évidente que soit l'idée, elle entraîne de [nombreux problèmes](https://2016.stateofthemap.org/2016/staying-on-the-right-side-best-practices-in-editing/).
 
-Daher lässt die Overpass API nicht zu,
-OpenStreetMap-Objekte zur Laufzeit umzuschrieben.
-Für den zweifelsohne und auch durchaus berechtigten bestehenden Bedarf,
-umgeschriebene Objekte zu bekommen,
-ist eigens die Klasse der _Deriveds_ eingeführt worden.
-Diese sind ausreichend verschieden von OpenStreetMap-Objekten,
-dass sie nicht direkt zurückgeschrieben werden können.
+Par conséquent, l'API Overpass ne permit pas,
+réécrire les objets OpenStreetMap au moment de l'exécution.
+Pour le besoin indubitablement et aussi tout à fait justifié existant,
+pour obtenir des objets réécrits,
+la classe des _éléments dérivées_ a été introduite.
+Ceux-ci sont suffisamment différents des objets OpenStreetMap,
+qu'on ne peut pas leur re-télécharger directement.
 
-Bei Edits in verschiedenen Automatisierungsgraden kann die Overpass API trotzdem hilfreich sein.
-Beispiele dafür sind im Abschnitt [JOSM](../targets/josm.md) zu finden.
--->
+L'API Overpass peut toujours être utile pour les éditions avec différents niveaux d'automatisation.
+Des exemples peuvent être trouvés dans la section [JOSM](../targets/josm.md).
 
 <a name="ql"/>
 ## Langage multifonctionnel
 
-...
-<!--
-Geodaten bringen mit dem Konzept _Räumliche Nähe_ ihr eigenes Ordnungskriterium mit.
-Damit fallen sie in keine der Kategorien,
-die durch Standard-Abfragesprachen bereits abgedeckt sind.
-Daher gibt es überhaupt eine eigene Abfragesprache.
+Les géodonnées apportent avec elles leur propre critère d'ordre avec le concept de _proximité spatiale_.
+Ils n'entrent donc dans aucune des catégories,
+qui sont déjà couverts par les langages de requête standard.
+Par conséquent, il existe un langage de requête qui lui est propre.
 
-Die Abfragesprache orientiert sich so nicht nur an räumlicher Nähe,
-sondern kann auch voll den Eigenheiten des OpenStreetMap-Datenmodells Rechnung tragen.
-Dazu kommt das Erfordernis,
-dass sich die Abfragen auf einem öffentlichen geteilten Server vernüftig verhalten sollen,
-d.h. weder große Angriffsflächen für Sicherheitslücken noch Performance-Probleme bieten sollen.
+Le langage de requête n'est donc pas seulement orienté vers la proximité spatiale,
+mais peut également tenir pleinement compte des particularités du modèle de données OpenStreetMap.
+En outre, il y a l'exigence,
+que les requêtes sur un serveur partagé public doivent se comporter raisonnablement,
+c'est-à-dire que ni aucun surfaces d'attaque significantes pour les failles de sécurité ni les problèmes de performance ne doivent offrir.
 
-Im übrigen hat sich herausgestellt,
-dass die OpenStreetMap-Community Bedarf auch an komplexen Suchen hat.
-Diese sollen bedient werden,
-indem die Sprache möglichst logisch rigide und orthgonal ist,
-so dass nahezu alles mit allem kombinieren lässt.
--->
+Il s'est avéré
+que la communauté OpenStreetMap a également besoin de recherches complexes.
+Celles-ci devraient être servies,
+en rendant le langage aussi logiquement rigide et orthogonal que possible,
+de sorte que presque tout peut être combiné avec tout.
 
 <a name="infrastructure"/>
 ## Infrastructure
 
-...
-<!--
-Die Overpass API ist als Infrastruktur konzipiert.
-Sie ist also keine Endanwender-Software und auch kein Prototyp.
+L'API Overpass est conçue comme une infrastructure.
+En particulier, il ne s'agit pas d'un logiciel d'utilisateur final ou d'un prototype.
 
-Entscheidungen über Schnittstellen,
-inbesondere der Abfragesprache,
-und über benutzte Abhängigkeiten werden voraussichtlich Jahrzehnte nachwirken.
-Daher gibt es Neuerungen auch eher behutsam und erst,
-wenn eine für langfristige Unterstützung geeignete Form gefunden ist.
+Décisions concernant les interfaces,
+en particulier le langage de requête,
+et sur les dépendances utilisées dureront probablement des décennies.
+Il y a donc des innovations assez prudemment et seulement,
+si une forme de soutien à long terme a été trouvée.
 
-Eine über das Internet erreichbare Infrastuktur zu sein bedeutet auch,
-vernüftiges Lastverhalten auch bei unvernüftigen Anfragemustern zu behalten.
-Mehr dazu im [nächsten Abschnitt](commons.md#magnitudes).
--->
+Etre une infrastructure accessible via Toile, c'est aussi
+de maintenir un comportement de charge raisonnable, même avec des échantillons d'requête déraisonnables.
+Plus d'informations à ce sujet dans la [prochaine section](commons.md#magnitudes).
 
 <a name="libre"/>
 ## Libre
 
-...
-<!--
-Die Overpass API lässt sich an den [Vier Freiheiten](https://www.gnu.org/philosophy/free-sw.de.html) von Open Source messen.
--->
+L'API Overpass peut être mesurée par rapport aux [quatre libertés essentielles](https://www.gnu.org/philosophy/free-sw.fr.html) de l'Open Source.
 
-### Fonctionner, distribuer
+### Fonctionner, redistribuer
 
-...
-<!--
-Dazu reicht es nicht aus,
-die öffentlichen Instanzen anzubieten,
-da diese unvermeidlich eine endliche Kapazität haben.
+Ce n'est pas suffisant,
+à offrir aux instances publiques,
+car ils ont inévitablement une capacité finie.
 
-Erst mit der Veröffentlichung des [Quellcodes](https://github.com/drolbr/Overpass-API) in einer Form,
-der die [Installation eigener Instanzen](https://dev.overpass-api.de/no_frills.html) einfach macht,
-sind die Freiheiten gewahrt.
-Das schließt auch ein,
-den Ressourcenbedarf der Software so zu bemessen,
-dass geeignete Hardware leicht zu bekommen ist.
--->
+Seulement avec la publication du [code source](https://github.com/drolbr/Overpass-API) sous une forme,
+ce qui facilite [l'installation de vos propres instances](https://dev.overpass-api.de/no_frills.html),
+les libertés sont préservées.
+Cela inclut,
+de mesurer ainsi les besoins en ressources du logiciel,
+que le matériel approprié est facile à trouver.
 
-### Modifier, cultiver
+### Étudier, modifier
 
-...
-<!--
-Der [Quellcode](https://github.com/drolbr/Overpass-API) ist hier wesentliche Voraussetzung.
-Die [Lizenz](https://github.com/drolbr/Overpass-API/blob/master/COPYING) sichert dies auch rechtlich ab.
--->
+Le [code source](https://github.com/drolbr/Overpass-API) est ici essentiel.
+La [licence](https://github.com/drolbr/Overpass-API/blob/master/COPYING) le garantit également légalement.
+
+<!-- Traduit avec www.DeepL.com/Translator, partiellement redigé -->

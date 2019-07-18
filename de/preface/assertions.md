@@ -31,7 +31,7 @@ In Reaktion darauf verwenden Mapper dann nicht selten faktenwidrige Modellierung
 die aber im bevorzugten Werkzeug schönere Ergebnisse zeigen.
 Dass die Ergebnisse in anderen Werkzeugen schlechter sind,
 bemerkt der Mapper dann meist nicht.
-Diese Praxis ist unter der Redewendung _für den Renderer Taggen_ berüchtigt.
+Diese Praxis ist unter der Redewendung [für den Renderer Taggen](https://wiki.openstreetmap.org/wiki/DE:Tagging_for_the_renderer) berüchtigt.
 
 Das Problem ist,
 dass faktenwidriges Modellieren dann durch ein schönes Kartenbild belohnt
@@ -92,7 +92,7 @@ halte ich mich aus solchen Dissensen heraus.
 Die Overpass API ist daher strikt neutral bzgl. Tagging,
 d.h. kein Tag bekommt eine besondere Behandlung.
 
-<a name="nd"/>
+<a name="antiwar"/>
 ## Unverletzlichkeit
 
 Ein anderes Problem in diesem Zusammenhang ist das Bestreben,

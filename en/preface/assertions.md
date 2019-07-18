@@ -33,7 +33,7 @@ may lead in the map, at routing and in other use cases to unexpected results.
 Many mappers quite often address this by mis-mapping facts
 that deliver in exchange for more desired results in the tool of choice.
 The mapper rarely recognizes that the results are, that way, worse in other tools.
-This practice is referred to by the expression _(mis-)mapping for the renderer_.
+This practice is referred to by the expression [(mis-)mapping for the renderer](https://wiki.openstreetmap.org/wiki/Tagging_for_the_renderer).
 
 The problem is that mapping against the facts in then promoted by a pretty map appearance
 and faithful mapping is discouraged by an ugly map appearance.
@@ -91,7 +91,7 @@ I keep it out of such dissents as much as possible.
 For this reason the Overpass API is strictly tagging neutral,
 i.e. no tag gets special treatment.
 
-<a name="nd"/>
+<a name="antiwar"/>
 ## Immutability
 
 Another problem in this context is the ambition
