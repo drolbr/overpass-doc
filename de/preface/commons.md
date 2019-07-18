@@ -17,6 +17,10 @@ es gibt jedoch auch deutlich länger laufende Anfragen.
 Jeder Server der Overpass API kann davon etwa 1 Mio. Anfragen pro Tag beantworten,
 und es werden zwei Server im Rahmen von [overpass-api.de](https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances) betrieben.
 
+Es ist praktisch ausgeschlossen, dass Sie mit manuell ausgelösten Abfragen jemals Schwierigkeiten bereiten.
+Leider kann die Ressourcenbegrenzung Sie trotzdem vereinzelt heimsuchen -
+der Algorithmus kann nicht perfekt arbeiten.
+
 Beispiele für problematisches Verhalten sind:
 
 1. zehntausende Male pro Tag die exakt gleiche Abfrage (von der gleichen Adresse) auszuführen
@@ -28,7 +32,7 @@ Beispiele für problematisches Verhalten sind:
 Im ersten Fall muss das abfragende Skript repariert werden,
 in den Fällen 2 und 3 sollte anstatt der Overpass API lieber ein [Planet-Dump](https://wiki.openstreetmap.org/wiki/Planet.osm) verwendet werden.
 Im vierten Fall ist eine eigene Instanz die bessere Wahl;
-Hinweise zur Einrichtung gibt der folgende Absatz.
+Hinweise zur Einrichtung geben die [Installations-Instruktionen](../more_info/setup.md).
 
 Tatsächlich stellen die meisten Nutzer aber nur jeweils wenige Anfragen.
 Die automatische Lastbegrenzung zielt also darauf ab,
@@ -80,21 +84,21 @@ Eine Slippy-Map würde nun viele kurzlaufende Abfragen in kurzer Zeit absetzen.
 Damit ein Benutzer alle diese Abfragen beantwortet bekommen kann,
 gibt es zwei Kulanzmechanismen:
 
-- Es gibt üblicherweise mehrere Slots.
+* Es gibt üblicherweise mehrere Slots.
   Die Anzahl der Slots steht in der dritten Zeile hinter ``Rate limit:``.
-- Abfragen werden bis zu 15 Sekunden auf dem Server offengehalten,
+* Abfragen werden bis zu 15 Sekunden auf dem Server offengehalten,
   wenn ihnen noch kein Slot zur Verfügung steht.
 
 Benötigt eine solche Slippy-Map also z.B. 20 Abfragen zu 1 Sekunde Laufzeit,
 ist die Anzahl der Slots gleich 2 und das Verhältnis von Abfragedauer zu Beruhigungszeit 1:1,
 so würden
 
-- die ersten zwei Abfragen sofort abgewickelt
-- die nächsten zwei Abfragen entgegengenommen
+* die ersten zwei Abfragen sofort abgewickelt
+* die nächsten zwei Abfragen entgegengenommen
   und nach 2 Sekunden (1 Sekunde Ausführungsdauer plus 1 Sekunde Beruhigungszeit) ausgeführt
-- die weiteren Abfragen entsprechend später ausgeführt
-- die Abfragen 15 und 16 an jeweils fünfter Position nach 14 Sekunden ausgeführt
-- die Abfragen 17 bis 20 nach 15 Sekunden verworfen,
+* die weiteren Abfragen entsprechend später ausgeführt
+* die Abfragen 15 und 16 an jeweils fünfter Position nach 14 Sekunden ausgeführt
+* die Abfragen 17 bis 20 nach 15 Sekunden verworfen,
   da sie bis dahin keinen Slot bekommen haben
 
 Wenn der Benutzer die Inhalte der Abfragen 17 bis 20 noch braucht,
@@ -123,6 +127,12 @@ Es gibt zwei Kriterien dafür, pro Laufzeit und pro Speicherbedarf.
 Jede Abfrage enthält eine Deklaration zu ihrer erwarteten Maximallaufzeit und zu ihrem erwarteten maximalen Speicherbedarf.
 Die Deklaration der Maximallaufzeit kann explizit durch ein vorangestelltes ``[timeout:...]`` erfolgen;
 die Deklaration des maximalen Speicherbedarfs durch ein vorangestelltes ``[maxsize:...]``.
+Beides kann kombiniert werden.
+
+Ist bei einer Abfrage keine Maximallaufzeit deklariert,
+so wird eine Maximallaufzeit von 180 Sekunden gesetzt.
+Für den maximalen Speicherbedarf ist der Defaultwert 536870912;
+dies entspricht 512 MiB.
 
 Überschreitet eine Abfrage ihre deklarierte Maximallaufzeit oder ihren deklarierten maximalen Speicherbedarf,
 so wird sie vom Server abgebrochen.
@@ -137,11 +147,6 @@ Das [gleiche Beispiel mit mehr Zeit](https://overpass-turbo.eu/?lat=51.4775&lon=
     [timeout:90];
     nwr[shop=supermarket]({{bbox}});
     out center;
-
-Ist bei einer Abfrage keine Maximallaufzeit deklariert,
-so wird eine Maximallaufzeit von 180 Sekunden gesetzt.
-Für den maximalen Speicherbedarf ist der Defaultwert 536870912;
-dies entspricht 512 MiB.
 
 Der Server lässt nun eine Abfrage genau dann zu,
 wenn sie in beiden Kriterien höchstens die Hälfte der noch verfügbaren Ressourcen belegt.
@@ -158,7 +163,10 @@ Der übliche Gesamtwert für zulässige Zeiteinheiten sind 262144.
 Es wird also eine Abfrage mit Maximallaufzeit 1 Tag recht bequem zugelassen,
 aber jede weitere parallele Abfrage mit einer so langen Maximallaufzeit dann abgelehnt.
 Der Rate-Limit-Mechanismus sorgt dann mit der anschließenden Beruhigungszeit in der Größenordnung von Tagen dafür,
-dass nicht immer derselbe Nutzer eine so lange Maximallaufzeit anfordern kann.
+dass nicht immer derselbe Nutzer von einer so lange Maximallaufzeit profitiert.
+
+Die Last aus Sicht des Servers wird per Munin angezeigt,
+[hier](https://z.overpass-api.de/munin/localdomain/localhost.localdomain/index.html#other) und [hier](https://lz4.overpass-api.de/munin/localdomain/localhost.localdomain/index.html#other).
 
 Wie beim Rate-Limit lehnt der Server zu große Abfragen nicht sofort ab,
 sondern wartet 15 Sekunden,
