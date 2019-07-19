@@ -72,7 +72,7 @@ welche Gepflogenheiten sich durchsetzen,
 so dass eine Verkürzung auf weniger Bits vorbehalten bleibt.
 Die vom Server ermittelte Benutzernummer steht in der ersten Zeile der [Status-Abfrage](https://overpass-api.de/api/status) hinter ``Connected as:``.
 
-Jede Ausführung einer Abfrage belegt einen Slot pro Benutzer,
+Jede Ausführung einer Abfrage belegt einen Slot des Benutzers,
 und zwar für die Ausführungsdauer der Abfrage plus eine Beruhigungszeit.
 Der Zweck der Beruhigungszeit ist,
 anderen Benutzern die Chance zu Abfragen zu geben.
@@ -118,7 +118,7 @@ Wegen des Rate-Limits abgelehnte Abfragen werden mit dem [HTTP-Statuscode 429](h
 
 ### Timeout und Maxsize
 
-unabhängig von diesem Rate-Limit gibt es einen zweiten Mechanismus;
+Unabhängig von diesem Rate-Limit gibt es einen zweiten Mechanismus;
 er bevorzugt kleine Abfragen vor großen Abfragen,
 damit viele Nutzer mit kleinen Abfragen auch dann noch bedient werden können,
 wenn die Kapazität für die Nutzer mit den größen Abfragen zusammen nicht mehr reicht.
