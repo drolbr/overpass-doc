@@ -22,7 +22,7 @@ Bei Nodes ist eine nutzbare Geometrie einfach zu bekommen:
 Alle Ausgabemodi außer `out ids` und `out tags` haben per Definition die Koordinaten der Nodes dabei.
 
 Bei der Kombination mit Ways gibt es dagegen bereits mehrere Möglichkeiten je nach Situation:
-Im einfachsten Fall kann ihr Programm ergänzende Koordinaten an den Ways verarbeiten.
+Im einfachsten Fall kann Ihr Programm ergänzende Koordinaten an den Ways verarbeiten.
 Sie können sich den Unterschied z.b. in Overpass Turbo veranschaulichen,
 indem Sie die Resultate der beiden nachfolgenden Abfragen im Tab _Data_ (oben rechts) vergleichen:
 [Ohne Koordinaten](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%3B)
@@ -160,7 +160,7 @@ Dies sind die Kommandos `rel(br)` und `>>`: [(Link)](https://overpass-turbo.eu/?
     ( rel(br); >>;);
     out;
 
-Je nach System wird dies ihren Browser verlangsamen oder eine Warnmeldung produzieren.
+Je nach System wird dies Ihren Browser verlangsamen oder eine Warnmeldung produzieren.
 Wir haben eine Ecke im Vorort Greenwich gewollt und tatsächlich Daten aus fast ganz London bezogen,
 da es eine Sammelrelation _Quietways_ gibt.
 Da hat die sowieso schon große Datenmenge wiederum vervielfacht.
