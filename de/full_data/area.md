@@ -32,7 +32,7 @@ Es gibt andere Anliegen im Projekt mit größerem Leidensdruck.
 
 Der typische Einsatzfall für Flächen in der Overpass API ist,
 alle Objekte von einem Typ oder alle Objekte generell in einem Gebiet herunterzuladen.
-Wir fangen mit allen Objekten von einem mäßigen häufigen Typ an;
+Wir fangen mit allen Objekten von einem mäßig häufigen Typ an;
 alle Objekte generell sind zum Üben viel zu viele Daten.
 Wenn der _Area_-Mechanismus in diesem Abschnitt eingeführt ist,
 folgt der Download aller Objekte im [folgenden Abschnitt](area.md#full).
@@ -46,7 +46,7 @@ Wir wollen zunächst [alle Supermärkte in London](https://overpass-turbo.eu/?la
 Die eigentliche Arbeit wird in Zeile 2 geleistet:
 dort beschränkt der _Filter_ ``(area)`` die zu selektierenden Objekte
 auf solche nur in den Flächen aus der Eingabe;
-wir müssen als vorher die _Area_ zu London geliefert haben.
+wir müssen also vorher die _Area_ zu London geliefert haben.
 
 Zeile 1 selektiert alle Objekte vom Typ _Area_,
 die ein Tag _name_ mit dem Wert _London_ besitzen.
@@ -73,7 +73,8 @@ Der Vollständigkeit halber sei darauf hingewiesen, dass dies auch mit dem [Komf
 
 In beiden Fällen ist die Bounding-Box ein Filter parallel zu ``(area)``.
 Für das Provisorium _Area_ ist niemals eine Bounding-Box implementiert worden,
-auch deswegen, da der Filter im Wesentlichen nur eine Anweisung später angewendet werden muss.
+auch deswegen, da es reicht,
+den Filter eine Anweisung später anzuwenden.
 
 In ähnlicher Weise können wir auch ausnutzen, dass London in Großbritannien liegt.
 Ein [späterer Abschnitt](area.md#combining) zeigt alle Möglichkeiten dazu auf.
@@ -128,7 +129,7 @@ hier z.B. ``area(3600065606)``.
 Wir wollen nun wirklich alle Daten in einem Gebiet herunterladen.
 Das geht zwar mit fast der Abfrage, die wir [zum Üben](area.md#per_tag) verwendet haben.
 Aber wir müssen das Werkzeug wechseln:
-für ein Gebiet von der Größe London kommen schnell 10 Mio. Objekte oder mehr zusammen,
+für ein Gebiet von der Größe Londons kommen schnell 10 Mio. Objekte oder mehr zusammen,
 während _Overpass Turbo_ bereits ab etwa 2000 Objekten den Browser bis zur Unbrauchbarkeit verlangsamt.
 
 Zudem sind Sie bei fast allen Gebieten in offiziellen Grenzen von Staaten bis Städten besser bedient mit regionalen Extrakten.
@@ -190,32 +191,92 @@ muss sie an einem anderen Ort als der Standard-Auswahl liegen.
 <a name="combining"/>
 ## Fläche-in-Fläche
 
-...
-<!--
-  Area-in-Area geht nicht, 2 Namen
-  Overpass-Turbo, Id + 2.4 Mrd/3.6 Mrd
-  map_to_area (auch Bbox)
--->
+Wir kommen zurück zu dem Problem,
+London als Fläche in Großbritannien auszuwählen.
+Das ist nicht implementiert,
+aber es gibt auch hier wieder zwei andere Möglichkeiten.
+
+Man kann Objekte suchen, die [in der Schnittmenge zweier Flächen](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=8&Q=area%5Bname%3D%22London%22%5D%2D%3E%2Eklein%3B%0Aarea%5Bname%3D%22England%22%5D%2D%3E%2Egrosz%3B%0Anwr%5Bshop%3Dsupermarket%5D%28area%2Eklein%29%28area%2Egrosz%29%3B%0Aout%20center%3B) liegen:
+
+    area[name="London"]->.klein;
+    area[name="England"]->.grosz;
+    nwr[shop=supermarket](area.klein)(area.grosz);
+    out center;
+
+Das eigentliche Filtern findet im Query-Statement in Zeile 3 statt;
+dort werden nur Objekte zugelassen, die alle drei Filter erfüllen:
+Der Filter ``[shop=supermarket]`` lässt nur Objekte mit dem entsprechenden Tag zu.
+Der Filter ``(area.klein)`` beschränkt dies auf Objekte,
+die innerhalb einer der in _klein_ befindlichen Flächen liegen.
+Der Filter ``(area.grosz)`` reduziert dies weiter auf Objekte,
+die innerhalb einer der in _grosz_ befindlichen Flächen liegen.
+
+Nun müssen wir nur noch sicherstellen,
+dass in _klein_ bzw. _grosz_ die gewollten Flächen drinstehen.
+Die erledigen jeweils Query-Statements nach _Areas_,
+die ihr Ergebnis in eine benannte Variable speichern.
+
+Das andere Vorgehen verwendet den Zusammenhang zwischen _Area_ und dem erzeugenden Objekt,
+allerdings diesmal in die dem Filter _pivot_ entgegengesetzte Richtung.
+Wir [selektieren](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=8&Q=area%5Bname%3D%22England%22%5D%3B%0Arel%5Bname%3D%22London%22%5D%28area%29%3B%0Amap%5Fto%5Farea%3B%0Anwr%5Bshop%3Dsupermarket%5D%28area%29%3B%0Aout%20center%3B) das erzeugte Objekt der kleinen Fläche:
+
+    area[name="England"];
+    rel[name="London"](area);
+    map_to_area;
+    nwr[shop=supermarket](area);
+    out center;
+
+In Zeile 4 wollen wir für den Filter ``(area)`` exakt die _Area_ zu London als Eingabe haben.
+Dazu selektieren wir in Zeile 2 alle _Relations_, die den Namen _London_ haben
+und innerhalb einer der Flächen von ``(area)`` liegen.
+Für diese hatten wir in Zeile 1 alle Flächen mit Name _England_ ausgewählt.
+
+Nun brauchen wir aber in Zeile 4 ja Flächen,
+während der Filter ``(area)`` keine Flächen filtern kann und wir daher _Relations_ selektiert haben.
+Dies erledigt ``map_to_area``:
+es ordnet den Objekten aus seiner Eingabe die von den Objekten erzeugten Flächen zu.
 
 <a name="background"/>
 ## Technischer Hintergrund
 
-...
-<!--
-Problem: Generierung
-Viele Filter gehen nicht
-Bbox-Alternative via map_to_area
-...
--->
+Bereits am Anfang des Overpass-Projekts im Jahr 2009 sollte es die Möglichkeit geben,
+ein geometrisches A-liegt-in-B nutzen zu können.
+Das hat sich nur denkbar schlecht mit der Anforderung vertragen,
+[OpenStreetMap-Daten treu abzubilden](../preface/assertions.md#faithful):
+Flächen sind in OpenStreetMap ein gemischtes Konzept aus Geometrie und Tags,
+es gab glaubwürdige Bestrebungen, einen eigenen Datentyp _Area_ zu entwickeln,
+und die Regeln dafür, wann genau ein OpenStreetMap-Objekt eine Fläche ist, sind damals noch im Fluss gewesen.
+Zuletzt gab es den Eindruck, dass Flächen leicht beschädigt werden könnten und dies häufiger zu erwarten ist.
 
-<!--
-  Greenwich
-  - Debug-Mode
--->
+Daher sind _Areas_ in Overpass API ein eigener Datentyp.
+Der Server erzeugt diese in einem zyklischen Hintergrundprozess nach einem vom Code getrennten [Regelsatz](https://github.com/drolbr/Overpass-API/tree/master/src/rules).
+Damit haben es potentielle Betreiber eigener Instanzen einfacher,
+selbst zu entscheiden, welche Flächen sie erzeugen wollen.
+Jede _Area_ übernimmt dabei bei ihrer Erzeugung die Tags des Objektes, aus dem sie erzeugt worden ist.
 
-<!--
-- Regex: ...
-  Suche per Name, regulärer Ausdruck
-  "London Borough of Greenwich"
--->
+Dies zieht Folgen nach sich:
 
+* Flächen stehen erst viele Stunden später zu Verfügung als ihre erzeugenden Objekte.
+  Entsprechend wirken sich auch Änderungen an den erzeugenden Objekten verzögert aus.
+* Ergibt ein erzeugendes Objekt keine gültige Fläche mehr,
+  so bleibt das alte _Area_-Objekt bestehen, bis wieder eine neue gültige Fläche erzeugt werden kann.
+* Areas haben eigene Regeln, nach denen ihre Ids vergeben werden.
+* Nur ein Teil der Filter für OpenStreetMap-Objekte steht auch für _Areas_ zur Verfügung.
+
+Der große Vorteil ist aber, dass die Suche Punkt-in-Fläche effizient und zuverlässig funktioniert.
+
+Als Nachteil hat sich herausgestellt, dass nicht alle nachgefragten _Area_-Objekte existieren:
+mittlerweile wird fast jedes Objekt in OpenStreetMap, das von seiner Geometrie her eine Fläche ergibt,
+auch als Fläche genutzt.
+Wenn aber gemäßg den Tagging-Regeln der Hintergrundprozess das Objekt nicht für eine Fläche hält,
+gibt es kein korrespondierendes _Area_-Objekt.
+
+Umgekehrt ist mir in den letzten 10 Jahren keine Instanz begegnet,
+die ihre Flächen-Regelwerk an ihre speziellen Bedürfnisse angepasst hat.
+Es gab wohl eher einen Tradeoff, weniger Flächen zu akzeptieren,
+um Rechenzeit beim Hintergrundprozess zu sparen.
+Damit ist der Regelsatz doch de facto zentral festgelegt,
+und dies beraubt ihn der meisten seiner Vorteile.
+
+Daher beabsichtige ich mittlerweile,
+auch die Flächenoperationen direkt auf den OpenStreetMap-Objekten auszuführen.
