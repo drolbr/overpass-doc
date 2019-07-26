@@ -13,6 +13,4 @@ Erläuterung, wie man alle Daten in einem räumlich begrenzten Gebiet bekommt.
 
 [LINK_STUB](area.md)
 
-[Alternativen](other_sources.md)  
-Nicht immer ist Overpass API die beste Lösung.
-Es werden Alternativen, z.B. [Geofabrik](https://download.geofabrik.de/) vorgestellt.
+[LINK_STUB](other_sources.md)

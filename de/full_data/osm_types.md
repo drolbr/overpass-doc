@@ -216,7 +216,7 @@ Relationen auf Relationen erhalten Sie, wenn Sie Zeile 4 durch die Sammlung von 
     ( <; rel(br); );
     out qt;
 
-Alternativ können Sie die Daten auch im strikt traditionellen Format mit Sortierung nach Eleementtypen und nur indirekter Geometrie ausgeben.
+Alternativ können Sie die Daten auch im strikt traditionellen Format mit Sortierung nach Elementtypen und nur indirekter Geometrie ausgeben.
 Dies erfordert insbesondere, die Vorwärtsauflösung der Ways, um alle Nodes für die Geometrie zu bekommen.
 Dann müssen wir das Kommando `<` durch eine präzisere Variante ersetzen,
 da sonst das Kommando `<` Wege an den hinzugefügen Nodes aufsammelt.

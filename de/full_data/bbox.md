@@ -7,7 +7,7 @@ Der einfachste Weg, um an OpenStreetMap-Daten in einem Ausschnitt zu kommen.
 ## Suchkriterium
 
 Der einfachste Weg, an alle Daten in einer Bounding-Box zu kommen, ist,
-die explizit so zu formulieren [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=nwr%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%3B):
+dies explizit so zu formulieren [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=nwr%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%3B):
 
     nwr(51.477,-0.001,51.478,0.001);
     out;
