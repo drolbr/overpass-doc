@@ -5,6 +5,10 @@ Die Overpass API sucht nach tatsächlichen OpenStreetMap-Daten.
 Manchmal wird aber auch eher eine intelligente Suche benötigt, das Geocodieren.
 Das können _Nominatim_ und andere besser.
 
+<!--
+  QA-Tools ?!?
+-->
+
 <a name="nominatim"/>
 ## Nominatim
 

@@ -243,4 +243,7 @@ dass Caret und Dollarzeichen nicht nur auf einen Wert wirken.
 ## Per Zahlwert
 
 ...
-<!-- Hilfsmittel zum Umgang mit Tags, die Zahlwerte im Value enthalten. -->
+<!--
+  Hilfsmittel zum Umgang mit Tags, die Zahlwerte im Value enthalten.
+  Einheiten
+-->

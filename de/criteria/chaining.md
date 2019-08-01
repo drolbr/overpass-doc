@@ -276,4 +276,8 @@ Ebenso [mit dem Pfeil](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=14&Q=%2
 ...
 <!--
   TODO: Wertgleichheit via Evaluator
+
+  Indoor
+  doppelte Hausnummern
+  name vs name:XX
 -->
