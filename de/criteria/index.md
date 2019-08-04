@@ -14,8 +14,4 @@ Auffinden von Daten anhand von Suchkriterien wie Tags, grobem Ort oder anderen K
 
 [LINK_STUB](lrs.md)
 
-[Keys, Verneinung und Co](misc_criteria.md)  
-Zu weiteren möglichen Suchkriterien wie Verneinung oder nur Keys.
-
-[Mehr Suchkriterien](more_evals.md)  
-Weitergehende Suchkriterien wie Suche per Länge, Version, Changest-Nummer oder Elementanzahl.
+[LINK_STUB](misc_criteria.md)
