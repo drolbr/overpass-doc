@@ -167,17 +167,34 @@ Dazu kann es helfen, alle Objekte der Version 1 in einer Bounding-Box [auszuwäh
       (if:version()==1);
     out center;
 
-...
-<!--
-  Timestamp (Newer, Changed)
--->
+Dazu wird hier in Zeile 2 der Evaluator ``version()`` genutzt.
+Wie bei allen _Evaluators_ als _Filter_ geschieht dies,
+indem im Rahmen des Filters ``(if:...)`` der Wert des Evaulators mit einem anderen Wert (hier ``1``) verglichen wird.
+
+Auch für Timestamps steht im Wesentlichen ein Evaluator zur Verfügung, und zwar ``timestamp()``.
+Es gibt zwar einen Filter ``(changed:...)``,
+aber dieser ist für den Einsatz [mit Attic-Data](../analysis/index.md) bestimmt.
+
+Der Evaluator ``timestamp()`` liefert stets ein Datum im [internationalen Datumsformat](https://de.wikipedia.org/wiki/ISO_8601),
+z.B. ``2012-09-13`` für den 13. September 2012.
+Es sollte daher auch stets gegen ein Datum im ISO-Format verglichen werden.
+Wir listen z.B. alle nahe Greenwich [zuletzt vor dem 13. September 2012](https://overpass-turbo.eu/?lat=51.478&lon=-0.0&zoom=17&Q=nwr%28%7B%7Bbbox%7D%7D%29%28if%3Atimestamp%28%29%3C%222012%2D09%2D13%22%29%3B%0Aout%20geom%28%7B%7Bbbox%7D%7D%29%3B) geänderten Objekte auf:
+
+    nwr({{bbox}})(if:timestamp()<"2012-09-13");
+    out geom({{bbox}});
+
+An einige Tücken sei dabei erinnert:
+
+* Ways und Relations können ihre Geometrie ändern, ohne dass eine neue Version entsteht,
+  nämlich wenn nur referenzierte Nodes verschoben worden sind, ohne die Referenzierung zu ändern.
+* Die meisten Eigenschaften eines Objektes kommen aus früheren Version,
+  d.h. ein scheinbar frisches Änderungsdatum bedeutet nicht notwendigerwiese ein aktuelles Objekt.
 
 <a name="attribution"/>
-## Zurechenbarkeit
+## Zurechnung
 
 ...
 <!--
   Username
   Changeset-Id
 -->
-
