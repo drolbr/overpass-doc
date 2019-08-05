@@ -50,7 +50,12 @@ echo '</head>' >>$TARGET
 echo '<body style="font-family:sans-serif; max-width:30em">' >>$TARGET
 echo >>$TARGET
 
-{
+{ 
+  cat <$1 | awk -f "$SCRIPT_DIR/extract_code.awk" \
+  | hexdump -v -e '/1 "%02X "' -e '/1 "%_p\n"' | awk -f "$SCRIPT_DIR/to_cgi.awk";
+  echo;
+  cat <$1;
+} | awk -f "$SCRIPT_DIR/include_example_links.awk" | {
   if [[ -n $PARENT ]]; then
     echo "x[$PARENT](${DIRPREFIX}index.md)  x"
   fi
@@ -65,7 +70,7 @@ echo >>$TARGET
     echo 'x---x'
     echo 'xx'
   fi
-  cat <$1 | sed 's/^/x/g' | sed 's/$/x/g'
+  sed 's/^/x/g' | sed 's/$/x/g'
   if [[ -n $SUCC_PAGE ]]; then
     echo
     echo 'x---x'
