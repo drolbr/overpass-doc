@@ -108,7 +108,7 @@ Diese sind ausreichend verschieden von OpenStreetMap-Objekten,
 dass sie nicht direkt zurückgeschrieben werden können.
 
 Bei Edits in verschiedenen Automatisierungsgraden kann die Overpass API trotzdem hilfreich sein.
-Beispiele dafür sind im Abschnitt [JOSM](../targets/josm.md) zu finden.
+Beispiele dafür sind im Abschnitt [JOSM](../targets/index.md) zu finden.
 
 <a name="ql"/>
 ## Allzweck-Abfragesprache

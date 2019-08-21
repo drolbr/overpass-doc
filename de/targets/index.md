@@ -9,6 +9,9 @@ Erläuterung der Datenformate und ihrer Varianten.
 
 [LINK_STUB](turbo.md)
 
+(Kapitel leider noch nicht fertiggestellt)
+
+<!--
 [uMap](umap.md)  
 Daten und Geometrien pur, um eine thematische Karte mit [uMap](https://umap.openstreetmap.fr/) selbst zu gestalten.
 
@@ -26,6 +29,7 @@ damit man sie mit einer Tabellenkalkulation verarbeiten kann.
 Überblick über mögliche Varianten.
 <!-- Bsp. mit for-Schleife -->
 
+<!--
 [Osmoscope und MapRoulette](osmoscope.md)  
 Overpass API im Backend einer Website:
 Abfragen für bekannte vorhandene Services.
@@ -44,3 +48,4 @@ Dabei gibt es einige Besonderheiten zu beachten.
 
 [Diffs](diffs.md)  
 Das Sonderformat Diffs und Augmented Diffs, um Änderungen verfolgen zu können.
+-->

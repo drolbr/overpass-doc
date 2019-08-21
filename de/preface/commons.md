@@ -104,7 +104,7 @@ so würden
 Wenn der Benutzer die Inhalte der Abfragen 17 bis 20 noch braucht,
 (und nicht bereits weggescrollt hat)
 dann sollte das Client-Framework die Abfragen 17 bis 20 nach Ablauf der 15 Sekunden erneut stellen.
-Im [Abschnitt über OpenLayers und Leaflet](../targets/openlayers.md) gibt es eine Referenz-Implementierung.
+Im [Abschnitt über OpenLayers und Leaflet](../targets/index.md) gibt es eine Referenz-Implementierung.
 
 Die Grund für diesen Mechanismus sind Skripte in Endlosschleife:
 viele führen je eine Abfrage parallel aus und werden dann sinnvoll verzögert,

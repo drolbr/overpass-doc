@@ -41,7 +41,7 @@ um auszuschließen, dass es weitere gleichnamige Objekte [an anderen Orten](http
     nwr[name="Viktualienmarkt"];
     out geom;
 
-Eine [Bounding-Box](bbox.md#bbox) oder die Angabe einer umschließenden Fläche [können helfen](https://overpass-turbo.eu/?lat=48.0&lon=11.5&zoom=10&Q=area%5Bname%3D%22M%C3%BCnchen%22%5D%3B%0Anwr%28area%29%5Bname%3D%22Viktualienmarkt%22%5D%3B%0Aout%20geom%3B):
+Eine [Bounding-Box](bbox.md#filter) oder die Angabe einer umschließenden Fläche [können helfen](https://overpass-turbo.eu/?lat=48.0&lon=11.5&zoom=10&Q=area%5Bname%3D%22M%C3%BCnchen%22%5D%3B%0Anwr%28area%29%5Bname%3D%22Viktualienmarkt%22%5D%3B%0Aout%20geom%3B):
 
     area[name="München"];
     nwr(area)[name="Viktualienmarkt"];

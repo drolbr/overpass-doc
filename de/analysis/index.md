@@ -4,6 +4,9 @@ Daten Analysieren
 Methoden, um OpenStreetMap weitergehend zu analysieren.
 Ein typischer Anwendungsfall ist die Suche nach oder das Zurückverfolgen von Fehlern.
 
+(Kapitel leider noch nicht geschrieben)
+
+<!--
 [QA-Tools](qa_tools.md)  
 Nicht jedes Problem kann oder muss mit der Overpass API gelöst werden.
 Übersicht über bekannte QA-Tools, die ihre speziellen Kriterien jeweils gezielt anwenden können.
@@ -27,3 +30,4 @@ Zwar sind diese meist harmlos, können aber auf einen Anlass zum Neumappen hinwe
 Alle Versionen eines Objektes sichten:
 Neben der auch auf der [Hauptseite](https://openstreetmap.org/) verfügbaren Funktionalität
 erlaubt dies auch, die auslösende Version für unübliche Änderungen zu finden.
+-->

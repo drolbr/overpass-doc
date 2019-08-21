@@ -4,6 +4,9 @@ Objekte Zählen
 Wenn es noch lokaler oder spezieller sein soll als [Taginfo](https://taginfo.openstreetmap.org/).
 Hilfsmittel, um Objekte anhand ihrer Eigenschaften zu zählen oder sonstwie zusammenzufassen.
 
+(Kapitel leider noch nicht geschrieben)
+
+<!--
 [Taginfo](taginfo.md)  
 Zu Erinnerung: Wer direkt und einfach globale Ergebnisse möchte,
 sollte [Taginfo](https://taginfo.openstreetmap.org/) nutzen.
@@ -21,8 +24,8 @@ Hinweise zu deren sinnvoller Verwendung.
 
 [Alle Auswertekriterien](more_evals.md)  
 Zusammenstellung der übrigen existierenden Auswahlkriterien.
+-->
 
-...
 <!--
 Mischdiskussion um Typen und Abgeleitetes
 -->

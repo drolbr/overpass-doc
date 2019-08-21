@@ -35,7 +35,7 @@ es sei denn, man will eine Bounding-Box über den Antimeridian spannen.
 Meistens ist es recht mühsam,
 die passende Bounding-Box selbst herauszufinden.
 Daher haben fast alle der unter [Verwendung](../targets/index.md) beschriebenen Programme Komfortfunktionen dafür.
-Bei [Overpass Turbo](../targets/turbo.md#convenience) und auch [JOSM](../targets/josm.md)
+Bei [Overpass Turbo](../targets/turbo.md#convenience) und auch [JOSM](../targets/index.md)
 werden vor dem Absenden der Anfrage alle Vorkommen der Zeichenfolge `{{bbox}}` durch die sichtbare Bounding-Box ersetzt. Damit kann man eine Abfrage wie oben allgemeiner schreiben als [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=nwr%28%7B%7Bbbox%7D%7D%29%3B%0Aout%3B)
 
     nwr({{bbox}});

@@ -4,9 +4,7 @@
     if ($0 == "")
       body = 1;
     else
-    {
       example[i] = substr($0,1,length($0)-3); ++i;
-    }
   }
   else
   {

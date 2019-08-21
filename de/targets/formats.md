@@ -79,7 +79,7 @@ Schlussendlich liefert das Kommando _out attribution_ die folgenden Daten mit:
 * den Usernamen zu dieser User-Id
 
 Dieser letzte Detailgrad betrifft allerdings Daten, die nach herrschender Meinung unter den Datenschutz fallen.
-Daher ist dafür ein [erhöhter Aufwand](../analysis/per_user.md) nötig.
+Daher ist dafür ein [erhöhter Aufwand](../analysis/index.md) nötig.
 Da diese Daten für keines der in diesem Kapitel diskutierten Anwendungen erforderlich sind,
 verzichten wir hier auf ein Beispiel.
 

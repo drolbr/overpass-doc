@@ -137,7 +137,7 @@ als auch die nötigen Daten, um Änderungen Benutzern zuzuweisen.
 
 Im einzelnen gibt es pro Objekt und Zustand eine _Versionsnummer_ und einen _Zeitstempel_.
 Alte Zustände mit alten Versionsnummern werden dabei gesichert.
-Daher gibt es in der Overpass API [spezielle Methoden](../analysis/museum.md), um auf alte Datenstände zuzugreifen.
+Daher gibt es in der Overpass API [spezielle Methoden](../analysis/index.md), um auf alte Datenstände zuzugreifen.
 Ohne besondere Konfiguration wird immer auf den aktuellen Daten gearbeitet.
 
 Änderungen werden zudem zu _Changesets_ zusammengefasst.

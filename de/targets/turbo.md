@@ -222,7 +222,7 @@ Overpass Turbo beherrscht zwar nahezu alle Ausgabearten der Overpass API.
 Es gibt aber dennoch ein paar Grenzen:
 
 Pro Objekt-Id und -Typ zeigt Overpass Turbo nur ein Objekt an.
-Daher lassen sich [Diffs](../target/diffs.md) nicht sinnvoll mit Overpass Turbo anzeigen.
+Daher lassen sich [Diffs](index.md) nicht sinnvoll mit Overpass Turbo anzeigen.
 
 Overpass Turbo zeigt [GeoJSON](../targets/formats.md#json) direkt von der Overpass API nicht an.
 Overpass Turbo bringt sein eigenes Konvertierungsmodul für GeoJSON mit,

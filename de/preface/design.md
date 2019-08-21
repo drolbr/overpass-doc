@@ -157,7 +157,7 @@ Man kann damit z.B. eine [Liste aller Straßennamen](https://overpass-turbo.eu/?
     }
 
 Die Zeilen 2 und 6 enthalten die einfachen Statements ``way[highway]({{bbox}})`` bzw. ``out``.
-Mit ``[out:csv(name)]`` in Zeile 1 wird das Ausgabeformat gesteuert ([siehe dort](../targets/csv.md)).
+Mit ``[out:csv(name)]`` in Zeile 1 wird das Ausgabeformat gesteuert ([siehe dort](../targets/index.md)).
 Die Zeilen 3, 4 und 7 bilden das Block-Statement ``for (t["name"])``;
 dieses muss wissen, nach welchem Kriterium es gruppieren soll.
 

@@ -60,7 +60,7 @@ indem wir statt _nwr_ (für Nodes-Ways-Relations) den Ausdruck _relation_ [schre
     relation[name="Köln"];
     out geom;
 
-Hier ist auch [die Ausgabeart](../targets/formats.html#extras) von _center_ auf _geom_ geändert,
+Hier ist auch [die Ausgabeart](../targets/formats.md#extras) von _center_ auf _geom_ geändert,
 damit man die volle Geometrie des Objekts sieht.
 
 Entsprechend gibt es auch die Typen _node_ und _way_ anstelle von _nwr_.
@@ -163,7 +163,7 @@ Finde alle Objekte vom Typ _way_,
 die ein Tag mit Key ``name`` und einem Value besitzen,
 der mit ``Emmy`` beginnt.
 
-In der zweiten Zeile steht dann noch eine passende [Ausgabeanweisung](../targets/formats.html#extras).
+In der zweiten Zeile steht dann noch eine passende [Ausgabeanweisung](../targets/formats.md#extras).
 
 Ebenso kann man nach Werten suchen,
 die auf einem bestimmten Wert [enden](https://overpass-turbo.eu/?lat=0.0&lon=0.0&zoom=1&Q=way%5Bname%7E%22Noether%24%22%5D%3B%0Aout%20geom%3B), z.B. _Noether_:
