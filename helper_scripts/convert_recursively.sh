@@ -43,7 +43,8 @@ echo '<html xmlns="http://www.w3.org/1999/xhtml">' >>$TARGET
 echo '<head><meta charset="utf-8"/>' >>$TARGET
 echo '  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>' >>$TARGET
 echo '<style>' >>$TARGET
-echo 'pre { background-color:aquamarine; padding:0.5em; }' >>$TARGET
+echo 'pre { background-color:#ccffff; padding: 0.5em; counter-reset: line; }' >>$TARGET
+echo 'codeline::before { counter-increment: line; content: counter(line)" "; color: #99cccc; }' >>$TARGET
 echo '</style>' >>$TARGET
 echo '  <title>'$TITLE'</title>' >>$TARGET
 echo '</head>' >>$TARGET
@@ -84,7 +85,7 @@ do
   else
     echo "${LINE:1:$((${#LINE}-2))}"
   fi
-done | sed 's/\([[][^:[]*\)\.md\b/\1\.html/g' | markdown | sed 's/href=\"https:/target=\"_blank\" rel=\"noopener\" href=\"https:/g' >>$TARGET
+done | sed 's/\([[][^:[]*\)\.md\b/\1\.html/g' | markdown | awk -f "$SCRIPT_DIR/tag_each_code_line.awk" | sed 's/href=\"https:/target=\"_blank\" rel=\"noopener\" href=\"https:/g' >>$TARGET
 
 echo >>$TARGET
 echo '</body>' >>$TARGET

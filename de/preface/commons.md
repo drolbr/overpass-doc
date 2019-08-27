@@ -121,7 +121,7 @@ Wegen des Rate-Limits abgelehnte Abfragen werden mit dem [HTTP-Statuscode 429](h
 Unabhängig von diesem Rate-Limit gibt es einen zweiten Mechanismus;
 er bevorzugt kleine Abfragen vor großen Abfragen,
 damit viele Nutzer mit kleinen Abfragen auch dann noch bedient werden können,
-wenn die Kapazität für die Nutzer mit den größen Abfragen zusammen nicht mehr reicht.
+wenn die Kapazität für die Nutzer mit den größten Abfragen zusammen nicht mehr reicht.
 
 Es gibt zwei Kriterien dafür, pro Laufzeit und pro Speicherbedarf.
 Jede Abfrage enthält eine Deklaration zu ihrer erwarteten Maximallaufzeit und zu ihrem erwarteten maximalen Speicherbedarf.
@@ -163,7 +163,7 @@ Der übliche Gesamtwert für zulässige Zeiteinheiten sind 262144.
 Es wird also eine Abfrage mit Maximallaufzeit 1 Tag recht bequem zugelassen,
 aber jede weitere parallele Abfrage mit einer so langen Maximallaufzeit dann abgelehnt.
 Der Rate-Limit-Mechanismus sorgt dann mit der anschließenden Beruhigungszeit in der Größenordnung von Tagen dafür,
-dass nicht immer derselbe Nutzer von einer so lange Maximallaufzeit profitiert.
+dass nicht immer derselbe Nutzer von einer so langen Maximallaufzeit profitiert.
 
 Die Last aus Sicht des Servers wird per Munin angezeigt,
 [hier](https://z.overpass-api.de/munin/localdomain/localhost.localdomain/index.html#other) und [hier](https://lz4.overpass-api.de/munin/localdomain/localhost.localdomain/index.html#other).

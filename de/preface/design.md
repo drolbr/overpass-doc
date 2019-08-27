@@ -79,8 +79,10 @@ Das Statement ``out center`` ist ein Ausgabestatement ohne weitere Unterstruktur
 Die Möglichkeiten, das Ausgabeformat zu steuern, werden im Abschnitt [Datenformate](../targets/formats.md) thematisiert.
 
 Die übrigen _Statements_ sind alle _query_-Statements, d.h. sie dienen dazu Objekte anzuwählen.
-Dies gilt für alle mit ``nwr`` beginnenden Statements und weitere spezielle Schlüsselwörter.
-Sie haben hier mehrfach auftretende Unterstrukturen:
+Dies gilt für alle mit ``nwr`` beginnenden Statements und weitere spezielle Schlüsselwörter:
+die Schlüsselwörter ``node``, ``way`` und ``relation`` wählen gezielt die entsprechende Objektart,
+und ``nwr`` (kurz für _nodes, ways, relations_) lässt alle Objektarten im Ergebnis zu.
+Die _query_-Statements haben hier mehrfach auftretende Unterstrukturen:
 
 * ``[shop=supermarket]`` und ``[public_transport=station]``
 * ``({{bbox}})``
