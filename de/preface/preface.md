@@ -55,7 +55,7 @@ Einerseits gibt es [öffentliche Instanzen](https://wiki.openstreetmap.org/wiki/
 Andererseits ist Overpass API auch [freie Software](https://github.com/drolbr/Overpass-API),
 so dass jedermann eine eigene Instanz betreiben kann.
 
-Zum ersten Kennenlernen bietet sich das Frontend [Overpass Turbo](https://overpass-turbo.eu/?lat=0.0&lon=0.0&zoom=2) an.
+Zum ersten Kennenlernen bietet sich das Frontend _Overpass Turbo_ an.
 Dort werden die Daten auch gleich auf einer Karte angezeigt.
 Als [Beispiel](https://overpass-turbo.eu/?lat=0.0&lon=0.0&zoom=2&Q=nwr%5Bname%3D%22Sylt%22%5D%3B%0Aout%20center%3B) suchen wir nach allem, was den Namen Sylt hat:
 Dazu wird der Abfragetext
