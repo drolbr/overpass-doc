@@ -103,7 +103,7 @@ then
 If the user still needs the content of the requests 17 to 20
 (and not has already panned to a different place)
 then the client framework shall resubmit the requests after the 15 seconds.
-There is a reference implementation in the [section about OpenLayers and Leaflet](../targets/openlayers.md).
+There is a reference implementation in the [section about OpenLayers and Leaflet](../targets/index.md).
 
 The reason for this mechanism is scripts in an inifinite loop:
 many of them submit multiple requests in parallel and are delayed by that mechanism in a meaningful way,

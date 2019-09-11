@@ -140,7 +140,7 @@ et les données nécessaires pour affecter les modifications aux utilisateurs.
 
 Il y a un _numéro de version_ et un _horodatage_ pour chaque objet et état.
 Les anciens états avec d'anciens numéros de version sont sauvegardés.
-Par conséquent, il existe des [méthodes spéciales](.../analysis/museum.md) dans l'API Overpass pour accéder aux anciens états de données.
+Par conséquent, il existe des [méthodes spéciales](.../analysis/index.md) dans l'API Overpass pour accéder aux anciens états de données.
 Sans configuration spéciale, les données actuelles sont toujours utilisées.
 
 Les modifications sont également combinées à _groupes de modifications_.

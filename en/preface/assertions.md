@@ -108,7 +108,7 @@ These are sufficiently different from OpenStreetMap objects
 such that they cannot be directly written back.
 
 Edits with various degrees of automation can still profit from the Overpass API.
-Examples of this can be found in the section [JOSM](../targets/josm.md).
+Examples of this can be found in the section [JOSM](../targets/index.md).
 
 <a name="ql"/>
 ## Versatile Query Language

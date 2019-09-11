@@ -105,7 +105,7 @@ alors
 Si l'utilisateur a encore besoin du contenu des requêtes 17 à 20,
 (et n'a pas déjà défilé)
 alors le framework client doit réinitialiser les requêtes 17 à 20 après que les 15 secondes se soient écoulées.
-Il y a une implémentation de référence dans la section [OpenLayers et Leaflet](../targets/openlayers.md).
+Il y a une implémentation de référence dans la section [OpenLayers et Leaflet](../targets/index.md).
 
 La raison de ce mécanisme sont les scripts en boucle sans fin:
 beaucoup exécutent une requête en parallèle et sont ensuite retardées de manière sensée,

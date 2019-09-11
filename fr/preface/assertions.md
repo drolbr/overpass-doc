@@ -109,7 +109,7 @@ Ceux-ci sont suffisamment différents des objets OpenStreetMap,
 qu'on ne peut pas leur re-télécharger directement.
 
 L'API Overpass peut toujours être utile pour les éditions avec différents niveaux d'automatisation.
-Des exemples peuvent être trouvés dans la section [JOSM](../targets/josm.md).
+Des exemples peuvent être trouvés dans la section [JOSM](../targets/index.md).
 
 <a name="ql"/>
 ## Langage multifonctionnel

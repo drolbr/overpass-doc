@@ -56,7 +56,7 @@ It is also possible to have your own instance because
 Overpass API is [open source](https://github.com/drolbr/Overpass-API)
 with easy installation and reasonable hardware requirements.
 
-A good starting point is the frontend [Overpass Turbo](https://overpass-turbo.eu/).
+A good starting point is the frontend _Overpass Turbo_.
 There, the results of a request appear immediately on a map.
 As [an example](https://overpass-turbo.eu/?lat=0.0&lon=0.0&zoom=2&Q=nwr%5Bname%3D%22Sylt%22%5D%3B%0Aout%20center%3B) we search for everything that has the name _Sylt_:
 

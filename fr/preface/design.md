@@ -79,7 +79,9 @@ Les possibilités de contrôle du format de sortie sont discutées dans la secti
 
 Les _statements_ restants sont tous des instructions de type _query_,
 c'est-à-dire qu'ils sont utilisés pour sélectionner des objets.
-Ceci s'applique à tous les énoncés commençant par ``nwr`` et autres mots-clés spéciaux.
+Ceci s'applique à tous les énoncés commençant par ``nwr`` et autres mots-clés spéciaux:
+les mots-clés ``node``, ``way`` et ``relation`` chacun respectivement restrictent le résultat à des objets de type nœud, chemin et relation,
+mais ``nwr`` (acronym de _node_, _way_, _relation_) fournit tous les trois types.
 Ils ont plusieurs sous-structures ici:
 
 * ``[shop=supermarket]`` et ``[public_transport=station]``
@@ -158,7 +160,7 @@ Par exemple, vous pouvez créer une [liste de tous les noms de rues](https://ove
     }
 
 Les lignes 2 et 6 contiennent les phrases simples ``way[highway]({{bbox}})`` et ``out`` respectivement.
-Avec ``[out:csv(name)]`` dans la ligne 1, le format de sortie est contrôlé ([voir là](../targets/csv.md)).
+Avec ``[out:csv(name)]`` dans la ligne 1, le format de sortie est contrôlé ([voir là](../targets/index.md)).
 Les lignes 3, 4 et 7 forment l'instruction de bloc ``for (t["name"])``;
 elle doit savoir, selon quel critère elle doit regrouper les objets selectionnés.
 

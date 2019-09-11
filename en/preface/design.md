@@ -77,8 +77,10 @@ The statement ``out center`` is an output statement without further substructure
 The possibilities to control the output format are elaborated in section [Formats](../targets/formats.md).
 
 All the other statements are _query_ statements, i.e. they select objects.
-This applies to all statements starting with ``nwr`` and further keywords.
-The statements have substructures appearing multiple times:
+This applies to all statements starting with ``nwr`` and further keywords:
+The keywords ``node``, ``way``, and ``relation`` select the respective type of object,
+and ``nwr`` (abbreviating _nodes_, _ways_, and _relations_) admits all types of objects in the result.
+The _query_ statements have substructures appearing multiple times:
 
 * ``[shop=supermarket]`` and ``[public_transport=station]``
 * ``({{bbox}})``
@@ -154,7 +156,7 @@ You can e.g. create with this [a list of all street names](https://overpass-turb
     }
 
 Lines 2 and 6 contain the simple statements ``way[highway]({{bbox}})`` resp. ``out``.
-With ``[out:csv(name)]`` in line 1 the output format is controlled ([see there](../targets/csv.md)).
+With ``[out:csv(name)]`` in line 1 the output format is controlled ([see there](../targets/index.md)).
 The lines 3, 4, and 7 constitute the block statement ``for (t["name"])``;
 it needs to know by which criterion it should group the elements.
 

@@ -52,7 +52,7 @@ D'une part, il existe des [instances publiques](https://wiki.openstreetmap.org/w
 D'autre part, l'API d'Overpass est aussi un [logiciel libre](https://github.com/drolbr/Overpass-API),
 pour que chacun puisse gérer sa propre instance.
 
-Le frontend [Overpass Turbo](https://overpass-turbo.eu) est un bon endroit pour apprendre à se familiariser avec pour la première fois.
+Le frontend _Overpass Turbo_ est un bon endroit pour apprendre à se familiariser avec pour la première fois.
 Les données y sont également affichées sur une carte.
 Comme [par exemple](https://overpass-turbo.eu/?lat=0.0&lon=0.0&zoom=2&Q=nwr%5Bname%3D%22Sylt%22%5D%3B%0Aout%20center%3B), nous cherchons tout ce qui porte le nom de Sylt:
 Il faut mettre le texte de la requête
