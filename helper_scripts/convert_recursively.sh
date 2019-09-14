@@ -7,28 +7,26 @@ AUX_TARGET="$2/"$(dirname "$1")/index.aux
 SCRIPT_DIR=$(dirname $0)
 TITLE=$(cat <$1 | awk '{ if (substr($1,1,3) == "===") print last; last = $0; }')
 
-if [[ $(basename "$1") == "index.md" ]]; then
-  if [[ $(dirname $1) == "de" ]]; then
-    declare -x TR_NEXT="weiter"
-    declare -x TR_TOC="Inhalt"
-  elif [[ $(dirname $1) == "en" ]]; then
-    declare -x TR_NEXT="next"
-    declare -x TR_TOC="Content"
-  elif [[ $(dirname $1) == "fr" ]]; then
-    declare -x TR_NEXT="prochaine"
-    declare -x TR_TOC="Sommaire"
-  elif [[ -z $TR_PREVIOUS || -z $TR_NEXT ]]; then
-    declare -x TR_NEXT="+1"
-    declare -x TR_TOC="[+]"
-  fi
-fi
-
 DIRPREFIX="../"
 if [[ -n $3 ]]; then
   PARENT="$3"
 else
   PARENT="$TITLE"
   DIRPREFIX=
+
+  if [[ $(dirname "$1") == "de" ]]; then
+    declare -x TR_NEXT="weiter"
+    declare -x TR_TOC="Inhalt"
+  elif [[ $(dirname "$1") == "en" ]]; then
+    declare -x TR_NEXT="next"
+    declare -x TR_TOC="Content"
+  elif [[ $(dirname "$1") == "fr" ]]; then
+    declare -x TR_NEXT="prochaine"
+    declare -x TR_TOC="Sommaire"
+  elif [[ -z $TR_PREVIOUS || -z $TR_NEXT ]]; then
+    declare -x TR_NEXT="+1"
+    declare -x TR_TOC="[+]"
+  fi
 fi
 
 mkdir -p $(dirname $TARGET)
