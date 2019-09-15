@@ -1,74 +1,81 @@
-Geometrien
+Geometries
 ==========
 
-Um die verschiedenen Varianten für volle OpenStreetMap-Daten zu erklären,
-werden hier die Details des OpenStreetMap-Datenmodells erklärt.
+To explain the different variants of getting full OpenStreetMap data within a region
+the fine print of the OpenStreetMap data model is explained here.
 
 <a name="scope"/>
-## Abgrenzung
+## Scope of this Section
 
-Die Datentypen sind bereits im [passenden Abschnitt der Einleitung](../preface/osm_data_model.md) eingeführt worden.
-Sie sollten hier also bereits mit Nodes, Ways und Relations vertraut sein.
+The OpenStreetMap data types already have been introduced in [a subsection](../preface/osm_data_model.md) of the preface.
+Thus, you already are familiar with nodes, ways, and relations.
 
-Diese können auf verschiedene Weise dargestellt werden; Ausgabeformate wie JSON oder XML erläutert der Abschnitt [Datenformate](../targets/formats.md).
-Ebenfalls dort wird darauf eingegangen, welche Detailgrade hinsichtlich Struktur, Geometrie, Tags, Versionen und Attributierung möglich sind.
+OpenStreetMap data can be represented in different ways.
+Output formats like JSON or XML are explained in the subsection [Data Formats](../targets/formats.md).
+The range of possible levels of detail with regard to structure, geometry, tags, version information and attribution also are introduced there.
 
-Hier geht es darum, wie das Vervollständigen von Ways und Relationen diesen eine nutzbare Geometrie verschafft,
-ohne dass die Größe des Abfrageresultats ausufert.
+The issue at stake here is
+how completing ways and relations equips them with a useful geometry
+while keeping the total size manageable.
 
 <a name="nodes_ways"/>
-## Ways und Nodes
+## Ways and Nodes
 
-Bei Nodes ist eine nutzbare Geometrie einfach zu bekommen:
-Alle Ausgabemodi außer `out ids` und `out tags` haben die Koordinaten der Nodes dabei,
-denn diese sind ja per Definition im OSM-Datenmodell Bestandteil der Nodes.
+A usable geometry for nodes is easy to obtain:
+All output modes except `out ids` and `out tags` include the coordinates of the nodes,
+because they are anyway part of the nodes by the definition in the OpenStreetMap data model.
 
-Bei der Ausstattung von Ways mit Geometrie gibt es dagegen bereits mehrere Möglichkeiten:
-Im einfachsten Fall kann Ihr Programm ergänzende Koordinaten an den Ways verarbeiten.
-Sie können sich den Unterschied z.b. in Overpass Turbo veranschaulichen,
-indem Sie die Resultate der beiden nachfolgenden Abfragen im Tab _Data_ (oben rechts) vergleichen:
-[Ohne Koordinaten](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+By contrast, ways already can be equipped with geometry in multiple ways:
+In the best of all cases, your program can process coordinates on ways.
+You can observe the difference e.g. in Overpass Turbo,
+by comparing the results of the two following requests in the tab _Data_ (upper right corner):
+[without coordinates](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     way(51.477,-0.001,51.478,0.001);
     out;
 
-und [mit Koordinaten](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+
+and [with coordinates](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     way(51.477,-0.001,51.478,0.001);
     out geom;
 
-Im originalen Datenmodell von OpenStreetMap sind an Ways jedoch keine Koordinaten vorgesehen.
-Die Ways haben ja bereits Verweise auf Ids von Nodes.
-Daher gibt es auch nach wie vor Programme, die Koordinaten an Ways nicht verarbeiten können.
-Für diese gibt es zwei Abstufungen, die Geometrie auf traditionellem Weg mitzuliefern.
+The original data model of OpenStreetMap does not admit coordinates on ways,
+because the ways already have references to nodes.
+Therefore, there still exist programs that cannot process coordinates on ways.
+For those there exist two levels of faithfulness to deliver the geometry in the traditional way.
 
-Einen möglichst geringen Extra-Aufwand an Daten zieht es nach sich, nur die Koordinaten der Nodes anzufordern.
-Das Kommando `node(w)` fordert nach der Ausgabe der Ways an, die in den Ways referenzierten Nodes zu finden;
-der Modus `out skel` reduziert den Datenumfang auf die Koordinaten pur; der Zusatz `qt` spart den Aufwand für das Sortieren der Ausgabe: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+The least extra effort is due if one requests only coordinates of the nodes.
+After the output statement of the ways, a statement `node(w)` selects the in the ways referred nodes;
+the mode `out skel` reduces the amount of data to pure coordinates,
+and the supplement `qt` eliminates the effort to sort the output:
+[(link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     way(51.477,-0.001,51.478,0.001);
     out qt;
     node(w);
     out skel qt;
 
-Ich empfehle wiederum, sich die Ausgabe im Tab _Data_ oben rechts anzuschauen.
-Die Nodes sieht man erst, wenn man herunterscrollt.
+I suggest to inspect the output in the tab _Data_ (upper right corner).
+The nodes appear after scrolling sufficiently far down.
 
-Das ist zwar schon näher am originalen Datenmodell,
-aber es gibt Programme, die auch damit noch nicht zurechtkommen.
-Es gibt die Konvention, Nodes strikt vor Ways und die Elemente untereinander nach Id zu sortieren.
-Dann müssen wir die Nodes ergänzend zu den Ways laden, bevor wir etwas ausgeben;
-dies leistet das Idiom `(._; node(w););` bestehend aus den drei Kommandos `._`, `node(w)` und `(...)`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+This is already closer to the original data model,
+but there are programs that still do not work with this form of data.
+There is a practice to place all nodes before any ways and to sort the elements of the same type by their ids.
+To achieve this we must load the nodes in parallel to the ways before we can output anything.
+The idiom `(._; node(w););` accomplishes this by its three statements `._`, `node(w)`, and `(...)`:
+[(link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     way(51.477,-0.001,51.478,0.001);
     (._; node(w););
     out;
 
-Nodes und Ways gemeinsam erläutern wir im finalen Abschnitt.
+Nodes and ways each with all their details together are explained in the final section.
 
 <a name="rels"/>
-## Relationen
+## Relations
 
+<!--
 Wie schon bei Ways ist der einfachere Fall im Umgang mit Relationen,
 dass das Zielprogramm integrierte Geometrie direkt auswerten kann.
 Dazu nocheinmal den passenden Direktvergleich:
@@ -139,10 +146,12 @@ Noch besser findet man die Relation in der Anzeige _Daten_.
 Die meisten Member der Relationen laden wir also gar nicht, sondern nur die in der Bounding-Box befindlichen.
 Diese Abfrage ist nicht ganz praxistauglich, da wir zu den Ways nicht alle benutzten Nodes laden.
 Eine vollständige Fassung gibt es unten im Abschnitt _Alles zusammen_.
+-->
 
 <a name="rels_on_rels"/>
-## Relationen auf Relationen
+## Relations on Top of Relations
 
+<!--
 Um das Problem mit Relationen auf Relationen vorzuführen,
 müssen wir die Bounding-Box nicht einmal besonders vergrößern.
 Wir starten mit der Abfrage von oben ohne Relatione auf Relationen: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
@@ -187,10 +196,12 @@ Dazu ergänzen wir die letzte Abfrage aus dem Absatz _Relationen_ um die Rückw�
       way(51.47,-0.01,51.48,0.01); );
     (._; <; rel(br); );
     out;
+-->
 
 <a name="full"/>
-## Alles zusammen
+## Grand Total
 
+<!--
 Wir stellen hier die am ehesten sinnvollen Varianten zusammen.
 
 Wenn Ihr Zielprogramm mit Koordinaten am Objekt umgehen kann,
@@ -257,3 +268,4 @@ indem Zeile 7 entsprechend durch die neue Zeile 8 ergänzt wird: [(Link)](https:
 Weitere Varianten existieren,
 auch wenn sie eher historische Bedeutung haben.
 Zwei stellen wir im [nächsten Unterkapitel](map_apis.md) vor.
+-->
