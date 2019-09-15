@@ -205,7 +205,7 @@ dann können Sie alle Nodes, Ways und Relations in der Bounding Box komplett wie
 Dies sammelt
 
 * alle Nodes in der Bounding-Box (Selektion Zeile 1, Ausgabe Zeile 3)
-* alle Ways in der Bounding-Box, auch solche, die die Bounding Box nur ohne Node durchschneiden (Selektion Zeile 2, Ausgabe Zeil 3)
+* alle Ways in der Bounding-Box, auch solche, die die Bounding Box nur ohne Node durchschneiden (Selektion Zeile 2, Ausgabe Zeile 3)
 * alle Relationen, die mindestens eine Node oder Way in der Bounding-Box als Member haben, ohne eigenständige Geometrie (Selektion Zeile 4, Ausgabe Zeile 5)
 
 Die gleichen Daten ganz ohne Relationen erhalten Sie, wenn Sie nur die Zeilen 1 bis 3 als Abfrage verwenden.

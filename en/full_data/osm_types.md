@@ -208,11 +208,11 @@ For this purpose, we amend our last request from the subsection _Relations_ with
 <a name="full"/>
 ## Grand Total
 
-<!--
-Wir stellen hier die am ehesten sinnvollen Varianten zusammen.
+We line up here the most likely helpful variants.
 
-Wenn Ihr Zielprogramm mit Koordinaten am Objekt umgehen kann,
-dann können Sie alle Nodes, Ways und Relations in der Bounding Box komplett wie folgt bekommen: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+If your software of choice can handle coordinates on the object,
+then you can get all nodes, ways, and relations inside the bounding box complete as follows:
+[(link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     ( node(51.477,-0.001,51.478,0.001);
       way(51.477,-0.001,51.478,0.001); );
@@ -220,15 +220,16 @@ dann können Sie alle Nodes, Ways und Relations in der Bounding Box komplett wie
     <;
     out qt;
 
-Dies sammelt
+This collects
 
-* alle Nodes in der Bounding-Box (Selektion Zeile 1, Ausgabe Zeile 3)
-* alle Ways in der Bounding-Box, auch solche, die die Bounding Box nur ohne Node durchschneiden (Selektion Zeile 2, Ausgabe Zeil 3)
-* alle Relationen, die mindestens eine Node oder Way in der Bounding-Box als Member haben, ohne eigenständige Geometrie (Selektion Zeile 4, Ausgabe Zeile 5)
+* all nodes in the bounding box (selection in line 1, output in line 3)
+* all ways in the bounding box including those that only cross the bounding box without a node inside (selection in line 2, output in line 3)
+* all relations that have at least one node or way as a member that is inside the bounding box (selection line 4, output line 5); the relations get no geometry beside the geometry that its included members have anyway.
 
-Die gleichen Daten ganz ohne Relationen erhalten Sie, wenn Sie nur die Zeilen 1 bis 3 als Abfrage verwenden.
+You get the same data just without relations if you use only the lines 1 to 3 as a request.
 
-Relationen auf Relationen erhalten Sie, wenn Sie Zeile 4 durch die Sammlung von Relationen und Relationen auf Relationen ergänzen: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+You get relations on relations if you amend line 4 by the statements to collect relations and relations on relations:
+[(link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     ( node(51.47,-0.01,51.48,0.01);
       way(51.47,-0.01,51.48,0.01); );
@@ -236,11 +237,12 @@ Relationen auf Relationen erhalten Sie, wenn Sie Zeile 4 durch die Sammlung von 
     ( <; rel(br); );
     out qt;
 
-Alternativ können Sie die Daten auch im strikt traditionellen Format mit Sortierung nach Elementtypen und nur indirekter Geometrie ausgeben.
-Dies erfordert insbesondere, die Vorwärtsauflösung der Ways, um alle Nodes für die Geometrie zu bekommen.
-Dann müssen wir das Kommando `<` durch eine präzisere Variante ersetzen,
-da sonst das Kommando `<` Wege an den hinzugefügen Nodes aufsammelt.
-Die erste Variante wird dann zu: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+You also can output the data in the strictly traditional format sorted by element type and only with indirect geometry.
+This requires in particular the forward resolution of the ways to get all nodes for the ways' geometries.
+For this purpose, we must replace the statement `<` by a more precise idiom,
+because otherwise the statement `<` picks up ways on the just added nodes.
+The first variant then becomes:
+[(link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     ( node(51.47,-0.01,51.48,0.01);
       way(51.47,-0.01,51.48,0.01); );
@@ -253,12 +255,13 @@ Die erste Variante wird dann zu: [(Link)](https://overpass-turbo.eu/?lat=51.4775
       node(w); );
     out;
 
-Hier sind Zeilen 3 bis 7 für die Relationen zuständig.
-Ohne Zeilen 4 bis 8, aber mit Zeilen 9 bis 11 für die Vervollständigung der Ways und die Ausgabe
-erhält man dann nur Nodes und Ways.
+Here, the lines 3 to 7 are responsible for the relations.
+Without the lines 4 to 8 but with the lines 9 to 11 for the completion of the ways and the output
+one only gets nodes and ways.
 
-Umgekehrt können Relationen auf Relationen gesammelt werden,
-indem Zeile 7 entsprechend durch die neue Zeile 8 ergänzt wird: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+Conversely, relations on relations can be collected
+by adding an extra line 8 to the existing line 7:
+[(link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     ( node(51.47,-0.01,51.48,0.01);
       way(51.47,-0.01,51.48,0.01); );
@@ -272,7 +275,6 @@ indem Zeile 7 entsprechend durch die neue Zeile 8 ergänzt wird: [(Link)](https:
       node(w); );
     out;
 
-Weitere Varianten existieren,
-auch wenn sie eher historische Bedeutung haben.
-Zwei stellen wir im [nächsten Unterkapitel](map_apis.md) vor.
--->
+Further approaches exist,
+but have mainly importance for historical reasons.
+We present two of them in the [next subsection](map_apis.md).
