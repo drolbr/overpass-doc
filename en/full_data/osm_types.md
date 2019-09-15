@@ -156,52 +156,54 @@ A completed request can be found below in the section _Grand Total_.
 <a name="rels_on_rels"/>
 ## Relations on Top of Relations
 
-<!--
-Um das Problem mit Relationen auf Relationen vorzuführen,
-müssen wir die Bounding-Box nicht einmal besonders vergrößern.
-Wir starten mit der Abfrage von oben ohne Relatione auf Relationen: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+To demonstrate the problem with relations on relations,
+we hardly need to enlarge the bounding box.
+We start with the request from above without relations on relations:
+[(link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     relation(51.47,-0.01,51.48,0.01);
     (._; >;);
     out;
 
-Jetzt ersetzen wir die Auflösung ab den Relationen abwärts durch
+Now we replace the resolution from the relations downwards by
 
-* eine Rückwärtsauflösung auf Relationen von Relationen
-* die vollständige Vorwärtsauflösung der gefundenen Relationen bis zu den Koordinaten
+* a backwards resolution from relations on relations
+* the complete forward resolution of the found relations down to the coordinates
 
-Dies sind die Kommandos `rel(br)` und `>>`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+These are performed by the statements `rel(br)` and `>>`:
+[(link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     relation(51.47,-0.01,51.48,0.01);
     ( rel(br); >>;);
     out;
 
-Je nach System wird dies Ihren Browser verlangsamen oder eine Warnmeldung produzieren.
-Wir haben eine Ecke im Vorort Greenwich gewollt und tatsächlich Daten aus fast ganz London bezogen,
-da es eine Sammelrelation _Quietways_ gibt.
-Da hat die sowieso schon große Datenmenge wiederum vervielfacht.
+Depending on the system you send the request from
+this will paralyze your browser or trigger a warning message.
+We intended to get a corner of the suburb Greenwich,
+but actually we got data from almost all of London,
+because there is a collection of relations called _Quietways_.
+This has multiplied the anyway already huge amount of data.
 
-Selbst wenn es hier irgendwann keine Sammelrelation mehr geben sollte,
-wie dies auch für unsere Testregion mit etwa hundert Metern Kantenlänge gilt:
-Wollen Sie ernsthaft Ihre Anwendung dafür anfällig machen,
-dass sie nicht mehr funktioniert,
-sobald irgendein ein unbedarfter Mapper im Zielgebiet eine oder mehrere Sammelrelationen anlegt?
+Even if there will be no more collecting relations in the future
+like this is currently the case for our test region with about hundred meters edge length:
+Do you really want to make your application vulnerable to fail
+just because an inexperienced mapper in the region of interest creates one or more collecting relations?
 
-Daher rate ich recht dringend davon ab, mit Relationen auf Relationen zu arbeiten.
-Die Datenstruktur schafft das Risiko,
-ungewollt sehr große Datenmengen miteinander zu verbinden.
+For this reason I strongly discourage you to work with relations on relations.
+This data structure creates the risk
+to inadvertently lump up huge amounts of data.
 
-Wenn man unbedingt Relationen auf Relationen verarbeiten will,
-dann ist eine eher beherrschbare Lösung,
-nur die Relationen zu laden,
-aber keine Vorwärtsauflösung mehr durchzuführen.
-Dazu ergänzen wir die letzte Abfrage aus dem Absatz _Relationen_ um die Rückwärtsauflösung `rel(br)`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+If you really want to work with relations on relations,
+then it is a much more feasible solution
+to only load those relations,
+but to refrain from the forward resolution.
+For this purpose, we amend our last request from the subsection _Relations_ with the backwards resolution `rel(br)`:
+[(link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     ( node(51.47,-0.01,51.48,0.01);
       way(51.47,-0.01,51.48,0.01); );
     (._; <; rel(br); );
     out;
--->
 
 <a name="full"/>
 ## Grand Total

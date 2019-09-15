@@ -145,7 +145,7 @@ Eine vollständige Fassung gibt es unten im Abschnitt _Alles zusammen_.
 
 Um das Problem mit Relationen auf Relationen vorzuführen,
 müssen wir die Bounding-Box nicht einmal besonders vergrößern.
-Wir starten mit der Abfrage von oben ohne Relatione auf Relationen: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+Wir starten mit der Abfrage von oben ohne Relationen auf Relationen: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     relation(51.47,-0.01,51.48,0.01);
     (._; >;);
