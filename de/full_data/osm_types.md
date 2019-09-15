@@ -133,8 +133,8 @@ die diese als Member haben: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=
     (._; <;);
     out;
 
-Die Member der Relation erkennt man an der abweichenden Farbe in der Anzeige.
-Noch besser findet man die Relation in der Anzeige _Daten_.
+Diejenigen Objekte, die Member der Relations sind, erkennt man an der abweichenden Farbe in der Anzeige.
+Noch besser findet man die Relationen in der Anzeige _Daten_, indem man ganz herunterscrollt.
 
 Die meisten Member der Relationen laden wir also gar nicht, sondern nur die in der Bounding-Box befindlichen.
 Diese Abfrage ist nicht ganz praxistauglich, da wir zu den Ways nicht alle benutzten Nodes laden.

@@ -75,78 +75,83 @@ Nodes and ways each with all their details together are explained in the final s
 <a name="rels"/>
 ## Relations
 
-<!--
-Wie schon bei Ways ist der einfachere Fall im Umgang mit Relationen,
-dass das Zielprogramm integrierte Geometrie direkt auswerten kann.
-Dazu nocheinmal den passenden Direktvergleich:
-[Ohne Koordinaten](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+As with ways, the simpler case is
+that the downstream tool can handle integrated geometry directly.
+For this purpose the direct comparison:
+[without coordinates](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     relation(51.477,-0.001,51.478,0.001);
     out;
 
-und [mit Koordinaten](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+and [with coordinates](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     relation(51.477,-0.001,51.478,0.001);
     out geom;
 
-Im Gegensatz zu Ways werden die Daten um eine Größenordnung mehr:
-Es liegt daran, dass wir in der Variante ohne Koordinaten von Ways nur die Id sehen,
-während tatsächlich jeder Way aus mehreren Nodes besteht und damit entsprechend viele Koordinaten hat.
+In contrast to the ways the data grows by an order of magnitude:
+This is because in the variant without coordinates, we see the ids of the member ways only,
+but in fact each way consists of multiple nodes and accordingly has multiple coordinates.
 
-Relations mit überwiegend Ways als Member sind auch der Regelfall.
-Es gibt daher den im Absatz _Ausgabebegrenzung_ auf [Bounding-Boxen](bbox.md#crop) beschriebenen Mechanismus,
-die zu liefernde Geometrie auf eine Bounding Box einzuschränken: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+Relations with most of the members being of type way are much more frequent than anything else.
+For this reason there is the mechanism to restrict the output geometry to a bounding box,
+which is described in the subsection [Crop the Bounding Box](bbox.md#crop):
+an [example](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     relation(51.477,-0.001,51.478,0.001);
     out geom({{bbox}});
 
-Auch für Relationen sind jedoch im originalen Datenmodell von OpenStreetMap keine Koordinaten vorgehesen.
-Für Programme, die das originale Datenmodell benötigen, gibt es zunächst wieder zwei Abstufungen.
-Möglichst nur die Koordinaten bekommt man, indem man die Relationen ausgibt und dann ihre Referenzen auflöst.
-Das benötigt zwei Pfade, da Relationen einerseits Nodes als Member haben können,
-andererseits Ways und diese wiederum Nodes als Member.
-Insgesamt müssten wir dazu vier Kommandos benutzen.
-Weil es aber ein so häufiger Fall ist, gibt es dafür ein besonders kurzes Sammelkommando `>`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+The original data model of OpenStreetMap does not admit coordinates for relations, too.
+For software that needs the strictly original data model, there again are two levels of faithfulness.
+One gets a result the most possible way reduced to only the extra coordinates
+by outputting the relations first and then resolving their dependencies.
+This needs two pathes of data flow,
+because relations can have nodes directly as members,
+but also indirectly as the members of the ways that are members of the relation.
+We would have to use four statements.
+Because this is such a frequent case there is an extra short shortcut statement `>`:
+[(link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     relation(51.477,-0.001,51.478,0.001);
     out qt;
     >;
     out skel qt;
 
-Gegenüber der vorhergehenden Ausgabe hat sich die Datenmenge etwa verdoppelt,
-da immer Verweis und Verweisziel enthalten sein müssen.
+In comparison to the preceding output the volume of data has already doubled,
+because we always need to include both the reference target and the reference itself.
 
-Die ganz kompatible Variante erfordert noch mehr Datenaufwand.
-Diese bildet das Idiom `(._; >;);` aus den drei Kommandos `._`, `>` und `(...)`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+The completely compatible variant claims even more data volume.
+It employs the idiom `(._; >;);` built from the statements `._`, `>`, and `(...)`:
+[(link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     relation(51.477,-0.001,51.478,0.001);
     (._; >;);
     out;
 
-Gibt es eine Lösung, um auch hier die Menge erhaltener Koordinaten auf die Bounding-Box zu beschränken?
-Da eine Relation in einer Bounding-Box enthalten ist,
-wenn mindestens eines ihrer Member in der Bounding-Box enthalten ist,
-können wir dies erreichen,
-indem wir nach den Membern fragen und zu den Relationen auflösen.
-Hier hilft das Kommando `<`:
-es ist eine Abkürzung, um alle Ways und Relationen zu finden,
-die die vorgegebenen Nodes oder Ways als Member haben.
-Wir suchen also nach allen Nodes und Ways in der Bounding-Box.
-Dann behalten wir diese per Kommando `._` und suchen alle Relationen,
-die diese als Member haben: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+Is there a solution possible also here to restrict the set of retrieved coordinates to the bounding box?
+Because a relation is contained in a bounding box
+if and only if at least one of its members is contained in the bounding box,
+we can achieve this by asking for the referred objects first and then resolve backwards.
+The statement `<` facilitates this:
+It is a shortcut to find all ways and relations
+that refer to the given nodes or ways as members.
+Thus we search for all nodes and ways in the bounding box.
+Then we keep them with the statement `._` and search all relations
+that refer to these as members: [(link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     ( node(51.477,-0.001,51.478,0.001);
       way(51.477,-0.001,51.478,0.001); );
     (._; <;);
     out;
 
-Die Member der Relation erkennt man an der abweichenden Farbe in der Anzeige.
-Noch besser findet man die Relation in der Anzeige _Daten_.
+The relations can be spotted by the traces they leave on their members:
+These have a different colour than ordinary search results in Overpass Turbo.
+The relations are even easier to find in the tab _Data_;
+just scroll down to the end.
 
-Die meisten Member der Relationen laden wir also gar nicht, sondern nur die in der Bounding-Box befindlichen.
-Diese Abfrage ist nicht ganz praxistauglich, da wir zu den Ways nicht alle benutzten Nodes laden.
-Eine vollständige Fassung gibt es unten im Abschnitt _Alles zusammen_.
--->
+Hence, most members of the relations are not loaded at all;
+only the members within the bounding box are loaded.
+This request is not ready for production use because we do not load all used nodes for the ways.
+A completed request can be found below in the section _Grand Total_.
 
 <a name="rels_on_rels"/>
 ## Relations on Top of Relations
