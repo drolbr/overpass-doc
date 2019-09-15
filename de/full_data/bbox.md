@@ -54,7 +54,7 @@ da wir dies in der Abfrage so spezifiziert haben.
 ## Ausgabebegrenzung
 
 Eine zweite Situation, in der Bounding-Boxen vorkommen,
-ist bei der Ausgabebegrenzung mit ``out geom``.
+ist bei der Ausgabebegrenzung mit `out geom`.
 Möchte man einen _Way_ oder eine _Relation_ auf der Karte visualisieren,
 so muss die Overpass API [explizit anweisen](../targets/formats.md#extras),
 das Objekt entgegen der OSM-Konventionen mit Koordinaten auszustatten.
@@ -72,11 +72,11 @@ indem bei der Ausgabe [explizit](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&
     relation(51.477,-0.001,51.478,0.001);
     out geom(51.47,-0.01,51.49,0.01);
 
-Die Bounding-Box wird direkt hinter ``geom`` notiert.
+Die Bounding-Box wird direkt hinter `geom` notiert.
 Sie kann sowohl gleich als auch verschieden von Bounding-Boxen aus vorangehenden Statements sein.
 In diesem Fall haben wir uns durch verschiedene Bounding-Boxen zu einem sehr breiten Reserverand entschieden.
 
-Zu einzeln vorkommenden _Nodes_ werden dabei die Koordinaten genau dann mitgeliefert,
+Zu explizit vorkommenden _Nodes_ werden dabei die Koordinaten genau dann mitgeliefert,
 wenn diese innerhalb der Bounding-Box liegen.
 
 Bei _Ways_ nicht nur die Koordinaten aller _Nodes_ in der Bounding-Box mitgeliefert,
@@ -98,14 +98,14 @@ auch bei einem einzelnen Way:
 
 Es reicht dazu eine mäßige Kurve aus der Bounding-Box und wieder hinein wie in diesem Beispiel.
 
-Bei _Relations_ werden _Ways_ mit allen ihren _Nodes_ expandiert,
+Bei _Relations_ werden _Member_ vom Typ _Way_ expandiert,
 wenn zumindest eine der _Nodes_ dieses Ways innerhalb der Bounding-Box liegt.
-Andere _Ways_ werden nicht expandiert.
+Andere _Member_ vom Typ _Way_ werden nicht expandiert.
 Innerhalb dieser _Ways_ werden wie bei einzelnen _Ways_ die _Nodes_ innerhalb der Bounding Box plus eine Extra-_Node_ mit Koordinaten versehen.
 
 Ebenso wie bei der Bounding-Box als Filter haben die meisten Programme einen Mechanismus,
 um die Bounding Box selbsttätig einzufügen.
-Bei [Overpass Turbo](../targets/turbo.md#convenience) tut dies wie oben ``{{bbox}}``, [(Beispiel)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB):
+Bei [Overpass Turbo](../targets/turbo.md#convenience) tut dies wie oben `{{bbox}}`, [(Beispiel)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB):
 
     relation({{bbox}});
     out geom({{bbox}});

@@ -54,64 +54,67 @@ but they have incomplete geometry because we implicitly specified so in this que
 <a name="crop"/>
 ## Crop Output
 
-<!--
-Eine zweite Situation, in der Bounding-Boxen vorkommen,
-ist bei der Ausgabebegrenzung mit ``out geom``.
-Möchte man einen _Way_ oder eine _Relation_ auf der Karte visualisieren,
-so muss die Overpass API [explizit anweisen](../targets/formats.md#extras),
-das Objekt entgegen der OSM-Konventionen mit Koordinaten auszustatten.
+There is a second purpose that bounding boxes are used for:
+The output of `out geom` can be spatially restricted.
+If one wants to visualize a _way_ or _relation_ on a map,
+then one must [explicitly instruct](../targets/formats.md#extras) the Overpass API to add coordinates,
+deviating from the design of the OSM data model.
 
-Im Falle von Relationen kann dies zu großen Datenmengen führen.
-So wird in [diesem Beispiel](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%20geom%3B) ungefragt Geometrie quer durch England ausgeliefert,
-obwohl nur ein paar hundert Quadratmeter im Fokus gewesen sind:
+In the case of relations this can lead to big amounts of data.
+As a quite typical example,
+in [this case](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB) geometry across half of England is delivered,
+although only a couple of hundreds of square meters had been in focus:
 
     relation(51.477,-0.001,51.478,0.001);
     out geom;
 
-Die Datenmenge kann eingeschränkt werden,
-indem bei der Ausgabe [explizit](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%20geom%2851%2E47%2C%2D0%2E01%2C51%2E49%2C0%2E01%29%3B) nur Koordinaten aus einer übergebenen Bounding-Box angefordert werden:
+The amount of data can be reduced
+by [explicitly stating](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB) a bounding box to apply:
 
     relation(51.477,-0.001,51.478,0.001);
     out geom(51.47,-0.01,51.49,0.01);
 
-Die Bounding-Box wird direkt hinter ``geom`` notiert.
-Sie kann sowohl gleich als auch verschieden von Bounding-Boxen aus vorangehenden Statements sein.
-In diesem Fall haben wir uns durch verschiedene Bounding-Boxen zu einem sehr breiten Reserverand entschieden.
+The bounding box must be written immediately after `geom`.
+It can be equal or different from bounding boxes in our statements of the same request.
+In this case we have opted for a very broad spare boundary
+by using a larger bounding box for the output than for the query.
 
-Zu einzeln vorkommenden _Nodes_ werden dabei die Koordinaten genau dann mitgeliefert,
-wenn diese innerhalb der Bounding-Box liegen.
+For explicitly output _nodes_ the coordinate then is exactly delivered
+if the node is inside the bounding box.
 
-Bei _Ways_ nicht nur die Koordinaten aller _Nodes_ in der Bounding-Box mitgeliefert,
-sondern auch die jeweils nächste und vorausgehende Koordinate,
-auch wenn sie bereits außerhalb der Bounding-Box liegt.
-Um dies [im Beispiel](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=18&Q=way%5Bname%3D%22Blackheath%20Avenue%22%5D%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%20geom%2851%2E477%2C%2D0%2E002%2C51%2E479%2C0%2E002%29%3B) zu sehen, bitte nach dem Ausführen auf _Daten_ oben rechts klicken;
-Herumschieben der Karte zeigt auch, wo abgeschnitten worden ist:
+For _ways_, not only the coordinates of the _nodes_ within the bounding box are printed,
+but always also the next and preceding coordinate
+even if the respective coordinate is already outside the bounding box.
+To see this in [an example](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=18&Q=CGI_STUB),
+please click after executing the request in the upper right corner on _data_.
+Panning the map around shows where the geometry has been cut:
 
     way[name="Blackheath Avenue"](51.477,-0.001,51.478,0.001);
     out geom(51.477,-0.002,51.479,0.002);
 
-Nur ein Teil der _Nodes_ im _Way_ hat hier Koordinaten.
+Only part of the _nodes_ have coordinates in this example.
 
-Die mit Koordinaten versehenen Abschnitte des Ways [können unzusammenhängend](https://overpass-turbo.eu/?lat=51.4735&lon=-0.007&zoom=17&Q=way%5Bname%3D%22Hyde%20Vale%22%5D%3B%0Aout%20geom%2851%2E472%2C%2D0%2E009%2C51%2E475%2C%2D0%2E005%29%3B) sein,
-auch bei einem einzelnen Way:
+The parts that have coordinates of each single the way [can be unconnected](https://overpass-turbo.eu/?lat=51.4735&lon=-0.007&zoom=17&Q=CGI_STUB), even within a single way:
 
     way[name="Hyde Vale"];
     out geom(51.472,-0.009,51.475,-0.005);
 
-Es reicht dazu eine mäßige Kurve aus der Bounding-Box und wieder hinein wie in diesem Beispiel.
+The phenomenon already happens
+if a way makes a moderate curve out of the bounding box and later again into it
+like in this example.
 
-Bei _Relations_ werden _Ways_ mit allen ihren _Nodes_ expandiert,
-wenn zumindest eine der _Nodes_ dieses Ways innerhalb der Bounding-Box liegt.
-Andere _Ways_ werden nicht expandiert.
-Innerhalb dieser _Ways_ werden wie bei einzelnen _Ways_ die _Nodes_ innerhalb der Bounding Box plus eine Extra-_Node_ mit Koordinaten versehen.
+For _relations_ their _members_ of type _way_ are expanded
+if at least one of the _nodes_ of the respective way is inside the bounding box.
+Other _members_ of type _way_ are not expanded.
+Within these _ways_, like for _ways_ themselves,
+the referred _nodes_ within the bounding box plus one extra _node_ are amended with coordinates.
 
-Ebenso wie bei der Bounding-Box als Filter haben die meisten Programme einen Mechanismus,
-um die Bounding Box selbsttätig einzufügen.
-Bei [Overpass Turbo](../targets/turbo.md#convenience) tut dies wie oben ``{{bbox}}``, [(Beispiel)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%28%7B%7Bbbox%7D%7D%29%3B%0Aout%20geom%28%7B%7Bbbox%7D%7D%29%3B):
+Like with the bounding box as a filter,
+most programs have a mechanism to automatically insert the bounding box of the viewport.
+In [Overpass Turbo](../targets/turbo.md#convenience) again the substring `{{bbox}}` is replaced by the current bounding box, [e.g.](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB):
 
     relation({{bbox}});
     out geom({{bbox}});
--->
 
 <a name="global"/>
 ## Filter Globally
