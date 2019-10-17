@@ -1,12 +1,14 @@
 Weitere Map-APIs
 ================
 
-Es gibt neben gezielt konfigurierter Abfragen auch einige API-Aufrufe,
-die nur Koordinaten brauchen und dann bereits Daten in jeweils einer speziellen Konfiguration liefern.
+Es gibt neben Abfragen in Overpass QL auch einige fixe API-Aufrufe.
+Die meisten von diesen erfüllen jediglich Zwecke der Rückwärtskompatibilität,
+und alle werden emuliert, indem die semantisch äquivalenten Overpass-QL-Abfragen ausgeführt werden.
+Diese API-Aufrufe brauchen daher nur Koordinaten.
 
 ## Der Export der Main Site
 
-Im [Export-Tab](https://openstreetmap.org/export) der [OSM Main Site](https://openstreetmap.org) gibt es eine Funktion,
+Im [Export-Tab](https://openstreetmap.org/export) der [OSM Main Site](https://openstreetmap.org) gibt es eine Funktionalität,
 um alle Daten mittels Overpass API zu exportieren.
 Diese bildet das Verhalten des Exports direkt von der Originaldatenbank nach,
 kann aber quantitativ deutlich mehr Elemente exportieren.
@@ -18,9 +20,9 @@ Die Reihenfolge der Koordinaten orientiert sich hier an älteren Schnittstellen.
 Sie weicht daher von der Bounding-Box ab.
 Es folgen westlicher Rand, südlicher Rand, östlicher Rand und nördlicher Rand aufeinander.
 
-Als Abfrage wird ausgeführt [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=17&Q=%28%20node%28%7B%7Bbbox%7D%7D%29%3B%0A%20%20way%28bn%29%3B%0A%20%20node%28w%29%3B%20%29%3B%0A%28%20%2E%5F%3B%0A%20%20%28%20rel%28bn%29%2D%3E%2Ea%3B%0A%20%20%20%20rel%28bw%29%2D%3E%2Ea%3B%0A%20%20%29%3B%0A%20%20rel%28br%29%3B%0A%29%3B%0Aout%20meta%3B)
+Als Abfrage wird ausgeführt [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=17&Q=CGI_STUB)
 
-    ( node({{bbox}});
+    ( node(51.477,-0.001,51.478,0.001);
       way(bn);
       node(w);
     );
