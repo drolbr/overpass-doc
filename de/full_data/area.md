@@ -21,7 +21,7 @@ Im Rahmen der [Rückwärtskompatibilität](../preface/assertions.md#infrastructu
 
 Derzeit ist beabichtigt,
 dass _area_ dann als Synonym für _Way_ plus _Relation_ plus einen Evaluator ``is\_closed()`` verwendet wird.
-Umgekehrt wird ``is_in`` dann wohl ebendiese Datentypen finden;
+Umgekehrt wird ``is\_in`` dann wohl ebendiese Datentypen finden;
 es wird sich anbieten, dieses _Statement_ dabei durch einen Filter abzulösen.
 
 Umgekehrt bitte ich Sie, dies nicht als eine konkrete Ankündigung misszuverstehen.
@@ -33,11 +33,12 @@ Es gibt andere Anliegen im Projekt mit größerem Leidensdruck.
 Der typische Einsatzfall für Flächen in der Overpass API ist,
 alle Objekte von einem Typ oder alle Objekte generell in einem Gebiet herunterzuladen.
 Wir fangen mit allen Objekten von einem mäßig häufigen Typ an;
-alle Objekte generell sind zum Üben viel zu viele Daten.
+alle Objekte generell sind zu viele Daten,
+um mit kurzen Reaktionszeiten üben zu können.
 Wenn der _Area_-Mechanismus in diesem Abschnitt eingeführt ist,
-folgt der Download aller Objekte im [folgenden Abschnitt](area.md#full).
+folgt der Download aller Objekte im [folgenden Abschnitt](#full).
 
-Wir wollen zunächst [alle Supermärkte in London](https://overpass-turbo.eu/?lat=30.0&lon=0.0&zoom=2&Q=area%5Bname%3D%22London%22%5D%3B%0Anwr%5Bshop%3Dsupermarket%5D%28area%29%3B%0Aout%20center%3B) anzeigen:
+Wir wollen zunächst [alle Supermärkte in London](https://overpass-turbo.eu/?lat=30.0&lon=0.0&zoom=2&Q=CGI_STUB) anzeigen:
 
     area[name="London"];
     nwr[shop=supermarket](area);
@@ -45,12 +46,12 @@ Wir wollen zunächst [alle Supermärkte in London](https://overpass-turbo.eu/?la
 
 Die eigentliche Arbeit wird in Zeile 2 geleistet:
 dort beschränkt der _Filter_ ``(area)`` die zu selektierenden Objekte
-auf solche nur in den Flächen aus der Eingabe;
+auf solche nur in den Flächen aus dem Set ``_``;
 wir müssen also vorher die _Area_ zu London geliefert haben.
 
 Zeile 1 selektiert alle Objekte vom Typ _Area_,
-die ein Tag _name_ mit dem Wert _London_ besitzen.
-Dieser Objekttyp wird [unten](area.md#background) erläutert.
+die ein Tag mit Key ``name`` und Wert ``London`` besitzen.
+Dieser Objekttyp wird [unten](#background) erläutert.
 Es handelt sich im übrigen um ein spezielles [Query-Statement](../preface/design.md#statements).
 
 Überraschenderweise verteilen sich die Fundstellen über den halben Planeten.
@@ -59,13 +60,13 @@ wir müssen ausdrücken, dass uns das große London in England interessiert.
 Uns stehen gleich fünf verschiedene Lösungswege zur Verfügung,
 unsere Anfrage zu präzisieren.
 
-Wir können eine große Bounding-Box um die ungefähre Zielregion [legen und nutzen](https://overpass-turbo.eu/?lat=30.0&lon=0.0&zoom=2&Q=area%5Bname%3D%22London%22%5D%3B%0Anwr%5Bshop%3Dsupermarket%5D%28area%29%2850%2E5%2C%2D1%2C52%2E5%2C1%29%3B%0Aout%20center%3B):
+Wir können eine große Bounding-Box um die ungefähre Zielregion [legen und nutzen](https://overpass-turbo.eu/?lat=30.0&lon=0.0&zoom=2&Q=CGI_STUB):
 
     area[name="London"];
     nwr[shop=supermarket](area)(50.5,-1,52.5,1);
     out center;
 
-Der Vollständigkeit halber sei darauf hingewiesen, dass dies auch mit dem [Komfortfeature von Overpass Turbo](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=10&Q=area%5Bname%3D%22London%22%5D%3B%0Anwr%5Bshop%3Dsupermarket%5D%28area%29%28%7B%7Bbbox%7D%7D%29%3B%0Aout%20center%3B) geht:
+Für Ihre Bequemlichkeit sei darauf hingewiesen, dass dies auch mit dem [Komfortfeature](../targets/turbo.md#convenience) von _Overpass Turbo_ [geht](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=10&Q=CGI_STUB):
 
     area[name="London"];
     nwr[shop=supermarket](area)({{bbox}});
@@ -77,10 +78,10 @@ auch deswegen, da es reicht,
 den Filter eine Anweisung später anzuwenden.
 
 In ähnlicher Weise können wir auch ausnutzen, dass London in Großbritannien liegt.
-Ein [späterer Abschnitt](area.md#combining) zeigt alle Möglichkeiten dazu auf.
+Ein [späterer Abschnitt](#combining) zeigt alle Möglichkeiten dazu auf.
 
 Nicht zuletzt kann man auch weitere Tags zur Unterscheidung der _Areas_ mit gleichem _name_-Tag heranziehen.
-Im Falle von London [hilft das Tag](https://overpass-turbo.eu/?lat=30.0&lon=0.0&zoom=2&Q=area%5Bname%3D%22London%22%5D%5B%22wikipedia%22%3D%22en%3ALondon%22%5D%3B%0Anwr%5Bshop%3Dsupermarket%5D%28area%29%3B%0Aout%20center%3B) zum Key _wikipedia_:
+Im Falle von London [hilft das Tag](https://overpass-turbo.eu/?lat=30.0&lon=0.0&zoom=2&Q=CGI_STUB) zum Key _wikipedia_:
 
     area[name="London"]["wikipedia"="en:London"];
     nwr[shop=supermarket](area);
@@ -92,7 +93,7 @@ Dadurch bleibt diesmal nur das eine _Area_-Objekt übrig,
 in dem wir tatsächlich suchen wollen.
 
 Andere häufig nützliche Filter können ``admin_level`` mit oder ohne Wert oder ``type=boundary`` sein.
-Es hilft dazu, sich zunächst alle gefundenen _Area_-Objekte [anzeigen zu lassen](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=10&Q=area%5Bname%3D%22London%22%5D%3B%0Aout%3B);
+Es hilft dazu, sich zunächst alle gefundenen _Area_-Objekte [anzeigen zu lassen](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=10&Q=CGI_STUB);
 bitte nach dem Ausführen per _Daten_ oben rechts auf die Daten-Ansicht umschalten:
 
     area[name="London"];
@@ -100,7 +101,7 @@ bitte nach dem Ausführen per _Daten_ oben rechts auf die Daten-Ansicht umschalt
 
 Zeile 2 gibt aus, was Zeile 1 findet.
 Bitte sichten Sie die Funde danach, welche _Tags_ die richtige Fläche selektieren.
-Mittels _pivot_-Filter in einem Query-Statement können Sie diese auch [visualisieren](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=10&Q=):
+Mittels _pivot_-Filter in einem Query-Statement können Sie diese auch [visualisieren](https://overpass-turbo.eu/?lat=30.0&lon=0.0&zoom=2&Q=CGI_STUB):
 
     area[name="London"];
     nwr(pivot);
@@ -109,9 +110,11 @@ Mittels _pivot_-Filter in einem Query-Statement können Sie diese auch [visualis
 In Zeile 2 steht dabei ein reguläres Query-Statement.
 Der _Filter_ ``(pivot)`` darin lässt genau diejenigen Objekte zu,
 die die Erzeuger der in seiner Eingabe befindlichen _Areas_ sind.
+Das ist das Set ``_``;
+es ist in Zeile 1 befüllt worden.
 
 Als fünfte Möglichkeit gibt es ein Komfort-Feature von [Overpass Turbo](../targets/turbo.md),
-um Nominatim [auswählen zu lassen](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=10&Q=%7B%7BgeocodeArea%3ALondon%7D%7D%3B%0Anwr%5Bshop%3Dsupermarket%5D%28area%29%3B%0Aout%20center%3B):
+um Nominatim [auswählen zu lassen](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=10&Q=CGI_STUB):
 
     {{geocodeArea:London}};
     nwr[shop=supermarket](area);
@@ -127,7 +130,7 @@ hier z.B. ``area(3600065606)``.
 ## Wirklich Alles
 
 Wir wollen nun wirklich alle Daten in einem Gebiet herunterladen.
-Das geht zwar mit fast der Abfrage, die wir [zum Üben](area.md#per_tag) verwendet haben.
+Das geht zwar mit fast der Abfrage, die wir [zum Üben](#per_tag) verwendet haben.
 Aber wir müssen das Werkzeug wechseln:
 für ein Gebiet von der Größe Londons kommen schnell 10 Mio. Objekte oder mehr zusammen,
 während _Overpass Turbo_ bereits ab etwa 2000 Objekten den Browser bis zur Unbrauchbarkeit verlangsamt.
@@ -143,12 +146,14 @@ London herunterzuladen kann mehrere Minuten dauern.
 Alternativ sei auf Download-Werkzeuge wie [Wget](https://www.gnu.org/software/wget/) oder [Curl](https://curl.haxx.se/) verwiesen.
 Um das zu üben, speichern Sie bitte eine der Abfragen von oben in eine lokale Datei, z.B. ``london.ql``.
 
-Sie können dann Abfragen stellen mit
+Sie können dann Abfragen ab der Kommandozeile stellen mit
+<!-- NO_QL_LINK -->
 
     wget -O london.osm.gz --header='Accept-Encoding: gzip, deflate' \\
         --post-file=london.ql 'https://overpass-api.de/api/interpreter'
 
 bzw.
+<!-- NO_QL_LINK -->
 
     curl -H'Accept-Encoding: gzip, deflate' -d@- \\
         'https://overpass-api.de/api/interpreter' \\
@@ -165,6 +170,7 @@ Nun kommen wir zu der eigentlichen Abfrage.
 Da eine Quelle großer Datenmengen bei vollen Daten räumliche ausgedehnte Relationen sind,
 gibt es an den endgültigen Anwendungszweck [angepasste Varianten](osm_types.md).
 Wir beschränken uns hier zunächst auf eine häufig passende Variante:
+<!-- NO_QL_LINK -->
 
     area[name="London"]["wikipedia"="en:London"];
     (
@@ -174,7 +180,8 @@ Wir beschränken uns hier zunächst auf eine häufig passende Variante:
     out;
 
 Alternativ sei noch eine Variante mit mehrfacher Nutzung des _Area_-Filters genannt.
-Dann sollten die als Eingabe selektierten Areas in einer benannten _Set-Variable_ [zwischengespeichert](../preface/design.md#sets) werden:
+Dann sollten die als Eingabe selektierten Areas in einer _benannten Set-Variable_ [zwischengespeichert](../preface/design.md#sets) werden:
+<!-- NO_QL_LINK -->
 
     area[name="London"]["wikipedia"="en:London"]->.suchgebiet;
     (
@@ -196,7 +203,7 @@ London als Fläche in Großbritannien auszuwählen.
 Das ist nicht implementiert,
 aber es gibt auch hier wieder zwei andere Möglichkeiten.
 
-Man kann Objekte suchen, die [in der Schnittmenge zweier Flächen](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=8&Q=area%5Bname%3D%22London%22%5D%2D%3E%2Eklein%3B%0Aarea%5Bname%3D%22England%22%5D%2D%3E%2Egrosz%3B%0Anwr%5Bshop%3Dsupermarket%5D%28area%2Eklein%29%28area%2Egrosz%29%3B%0Aout%20center%3B) liegen:
+Man kann Objekte suchen, die [in der Schnittmenge zweier Flächen](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=8&Q=CGI_STUB) liegen:
 
     area[name="London"]->.klein;
     area[name="England"]->.grosz;
@@ -207,18 +214,18 @@ Das eigentliche Filtern findet im Query-Statement in Zeile 3 statt;
 dort werden nur Objekte zugelassen, die alle drei Filter erfüllen:
 Der Filter ``[shop=supermarket]`` lässt nur Objekte mit dem entsprechenden Tag zu.
 Der Filter ``(area.klein)`` beschränkt dies auf Objekte,
-die innerhalb einer der in _klein_ befindlichen Flächen liegen.
+die innerhalb einer der in ``klein`` befindlichen Flächen liegen.
 Der Filter ``(area.grosz)`` reduziert dies weiter auf Objekte,
-die innerhalb einer der in _grosz_ befindlichen Flächen liegen.
+die innerhalb einer der in ``grosz`` befindlichen Flächen liegen.
 
 Nun müssen wir nur noch sicherstellen,
-dass in _klein_ bzw. _grosz_ die gewollten Flächen drinstehen.
-Die erledigen jeweils Query-Statements nach _Areas_,
+dass in ``klein`` bzw. ``grosz`` die gewollten Flächen drinstehen.
+Die erledigen jeweils Query-Statements nach _Areas_ in den Zeilen 1 und 2,
 die ihr Ergebnis in eine benannte Variable speichern.
 
 Das andere Vorgehen verwendet den Zusammenhang zwischen _Area_ und dem erzeugenden Objekt,
 allerdings diesmal in die dem Filter _pivot_ entgegengesetzte Richtung.
-Wir [selektieren](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=8&Q=area%5Bname%3D%22England%22%5D%3B%0Arel%5Bname%3D%22London%22%5D%28area%29%3B%0Amap%5Fto%5Farea%3B%0Anwr%5Bshop%3Dsupermarket%5D%28area%29%3B%0Aout%20center%3B) das erzeugte Objekt der kleinen Fläche:
+Wir [selektieren](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=8&Q=CGI_STUB) das erzeugte Objekt der kleinen Fläche:
 
     area[name="England"];
     rel[name="London"](area);
@@ -228,7 +235,8 @@ Wir [selektieren](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=8&Q=area%5Bn
 
 In Zeile 4 wollen wir für den Filter ``(area)`` exakt die _Area_ zu London als Eingabe haben.
 Dazu selektieren wir in Zeile 2 alle _Relations_, die den Namen _London_ haben
-und innerhalb einer der Flächen von ``(area)`` liegen.
+und innerhalb einer der Flächen liegen,
+die ``(area)`` in der EIngabe im Default-Set ``_`` vorfindet.
 Für diese hatten wir in Zeile 1 alle Flächen mit Name _England_ ausgewählt.
 
 Nun brauchen wir aber in Zeile 4 ja Flächen,
