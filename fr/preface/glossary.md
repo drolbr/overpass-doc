@@ -69,18 +69,18 @@ Il se compose de toutes les coordonnées,
 dont la latitude se situe entre les deux valeurs de latitude
 et dont la longitude se situe entre les deux spécifications de longitude.
 
+### Relation
+
+Un type d'objet spécifique dans le modèle de données d'OpenStreetMap.
+Modélise des choses,
+qui ne peut pas être modélisé avec des noeuds et des moyens seuls.
+
 ### Requête
 
 Le texte formalisé,
 qui est envoyé du client (par exemple de _Overpass Turbo_) au serveur.
 Seul le contenu de la requête décide,
 qui est récupéré à partir de l'OpenStreetMap.
-
-### Relation
-
-Un type d'objet spécifique dans le modèle de données d'OpenStreetMap.
-Modélise des choses,
-qui ne peut pas être modélisé avec des noeuds et des moyens seuls.
 
 ### Valeur
 
