@@ -194,12 +194,10 @@ Par conséquent, nous ajoutons la résolution arrière `rel(br)` à la dernière
 <a name="full"/>
 ## Tous les objets ensemble
 
-...
-<!--
-Wir stellen hier die am ehesten sinnvollen Varianten zusammen.
+Nous rassemblons ici les variantes les plus judicieuses.
 
-Wenn Ihr Zielprogramm mit Koordinaten am Objekt umgehen kann,
-dann können Sie alle Nodes, Ways und Relations in der Bounding Box komplett wie folgt bekommen: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+Si votre programme cible peut gérer les coordonnées de l'objet,
+alors vous pouvez obtenir tous les nœuds, chemins et relations dans le rectangle englobant comme suit: [(Lien)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     ( node(51.477,-0.001,51.478,0.001);
       way(51.477,-0.001,51.478,0.001); );
@@ -207,15 +205,18 @@ dann können Sie alle Nodes, Ways und Relations in der Bounding Box komplett wie
     <;
     out qt;
 
-Dies sammelt
+Cela recueille
 
-* alle Nodes in der Bounding-Box (Selektion Zeile 1, Ausgabe Zeile 3)
-* alle Ways in der Bounding-Box, auch solche, die die Bounding Box nur ohne Node durchschneiden (Selektion Zeile 2, Ausgabe Zeile 3)
-* alle Relationen, die mindestens eine Node oder Way in der Bounding-Box als Member haben, ohne eigenständige Geometrie (Selektion Zeile 4, Ausgabe Zeile 5)
+* tous les nœuds du rectangle englobant (sélection dans ligne 1, sortie dans ligne 3)
+* toutes les chemins du rectangle englobant,
+  même celles qui ne traversent que sans nœud le rectangle englobant (sélection dans ligne 2, sortie dans ligne 3).
+* toutes les relations qui ont au moins un nœud ou une voie dans le rectangle englobant en tant que membre,
+  sans géométrie indépendante (sélection dans ligne 4, sortie dans ligne 5)
 
-Die gleichen Daten ganz ohne Relationen erhalten Sie, wenn Sie nur die Zeilen 1 bis 3 als Abfrage verwenden.
+Vous obtenez les mêmes données sans aucune relation si vous n'utilisez que les lignes 1 à 3 comme requête.
 
-Relationen auf Relationen erhalten Sie, wenn Sie Zeile 4 durch die Sammlung von Relationen und Relationen auf Relationen ergänzen: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+Les relations sur les relations sont obtenues
+en complétant la ligne 4 par un réunion de relations et de relations sur les relations: [(Lien)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     ( node(51.47,-0.01,51.48,0.01);
       way(51.47,-0.01,51.48,0.01); );
@@ -223,11 +224,12 @@ Relationen auf Relationen erhalten Sie, wenn Sie Zeile 4 durch die Sammlung von 
     ( <; rel(br); );
     out qt;
 
-Alternativ können Sie die Daten auch im strikt traditionellen Format mit Sortierung nach Elementtypen und nur indirekter Geometrie ausgeben.
-Dies erfordert insbesondere, die Vorwärtsauflösung der Ways, um alle Nodes für die Geometrie zu bekommen.
-Dann müssen wir das Kommando `<` durch eine präzisere Variante ersetzen,
-da sonst das Kommando `<` Wege an den hinzugefügen Nodes aufsammelt.
-Die erste Variante wird dann zu: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+Vous pouvez également sortir les données dans un format strictement traditionnel avec tri par type d'élément et géométrie indirecte uniquement.
+Cela nécessite, en particulier, la résolution vers l'avant des chemins
+pour obtenir tous les nœuds pour la géométrie.
+Ensuite, nous devons remplacer l'instruction `<` par une variante plus précise,
+sinon la commande `<` collectera les chemins aux nœuds ajoutés.
+La première variante devient alors: [(Lien)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     ( node(51.47,-0.01,51.48,0.01);
       way(51.47,-0.01,51.48,0.01); );
@@ -240,12 +242,12 @@ Die erste Variante wird dann zu: [(Link)](https://overpass-turbo.eu/?lat=51.4775
       node(w); );
     out;
 
-Hier sind Zeilen 3 bis 7 für die Relationen zuständig.
-Ohne Zeilen 4 bis 8, aber mit Zeilen 9 bis 11 für die Vervollständigung der Ways und die Ausgabe
-erhält man dann nur Nodes und Ways.
+Ici, les lignes 3 à 7 sont responsables des relations.
+Sans les lignes 4 à 8, mais avec les lignes 9 à 11 pour enrichissement des chemins et la sortie,
+vous n'avez que des noeuds et des chemins.
 
-Umgekehrt können Relationen auf Relationen gesammelt werden,
-indem Zeile 7 entsprechend durch die neue Zeile 8 ergänzt wird: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+Inversement, les relations sur les relations peuvent être collectées,
+en ajoutant la nouvelle ligne 8 à la ligne 7: [(Lien)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     ( node(51.47,-0.01,51.48,0.01);
       way(51.47,-0.01,51.48,0.01); );
@@ -259,7 +261,6 @@ indem Zeile 7 entsprechend durch die neue Zeile 8 ergänzt wird: [(Link)](https:
       node(w); );
     out;
 
-Weitere Varianten existieren,
-auch wenn sie eher historische Bedeutung haben.
-Zwei stellen wir im [nächsten Unterkapitel](map_apis.md) vor.
--->
+Il existe d'autres variantes,
+même s'ils ont une signification plutôt historique que à présent.
+Nous en présentons deux dans le [prochain sous-chapitre](map_apis.md).

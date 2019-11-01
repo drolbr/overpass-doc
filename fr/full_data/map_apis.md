@@ -8,23 +8,21 @@ et qui retournent des données dans une configuration particulière.
 
 ## L'export du site openstreetmap.org
 
-...
-<!--
-Im [Export-Tab](https://openstreetmap.org/export) der [OSM Main Site](https://openstreetmap.org) gibt es eine Funktion,
-um alle Daten mittels Overpass API zu exportieren.
-Diese bildet das Verhalten des Exports direkt von der Originaldatenbank nach,
-kann aber quantitativ deutlich mehr Elemente exportieren.
-Dahinter steckt eine einfache URL:
+Il y a une fonctionnalité dans le [onglet Exportation](https://openstreetmap.org/export) du [site principal de l'OSM](https://openstreetmap.org),
+pour exporter toutes les données à l'aide de l'API Overpass.
+Cette API réplique le comportement de l'export directement depuis la base de données d'origine,
+peut, cependant, exporter beaucoup plus d'éléments quantitativement.
+Derrière cela se cache une simple URL:
 
 [/api/map?bbox=-0.001,51.477,0.001,51.478](https://overpass-api.de/api/map?bbox=-0.001,51.477,0.001,51.478)
 
-Die Reihenfolge der Koordinaten orientiert sich hier an älteren Schnittstellen.
-Sie weicht daher von der Bounding-Box ab.
-Es folgen westlicher Rand, südlicher Rand, östlicher Rand und nördlicher Rand aufeinander.
+L'ordre des coordonnées ici est basé sur des interfaces plus anciennes.
+Il s'écarte donc de le rectangle englobant.
+Les frontières ouest, sud, est et nord se suivent.
 
-Als Abfrage wird ausgeführt [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=17&Q=%28%20node%28%7B%7Bbbox%7D%7D%29%3B%0A%20%20way%28bn%29%3B%0A%20%20node%28w%29%3B%20%29%3B%0A%28%20%2E%5F%3B%0A%20%20%28%20rel%28bn%29%2D%3E%2Ea%3B%0A%20%20%20%20rel%28bw%29%2D%3E%2Ea%3B%0A%20%20%29%3B%0A%20%20rel%28br%29%3B%0A%29%3B%0Aout%20meta%3B)
+Comme requête est exécutée [(Lien)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=17&Q=CGI_STUB)
 
-    ( node({{bbox}});
+    ( node(51.477,-0.001,51.478,0.001);
       way(bn);
       node(w);
     );
@@ -36,20 +34,19 @@ Als Abfrage wird ausgeführt [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon
     );
     out meta;
 
-D.h. es sind enthalten:
+C'est-à-dire qu'ils sont inclus :
 
-1. alle Nodes in der gegebenen Bounding-Box
-1. alle Ways, die mindestens eine Node in der Bounding-Box haben
-1. alle von diesen Ways benutzte Nodes
-1. alle Relationen, die eines oder mehrere Elemente unter 1.-3. als Member enthalten
-1. alle Relationen, die eine oder mehrere Relation von 4. als Member enthalten
+1. tous les nœuds dans le rectangle englobant donné
+1. toutes les chemins qui ont au moins un nœud dans la zone de délimitation
+1. tous les nœuds utilisés par ces chemins
+1. toutes les relations qui contiennent un ou plusieurs éléments visés aux points 1 à 3 comme membres
+1. toutes les relations qui contiennent une ou plusieurs relations de 4 comme membres
 
-und es wird davon der Detailgrad mit Version und Zeitstempel ausgegeben.
+et le niveau de détail avec la version et l'horodatage est affiché.
 
-Nicht enthalten sind Ways, die die Bounding-Box nur durchlaufen ohne dort einen Node zu haben.
-Wie man dieses Problem behebt,
-ist im [vorhergehenden Unterkapitel](osm_types.md#full) erläutert, insbesondere im Abschnitt _Alles zusammen_.
--->
+Ne sont pas inclus les chemins qui ne passent que par le rectangle englobant sans avoir un nœud là.
+Comment résoudre ce problème,
+est expliqué dans le [sous-chapitre précédent](osm_types.md#full), surtout dans la section _Tous les objets ensemble_.
 
 ## Xapi
 
