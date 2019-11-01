@@ -71,130 +71,125 @@ Les nœuds et les chemins de faire ensemble sont expliqués [dans la section ter
 <a name="rels"/>
 ## Relations
 
-...
-<!--
-Wie schon bei Ways ist der einfachere Fall im Umgang mit Relationen,
-dass das Zielprogramm integrierte Geometrie direkt auswerten kann.
-Dazu nocheinmal den passenden Direktvergleich:
-[Ohne Koordinaten](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+Comme pour _chemins_, le cas le plus simple est celui des _relations_,
+que le programme cible peut évaluer directement la géométrie intégrée.
+Encore une fois, la comparaison directe appropriée:
+[Sans coordonnées](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     relation(51.477,-0.001,51.478,0.001);
     out;
 
-und [mit Koordinaten](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+et [avec coordonnées](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     relation(51.477,-0.001,51.478,0.001);
     out geom;
 
-Im Gegensatz zu Ways werden die Daten um eine Größenordnung mehr:
-Es liegt daran, dass wir in der Variante ohne Koordinaten von Ways nur die Id sehen,
-während tatsächlich jeder Way aus mehreren Nodes besteht und damit entsprechend viele Koordinaten hat.
+Contrairement à _chemins_, les données deviennent un ordre de grandeur de plus:
+C'est parce que dans la variante sans coordonnées de voies nous ne voyons que l'identifiant,
+alors que chaque voie se compose en fait de plusieurs nœuds et a donc un nombre correspondant de coordonnées.
 
-Relations mit überwiegend Ways als Member sind auch der Regelfall.
-Es gibt daher den im Absatz _Ausgabebegrenzung_ auf [Bounding-Boxen](bbox.md#crop) beschriebenen Mechanismus,
-die zu liefernde Geometrie auf eine Bounding Box einzuschränken: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+Les relations avec les chemins comme majorité des membres sont également la règle.
+Par conséquent, il y a le mécanisme décrit dans le paragraphe _Restriction d'affichage_ sur [Rectangle englobant](bbox.md#crop),
+pour limiter la géométrie à livrer à un rectangle englobant: [(Lien)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     relation(51.477,-0.001,51.478,0.001);
     out geom({{bbox}});
 
-Auch für Relationen sind jedoch im originalen Datenmodell von OpenStreetMap keine Koordinaten vorgehesen.
-Für Programme, die das originale Datenmodell benötigen, gibt es zunächst wieder zwei Abstufungen.
-Möglichst nur die Koordinaten bekommt man, indem man die Relationen ausgibt und dann ihre Referenzen auflöst.
-Das benötigt zwei Pfade, da Relationen einerseits Nodes als Member haben können,
-andererseits Ways und diese wiederum Nodes als Member.
-Insgesamt müssten wir dazu vier Kommandos benutzen.
-Weil es aber ein so häufiger Fall ist, gibt es dafür ein besonders kurzes Sammelkommando `>`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+Cependant, le modèle de données original d'OpenStreetMap ne fournit pas de coordonnées également pour les relations.
+Pour les programmes qui nécessitent le modèle de données d'origine, il y a à nouveau deux niveaux.
+Si possible, seules les coordonnées peuvent être obtenues en sortant les relations et en résolvant leurs références.
+Cela nécessite deux routes, car les relations peuvent avoir des nœuds comme membres,
+d'autre part les chemins et ceux-ci à leur tour nœuds comme membres.
+En tout, nous devrions utiliser quatre commandes.
+Mais parce qu'il s'agit d'un cas courant, il y a une commande de collection très courte `>`: [(Lien)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     relation(51.477,-0.001,51.478,0.001);
     out qt;
     >;
     out skel qt;
 
-Gegenüber der vorhergehenden Ausgabe hat sich die Datenmenge etwa verdoppelt,
-da immer Verweis und Verweisziel enthalten sein müssen.
+Par rapport à la requête précédente, la quantité de données a pratiquement doublé,
+puisque la référence et la destination de référence doivent toujours être incluses.
 
-Die ganz kompatible Variante erfordert noch mehr Datenaufwand.
-Diese bildet das Idiom `(._; >;);` aus den drei Kommandos `._`, `>` und `(...)`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+La variante entièrement compatible nécessite encore plus de données.
+Ceci forme l'idiome `(._; >;);` à partir des trois commandes `._`, `>` et `(...)`:
+[(Lien)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     relation(51.477,-0.001,51.478,0.001);
     (._; >;);
     out;
 
-Gibt es eine Lösung, um auch hier die Menge erhaltener Koordinaten auf die Bounding-Box zu beschränken?
-Da eine Relation in einer Bounding-Box enthalten ist,
-wenn mindestens eines ihrer Member in der Bounding-Box enthalten ist,
-können wir dies erreichen,
-indem wir nach den Membern fragen und zu den Relationen auflösen.
-Hier hilft das Kommando `<`:
-es ist eine Abkürzung, um alle Ways und Relationen zu finden,
-die die vorgegebenen Nodes oder Ways als Member haben.
-Wir suchen also nach allen Nodes und Ways in der Bounding-Box.
-Dann behalten wir diese per Kommando `._` und suchen alle Relationen,
-die diese als Member haben: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+Existe-t-il une solution pour limiter le nombre de coordonnées reçues à le rectangle englobant?
+Parce qu'une relation est contenue dans un rectangle englobant,
+si au moins un de ses membres est contenu dans le rectangle englobant,
+nous pouvons y arriver,
+en demandant les membres et en résolvant les relations.
+Ici, la commande `<` aide:
+c'est un raccourci pour trouver toutes les _chemins_ et les _relations_,
+qui ont les _nœuds_ ou les _chemins_ donnés en tant que membres.
+Nous cherchons donc tous les _nœuds_ et tous les _chemins_ dans le rectangle englobant.
+Ensuite, nous les gardons par ordre `._` et cherchons toutes les relations,
+qui les ont comme membres: [(Lien)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     ( node(51.477,-0.001,51.478,0.001);
       way(51.477,-0.001,51.478,0.001); );
     (._; <;);
     out;
 
-Diejenigen Objekte, die Member der Relations sind, erkennt man an der abweichenden Farbe in der Anzeige.
-Noch besser findet man die Relationen in der Anzeige _Daten_, indem man ganz herunterscrollt.
+Les objets qui sont membres des relations peuvent être reconnus par les différentes couleurs de l'affichage.
+Mieux encore, vous pouvez trouver les relations dans l'affichage _Données_ en faisant défiler complètement vers le bas.
 
-Die meisten Member der Relationen laden wir also gar nicht, sondern nur die in der Bounding-Box befindlichen.
-Diese Abfrage ist nicht ganz praxistauglich, da wir zu den Ways nicht alle benutzten Nodes laden.
-Eine vollständige Fassung gibt es unten im Abschnitt _Alles zusammen_.
--->
+La plupart des membres des relations ne sont pas téléchargés du tout, mais seulement ceux qui sont dans le rectangle englobant.
+Cette requête n'est pas très pratique, car nous ne chargeons pas tous les nœuds utilisés dans les chemins.
+Une version complète se trouve dans la section [Tous ensemble](#full) ci-dessous.
 
 <a name="rels_on_rels"/>
 ## Relations sur relations
 
-...
-<!--
-Um das Problem mit Relationen auf Relationen vorzuführen,
-müssen wir die Bounding-Box nicht einmal besonders vergrößern.
-Wir starten mit der Abfrage von oben ohne Relationen auf Relationen: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+Montrer le problème des relations sur les relations,
+nous n'avons même pas besoin d'agrandir beaucoup le rectangle englobant.
+Nous commençons par la requête d'en haut sans relations sur les relations: [(Lien)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     relation(51.47,-0.01,51.48,0.01);
     (._; >;);
     out;
 
-Jetzt ersetzen wir die Auflösung ab den Relationen abwärts durch
+Nous remplaçons maintenant la résolution des relations vers le bas par
 
-* eine Rückwärtsauflösung auf Relationen von Relationen
-* die vollständige Vorwärtsauflösung der gefundenen Relationen bis zu den Koordinaten
+* une résolution rétrograde sur les relations de relations
+* la résolution en avant complète des relations trouvées jusqu'aux coordonnées
 
-Dies sind die Kommandos `rel(br)` und `>>`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+Ce sont les commandes `rel(br)` et `>>`: [(Lien)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     relation(51.47,-0.01,51.48,0.01);
     ( rel(br); >>;);
     out;
 
-Je nach System wird dies Ihren Browser verlangsamen oder eine Warnmeldung produzieren.
-Wir haben eine Ecke im Vorort Greenwich gewollt und tatsächlich Daten aus fast ganz London bezogen,
-da es eine Sammelrelation _Quietways_ gibt.
-Da hat die sowieso schon große Datenmenge wiederum vervielfacht.
+Selon le navigateur, cela ralentira votre navigateur ou produira un message d'avertissement.
+Nous voulions un coin dans la banlieue de Greenwich et nous avons obtenu des données de presque tout Londres,
+puisqu'il existe une relation de groupement _Quietways_.
+La quantité déjà importante de données s'est à nouveau multipliée.
 
-Selbst wenn es hier irgendwann keine Sammelrelation mehr geben sollte,
-wie dies auch für unsere Testregion mit etwa hundert Metern Kantenlänge gilt:
-Wollen Sie ernsthaft Ihre Anwendung dafür anfällig machen,
-dass sie nicht mehr funktioniert,
-sobald irgendein ein unbedarfter Mapper im Zielgebiet eine oder mehrere Sammelrelationen anlegt?
+Même s'il ne devrait plus y avoir de relation de groupement à un moment donné,
+comme c'est également le cas pour notre zone de test avec une longueur de bord d'environ cent mètres:
+Voulez-vous sérieusement rendre votre application sensible à cela
+que ça ne marche plus,
+dès qu'un cartographe inexpérimenté crée une ou plusieurs relations de groupement dans la zone cible?
 
-Daher rate ich recht dringend davon ab, mit Relationen auf Relationen zu arbeiten.
-Die Datenstruktur schafft das Risiko,
-ungewollt sehr große Datenmengen miteinander zu verbinden.
+C'est pourquoi je déconseille fortement de travailler avec les relations sur les relations.
+La structure des données crée le risque,
+de connecter involontairement de très grandes quantités de données.
 
-Wenn man unbedingt Relationen auf Relationen verarbeiten will,
-dann ist eine eher beherrschbare Lösung,
-nur die Relationen zu laden,
-aber keine Vorwärtsauflösung mehr durchzuführen.
-Dazu ergänzen wir die letzte Abfrage aus dem Absatz _Relationen_ um die Rückwärtsauflösung `rel(br)`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
+Si vous voulez absolument traiter les relations sur les relations,
+est une solution plus facile à gérer,
+pour ne charger que les relations,
+mais plus faire la résolution en avant.
+Par conséquent, nous ajoutons la résolution arrière `rel(br)` à la dernière requête du paragraphe _Relations_: [(Lien)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     ( node(51.47,-0.01,51.48,0.01);
       way(51.47,-0.01,51.48,0.01); );
     (._; <; rel(br); );
     out;
--->
 
 <a name="full"/>
 ## Tous les objets ensemble

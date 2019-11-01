@@ -93,7 +93,7 @@ die zu liefernde Geometrie auf eine Bounding Box einzuschränken: [(Link)](https
     relation(51.477,-0.001,51.478,0.001);
     out geom({{bbox}});
 
-Auch für Relationen sind jedoch im originalen Datenmodell von OpenStreetMap keine Koordinaten vorgehesen.
+Auch für Relationen sind jedoch im originalen Datenmodell von OpenStreetMap keine Koordinaten vorgesehen.
 Für Programme, die das originale Datenmodell benötigen, gibt es zunächst wieder zwei Abstufungen.
 Möglichst nur die Koordinaten bekommt man, indem man die Relationen ausgibt und dann ihre Referenzen auflöst.
 Das benötigt zwei Pfade, da Relationen einerseits Nodes als Member haben können,
@@ -138,7 +138,7 @@ Noch besser findet man die Relationen in der Anzeige _Daten_, indem man ganz her
 
 Die meisten Member der Relationen laden wir also gar nicht, sondern nur die in der Bounding-Box befindlichen.
 Diese Abfrage ist nicht ganz praxistauglich, da wir zu den Ways nicht alle benutzten Nodes laden.
-Eine vollständige Fassung gibt es unten im Abschnitt _Alles zusammen_.
+Eine vollständige Fassung gibt es unten im Abschnitt [Alles zusammen](#full).
 
 <a name="rels_on_rels"/>
 ## Relationen auf Relationen
