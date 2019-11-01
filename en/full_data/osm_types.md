@@ -70,7 +70,7 @@ The idiom `(._; node(w););` accomplishes this by its three statements `._`, `nod
     (._; node(w););
     out;
 
-Nodes and ways each with all their details together are explained in the final section.
+Nodes and ways each with all their details together are explained [in the final section](#full).
 
 <a name="rels"/>
 ## Relations

@@ -64,7 +64,7 @@ dies leistet das Idiom `(._; node(w););` bestehend aus den drei Kommandos `._`, 
     (._; node(w););
     out;
 
-Nodes und Ways gemeinsam erläutern wir im finalen Abschnitt.
+Nodes und Ways gemeinsam erläutern wir [im finalen Abschnitt](#full).
 
 <a name="rels"/>
 ## Relationen

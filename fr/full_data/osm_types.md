@@ -7,68 +7,66 @@ des détails des modèles des données d'OpenStreetMap sont introduits ici.
 <a name="scope"/>
 ## Démarcation
 
-...
-<!--
-Die Datentypen sind bereits im [passenden Abschnitt der Einleitung](../preface/osm_data_model.md) eingeführt worden.
-Sie sollten hier also bereits mit Nodes, Ways und Relations vertraut sein.
+Les types des objets ont déjà été présentés dans la [section correspondante de l'introduction](../preface/osm_data_model.md).
+Vous devriez donc déjà être familier avec les _nœuds_, les _chemins_ et les _relations_.
 
-Diese können auf verschiedene Weise dargestellt werden; Ausgabeformate wie JSON oder XML erläutert der Abschnitt [Datenformate](../targets/formats.md).
-Ebenfalls dort wird darauf eingegangen, welche Detailgrade hinsichtlich Struktur, Geometrie, Tags, Versionen und Attributierung möglich sind.
+Ceux-ci peuvent être représentés de différentes manières;
+les formats de sortie tels que JSON ou XML sont expliqués dans la section [Formats de données](../targets/formats.md).
+Il explique également les niveaux de détail possibles en termes de structure, de géométrie, de attributs, de versions et d'attributs.
 
-Hier geht es darum, wie das Vervollständigen von Ways und Relationen im Hinblick auf die Bounding-Boxen diesen eine nutzbare Geometrie verschafft.
--->
+Ici, il s'agit de savoir comment l'achèvement des _chemins_ et des _relations_ leur fournit une géométrie utilisable,
+sans que la taille du résultat de la requête ne devienne incontrôlable.
 
 <a name="nodes_ways"/>
 ## Chemins et nœuds
 
-...
-<!--
-Bei Nodes ist eine nutzbare Geometrie einfach zu bekommen:
-Alle Ausgabemodi außer `out ids` und `out tags` haben per Definition die Koordinaten der Nodes dabei.
+Avec les _nœuds_, une géométrie utilisable est facile à obtenir:
+Tous les modes de sortie sauf les `out ids` et les `out tags` ont les coordonnées des nœuds avec eux,
+parce que, par définition, ils font partie des nœuds dans le modèle de données de l'OSM.
 
-Bei der Kombination mit Ways gibt es dagegen bereits mehrere Möglichkeiten je nach Situation:
-Im einfachsten Fall kann ihr Programm ergänzende Koordinaten an den Ways verarbeiten.
-Sie können sich den Unterschied z.b. in Overpass Turbo veranschaulichen,
-indem Sie die Resultate der beiden nachfolgenden Abfragen im Tab _Data_ (oben rechts) vergleichen:
-[Ohne Koordinaten](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%3B)
+Par contre, en équipant les _chemins_ de la géométrie, il y a déjà plusieurs possibilités:
+Dans le cas le plus simple, votre programme peut traiter des coordonnées supplémentaires sur les chemins.
+Vous pouvez visualiser la différence, par exemple dans Overpass Turbo,
+en comparant les résultats des deux requêtes suivantes dans l'onglet _Données_ (en haut à droite):
+[Sans coordonnées](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     way(51.477,-0.001,51.478,0.001);
     out;
 
-und [mit Koordinaten](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%20geom%3B)
+et [avec coordonnées](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     way(51.477,-0.001,51.478,0.001);
     out geom;
 
-Im originalen Datenmodell von OpenStreetMap sind an Ways jedoch keine Koordinaten vorgesehen.
-Die Ways haben ja bereits Verweise auf Ids von Nodes.
-Daher gibt es auch nach wie vor Programme, die Koordinaten an Ways nicht verarbeiten können.
-Für diese gibt es zwei Abstufungen, die Geometrie auf traditionellem Weg mitzuliefern.
+Dans le modèle de données original d'OpenStreetMap, cependant, aucune coordonnée n'est fournie à _chemins_.
+Les _chemins_ ont déjà des références à des identifiants de noeuds.
+Par conséquent, il y a encore des programmes qui ne peuvent pas traiter les coordonnées sur _chemins_.
+Pour ces derniers, il y a deux gradations pour fournir la géométrie de la manière traditionnelle.
 
-Einen möglichst geringen Extra-Aufwand an Daten zieht es nach sich, nur die Koordinaten der Nodes anzufordern.
-Das Kommando `node(w)` fordert nach der Ausgabe der Ways an, die in den Ways referenzierten Nodes zu finden;
-der Modus `out skel` reduziert den Datenumfang auf die Koordinaten pur; der Zusatz `qt` spart den Aufwand für das Sortieren der Ausgabe: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%20qt%3B%0A%3E%3B%0Aout%20skel%20qt%3B)
+Le minimum de données supplémentaires est nécessaire pour ne demander que les coordonnées des nœuds.
+La commande `node(w)` demande après la sortie des chemins de trouver les nœuds référencés dans les chemins;
+le mode `out skel` réduit la quantité de données aux coordonnées pures; l'addition `qt` économise l'effort de tri de la sortie: [(Lien)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     way(51.477,-0.001,51.478,0.001);
     out qt;
     node(w);
     out skel qt;
 
-Ich empfehle wiederum, sich die Ausgabe im Tab _Data_ oben rechts anzuschauen.
-Die Nodes sieht man erst, wenn man herunterscrollt.
+Je recommande à nouveau de regarder la sortie dans l'onglet _Données_ dans le coin supérieur droit.
+Vous ne pouvez voir les nœuds que lorsque vous faites défiler vers le bas.
 
-Das ist zwar schon näher am originalen Datenmodell,
-aber es gibt Programme, die auch damit noch nicht zurechtkommen.
-Es gibt die Konvention, Nodes strikt vor Ways und die Elemente untereinander nach Id zu sortieren.
-Dann müssen wir die Nodes ergänzend zu den Ways laden, bevor wir etwas ausgeben;
-dies leistet das Idiom `(._; node(w););` bestehend aus den drei Kommandos `._`, `node(w)` und `(...)`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0A%28%2E%5F%3B%20%3E%3B%29%3B%0Aout%3B)
+Ce modèle est plus proche du modèle de données original,
+mais il y a des programmes qui ne peuvent pas le gérer.
+Il y a une convention pour trier les nœuds strictement avant les chemins et les éléments entre eux par identifiant.
+Pour ça, nous devons stocker les nœuds en plus des chemins avant de sortir;
+Ceci est fait par l'idiome `(._ ; node(w) ;);` constitué des trois commandes `._`, `node(w)` et `(...)`:
+[(Lien)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     way(51.477,-0.001,51.478,0.001);
     (._; node(w););
     out;
 
-Nodes und Ways gemeinsam erläutern wir im finalen Abschnitt.
--->
+Les nœuds et les chemins de faire ensemble sont expliqués [dans la section terminale](#full).
 
 <a name="rels"/>
 ## Relations
@@ -78,12 +76,12 @@ Nodes und Ways gemeinsam erläutern wir im finalen Abschnitt.
 Wie schon bei Ways ist der einfachere Fall im Umgang mit Relationen,
 dass das Zielprogramm integrierte Geometrie direkt auswerten kann.
 Dazu nocheinmal den passenden Direktvergleich:
-[Ohne Koordinaten](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%3B)
+[Ohne Koordinaten](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     relation(51.477,-0.001,51.478,0.001);
     out;
 
-und [mit Koordinaten](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%20geom%3B)
+und [mit Koordinaten](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     relation(51.477,-0.001,51.478,0.001);
     out geom;
@@ -94,7 +92,7 @@ während tatsächlich jeder Way aus mehreren Nodes besteht und damit entsprechen
 
 Relations mit überwiegend Ways als Member sind auch der Regelfall.
 Es gibt daher den im Absatz _Ausgabebegrenzung_ auf [Bounding-Boxen](bbox.md#crop) beschriebenen Mechanismus,
-die zu liefernde Geometrie auf eine Bounding Box einzuschränken: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%20geom%28%7B%7Bbbox%7D%7D%29%3B)
+die zu liefernde Geometrie auf eine Bounding Box einzuschränken: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     relation(51.477,-0.001,51.478,0.001);
     out geom({{bbox}});
@@ -105,7 +103,7 @@ Möglichst nur die Koordinaten bekommt man, indem man die Relationen ausgibt und
 Das benötigt zwei Pfade, da Relationen einerseits Nodes als Member haben können,
 andererseits Ways und diese wiederum Nodes als Member.
 Insgesamt müssten wir dazu vier Kommandos benutzen.
-Weil es aber ein so häufiger Fall ist, gibt es dafür ein besonders kurzes Sammelkommando `>`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0Aout%20qt%3B%0A%3E%3B%0Aout%20skel%20qt%3B)
+Weil es aber ein so häufiger Fall ist, gibt es dafür ein besonders kurzes Sammelkommando `>`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     relation(51.477,-0.001,51.478,0.001);
     out qt;
@@ -116,7 +114,7 @@ Gegenüber der vorhergehenden Ausgabe hat sich die Datenmenge etwa verdoppelt,
 da immer Verweis und Verweisziel enthalten sein müssen.
 
 Die ganz kompatible Variante erfordert noch mehr Datenaufwand.
-Diese bildet das Idiom `(._; >;);` aus den drei Kommandos `._`, `>` und `(...)`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0A%28%2E%5F%3B%20%3E%3B%29%3B%0Aout%3B)
+Diese bildet das Idiom `(._; >;);` aus den drei Kommandos `._`, `>` und `(...)`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     relation(51.477,-0.001,51.478,0.001);
     (._; >;);
@@ -132,15 +130,15 @@ es ist eine Abkürzung, um alle Ways und Relationen zu finden,
 die die vorgegebenen Nodes oder Ways als Member haben.
 Wir suchen also nach allen Nodes und Ways in der Bounding-Box.
 Dann behalten wir diese per Kommando `._` und suchen alle Relationen,
-die diese als Member haben: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20node%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0A%20%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0A%28%2E%5F%3B%20%3C%3B%29%3B%0Aout%3B)
+die diese als Member haben: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     ( node(51.477,-0.001,51.478,0.001);
       way(51.477,-0.001,51.478,0.001); );
     (._; <;);
     out;
 
-Die Member der Relation erkennt man an der abweichenden Farbe in der Anzeige.
-Noch besser findet man die Relation in der Anzeige _Daten_.
+Diejenigen Objekte, die Member der Relations sind, erkennt man an der abweichenden Farbe in der Anzeige.
+Noch besser findet man die Relationen in der Anzeige _Daten_, indem man ganz herunterscrollt.
 
 Die meisten Member der Relationen laden wir also gar nicht, sondern nur die in der Bounding-Box befindlichen.
 Diese Abfrage ist nicht ganz praxistauglich, da wir zu den Ways nicht alle benutzten Nodes laden.
@@ -154,7 +152,7 @@ Eine vollständige Fassung gibt es unten im Abschnitt _Alles zusammen_.
 <!--
 Um das Problem mit Relationen auf Relationen vorzuführen,
 müssen wir die Bounding-Box nicht einmal besonders vergrößern.
-Wir starten mit der Abfrage von oben ohne Relatione auf Relationen: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%0A%28%2E%5F%3B%20%3E%3B%29%3B%0Aout%3B)
+Wir starten mit der Abfrage von oben ohne Relationen auf Relationen: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     relation(51.47,-0.01,51.48,0.01);
     (._; >;);
@@ -165,13 +163,13 @@ Jetzt ersetzen wir die Auflösung ab den Relationen abwärts durch
 * eine Rückwärtsauflösung auf Relationen von Relationen
 * die vollständige Vorwärtsauflösung der gefundenen Relationen bis zu den Koordinaten
 
-Dies sind die Kommandos `rel(br)` und `>>`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=relation%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%0A%28%20rel%28br%29%3B%20%3E%3E%3B%29%3B%0Aout%3B)
+Dies sind die Kommandos `rel(br)` und `>>`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     relation(51.47,-0.01,51.48,0.01);
     ( rel(br); >>;);
     out;
 
-Je nach System wird dies ihren Browser verlangsamen oder eine Warnmeldung produzieren.
+Je nach System wird dies Ihren Browser verlangsamen oder eine Warnmeldung produzieren.
 Wir haben eine Ecke im Vorort Greenwich gewollt und tatsächlich Daten aus fast ganz London bezogen,
 da es eine Sammelrelation _Quietways_ gibt.
 Da hat die sowieso schon große Datenmenge wiederum vervielfacht.
@@ -190,7 +188,7 @@ Wenn man unbedingt Relationen auf Relationen verarbeiten will,
 dann ist eine eher beherrschbare Lösung,
 nur die Relationen zu laden,
 aber keine Vorwärtsauflösung mehr durchzuführen.
-Dazu ergänzen wir die letzte Abfrage aus dem Absatz _Relationen_ um die Rückwärtsauflösung `rel(br)`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20node%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%0A%20%20way%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%20%29%3B%0A%28%2E%5F%3B%20%3C%3B%20rel%28br%29%3B%20%29%3B%0Aout%3B)
+Dazu ergänzen wir die letzte Abfrage aus dem Absatz _Relationen_ um die Rückwärtsauflösung `rel(br)`: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     ( node(51.47,-0.01,51.48,0.01);
       way(51.47,-0.01,51.48,0.01); );
@@ -206,7 +204,7 @@ Dazu ergänzen wir die letzte Abfrage aus dem Absatz _Relationen_ um die Rückw�
 Wir stellen hier die am ehesten sinnvollen Varianten zusammen.
 
 Wenn Ihr Zielprogramm mit Koordinaten am Objekt umgehen kann,
-dann können Sie alle Nodes, Ways und Relations in der Bounding Box komplett wie folgt bekommen: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20node%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%0A%20%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aout%20geom%20qt%3B%0A%3C%3B%0Aout%20qt%3B)
+dann können Sie alle Nodes, Ways und Relations in der Bounding Box komplett wie folgt bekommen: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     ( node(51.477,-0.001,51.478,0.001);
       way(51.477,-0.001,51.478,0.001); );
@@ -217,12 +215,12 @@ dann können Sie alle Nodes, Ways und Relations in der Bounding Box komplett wie
 Dies sammelt
 
 * alle Nodes in der Bounding-Box (Selektion Zeile 1, Ausgabe Zeile 3)
-* alle Ways in der Bounding-Box, auch solche, die die Bounding Box nur ohne Node durchschneiden (Selektion Zeile 2, Ausgabe Zeil 3)
+* alle Ways in der Bounding-Box, auch solche, die die Bounding Box nur ohne Node durchschneiden (Selektion Zeile 2, Ausgabe Zeile 3)
 * alle Relationen, die mindestens eine Node oder Way in der Bounding-Box als Member haben, ohne eigenständige Geometrie (Selektion Zeile 4, Ausgabe Zeile 5)
 
 Die gleichen Daten ganz ohne Relationen erhalten Sie, wenn Sie nur die Zeilen 1 bis 3 als Abfrage verwenden.
 
-Relationen auf Relationen erhalten Sie, wenn Sie Zeile 4 durch die Sammlung von Relationen und Relationen auf Relationen ergänzen: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20node%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%0A%20%20way%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%20%29%3B%0Aout%20geom%20qt%3B%0A%28%20%3C%3B%20rel%28br%29%3B%20%29%3B%0Aout%20qt%3B)
+Relationen auf Relationen erhalten Sie, wenn Sie Zeile 4 durch die Sammlung von Relationen und Relationen auf Relationen ergänzen: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     ( node(51.47,-0.01,51.48,0.01);
       way(51.47,-0.01,51.48,0.01); );
@@ -230,11 +228,11 @@ Relationen auf Relationen erhalten Sie, wenn Sie Zeile 4 durch die Sammlung von 
     ( <; rel(br); );
     out qt;
 
-Alternativ können Sie die Daten auch im strikt traditionellen Format mit Sortierung nach Eleementtypen und nur indirekter Geometrie ausgeben.
+Alternativ können Sie die Daten auch im strikt traditionellen Format mit Sortierung nach Elementtypen und nur indirekter Geometrie ausgeben.
 Dies erfordert insbesondere, die Vorwärtsauflösung der Ways, um alle Nodes für die Geometrie zu bekommen.
 Dann müssen wir das Kommando `<` durch eine präzisere Variante ersetzen,
 da sonst das Kommando `<` Wege an den hinzugefügen Nodes aufsammelt.
-Die erste Variante wird dann zu: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20node%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%0A%20%20way%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%20%29%3B%0A%28%20%2E%5F%3B%0A%20%20%28%0A%20%20%20%20rel%28bn%29%2D%3E%2Ea%3B%0A%20%20%20%20rel%28bw%29%2D%3E%2Ea%3B%0A%20%20%29%3B%20%29%3B%0A%28%20%2E%5F%3B%0A%20%20node%28w%29%3B%20%29%3B%0Aout%3B)
+Die erste Variante wird dann zu: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     ( node(51.47,-0.01,51.48,0.01);
       way(51.47,-0.01,51.48,0.01); );
@@ -252,7 +250,7 @@ Ohne Zeilen 4 bis 8, aber mit Zeilen 9 bis 11 für die Vervollständigung der Wa
 erhält man dann nur Nodes und Ways.
 
 Umgekehrt können Relationen auf Relationen gesammelt werden,
-indem Zeile 7 entsprechend durch die neue Zeile 8 ergänzt wird: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20node%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%0A%20%20way%2851%2E47%2C%2D0%2E01%2C51%2E48%2C0%2E01%29%3B%20%29%3B%0A%28%20%2E%5F%3B%0A%20%20%28%0A%20%20%20%20rel%28bn%29%2D%3E%2Ea%3B%0A%20%20%20%20rel%28bw%29%2D%3E%2Ea%3B%0A%20%20%29%3B%0A%20%20rel%28br%29%3B%20%29%3B%0A%28%20%2E%5F%3B%0A%20%20node%28w%29%3B%20%29%3B%0Aout%3B)
+indem Zeile 7 entsprechend durch die neue Zeile 8 ergänzt wird: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     ( node(51.47,-0.01,51.48,0.01);
       way(51.47,-0.01,51.48,0.01); );
