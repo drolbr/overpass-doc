@@ -19,9 +19,9 @@ Die konkrete Planung und Umsetzung wird sicherlich eher Jahre in Anspruch nehmen
 Am Ende diese Prozesses werden aber einige der hier aufgeführten Syntax-Varianten wohl veraltet sein.
 Im Rahmen der [Rückwärtskompatibilität](../preface/assertions.md#infrastructure) werden möglichst wenige Abfragen für veraltet erklärt.
 
-Derzeit ist beabichtigt,
-dass _area_ dann als Synonym für _Way_ plus _Relation_ plus einen Evaluator ``is\_closed()`` verwendet wird.
-Umgekehrt wird ``is\_in`` dann wohl ebendiese Datentypen finden;
+Derzeit ist beabsichtigt,
+dass _area_ dann als Synonym für _Way_ plus _Relation_ plus einen Evaluator `is\_closed()` verwendet wird.
+Umgekehrt wird `is\_in` dann wohl ebendiese Datentypen finden;
 es wird sich anbieten, dieses _Statement_ dabei durch einen Filter abzulösen.
 
 Umgekehrt bitte ich Sie, dies nicht als eine konkrete Ankündigung misszuverstehen.
@@ -45,12 +45,12 @@ Wir wollen zunächst [alle Supermärkte in London](https://overpass-turbo.eu/?la
     out center;
 
 Die eigentliche Arbeit wird in Zeile 2 geleistet:
-dort beschränkt der _Filter_ ``(area)`` die zu selektierenden Objekte
-auf solche nur in den Flächen aus dem Set ``_``;
+dort beschränkt der _Filter_ `(area)` die zu selektierenden Objekte
+auf solche nur in den Flächen aus dem Set `_`;
 wir müssen also vorher die _Area_ zu London geliefert haben.
 
 Zeile 1 selektiert alle Objekte vom Typ _Area_,
-die ein Tag mit Key ``name`` und Wert ``London`` besitzen.
+die ein Tag mit Key `name` und Wert `London` besitzen.
 Dieser Objekttyp wird [unten](#background) erläutert.
 Es handelt sich im übrigen um ein spezielles [Query-Statement](../preface/design.md#statements).
 
@@ -72,7 +72,7 @@ Für Ihre Bequemlichkeit sei darauf hingewiesen, dass dies auch mit dem [Komfort
     nwr[shop=supermarket](area)({{bbox}});
     out center;
 
-In beiden Fällen ist die Bounding-Box ein Filter parallel zu ``(area)``.
+In beiden Fällen ist die Bounding-Box ein Filter parallel zu `(area)`.
 Für das Provisorium _Area_ ist niemals eine Bounding-Box implementiert worden,
 auch deswegen, da es reicht,
 den Filter eine Anweisung später anzuwenden.
@@ -87,12 +87,12 @@ Im Falle von London [hilft das Tag](https://overpass-turbo.eu/?lat=30.0&lon=0.0&
     nwr[shop=supermarket](area);
     out center;
 
-Wie bereits der erste Filter nach Tag ``[name="London"]``
-wird auch der zweite Filter ``["wikipedia"="en:London"]`` auf die _Area_-Query in Zeile 1 angewendet.
+Wie bereits der erste Filter nach Tag `[name="London"]`
+wird auch der zweite Filter `["wikipedia"="en:London"]` auf die _Area_-Query in Zeile 1 angewendet.
 Dadurch bleibt diesmal nur das eine _Area_-Objekt übrig,
 in dem wir tatsächlich suchen wollen.
 
-Andere häufig nützliche Filter können ``admin_level`` mit oder ohne Wert oder ``type=boundary`` sein.
+Andere häufig nützliche Filter können `admin_level` mit oder ohne Wert oder `type=boundary` sein.
 Es hilft dazu, sich zunächst alle gefundenen _Area_-Objekte [anzeigen zu lassen](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=10&Q=CGI_STUB);
 bitte nach dem Ausführen per _Daten_ oben rechts auf die Daten-Ansicht umschalten:
 
@@ -108,9 +108,9 @@ Mittels _pivot_-Filter in einem Query-Statement können Sie diese auch [visualis
     out geom;
 
 In Zeile 2 steht dabei ein reguläres Query-Statement.
-Der _Filter_ ``(pivot)`` darin lässt genau diejenigen Objekte zu,
+Der _Filter_ `(pivot)` darin lässt genau diejenigen Objekte zu,
 die die Erzeuger der in seiner Eingabe befindlichen _Areas_ sind.
-Das ist das Set ``_``;
+Das ist das Set `_`;
 es ist in Zeile 1 befüllt worden.
 
 Als fünfte Möglichkeit gibt es ein Komfort-Feature von [Overpass Turbo](../targets/turbo.md),
@@ -120,11 +120,11 @@ um Nominatim [auswählen zu lassen](https://overpass-turbo.eu/?lat=51.5&lon=-0.1
     nwr[shop=supermarket](area);
     out center;
 
-Dabei löst der Ausdruck ``{{geocodeArea:London}}`` aus,
-dass _Overpass Turbo_ bei _Nominatim_ erfragt, was das plausibelste Objekt zu ``London`` ist.
+Dabei löst der Ausdruck `{{geocodeArea:London}}` aus,
+dass _Overpass Turbo_ bei _Nominatim_ erfragt, was das plausibelste Objekt zu `London` ist.
 Mittels der von Nominatim zurückgelieferten Id
 ersetzt Overpass Turbo den Ausdruck durch eine Id-Query nach der zugehörigen Fläche,
-hier z.B. ``area(3600065606)``.
+hier z.B. `area(3600065606)`.
 
 <a name="full"/>
 ## Wirklich Alles
@@ -139,12 +139,12 @@ Zudem sind Sie bei fast allen Gebieten in offiziellen Grenzen von Staaten bis St
 Details dazu [im dazugehörigen Abschnitt](other_sources.md#regional).
 
 Sie können die Rohdaten zur Weiterverarbeitung direkt auf ihren lokalen Rechner herunterladen:
-Dazu dient in _Overpass Turbo_ unter _Export_ oben links der Link ``Rohdaten direkt von der Overpass API``.
+Dazu dient in _Overpass Turbo_ unter _Export_ oben links der Link `Rohdaten direkt von der Overpass API`.
 Es ist normal, dass nach de Klick erst einmal nichts passiert.
 London herunterzuladen kann mehrere Minuten dauern.
 
 Alternativ sei auf Download-Werkzeuge wie [Wget](https://www.gnu.org/software/wget/) oder [Curl](https://curl.haxx.se/) verwiesen.
-Um das zu üben, speichern Sie bitte eine der Abfragen von oben in eine lokale Datei, z.B. ``london.ql``.
+Um das zu üben, speichern Sie bitte eine der Abfragen von oben in eine lokale Datei, z.B. `london.ql`.
 
 Sie können dann Abfragen ab der Kommandozeile stellen mit
 <!-- NO_QL_LINK -->
@@ -161,7 +161,7 @@ bzw.
 
 Beide Anweisungen können natürlich ohne den Rückstrich auch in je einer Zeile geschrieben werden.
 In beiden Fällen tuen Sie mir, sich und allen übrigen Benutzern einen großen Gefallen,
-wenn Sie den zusätzlichen Header ``Accept-Encoding: gzip, deflate`` setzen.
+wenn Sie den zusätzlichen Header `Accept-Encoding: gzip, deflate` setzen.
 Dies gestattet dem Server, die Daten zu komprimieren,
 was die Datenmengen um ca. den Faktor 7 verkleinert
 und beide Enden der Verbindung entlastet.
@@ -212,14 +212,14 @@ Man kann Objekte suchen, die [in der Schnittmenge zweier Flächen](https://overp
 
 Das eigentliche Filtern findet im Query-Statement in Zeile 3 statt;
 dort werden nur Objekte zugelassen, die alle drei Filter erfüllen:
-Der Filter ``[shop=supermarket]`` lässt nur Objekte mit dem entsprechenden Tag zu.
-Der Filter ``(area.klein)`` beschränkt dies auf Objekte,
-die innerhalb einer der in ``klein`` befindlichen Flächen liegen.
-Der Filter ``(area.grosz)`` reduziert dies weiter auf Objekte,
-die innerhalb einer der in ``grosz`` befindlichen Flächen liegen.
+Der Filter `[shop=supermarket]` lässt nur Objekte mit dem entsprechenden Tag zu.
+Der Filter `(area.klein)` beschränkt dies auf Objekte,
+die innerhalb einer der in `klein` befindlichen Flächen liegen.
+Der Filter `(area.grosz)` reduziert dies weiter auf Objekte,
+die innerhalb einer der in `grosz` befindlichen Flächen liegen.
 
 Nun müssen wir nur noch sicherstellen,
-dass in ``klein`` bzw. ``grosz`` die gewollten Flächen drinstehen.
+dass in `klein` bzw. `grosz` die gewollten Flächen drinstehen.
 Die erledigen jeweils Query-Statements nach _Areas_ in den Zeilen 1 und 2,
 die ihr Ergebnis in eine benannte Variable speichern.
 
@@ -233,15 +233,15 @@ Wir [selektieren](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=8&Q=CGI_STUB
     nwr[shop=supermarket](area);
     out center;
 
-In Zeile 4 wollen wir für den Filter ``(area)`` exakt die _Area_ zu London als Eingabe haben.
+In Zeile 4 wollen wir für den Filter `(area)` exakt die _Area_ zu London als Eingabe haben.
 Dazu selektieren wir in Zeile 2 alle _Relations_, die den Namen _London_ haben
 und innerhalb einer der Flächen liegen,
-die ``(area)`` in der EIngabe im Default-Set ``_`` vorfindet.
+die `(area)` in der EIngabe im Default-Set `_` vorfindet.
 Für diese hatten wir in Zeile 1 alle Flächen mit Name _England_ ausgewählt.
 
 Nun brauchen wir aber in Zeile 4 ja Flächen,
-während der Filter ``(area)`` keine Flächen filtern kann und wir daher _Relations_ selektiert haben.
-Dies erledigt ``map_to_area``:
+während der Filter `(area)` keine Flächen filtern kann und wir daher _Relations_ selektiert haben.
+Dies erledigt `map_to_area`:
 es ordnet den Objekten aus seiner Eingabe die von den Objekten erzeugten Flächen zu.
 
 <a name="background"/>

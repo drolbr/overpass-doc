@@ -22,8 +22,8 @@ as few syntax variants as possible will be removed.
 
 Currently it is planned
 that _area_ is then used as a label for _ways_ or_relations_
-for which the evaluator ``is\_closed()`` returns true.
-Conversely, the statement ``is\_in`` will find these kind of OpenStreetMap objects.
+for which the evaluator `is\_closed()` returns true.
+Conversely, the statement `is\_in` will find these kind of OpenStreetMap objects.
 It would make sense to replace that statement by a filter in the transition process.
 
 But please do not understand this notice as an announcement.
@@ -48,17 +48,17 @@ We first want to display [all supermarkets in London](https://overpass-turbo.eu/
     out center;
 
 The actual work is done in line 2:
-the _filter_ ``(area)`` there restricts the found objects
-to those that are partly or completely within one or more of the areas in the set ``_``.
-Thus we must first bring our areas of interest into the set ``_``.
+the _filter_ `(area)` there restricts the found objects
+to those that are partly or completely within one or more of the areas in the set `_`.
+Thus we must first bring our areas of interest into the set `_`.
 
 Line 1 selects all objects of the type _area_
-that have a tag with key ``name`` and value ``London``.
+that have a tag with key `name` and value `London`.
 This object type is explained [later](#background).
 By the way, the whole statement is still a [_query_ statement](../preface/design.md#statements).
 
 Unexpectedly, many results pop up across half of the planet.
-This is because there are many areas named ``London``;
+This is because there are many areas named `London`;
 we need to express that we want only the big London in England.
 There are five different ways to make our request more precise.
 
@@ -76,8 +76,8 @@ that the bounding box can be [computed automatically](https://overpass-turbo.eu/
     nwr[shop=supermarket](area)({{bbox}});
     out center;
 
-In both cases, the bounding box acts as a filter in parallel to the ``(area)`` filter.
-For the as temporary intended filter ``(area)``, a bounding box has never been implemented.
+In both cases, the bounding box acts as a filter in parallel to the `(area)` filter.
+For the as temporary intended filter `(area)`, a bounding box has never been implemented.
 But that this can be mitigated in the just explained way
 also contributed to that it never got priority.
 
@@ -92,14 +92,14 @@ In the case of London the tag with the key _wikipedia_ [helps out](https://overp
     nwr[shop=supermarket](area);
     out center;
 
-Like the first filter by tag ``[name="London"]``,
+Like the first filter by tag `[name="London"]`,
 the second filter is applied to the query in the first line.
 This way here remains only the one _area_ object
 in which we actually wanted to search.
 
-Other often useful tags for filtering are ``admin_level`` with or without a value or ``type=boundary``.
+Other often useful tags for filtering are `admin_level` with or without a value or `type=boundary`.
 To this end, it helps to first [display](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=10&Q=CGI_STUB) and scrutinize all the found _area_ objects;
-please switch after ``Run`` to the ``Data`` view by the tab in the upper right corner:
+please switch after `Run` to the `Data` view by the tab in the upper right corner:
 
     area[name="London"];
     out;
@@ -114,9 +114,9 @@ you also can [visualize](https://overpass-turbo.eu/?lat=30.0&lon=0.0&zoom=2&Q=CG
     out geom;
 
 Line 2 constitutes a regular _query_ statement.
-The filter ``(pivot)`` there selected exactly those objects
+The filter `(pivot)` there selected exactly those objects
 that are generators of the _areas_ in its input.
-This is the set ``_``, and it is filled in line 1.
+This is the set `_`, and it is filled in line 1.
 
 The fifth possibility is a convenience feature of [Overpass Turbo](../targets/turbo.md)
 to [let choose](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=10&Q=CGI_STUB) _Nominatim_ the right area:
@@ -125,11 +125,11 @@ to [let choose](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=10&Q=CGI_STUB)
     nwr[shop=supermarket](area);
     out center;
 
-Here the expression ``{{geocodeArea:London}}`` triggers
-that _Overpass Turbo_ asks _Nominatim_ for the most plausible object for the name ``London``.
+Here the expression `{{geocodeArea:London}}` triggers
+that _Overpass Turbo_ asks _Nominatim_ for the most plausible object for the name `London`.
 By using the id returned by Nominatim,
 Overpass Turbo replaces the expression by an _id_ query for the corresponding area,
-e.g. ``area(3600065606)``.
+e.g. `area(3600065606)`.
 
 <a name="full"/>
 ## Full Data
@@ -144,12 +144,12 @@ In addition, for virtually all areas in official boundaries I suggest to rather 
 Details for this are in [the subsection about regional extracts](other_sources.md#regional).
 
 You can in both cases download the raw data directly to your local computer:
-For this purpose _Overpass Turbo_ offers in the _Export_ menu the link ``download as raw OSM data``.
+For this purpose _Overpass Turbo_ offers in the _Export_ menu the link `download as raw OSM data`.
 It is normal that nothing happens immediately after the click.
 Downloading entire London can take several minutes.
 
 It might be even easier to use download tools like [Wget](https://www.gnu.org/software/wget/) or [Curl](https://curl.haxx.se/).
-To exercise this, please store one of the queries from above in a local file, e.g. ``london.ql``.
+To exercise this, please store one of the queries from above in a local file, e.g. `london.ql`.
 
 You then can pose requests on the command line with
 <!-- NO_QL_LINK -->
@@ -166,7 +166,7 @@ respectively
 
 Both commands can of course be written without the backslash in a single line.
 In both cases do you do to me, to you, and to all the other users a big favor
-if you set the additional header ``Accept-Encoding: gzip, deflate``.
+if you set the additional header `Accept-Encoding: gzip, deflate`.
 This entitles the server to compress the data,
 and this reduces the data about sevenfold and relieves both ends of the connection.
 
@@ -196,10 +196,10 @@ To this end you need [to store](../preface/design.md#sets) the selected areas in
     );
     out;
 
-Here the query statement in line 3 writes its result into the default set ``_``.
+Here the query statement in line 3 writes its result into the default set `_`.
 Because the area selection is still needed in line 4,
 it must be stored in a different location than the default set,
-in this case ``area_of_interest``.
+in this case `area_of_interest`.
 
 <a name="combining"/>
 ## Area inside an Area
@@ -219,13 +219,13 @@ that are [in the intersection of two areas](https://overpass-turbo.eu/?lat=51.5&
 
 The actual filtering takes place in the query statement in line 3;
 there are only objects admitted that meet all three filter criteria:
-The filter ``[shop=supermarket]`` admits only objects with this very tag.
-The filter ``(area.small)`` restricts this to objects
-that are situated within one of the areas from the set ``small``.
-The filter ``(area.big)`` restricts this further to objects
-that are situated within one of the areas from the set ``big``.
+The filter `[shop=supermarket]` admits only objects with this very tag.
+The filter `(area.small)` restricts this to objects
+that are situated within one of the areas from the set `small`.
+The filter `(area.big)` restricts this further to objects
+that are situated within one of the areas from the set `big`.
 
-Now we need to arrange that in ``small`` and ``big`` are selected the intended areas.
+Now we need to arrange that in `small` and `big` are selected the intended areas.
 This is fulfilled by the queries for _areas_ in lines 1 and 2,
 that store their results each in the named variable.
 
@@ -239,16 +239,16 @@ We [select](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=8&Q=CGI_STUB) the 
     nwr[shop=supermarket](area);
     out center;
 
-In line 4, we want for the filter ``(area)`` exactly the _area_ for the big London as input.
+In line 4, we want for the filter `(area)` exactly the _area_ for the big London as input.
 For this purpose, we select in line 2 all _relations_
 that have the name _London_
-and are situated without one of the areas supplied as input to ``(area)`` via the default set ``_``.
+and are situated without one of the areas supplied as input to `(area)` via the default set `_`.
 All areas with the name _England_ have been stored in the default set in line 1.
 
 Now we need in line 4 areas,
-although the filter ``(area)`` cannot filter areas,
+although the filter `(area)` cannot filter areas,
 and we thus have resorted to select _relations_ instead.
-This is done by ``map_to_area``:
+This is done by `map_to_area`:
 it selects the areas that have been made from the objects in its input.
 
 <a name="background"/>

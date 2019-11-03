@@ -177,38 +177,37 @@ les coordonnées sont séparées par des virgules.
 <a name="polygon"/>
 ## Par polygone saisi
 
-...
-<!--
-Eine weitere Methode,
-um mit Suchgebieten umzugehen,
-die nur schlecht in Bounding-Boxen passen,
-ist die Suche anhand eines Polygons.
+Une autre méthode,
+pour s'occuper des zones de recherche,
+qui ne rentrent pas bien dans les rectangles englobants,
+est de chercher par polygone.
 
-Zwar decken [Areas](area.md) bereits sehr viele Anwendungsfälle ab,
-indem sie die Suche in exakt einem benannten Gebiet erlauben.
-Aber wenn es darum geht, solche Gebiete etwas zu erweitern oder auch beliebige Freiformen zu schneiden,
-muss zwangsläufig die Flächenbegrenzung als explizites Polygon übergeben werden.
+Il est vrai que [surfaces](area.md) couvre déjà de nombreuses applications,
+en permettant la recherche dans exactement une zone nommée.
+Mais quand il s'agit d'étendre ces zones ou de réduire les formes libres arbitraires,
+la limite de la zone doit être passée comme un polygone explicite.
 
-Zur Illustration zunächst eine Suche nur nach Nodes [mit einem Dreieck als Grenze](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=14&Q=CGI_STUB),
-um die Polygonform gut auf der Karte sehen zu können:
+Pour l'illustration d'abord une recherche seulement pour les nœuds [avec un triangle comme limite](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=14&Q=CGI_STUB),
+pour bien voir la forme du polygone sur la carte:
 
     node(poly:"51.47 -0.01 51.477 0.01 51.484 -0.01");
     out geom;
 
-In Zeile 1 suchen wir nach _Nodes_,
-und der Filter `(poly:...)` lässt nur solche Objekte zu,
-die innerhalb des in den Anführungszeichen notierten Polygons liegen.
-Das Polygon ist eine Liste von Koordinaten der Form Breitengrad-Längengrad,
-wobei zwischen den Zahlwerten nur Leerzeichen liegen dürfen.
-Nach der letzten Koordinate ergänzt Overpass API die schließende Kante.
+Dans la ligne 1, nous recherchons _nœudes_,
+et le filtre `(poly :....)` n'autorise que de tels objets,
+qui sont à l'intérieur du polygone noté entre guillemets.
+Le polygone est une liste de coordonnées latitude-longitude,
+où seuls les blancs sont autorisés entre les valeurs numériques.
+Après la dernière coordonnée, l'API Overpass ajoute le segment de fermeture.
 
-Sehr viele Daten liefert wieder einmal die [Suche nach allen drei Objektarten](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=14&Q=CGI_STUB):
+La [recherche de les trois types d'objets](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=14&Q=CGI_STUB) fournit une fois de plus une très grande quantité de données:
 
     nwr(poly:"51.47 -0.01 51.477 0.01 51.484 -0.01");
     out geom;
 
-Wie schon [zuvor](#around) kann dies durch die beiden Schritte _Nodes_ plus _Ways_ und Rückwärtsauflösen der _Relations_ eingehegt werden;
-die Datenersparnis entsteht nur dadurch, dass zu den _Relations_ [die Geometrie weggelassen wird](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=14&Q=CGI_STUB):
+Comme [avant](#around) ceci peut être contenu par les deux étapes _nœudes_ plus _chemins_ et résolution arrière des _relations_;
+la réduction des données ne résulte que du fait
+qu'aux _relations_ [la géométrie est omise](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=14&Q=CGI_STUB):
 
     (
       node(poly:"51.47 -0.01 51.477 0.01 51.484 -0.01");
@@ -218,12 +217,12 @@ die Datenersparnis entsteht nur dadurch, dass zu den _Relations_ [die Geometrie 
     rel(<);
     out;
 
-Können auch Löcher und mehrere Komponenten realisiert werden?
+Peut-on également réaliser des trous et plusieurs composants ?
 
-Mehrere Komponenten können per _Union_-Statement realisiert werden.
-Da _Union_-Statements beliebig viele Unterstatements haben können,
-können wir die _Query_-Statements für die Komponenten einfach hintereinander schreiben,
-hier gleich für [die _Nodes_-und-_Ways_-Variante](https://overpass-turbo.eu/?lat=51.487&lon=0.0&zoom=13&Q=CGI_STUB):
+Plusieurs composantes peuvent être réalisées par instruction _union_.
+Car les instructions _union_ peuvent avoir un nombre ad libitum de sous-instructions,
+nous pouvons simplement écrire les instructions _query_ pour les composants l'un après l'autre,
+ici pour [la variante avec _nœudes_ et _chemins_](https://overpass-turbo.eu/?lat=51.487&lon=0.0&zoom=13&Q=CGI_STUB):
 
     (
       node(poly:"51.47 -0.01 51.477 0.01 51.484 -0.01");
@@ -235,37 +234,36 @@ hier gleich für [die _Nodes_-und-_Ways_-Variante](https://overpass-turbo.eu/?la
     rel(<);
     out;
 
-Der Umriss wird hier jeweils zweimal angegeben;
-dies lässt sich im Moment leider nicht sinnvoll vermeiden.
+Le contour est spécifié deux fois ici;
+cela ne peut être évité pour l'instant.
 
-Entsprechend könnte es für Löcher naheliegend sein,
-das Block-Statement [Difference](../criteria/chaining.md#difference) zu verwenden.
-Dann schneidet man allerdings auch Objekte weg,
-die teilweise im Loch und teilweise im umgebenden Polygon liegen,
-denn Difference würde diese Objekte im Loch ja finden.
+En conséquence, il pourrait être évident pour les trous,
+pour utiliser l'instruction de bloc [différence](../criteria/chaining.md#difference).
+Mais ensuite, vous coupez aussi des objets,
+en partie dans le trou et en partie dans le polygone environnant,
+parce que l'instruction _différence_ trouverait ces objets pertiellement dans le trou.
 
-Stattdessen funktioniert es,
-den zum ersten Punkt des Lochs nächstgelegenen Punkt der Außenlinie zu verdoppeln
-und den Linienzug mit gedoppeltem Start- und Endpunkt dazwischen einzufügen.
+Au lieu de ça, ça marche,
+doubler le point le plus proche du premier point du trou sur la ligne extérieure
+et insérez la ligne polygonale avec les points de début et de fin doubles entre eux.
 
-Wenn wir z.B. aus dem Dreieck `51.47 -0.01 51.477 0.01 51.484 -0.01`
-das Dreieck `51.483 -0.0093 51.471 -0.0093 51.477 0.008` ausschneiden wollen, dann
+Si, par exemple, nous voulons du triangle `51.47 -0.01 51.477 0.01 51.484 -0.01`
+couper le triangle `51.483 -0.0093 51.471 -0.0093 51.477 0.008`, alors
 
-* duplizieren wir zunächst den nächstgelegenen Punkt `51.484 -0.01`,
-  erhalten also `51.47 -0.01 51.477 0.01 51.484 -0.01 51.484 -0.01`
-* wiederholen den ersten Punkt des Lochs `51.483 -0.0093` am Ende,
-  erhalten also fürs Loch `51.483 -0.0093 51.471 -0.0093 51.477 0.008 51.483 -0.0093`
-* fügen das Loch zwischen den beiden Kopien des duplizierten Punktes ein:
+* nous dupliquons d'abord le point le plus proche `51.484 -0.01`,
+  a reçu `51,47 -0,01 51,477 0,01 51,484 -0,01 51,484 -0,01 -0,01`
+* répéter le premier point du trou `51.483 -0.0093` à la fin,
+  reçu pour le trou `51.483 -0.0093 51.471 -0.0093 51.477 0.008 51.483 -0.0093`
+* insérer le trou entre les deux copies du point dupliqué:
   `51.47 -0.01 51.477 0.01 51.484 -0.01 51.483 -0.0093 51.471 -0.0093 51.477 0.008 51.483 -0.0093 51.484 -0.01`
 
-Zur Illustration die [fertige Abfrage für Nodes](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=14&Q=CGI_STUB).
-Sie funktioniert auch für alle anderen Objekttypen und kann mit _Union_ kombiniert werden,
-aber dann sieht man schlechter das tatsächlich durch das Polygon ausgewählte Gebiet:
+A titre d'illustration, la [requête terminée pour les nœuds](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=14&Q=CGI_STUB).
+Il fonctionne également pour tous les autres types d'objets et peut être combiné avec _union_,
+mais alors vous ne pouvez pas voir la zone réellement sélectionnée par le polygone:
 
     node(poly:"51.47 -0.01 51.477 0.01 51.484 -0.01
       51.483 -0.0093 51.471 -0.0093 51.477 0.008
       51.483 -0.0093 51.484 -0.01");
     out geom;
--->
 
 <!-- Traduit avec www.DeepL.com/Translator, partiellement redigé -->
