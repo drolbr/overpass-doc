@@ -264,3 +264,5 @@ en ajoutant la nouvelle ligne 8 à la ligne 7: [(Lien)](https://overpass-turbo.e
 Il existe d'autres variantes,
 même s'ils ont une signification plutôt historique que à présent.
 Nous en présentons deux dans le [prochain sous-chapitre](map_apis.md).
+
+<!-- Traduit avec www.DeepL.com/Translator, partiellement redigé -->

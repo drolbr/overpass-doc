@@ -82,6 +82,14 @@ qui est envoyé du client (par exemple de _Overpass Turbo_) au serveur.
 Seul le contenu de la requête décide,
 qui est récupéré à partir de l'OpenStreetMap.
 
+### Surface
+
+Un type spécial _objet_ dans les données de l'API Overpass.
+Contrairement aux _nœuds_, _chemins_ et _relations_, les surfaces ne proviennent pas directement des données OpenStreetMap,
+mais sont générés par l'API Overpass.
+C'est une solution de contournement parce que les _surfaces_ sont utilisées comme un concept dans OpenStreetMap,
+mais il n'y a pas de type de données spécial pour cela.
+
 ### Valeur
 
 Partie d'un _tag_,

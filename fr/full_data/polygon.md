@@ -1,93 +1,89 @@
 Polygone et autour
 ==================
 
-En plus du rectangle englobant,
-il y a d'autres critères pour délimiter une région plus précisément.
+En plus de le rectangle englobant, il existe d'autres cadres de délimitation qui sont plus adaptables à la zone cible.
 
-<!--
-Koordinaten in Breiten- und Längengrad sind zwar als Konzept gut verständlich,
-aber die wenigsten Menschen kennen zu den sie interessiernden Orten die Koordinaten auswendig.
+Les coordonnées en latitude et en longitude sont bien compréhensibles en tant que concept,
+mais très peu de gens connaissent les coordonnées des lieux qui les intéressent par cœur.
 
-Es wird daher zunächst die indirekte Suche anhand von benannten Objekten vorgestellt.
-Die Suche in Flächen ist dabei einerseits herausragend häufig,
-hat aber andererseits mehrere Besonderheiten.
-Sie wird daher in einem [anderen Unterkapitel](area.md) behandelt.
+C'est pourquoi la recherche indirecte au moyen d'objets nommés est introduite en premier lieu.
+D'une part, la recherche dans les surfaces est extrêmement fréquente,
+mais d'un autre côté, il a plusieurs particularités.
+Il est donc traité dans un [autre sous-chapitre](area.md).
 
-In diesem Unterkapitel geht es um die Suche im Umkreis von benannten Objekten.
-Die Suche im Umkreis von Koordinaten schließt sich an.
-Zuletzt werden noch Polygone als räumlicher Suchfilter vorgestellt.
--->
+Le premier sous-chapitre traite de la recherche à proximité des objets nommés.
+La recherche au voisinage des coordonnées suit.
+Enfin, les polygones sont introduits comme filtres de recherche spatiale.
 
 <a name="around"/>
 ## Autour des objets
 
-...
-<!--
-Es ist eine anspruchsvolle Aufgabe,
-aus einem Text zuverlässig einen konkreten Ort zu ermitteln.
-Daher fällt dies auch eigentlich einem Geocoder zu, z.B. [Nominatim](../criteria/nominatim.md#nominatim),
-und wird hier nicht vertieft.
-Mit den Ergebnissen von Nominatim kann schon die im nächsten Abschnitt beschriebene Suche um Koordinaten benutzt werden.
+C'est une tâche exigeante,
+pour déterminer de manière fiable un lieu concret à partir d'un texte.
+C'est donc également vraiment pour un géocodeur, par exemple [Nominatim](../criteria/nominatim.md#nominatim),
+et n'est pas approfondi ici.
+Avec les résultats de Nominatim, la recherche de coordonnées décrite dans la section suivante peut déjà être utilisée.
 
-Es gibt aber genug Beispiele, bei denen bereits der Name das richtige Objekt [liefert](https://overpass-turbo.eu/?lat=51.0&lon=10.0&zoom=6&Q=nwr%5Bname%3D%22K%C3%B6lner%20Dom%22%5D%3B%0Aout%20geom%3B):
+Cependant, il y a suffisamment d'exemples où le nom [fournit](https://overpass-turbo.eu/?lat=51.0&lon=10.0&zoom=6&Q=CGI_STUB) déjà l'objet juste:
 
     nwr[name="Kölner Dom"];
     out geom;
 
-In Zeile 1 suchen wir nach allen Objekten,
-die ein Tag ``name`` mit wert ``Kölner Dom`` besitzen.
-Dieses wird im Set ``_`` abgelegt,
-und in Zeile 2 gibt ``out geom`` aus, was es im Set ``_`` vorfindet.
+Dans la ligne 1, nous recherchons tous les objets,
+qui ont un tag `nom` avec la valeur `Kölner Dom`.
+Ceci est stocké dans l'ensemble `_`,
+et à la ligne 2 `out geom` affiche ce qu'il trouve dans l'ensemble `_`.
 
-Zur Erinnerung: [Die Lupe](../targets/turbo.md#basics) zoomt auf die Fundstellen heran.
-Gerade bei indirekten Filtern ist es oft sinnvoll, die ursprüngliche Objektsuche auszuführen,
-um auszuschließen, dass es weitere gleichnamige Objekte [an anderen Orten](https://overpass-turbo.eu/?lat=51.0&lon=10.0&zoom=6&Q=nwr%5Bname%3D%22Viktualienmarkt%22%5D%3B%0Aout%20geom%3B) gibt:
+Pour rappel: [La loupe](../targets/turbo.md#basics) zoome sur les lieux.
+En particulier avec les filtres indirects, il est souvent judicieux d'exécuter la recherche d'objet d'origine,
+pour exclure qu'il existe d'autres objets du même nom [dans d'autres lieux](https://overpass-turbo.eu/?lat=51.0&lon=10.0&zoom=6&Q=CGI_STUB):
 
     nwr[name="Viktualienmarkt"];
     out geom;
 
-Eine [Bounding-Box](bbox.md#bbox) oder die Angabe einer umschließenden Fläche [können helfen](https://overpass-turbo.eu/?lat=48.0&lon=11.5&zoom=10&Q=area%5Bname%3D%22M%C3%BCnchen%22%5D%3B%0Anwr%28area%29%5Bname%3D%22Viktualienmarkt%22%5D%3B%0Aout%20geom%3B):
+Un [rectangle englobant](bbox.md#filter) ou la spécification d'une surface enfermemente [peut aider](https://overpass-turbo.eu/?lat=48.0&lon=11.5&zoom=10&Q=CGI_STUB):
 
     area[name="München"];
     nwr(area)[name="Viktualienmarkt"];
     out geom;
 
-Das bzw. die gewünschten Objekte stehen hier nach Zeile 2 im Set ``_``.
+Les objets désirés sont listés ici après la ligne 2 dans l'ensemble `_`.
 
-Wir könnten nun alle Objekte im Umkreis von 100 Metern um den Kölner Dom [finden](https://overpass-turbo.eu/?lat=50.94&lon=6.96&zoom=14&Q=nwr%5Bname%3D%22K%C3%B6lner%20Dom%22%5D%3B%0Anwr%28around%3A100%29%3B%0Aout%20geom%3B):
+Nous pouvions maintenant [trouver](https://overpass-turbo.eu/?lat=50.94&lon=6.96&zoom=14&Q=CGI_STUB) tous les objets dans un rayon de 100 mètres autour de la cathédrale de Cologne:
 
     nwr[name="Kölner Dom"];
     nwr(around:100);
     out geom;
 
-Allerdings warnt Overpass Turbo zurecht vor der Größe der zurückkommenden Datenmenge.
-Es erschließt sich auch nicht unmittelbar,
-warum eigentlich Gleise zwischen Paris und Brüssel als in der Nähe des Kölner Doms gelten sollen.
-Das Problem sind daher einmal mehr räumlich ausgedehnte _Relations_.
-Da dies beim Viktualienmarkt wegen Fernwander- und Radwegen [kaum besser](https://overpass-turbo.eu/?lat=48.135&lon=11.575&zoom=14&Q=area%5Bname%3D%22M%C3%BCnchen%22%5D%3B%0Anwr%28area%29%5Bname%3D%22Viktualienmarkt%22%5D%3B%0Anwr%28around%3A100%29%3B%0Aout%20geom%3B) ist ...
+Cependant, Overpass Turbo prévient à juste titre de la grandeur de la quantité de données qui reviennent.
+Il ne s'ouvre pas tout de suite non plus,
+pourquoi les voies entre Paris et Bruxelles doivent être considérées comme proches de la cathédrale de Cologne.
+Le problème est donc encore une fois les _relations_ spatialement gigantesques.
+Comme ce [n'est guère mieux](https://overpass-turbo.eu/?lat=48.135&lon=11.575&zoom=14&Q=CGI_STUB) au Viktualienmarkt à cause des sentiers de randonnée et de vélo de longue distance ...
 
     area[name="München"];
     nwr(area)[name="Viktualienmarkt"];
     nwr(around:100);
     out geom;
 
-... lässt sich vermuten, dass es sich um ein häufiges Problem handelt.
-Dies setzt der Nutzbarkeit des _Around_-Filters ohne weitere Filter enge Grenzen.
+... on peut supposer qu'il s'agit d'un problème courant.
+Ceci fixe des limites étroites à l'utilisation du filtre _around_ sans filtres supplémentaires.
 
-Auf der technischen Ebene haben wir wieder unsere benannten Objekte vor der Zeile mit ``(around:100)`` im Set ``_``.
-Das Statement _Around_ filtert nun aus allen Objekten nur diejenigen heraus,
-die zu mindestens einem Objekt im Set ``_`` einen Abstand von höchstens dem angegebenen Wert in Metern haben.
+Sur la couche technique, nous avons de nouveau nos objets nommés avant la ligne 3 dans l'ensemble `_`.
+L'instruction _around_ filtre maintenant uniquement les objets de tous les objets,
+qui ont une distance d'au moins un objet dans l'ensemble `_` d'au plus la valeur spécifiée `100` en mètres.
 
-Der Mechanismus zur Verkettung hat [ein eigenes Unterkapitel](../criteria/chaining.md#lateral), und Sets sind in [der Einleitung](../preface/design.md#sets) eingeführt worden.
-Das Beispiel [dort vom Anfang](../preface/design.md#sequential) zeigt eine Anwendung der _Around_-Filters,
-die hilfreich ist,
-da sie den Filter mit einem Filter nach einem Tag [kombiniert](../criteria/union.md#intersection).
-Werkzeuge gegen übergroße Datenmengen sind im Unterkapiel [Geometrien](osm_types.md#full) diskutiert worden.
+Le mécanisme de chaînage a [son propre sous-chapitre](../criteria/chaining.md#lateral),
+et des ensembles ont été introduits dans [la préface](../preface/design.md#sets).
+L'exemple là [depuis le début](../preface/design.md#sequential) montre une application des filtres _around_
+qui est pertinente,
+parce qu'il [combine](../criteria/union.md#intersection) le filtre avec un filtre après un attribut.
+Les outils contre les ensembles de données surdimensionnés ont été discutés dans le sous-chapitre [Géométries](osm_types.md#full).
 
-Eine weitere mögliche Lösung, um den obigen Fall zumindest sinnvoll anzeigen zu können,
-wäre nach _Ways_ statt nach allen Objekten zu filtern und nur die _Relations_ zu ermitteln,
-die die gefundenen _Ways_ referenzieren;
-für den [Kölner Dom](https://overpass-turbo.eu/?lat=50.94&lon=6.96&zoom=14&Q=nwr%5Bname%3D%22K%C3%B6lner%20Dom%22%5D%3B%0Away%28around%3A100%29%3B%0Aout%20geom%3B%0Arel%28bw%29%3B%0Aout%3B):
+Une autre solution possible pour au moins afficher le cas ci-dessus d'une manière significative,
+serait de filtrer pour _chemins_ au lieu de tous les objets et de ne déterminer que les _relations_,
+qui font référence aux _chemins_ trouvés;
+pour [la cathédrale de Cologne](https://overpass-turbo.eu/?lat=50.94&lon=6.96&zoom=14&Q=CGI_STUB):
 
     nwr[name="Kölner Dom"];
     way(around:100);
@@ -95,45 +91,42 @@ für den [Kölner Dom](https://overpass-turbo.eu/?lat=50.94&lon=6.96&zoom=14&Q=n
     rel(bw);
     out;
 
-Zeile 1 bringt unsere benannten Objekte ins Set ``_``;
-Zeile 2 findet alle _Ways_,
-die zu mindestens einem der Objekte aus dem Set ``_`` höchstens 100 Meter Abstand haben;
-das Ergebnis ersetzt den Inhalt von Set ``_``.
-Zeile 3 gibt den Inhalt von Set ``_`` aus, also die in Zeile 2 gefundenen _Ways_.
-Zeile 4 findet alle _Relations_, die mindestens einen der im Set ``_`` abgelegten _Ways_ referenzieren
-und ersetzt den Inhalt von ``_`` durch dieses Ergebnis.
-In Zeile 5 wird der Inhalt von Set ``_``, also die gefundenen _Relations_, ausgegeben,
-aber im Gegensatz zu Zeile 3 werden keine Koordinaten mitgeliefert -
-dies schrumpft die _Relations_ auf eine handhabbare Größe.
--->
+La ligne 1 met les objets nommés dans l'ensemble `_`.
+La ligne 2 trouve tous les _chemins_,
+qui ont une distance maximale de 100 mètres d'au moins un des objets de l'ensemble `_`;
+le résultat remplace le contenu de l'ensemble `_`.
+La ligne 3 affiche le contenu de l'ensemble `_`, c'est-à-dire les _chemins_ de la ligne 2.
+La ligne 4 trouve toutes les _relations_ qui font référence à au moins une des _chemins_ stockées dans l'ensemble `_`
+et remplace le contenu de `_` par ce résultat.
+La ligne 5 affiche le contenu de l'ensemble `_`, c'est-à-dire les _relations_ trouvées,
+mais contrairement à la ligne 3, aucune coordonnée n'est fournie.
+cela réduit les _relations_ à une taille gérable.
 
 <a name="absolute_around"/>
 ## Autour des coordonnées
 
-...
-<!--
-Im Umkreis kann auch anhand von Koordinaten statt vorhandener Objekte gesucht werden.
-Ein Beispiel nahe Greenwich [auf dem Nullmeridian](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=15&Q=nwr%28around%3A100%2C51%2E477%2C0%2E0%29%3B%0Aout%20geom%3B):
+Vous pouvez également effectuer une recherche dans un rayon en utilisant des coordonnées au lieu d'objets existants.
+Un exemple près de Greenwich [sur le méridien origine](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=15&Q=CGI_STUB):
 
     nwr(around:100,51.477,0.0);
     out geom;
 
-Es kommt ein Filter in Zeile 1 zum Einsatz:
-es werden alle Objekte im Set ``_`` abgelegt,
-die höchstens 100 Meter Abstand zu der gegebenen Koordinate haben.
-Zeile 2 gibt das Set ``_`` aus.
+Un filtre est utilisé dans la ligne 1:
+tous les objets de l'ensemble `_` sont stockés,
+qui ont une distance maximale de 100 mètres par rapport à la coordonnée donnée.
+La ligne 2 affiche l'ensemble `_`.
 
-Es gelten die gleichen Vorsichtshinweise wie bei allen anderen Volldaten-Suchen mit _Relations_:
-sehr schnell hat man sehr viele Daten.
-Die Reduktionstechniken von [Bounding-Boxen](osm_types.md#full) und [aus dem letzten Abschnitt](polygon.md#around) greifen hier aber ebenfalls.
+Les mêmes précautions s'appliquent que pour toutes les autres recherches de données complètes avec _relations_:
+très vite, vous avez beaucoup de données.
+Les techniques de réduction de [rectangle englobant](osm_types.md#full) et [de la dernière section](#around) s'appliquent également ici.
 
-Es gibt aber keinen Zwang nach _Relations_ zu suchen.
-Man kann auch nur nach _Nodes_, [nur nach _Ways_](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=15&Q=way%28around%3A100%2C51%2E477%2C0%2E0%29%3B%0Aout%20geom%3B) ...
+Mais il n'y a aucune obligation de chercher _relations_.
+Vous pouvez également rechercher uniquement _nodes_, [uniquement pour _chemins_](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=15&Q=CGI_STUB) ...
 
     way(around:100,51.477,0.0);
     out geom;
 
-... oder nach [_Nodes_ und _Ways_](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=15&Q=%28%0A%20%20node%28around%3A100%2C51%2E477%2C0%2E0%29%3B%0A%20%20way%28around%3A100%2C51%2E477%2C0%2E0%29%3B%0A%29%3B%0Aout%20geom%3B) suchen:
+...ou chercher [des _nœuds_ et des _chemins_](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=15&Q=CGI_STUB):
 
     (
       node(around:100,51.477,0.0);
@@ -141,14 +134,14 @@ Man kann auch nur nach _Nodes_, [nur nach _Ways_](https://overpass-turbo.eu/?lat
     );
     out geom;
 
-Hier nutzen wir ein _Union_-Statement (wird [später](../criteria/union.md#union) eingeführt),
-um die Ergebnisse der Umkreissuche nach _Nodes_ und der Umkreissuche nach _Ways_ zusammenzuführen.
-Zeile 2 und Zeile 3 filtern je einen Objekttyp anhand eines _Around_-Filters,
-und _Union_ fügt die Ergebnisse beider _Query_-Statements im Set ``_`` zusammen.
+Ici, nous utilisons une instruction _union_ (qui sera introduite [plus tard](../criteria/union.md#union)),
+pour fusionner les résultats de la recherche de rayon pour _nœuds_ et de la recherche de rayon pour _chemins_.
+La ligne 2 et la ligne 3 filtrent chacune un type d'objet à l'aide d'un filtre _around_,
+et _union_ fusionne les résultats des deux instructions dans l'ensemble `_`.
 
-Damit werden auch Umkreise mit einem Radius von 1000 Metern und mehr durchführbar.
+Cela permet de réaliser des cercles d'un rayon de 1000 mètres et plus.
 
-Relationen kann man jetzt ähnlich wie oben ohne Geometrie wieder [hinzunehmen](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=15&Q=%28%0A%20%20node%28around%3A1000%2C51%2E477%2C0%2E0%29%3B%0A%20%20way%28around%3A1000%2C51%2E477%2C0%2E0%29%3B%0A%29%3B%0Aout%20geom%3B%0Arel%28%3C%29%3B%0Aout%3B):
+Les relations peuvent maintenant être [ajoutées](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=15&Q=CGI_STUB) sans géométrie comme ci-dessus:
 
     (
       node(around:1000,51.477,0.0);
@@ -158,17 +151,17 @@ Relationen kann man jetzt ähnlich wie oben ohne Geometrie wieder [hinzunehmen](
     rel(<);
     out;
 
-In Zeile 5 steht als Eingabe im Set ``_`` noch das Ergebnis des _Union_-Statements zur Verfügung.
-Der Filter ``(<)`` lässt nur Objekte zu,
-die auf mindestens ein Objekt in der Eingabe referenzieren -
-das sind genau die Relationen, die einen Bezug zum Suchgebiet haben.
+Dans la ligne 5, le résultat de l'instruction _union_ est disponible comme entrée dans l'ensemble `_`.
+Le filtre `(<)` n'autorise que les objets,
+qui font référence à au moins un objet dans l'entrée -
+ce sont exactement les relations qui ont un rapport avec la zone de recherche.
 
-Um mit Suchen umzugehen,
-die nicht gut in Bounding-Boxen passen,
-stellen wir hier noch die Umkreissuche um einen Linienzug vor.
-Dazu definiert man einen Pfad über zwei oder mehr Koordinaten,
-und es werden alle Objekte gefunden,
-deren Abstand [geringer](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=13&Q=%28%0A%20%20node%28around%3A100%2C51%2E477%2C0%2E0%2C51%2E46%2C%2D0%2E03%29%3B%0A%20%20way%28around%3A100%2C51%2E477%2C0%2E0%2C51%2E46%2C%2D0%2E03%29%3B%0A%29%3B%0Aout%20geom%3B%0Arel%28%3C%29%3B%0Aout%3B) als der angegebene Radius ist:
+Pour s'occuper des recherches,
+qui ne rentrent pas bien dans les rectangles englobants,
+nous introduirons la recherche périmétrique autour d'une ligne polygonale.
+Pour cela, vous définissez un chemin avec deux coordonnées ou plus,
+et tous les objets sont trouvés,
+dont [la distance moins est inférieure](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=13&Q=CGI_STUB) à la valeur spécifiée en mètres:
 
     (
       node(around:100,51.477,0.0,51.46,-0.03);
@@ -178,9 +171,8 @@ deren Abstand [geringer](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=13&Q
     rel(<);
     out;
 
-Gegenüber der vorangehenden Abfrage haben sich nur die Zeilen 2 und 3 geändert;
-die Koordinaten werden jeweils mit Kommata getrennt aneinandergehängt.
--->
+Par rapport à la requête précédente, seules les lignes 2 et 3 ont changé;
+les coordonnées sont séparées par des virgules.
 
 <a name="polygon"/>
 ## Par polygone saisi
@@ -197,26 +189,26 @@ indem sie die Suche in exakt einem benannten Gebiet erlauben.
 Aber wenn es darum geht, solche Gebiete etwas zu erweitern oder auch beliebige Freiformen zu schneiden,
 muss zwangsläufig die Flächenbegrenzung als explizites Polygon übergeben werden.
 
-Zur Illustration zunächst eine Suche nur nach Nodes [mit einem Dreieck als Grenze](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=14&Q=node%28poly%3A%2251%2E47%20%2D0%2E01%2051%2E477%200%2E01%2051%2E484%20%2D0%2E01%22%29%3B%0Aout%20geom%3B),
+Zur Illustration zunächst eine Suche nur nach Nodes [mit einem Dreieck als Grenze](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=14&Q=CGI_STUB),
 um die Polygonform gut auf der Karte sehen zu können:
 
     node(poly:"51.47 -0.01 51.477 0.01 51.484 -0.01");
     out geom;
 
 In Zeile 1 suchen wir nach _Nodes_,
-und der Filter ``(poly:...)`` lässt nur solche Objekte zu,
-die innerhalb des in den Anführungsreichen notierten Polygons liegen.
+und der Filter `(poly:...)` lässt nur solche Objekte zu,
+die innerhalb des in den Anführungszeichen notierten Polygons liegen.
 Das Polygon ist eine Liste von Koordinaten der Form Breitengrad-Längengrad,
 wobei zwischen den Zahlwerten nur Leerzeichen liegen dürfen.
 Nach der letzten Koordinate ergänzt Overpass API die schließende Kante.
 
-Sehr viele Daten liefert wieder einmal die [Suche nach allen drei Objektarten](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=14&Q=nwr%28poly%3A%2251%2E47%20%2D0%2E01%2051%2E477%200%2E01%2051%2E484%20%2D0%2E01%22%29%3B%0Aout%20geom%3B):
+Sehr viele Daten liefert wieder einmal die [Suche nach allen drei Objektarten](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=14&Q=CGI_STUB):
 
     nwr(poly:"51.47 -0.01 51.477 0.01 51.484 -0.01");
     out geom;
 
-Wie schon [zuvor](polygon.md#around) kann dies durch die beiden Schritte _Nodes_ plus _Ways_ und Rückwärtsauflösen der _Relations_ eingehegt werden;
-die Datenersparnis entsteht nur dadurch, dass zu den _Relations_ [die Geometrie weggelassen wird](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=14&Q=%28%0A%20%20node%28poly%3A%2251%2E47%20%2D0%2E01%2051%2E477%200%2E01%2051%2E484%20%2D0%2E01%22%29%3B%0A%20%20way%28poly%3A%2251%2E47%20%2D0%2E01%2051%2E477%200%2E01%2051%2E484%20%2D0%2E01%22%29%3B%0A%29%3B%0Aout%20geom%3B%0Arel%28%3C%29%3B%0Aout%3B):
+Wie schon [zuvor](#around) kann dies durch die beiden Schritte _Nodes_ plus _Ways_ und Rückwärtsauflösen der _Relations_ eingehegt werden;
+die Datenersparnis entsteht nur dadurch, dass zu den _Relations_ [die Geometrie weggelassen wird](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=14&Q=CGI_STUB):
 
     (
       node(poly:"51.47 -0.01 51.477 0.01 51.484 -0.01");
@@ -231,7 +223,7 @@ Können auch Löcher und mehrere Komponenten realisiert werden?
 Mehrere Komponenten können per _Union_-Statement realisiert werden.
 Da _Union_-Statements beliebig viele Unterstatements haben können,
 können wir die _Query_-Statements für die Komponenten einfach hintereinander schreiben,
-hier gleich für [die _Nodes_-und-_Ways_-Variante](https://overpass-turbo.eu/?lat=51.487&lon=0.0&zoom=13&Q=%28%0A%20%20node%28poly%3A%2251%2E47%20%2D0%2E01%2051%2E477%200%2E01%2051%2E484%20%2D0%2E01%22%29%3B%0A%20%20way%28poly%3A%2251%2E47%20%2D0%2E01%2051%2E477%200%2E01%2051%2E484%20%2D0%2E01%22%29%3B%0A%20%20node%28poly%3A%2251%2E491%20%2D0%2E01%2051%2E498%20%2D0%2E03%2051%2E505%20%2D0%2E01%22%29%3B%0A%20%20way%28poly%3A%2251%2E491%20%2D0%2E01%2051%2E498%20%2D0%2E03%2051%2E505%20%2D0%2E01%22%29%3B%0A%29%3B%0Aout%20geom%3B%0Arel%28%3C%29%3B):
+hier gleich für [die _Nodes_-und-_Ways_-Variante](https://overpass-turbo.eu/?lat=51.487&lon=0.0&zoom=13&Q=CGI_STUB):
 
     (
       node(poly:"51.47 -0.01 51.477 0.01 51.484 -0.01");
@@ -256,17 +248,17 @@ Stattdessen funktioniert es,
 den zum ersten Punkt des Lochs nächstgelegenen Punkt der Außenlinie zu verdoppeln
 und den Linienzug mit gedoppeltem Start- und Endpunkt dazwischen einzufügen.
 
-Wenn wir z.B. aus dem Dreieck ``51.47 -0.01 51.477 0.01 51.484 -0.01``
-das Dreieck ``51.483 -0.0093 51.471 -0.0093 51.477 0.008`` ausschneiden wollen, dann
+Wenn wir z.B. aus dem Dreieck `51.47 -0.01 51.477 0.01 51.484 -0.01`
+das Dreieck `51.483 -0.0093 51.471 -0.0093 51.477 0.008` ausschneiden wollen, dann
 
-* duplizieren wir zunächst den nächstgelegenen Punkt ``51.484 -0.01``,
-  erhalten also ``51.47 -0.01 51.477 0.01 51.484 -0.01 51.484 -0.01``
-* wiederholen den ersten Punkt des Lochs ``51.483 -0.0093`` am Ende,
-  erhalten also fürs Loch ``51.483 -0.0093 51.471 -0.0093 51.477 0.008 51.483 -0.0093``
+* duplizieren wir zunächst den nächstgelegenen Punkt `51.484 -0.01`,
+  erhalten also `51.47 -0.01 51.477 0.01 51.484 -0.01 51.484 -0.01`
+* wiederholen den ersten Punkt des Lochs `51.483 -0.0093` am Ende,
+  erhalten also fürs Loch `51.483 -0.0093 51.471 -0.0093 51.477 0.008 51.483 -0.0093`
 * fügen das Loch zwischen den beiden Kopien des duplizierten Punktes ein:
-  ``51.47 -0.01 51.477 0.01 51.484 -0.01 51.483 -0.0093 51.471 -0.0093 51.477 0.008 51.483 -0.0093 51.484 -0.01``
+  `51.47 -0.01 51.477 0.01 51.484 -0.01 51.483 -0.0093 51.471 -0.0093 51.477 0.008 51.483 -0.0093 51.484 -0.01`
 
-Zur Illustration die [fertige Abfrage für Nodes](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=14&Q=node%28poly%3A%2251%2E47%20%2D0%2E01%2051%2E477%200%2E01%2051%2E484%20%2D0%2E01%0A%20%2051%2E483%20%2D0%2E0093%2051%2E471%20%2D0%2E0093%2051%2E477%200%2E008%0A%20%2051%2E483%20%2D0%2E0093%2051%2E484%20%2D0%2E01%22%29%3B%0Aout%20geom%3B).
+Zur Illustration die [fertige Abfrage für Nodes](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=14&Q=CGI_STUB).
 Sie funktioniert auch für alle anderen Objekttypen und kann mit _Union_ kombiniert werden,
 aber dann sieht man schlechter das tatsächlich durch das Polygon ausgewählte Gebiet:
 
@@ -275,3 +267,5 @@ aber dann sieht man schlechter das tatsächlich durch das Polygon ausgewählte G
       51.483 -0.0093 51.484 -0.01");
     out geom;
 -->
+
+<!-- Traduit avec www.DeepL.com/Translator, partiellement redigé -->

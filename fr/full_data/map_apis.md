@@ -51,3 +51,5 @@ est expliqué dans le [sous-chapitre précédent](osm_types.md#full), surtout da
 ## Xapi
 
 ...
+
+<!-- Traduit avec www.DeepL.com/Translator, partiellement redigé -->

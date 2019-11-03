@@ -11,7 +11,7 @@ Die Suche in Flächen ist dabei einerseits herausragend häufig,
 hat aber andererseits mehrere Besonderheiten.
 Sie wird daher in einem [anderen Unterkapitel](area.md) behandelt.
 
-In diesem Unterkapitel geht es um die Suche im Umkreis von benannten Objekten.
+Im ersten Unterkapitel geht es um die Suche im Umkreis von benannten Objekten.
 Die Suche im Umkreis von Koordinaten schließt sich an.
 Zuletzt werden noch Polygone als räumlicher Suchfilter vorgestellt.
 
@@ -30,9 +30,9 @@ Es gibt aber genug Beispiele, bei denen bereits der Name das richtige Objekt [li
     out geom;
 
 In Zeile 1 suchen wir nach allen Objekten,
-die ein Tag ``name`` mit wert ``Kölner Dom`` besitzen.
-Dieses wird im Set ``_`` abgelegt,
-und in Zeile 2 gibt ``out geom`` aus, was es im Set ``_`` vorfindet.
+die ein Tag `name` mit Wert `Kölner Dom` besitzen.
+Dieses wird im Set `_` abgelegt,
+und in Zeile 2 gibt `out geom` aus, was es im Set `_` vorfindet.
 
 Zur Erinnerung: [Die Lupe](../targets/turbo.md#basics) zoomt auf die Fundstellen heran.
 Gerade bei indirekten Filtern ist es oft sinnvoll, die ursprüngliche Objektsuche auszuführen,
@@ -47,7 +47,7 @@ Eine [Bounding-Box](bbox.md#filter) oder die Angabe einer umschließenden Fläch
     nwr(area)[name="Viktualienmarkt"];
     out geom;
 
-Das bzw. die gewünschten Objekte stehen hier nach Zeile 2 im Set ``_``.
+Das bzw. die gewünschten Objekte stehen hier nach Zeile 2 im Set `_`.
 
 Wir könnten nun alle Objekte im Umkreis von 100 Metern um den Kölner Dom [finden](https://overpass-turbo.eu/?lat=50.94&lon=6.96&zoom=14&Q=CGI_STUB):
 
@@ -69,9 +69,9 @@ Da dies beim Viktualienmarkt wegen Fernwander- und Radwegen [kaum besser](https:
 ... lässt sich vermuten, dass es sich um ein häufiges Problem handelt.
 Dies setzt der Nutzbarkeit des _Around_-Filters ohne weitere Filter enge Grenzen.
 
-Auf der technischen Ebene haben wir wieder unsere benannten Objekte vor Zeile 3 im Set ``_``.
+Auf der technischen Ebene haben wir wieder unsere benannten Objekte vor Zeile 3 im Set `_`.
 Das Statement _Around_ filtert nun aus allen Objekten nur diejenigen heraus,
-die zu mindestens einem Objekt im Set ``_`` einen Abstand von höchstens dem angegebenen Wert ``100`` in Metern haben.
+die zu mindestens einem Objekt im Set `_` einen Abstand von höchstens dem angegebenen Wert `100` in Metern haben.
 
 Der Mechanismus zur Verkettung hat [ein eigenes Unterkapitel](../criteria/chaining.md#lateral), und Sets sind in [der Einleitung](../preface/design.md#sets) eingeführt worden.
 Das Beispiel [dort vom Anfang](../preface/design.md#sequential) zeigt eine Anwendung der _Around_-Filters,
@@ -90,14 +90,14 @@ für den [Kölner Dom](https://overpass-turbo.eu/?lat=50.94&lon=6.96&zoom=14&Q=C
     rel(bw);
     out;
 
-Zeile 1 bringt die benannten Objekte ins Set ``_``;
+Zeile 1 bringt die benannten Objekte ins Set `_`;
 Zeile 2 findet alle _Ways_,
-die zu mindestens einem der Objekte aus dem Set ``_`` höchstens 100 Meter Abstand haben;
-das Ergebnis ersetzt den Inhalt von Set ``_``.
-Zeile 3 gibt den Inhalt von Set ``_`` aus, also die in Zeile 2 gefundenen _Ways_.
-Zeile 4 findet alle _Relations_, die mindestens einen der im Set ``_`` abgelegten _Ways_ referenzieren
-und ersetzt den Inhalt von ``_`` durch dieses Ergebnis.
-In Zeile 5 wird der Inhalt von Set ``_``, also die gefundenen _Relations_, ausgegeben,
+die zu mindestens einem der Objekte aus dem Set `_` höchstens 100 Meter Abstand haben;
+das Ergebnis ersetzt den Inhalt von Set `_`.
+Zeile 3 gibt den Inhalt von Set `_` aus, also die in Zeile 2 gefundenen _Ways_.
+Zeile 4 findet alle _Relations_, die mindestens einen der im Set `_` abgelegten _Ways_ referenzieren
+und ersetzt den Inhalt von `_` durch dieses Ergebnis.
+In Zeile 5 wird der Inhalt von Set `_`, also die gefundenen _Relations_, ausgegeben,
 aber im Gegensatz zu Zeile 3 werden keine Koordinaten mitgeliefert -
 dies schrumpft die _Relations_ auf eine handhabbare Größe.
 
@@ -111,9 +111,9 @@ Ein Beispiel nahe Greenwich [auf dem Nullmeridian](https://overpass-turbo.eu/?la
     out geom;
 
 Es kommt ein Filter in Zeile 1 zum Einsatz:
-es werden alle Objekte im Set ``_`` abgelegt,
+es werden alle Objekte im Set `_` abgelegt,
 die höchstens 100 Meter Abstand zu der gegebenen Koordinate haben.
-Zeile 2 gibt das Set ``_`` aus.
+Zeile 2 gibt das Set `_` aus.
 
 Es gelten die gleichen Vorsichtshinweise wie bei allen anderen Volldaten-Suchen mit _Relations_:
 sehr schnell hat man sehr viele Daten.
@@ -136,7 +136,7 @@ Man kann auch nur nach _Nodes_, [nur nach _Ways_](https://overpass-turbo.eu/?lat
 Hier nutzen wir ein _Union_-Statement (wird [später](../criteria/union.md#union) eingeführt),
 um die Ergebnisse der Umkreissuche nach _Nodes_ und der Umkreissuche nach _Ways_ zusammenzuführen.
 Zeile 2 und Zeile 3 filtern je einen Objekttyp anhand eines _Around_-Filters,
-und _Union_ fügt die Ergebnisse beider _Query_-Statements im Set ``_`` zusammen.
+und _Union_ fügt die Ergebnisse beider _Query_-Statements im Set `_` zusammen.
 
 Damit werden auch Umkreise mit einem Radius von 1000 Metern und mehr durchführbar.
 
@@ -150,8 +150,8 @@ Relationen kann man jetzt ähnlich wie oben ohne Geometrie wieder [hinzunehmen](
     rel(<);
     out;
 
-In Zeile 5 steht als Eingabe im Set ``_`` noch das Ergebnis des _Union_-Statements zur Verfügung.
-Der Filter ``(<)`` lässt nur Objekte zu,
+In Zeile 5 steht als Eingabe im Set `_` noch das Ergebnis des _Union_-Statements zur Verfügung.
+Der Filter `(<)` lässt nur Objekte zu,
 die auf mindestens ein Objekt in der Eingabe referenzieren -
 das sind genau die Relationen, die einen Bezug zum Suchgebiet haben.
 
@@ -193,7 +193,7 @@ um die Polygonform gut auf der Karte sehen zu können:
     out geom;
 
 In Zeile 1 suchen wir nach _Nodes_,
-und der Filter ``(poly:...)`` lässt nur solche Objekte zu,
+und der Filter `(poly:...)` lässt nur solche Objekte zu,
 die innerhalb des in den Anführungszeichen notierten Polygons liegen.
 Das Polygon ist eine Liste von Koordinaten der Form Breitengrad-Längengrad,
 wobei zwischen den Zahlwerten nur Leerzeichen liegen dürfen.
@@ -245,15 +245,15 @@ Stattdessen funktioniert es,
 den zum ersten Punkt des Lochs nächstgelegenen Punkt der Außenlinie zu verdoppeln
 und den Linienzug mit gedoppeltem Start- und Endpunkt dazwischen einzufügen.
 
-Wenn wir z.B. aus dem Dreieck ``51.47 -0.01 51.477 0.01 51.484 -0.01``
-das Dreieck ``51.483 -0.0093 51.471 -0.0093 51.477 0.008`` ausschneiden wollen, dann
+Wenn wir z.B. aus dem Dreieck `51.47 -0.01 51.477 0.01 51.484 -0.01`
+das Dreieck `51.483 -0.0093 51.471 -0.0093 51.477 0.008` ausschneiden wollen, dann
 
-* duplizieren wir zunächst den nächstgelegenen Punkt ``51.484 -0.01``,
-  erhalten also ``51.47 -0.01 51.477 0.01 51.484 -0.01 51.484 -0.01``
-* wiederholen den ersten Punkt des Lochs ``51.483 -0.0093`` am Ende,
-  erhalten also fürs Loch ``51.483 -0.0093 51.471 -0.0093 51.477 0.008 51.483 -0.0093``
+* duplizieren wir zunächst den nächstgelegenen Punkt `51.484 -0.01`,
+  erhalten also `51.47 -0.01 51.477 0.01 51.484 -0.01 51.484 -0.01`
+* wiederholen den ersten Punkt des Lochs `51.483 -0.0093` am Ende,
+  erhalten also fürs Loch `51.483 -0.0093 51.471 -0.0093 51.477 0.008 51.483 -0.0093`
 * fügen das Loch zwischen den beiden Kopien des duplizierten Punktes ein:
-  ``51.47 -0.01 51.477 0.01 51.484 -0.01 51.483 -0.0093 51.471 -0.0093 51.477 0.008 51.483 -0.0093 51.484 -0.01``
+  `51.47 -0.01 51.477 0.01 51.484 -0.01 51.483 -0.0093 51.471 -0.0093 51.477 0.008 51.483 -0.0093 51.484 -0.01`
 
 Zur Illustration die [fertige Abfrage für Nodes](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=14&Q=CGI_STUB).
 Sie funktioniert auch für alle anderen Objekttypen und kann mit _Union_ kombiniert werden,

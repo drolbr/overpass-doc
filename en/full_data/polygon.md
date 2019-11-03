@@ -33,9 +33,9 @@ Nonetheless, in many cases a name alone already [identifies](https://overpass-tu
     out geom;
 
 In line 1 we select all objects
-that have a tag ``name`` with value ``Kölner Dom``.
-These are stored in the set ``_``.
-In line 2 the statement ``out geom`` prints all the objects that are in the set ``_``.
+that have a tag `name` with value `Kölner Dom`.
+These are stored in the set `_`.
+In line 2 the statement `out geom` prints all the objects that are in the set `_`.
 
 Please recall that [the magnifying glass](../targets/turbo.md#basics) zooms to the results.
 In particular for indirect filters, it makes sense to
@@ -51,7 +51,7 @@ A [bounding box](bbox.md#filter) or using an enclosing area [can help](https://o
     nwr(area)[name="Viktualienmarkt"];
     out geom;
 
-The desired object or objects are selected as set ``_`` after line 2.
+The desired object or objects are selected as set `_` after line 2.
 
 We can now find all objects within 100 meters distance [around the](https://overpass-turbo.eu/?lat=50.94&lon=6.96&zoom=14&Q=CGI_STUB) Kölner Dom:
 
@@ -78,9 +78,9 @@ due to hiking and cycling routes ...
 This tightly limits the use of the _around_ filter as a filter without further criteria.
 
 On the technical level,
-we again have our object to be used as reference before line 3 in the set ``_``.
-The statement ``around`` now selects from all the objects those
-that have to at least one of the objects in the set ``_`` a distance from at most the provided value ``100`` in meters.
+we again have our object to be used as reference before line 3 in the set `_`.
+The statement `around` now selects from all the objects those
+that have to at least one of the objects in the set `_` a distance from at most the provided value `100` in meters.
 
 An entire [subsection](../criteria/chaining.md#lateral) is devoted to piping statements,
 and sets have been explained in [the preface](../preface/design.md#sets).
@@ -100,15 +100,15 @@ For the [Kölner Dom](https://overpass-turbo.eu/?lat=50.94&lon=6.96&zoom=14&Q=CG
     rel(bw);
     out;
 
-Line 1 puts the named objects into the set ``_``.
+Line 1 puts the named objects into the set `_`.
 Line 2 selects all _ways_
-that have to at least one of the objects in the set ``_`` a distance of at most 100 meters;
-the result replaces the content of the set ``_``.
-Line 3 prints the result of set ``_``, i.e. the in line 2 selected ways.
+that have to at least one of the objects in the set `_` a distance of at most 100 meters;
+the result replaces the content of the set `_`.
+Line 3 prints the result of set `_`, i.e. the in line 2 selected ways.
 Line 4 selects all _relations_
-that have at least one of the ways in ``_`` as a member
-and replaces the content of ``_`` with that selection.
-In line 5 the content of ``_`` is printed, i.e. the found relations,
+that have at least one of the ways in `_` as a member
+and replaces the content of `_` with that selection.
+In line 5 the content of `_` is printed, i.e. the found relations,
 but in contrast to line 3 no coordinates are amended -
 this shrinks the _relations_ to a size
 that is easier to handle.
@@ -123,9 +123,9 @@ An example close to Greenwich [on the prime meridian](https://overpass-turbo.eu/
     out geom;
 
 Line 1 employs the filter in question:
-This query selects all objects into the set ``_``
+This query selects all objects into the set `_`
 that have to the given coordinate a distance of at most 100 meters.
-Line 2 prints the content of the set ``_``.
+Line 2 prints the content of the set `_`.
 
 The same warnings as for all other full data searches with _relations_ do apply:
 very quickly you are flooded with very much data.
@@ -148,7 +148,7 @@ You can as well search only for _nodes_, [only for _ways_](https://overpass-turb
 Here we use an _union_ statement (will be introduced [later](../criteria/union.md#union))
 to add the results of the quest for _nodes_ to the results of the quest for _ways_.
 The statements in lines 2 and 3 each filter for an object type by an _around_ filter.
-And the _union_ statement combines both into the final selection into the set ``_``.
+And the _union_ statement combines both into the final selection into the set `_`.
 
 This approach can handle a radius of 1000 and more meters
 and still delivers not too much data.
@@ -163,8 +163,8 @@ Relations can be [amended](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=15
     rel(<);
     out;
 
-The set ``_`` still contains before line 5 the result of the _union_ statement.
-The filter ``(<)`` only admits objects
+The set `_` still contains before line 5 the result of the _union_ statement.
+The filter `(<)` only admits objects
 that have at least one object from its input as a member.
 These are amongst the relations exactly those that have components within the search radius.
 
@@ -204,7 +204,7 @@ such that the form of the polygon can be spotted on the map:
     out geom;
 
 In line 1 we search for _nodes_
-and the filter ``(poly:...)`` only admits objects
+and the filter `(poly:...)` only admits objects
 that are situated within the inside the quotation marks noted polygon.
 This polygon is a list of coordinates of the form latitude-longitude
 where between the numbers is only whitespace allowed.
@@ -256,15 +256,15 @@ Instead, one can duplicate the vertex on the outer line
 that is closest to the hole.
 Then one can insert the vertex sequence describing the hole between these two vertices.
 
-If we, for example, want to cut out from the triangle ``51.47 -0.01 51.477 0.01 51.484 -0.01``
-the triangle ``51.483 -0.0093 51.471 -0.0093 51.477 0.008`` then
+If we, for example, want to cut out from the triangle `51.47 -0.01 51.477 0.01 51.484 -0.01`
+the triangle `51.483 -0.0093 51.471 -0.0093 51.477 0.008` then
 
-* We first duplicate the closest vertex ``51.484 -0.01``,
-  thus have the sequence ``51.47 -0.01 51.477 0.01 51.484 -0.01 51.484 -0.01``.
+* We first duplicate the closest vertex `51.484 -0.01`,
+  thus have the sequence `51.47 -0.01 51.477 0.01 51.484 -0.01 51.484 -0.01`.
 * Repeat the first vertex of the hole at its end,
-  thus get for the hole the sequence ``51.483 -0.0093 51.471 -0.0093 51.477 0.008 51.483 -0.0093``.
+  thus get for the hole the sequence `51.483 -0.0093 51.471 -0.0093 51.477 0.008 51.483 -0.0093`.
 * Insert the hole description between the two copies of the duplicated vertex:
-  ``51.47 -0.01 51.477 0.01 51.484 -0.01 51.483 -0.0093 51.471 -0.0093 51.477 0.008 51.483 -0.0093 51.484 -0.01``
+  `51.47 -0.01 51.477 0.01 51.484 -0.01 51.483 -0.0093 51.471 -0.0093 51.477 0.008 51.483 -0.0093 51.484 -0.01`
 
 For the sake of Illustration the [final request](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=14&Q=CGI_STUB).
 This request works as well for all the other object types

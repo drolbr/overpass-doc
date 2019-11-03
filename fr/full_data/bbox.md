@@ -114,3 +114,5 @@ Avec [Overpass Turbo](../targets/turbo.md#convenience) cela fait comme ci-dessus
 ## Rectangle globale de délimitation
 
 ...
+
+<!-- Traduit avec www.DeepL.com/Translator, partiellement redigé -->
