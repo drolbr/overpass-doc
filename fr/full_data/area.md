@@ -247,47 +247,43 @@ il sélectionne les surfaces créées par les objets aux objets à partir de son
 <a name="background"/>
 ## Contexte technique
 
-...
-<!--
-Bereits am Anfang des Overpass-Projekts im Jahr 2009 sollte es die Möglichkeit geben,
-ein geometrisches A-liegt-in-B nutzen zu können.
-Das hat sich nur denkbar schlecht mit der Anforderung vertragen,
-[OpenStreetMap-Daten treu abzubilden](../preface/assertions.md#faithful):
-Flächen sind in OpenStreetMap ein gemischtes Konzept aus Geometrie und Tags,
-es gab glaubwürdige Bestrebungen, einen eigenen Datentyp _Area_ zu entwickeln,
-und die Regeln dafür, wann genau ein OpenStreetMap-Objekt eine Fläche ist, sind damals noch im Fluss gewesen.
-Zuletzt gab es den Eindruck, dass Flächen leicht beschädigt werden könnten und dies häufiger zu erwarten ist.
+Déjà au début du projet Overpass en 2009, il devrait y avoir la possibilité, 
+pour pouvoir utiliser un A-se-situer-dans-B géométrique.
+Ce n'était que mal compatible avec l'exigence,
+[de répresenter fidèlement les données d'OpenStreetMap](../preface/assertions.md#faithful): 
+Les zones dans OpenStreetMap sont un concept mixte de géométrie et de attributs,
+des efforts crédibles ont été déployés pour élaborer un propre type de données _area_, 
+et les règles pour savoir exactement quand un objet OpenStreetMap est une surface étaient encore en mouvement à l'époque.
+Enfin, on a eu l'impression que les surfaces pouvaient facilement être endommagées et qu'il fallait s'y attendre plus souvent.
 
-Daher sind _Areas_ in Overpass API ein eigener Datentyp.
-Der Server erzeugt diese in einem zyklischen Hintergrundprozess nach einem vom Code getrennten [Regelsatz](https://github.com/drolbr/Overpass-API/tree/master/src/rules).
-Damit haben es potentielle Betreiber eigener Instanzen einfacher,
-selbst zu entscheiden, welche Flächen sie erzeugen wollen.
-Jede _Area_ übernimmt dabei bei ihrer Erzeugung die Tags des Objektes, aus dem sie erzeugt worden ist.
+Par conséquent, les _surfaces_ de l'API Overpass constituent un type de données distinct. 
+Le serveur les génère dans un processus cyclique en arrière-plan selon un [groupe des règles](https://github.com/drolbr/Overpass-API/tree/master/src/rules) séparé du code. 
+Cela facilite la tâche des opérateurs potentiels de leurs propres instances, 
+décider eux-mêmes des surfaces qu'ils veulent créer. 
+Chaque _area_ reprend les attributs de l'objet à partir duquel il a été créé. 
 
-Dies zieht Folgen nach sich:
+Cela a des conséquences:
 
-* Flächen stehen erst viele Stunden später zu Verfügung als ihre erzeugenden Objekte.
-  Entsprechend wirken sich auch Änderungen an den erzeugenden Objekten verzögert aus.
-* Ergibt ein erzeugendes Objekt keine gültige Fläche mehr,
-  so bleibt das alte _Area_-Objekt bestehen, bis wieder eine neue gültige Fläche erzeugt werden kann.
-* Areas haben eigene Regeln, nach denen ihre Ids vergeben werden.
-* Nur ein Teil der Filter für OpenStreetMap-Objekte steht auch für _Areas_ zur Verfügung.
+* Les surfaces ne sont disponibles que plusieurs heures après leurs objets de génération.
+  Par conséquent, les modifications apportées aux objets de génération ont également un effet différé.
+* Si un objet générateur ne produit plus de surface valide,
+  l'ancien objet _area_ reste jusqu'à ce qu'une nouvelle surface valide puisse être créée.
+* Les surfaces ont leurs propres règles selon lesquelles leurs identifiants sont dispersés.
+* Seule une partie des filtres pour les objets OpenStreetMap est également disponible pour surfaces.
 
-Der große Vorteil ist aber, dass die Suche Punkt-in-Fläche effizient und zuverlässig funktioniert.
+Mais le grand avantage est que le point de recherche dans la surface fonctionne de manière efficace et fiable.
 
-Als Nachteil hat sich herausgestellt, dass nicht alle nachgefragten _Area_-Objekte existieren:
-mittlerweile wird fast jedes Objekt in OpenStreetMap, das von seiner Geometrie her eine Fläche ergibt,
-auch als Fläche genutzt.
-Wenn aber gemäßg den Tagging-Regeln der Hintergrundprozess das Objekt nicht für eine Fläche hält,
-gibt es kein korrespondierendes _Area_-Objekt.
+Comme inconvénient, il s'est avéré que parfois des objets de surface exigés n'existent pas:
+Pendant ce temps, presque tous les objets dans OpenStreetMap qui ont une géométrie capable d'être une surface, également sont utilisé comme surface.
+Toutefois, si, selon les règles à la base de les attributs, le processus en arrière-plan ne considère pas l'objet comme un surface,
+il n'y a pas d'objet _area_ correspondant.
 
-Umgekehrt ist mir in den letzten 10 Jahren keine Instanz begegnet,
-die ihre Flächen-Regelwerk an ihre speziellen Bedürfnisse angepasst hat.
-Es gab wohl eher einen Tradeoff, weniger Flächen zu akzeptieren,
-um Rechenzeit beim Hintergrundprozess zu sparen.
-Damit ist der Regelsatz doch de facto zentral festgelegt,
-und dies beraubt ihn der meisten seiner Vorteile.
+Inversement, je n'ai pas rencontré un seul cas au cours des 10 dernières années,
+qui a adapté sa régles des surfaces à ses besoins particuliers.
+Il y a probablement eu plus de compromis à accepter moins de terres,
+pour gagner du temps de calcul en arrière-plan.
+Cela signifie que l'ensemble de règles est défini de facto de manière centralisée,
+et cela le prive de la plupart de ses avantages.
 
-Daher beabsichtige ich mittlerweile,
-auch die Flächenoperationen direkt auf den OpenStreetMap-Objekten auszuführen.
--->
+C'est pourquoi j'ai l'intention de le faire maintenant,
+exécute également les opérations de surface directement sur les objets OpenStreetMap.
