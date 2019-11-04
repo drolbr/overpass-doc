@@ -65,7 +65,7 @@ pour identifier les composants individuels.
 
 Le caractère le plus important est le point-virgule; il termine une _instruction_ à la fois.
 Les sauts de ligne, les espaces (et les tabulations) ne sont pas pertinents pour ceci et pour la syntaxe dans son ensemble.
-Ces _statements_ sont exécutés l'un après l'autre dans l'ordre,
+Ces _instructions_ sont exécutés l'un après l'autre dans l'ordre,
 où ils sont écrits.
 Ainsi, dans les deux requêtes, il y a quatre instructions ensemble:
 
@@ -77,7 +77,7 @@ Ainsi, dans les deux requêtes, il y a quatre instructions ensemble:
 L'instruction ``out center`` est une instruction de sortie sans autres sous-structures.
 Les possibilités de contrôle du format de sortie sont discutées dans la section [Formats de données](../targets/formats.md).
 
-Les _statements_ restants sont tous des instructions de type _query_,
+Les _instructions_ restants sont tous des instructions de type _query_,
 c'est-à-dire qu'ils sont utilisés pour sélectionner des objets.
 Ceci s'applique à tous les énoncés commençant par ``nwr`` et autres mots-clés spéciaux:
 les mots-clés ``node``, ``way`` et ``relation`` chacun respectivement restrictent le résultat à des objets de type nœud, chemin et relation,
