@@ -35,7 +35,7 @@ Dieses Handbuch beschränkt sich auf die unmittelbare Wechselwirkung mit der Abf
 <a name="basics"/>
 ## Rüstzeug
 
-Die Sicht der Website ist in mehrere Teile aufgeteilt;
+Die Ansicht der Website ist in mehrere Teile aufgeteilt;
 sie unterscheiden sich in der Anordnung zwischen Desktop- und Mobilversion.
 Öffnen Sie [sie](https://overpass-turbo.eu) am besten jetzt in einem separaten Tab.
 
@@ -55,7 +55,7 @@ Geben Sie
     nwr[name="Canary Wharf"];
     out geom;
 
-in das Textfeld ein (oder nutzen Sie [diesen Link](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=18&Q=nwr%5Bname%3D%22Canary%20Wharf%22%5D%3B%0Aout%20geom%3B))!
+in das Textfeld ein (oder nutzen Sie [diesen Link](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=18&Q=CGI_STUB))!
 
 Klicken Sie nun auf _Ausführen_.
 Es kommt kurz eine Fortschrittsmeldung,
@@ -74,29 +74,29 @@ sich die tatsächlich gelieferten Daten direkt anzuschauen.
 Das geht mit dem Reiter _Daten_ oben rechts oberhalb der Kartenansicht
 bzw. mit Herunterscrollen in der Mobilvariante.
 
-Alle auf der Karte hervorgehobenen Objekte sind anklickbar und zeigen dann,
+Unabhängig davon sind alle auf der Karte hervorgehobenen Objekte anklickbar und zeigen dann,
 je nach Umfang ihrer Daten,
 ihre Id, ihre Tags oder ihre Metadaten.
 
 Irgendwann wird Ihnen die Meldung begegnen,
 dass nicht zu allen Objekten die Geoetrie mitgeliefert worden ist.
 Sie können dann die Query-Änderung zur automatischen Vervollständig erproben.
-Oder Sie ersetzen alle Vorkommen von ``out`` durch ihre Gegenstücke mit Geometrie ``out geom``.
+Oder Sie ersetzen alle Vorkommen von `out` durch ihre Gegenstücke mit Geometrie `out geom`.
 
 Wenn Sie ein großes Ergebnis erwarten
 oder die Daten sowieso mit einem anderen Programm weiterverarbeiten wollen,
 dann können Sie die Daten auch ohne Anzeige direkt zum Abspeichern exportieren:
 Gehen Sie auf _Export_,
 bleiben Sie im erscheinenden Fenster im Reiter _Daten_
-und wählen Sie ``Rohdaten direkt von der Overpass API``.
+und wählen Sie `Rohdaten direkt von der Overpass API`.
 Bei langlaufenden Abfragen ist es normal,
 dass nach dem Klick erst einmal scheinbar nichts passiert.
 
 Auf zwei nützliche Extras sei hingewiesen:
 
-- Unten rechts im Kartenausschnitt stehen Zähler,
+* Unten rechts im Kartenausschnitt stehen Zähler,
   wie viele Objekte welchen Typs bei der letzten Abfrage zurückgeliefert worden sind.
-- Oben links im Kartenausschnitt gibt es ein Suchfeld.
+* Oben links im Kartenausschnitt gibt es ein Suchfeld.
   Dieses hat zwar eine geringere Leistungsfähigkeit als [Nominatim auf openstreetmap.org](../criteria/nominatim.md),
   aber die verfügbare Suche nach Ortsnamen reicht in der Regel,
   um den Kartenausschnitt schnell am richtigen Ort zu plazieren.
@@ -129,7 +129,7 @@ mit rotem Inneren sind es _Ways_.
 
 Ways können entweder wegen ihrer geringen Länge zu Punkten werden,
 da sie sonst zu unauffällig wären:
-Zoomen Sie bitte in [diesem Beispiel](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=19&Q=way%28%7B%7Bbbox%7D%7D%29%5Bbuilding%5D%3B%0Aout%20geom%3B) heraus
+Zoomen Sie bitte in [diesem Beispiel](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=19&Q=CGI_STUB) heraus
 und beobachten, wie Gebäude und Straße zu Punkten werden!
 
     way({{bbox}})[building];
@@ -139,14 +139,14 @@ Wenn das bei einer konkreten Abfrage stört,
 können Sie es unter _Einstellungen_, _Karte_, _Kleine Features nicht wie POIs darstellen_ abschalten.
 
 Oder sie können als Punkte dargestellt werden,
-weil [die Abfrage](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=19&Q=way%28%7B%7Bbbox%7D%7D%29%5Bbuilding%5D%3B%0Aout%20center%3B) per ``out center`` ausgegeben hat:
+weil [die Abfrage](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=19&Q=CGI_STUB) per `out center` ausgegeben hat:
 
     way({{bbox}})[building];
     out center;
 
 Punktobjekte können ein blauen oder lilanen Rand haben;
 das gilt auch für als Linienzug oder Fläche gezeichnete Objekte.
-In allen solchen Fällen sind _Relations_ [beteiligt](https://overpass-turbo.eu/?lat=51.5045&lon=-0.0195&zoom=17&Q=rel%5Bname%3D%22Canary%20Wharf%22%5D%3B%0Aout%20geom%3B):
+In allen solchen Fällen sind _Relations_ [beteiligt](https://overpass-turbo.eu/?lat=51.5045&lon=-0.0195&zoom=17&Q=CGI_STUB):
 
     rel[name="Canary Wharf"];
     out geom;
@@ -162,7 +162,7 @@ in die zurückgelieferten Daten selbst per Reiter _Daten_ hineinzuschauen.
 
 Ist dagegen die Linie oder Umrandung der Fläche gestrichelt,
 so ist die Geometrie des Objekts unvollständig.
-Das ist zumeist ein gewollter Effekt der [Ausgabebegrenzung](../full_data/bbox.md#crop) ([Beispiel](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=16&Q=%28%0A%20%20way%2851%2E475%2C%2D0%2E002%2C51%2E478%2C0%2E003%29%5Bhighway%3Dunclassified%5D%3B%0A%20%20rel%28bw%29%3B%0A%29%3B%0Aout%20geom%2851%2E475%2C%2D0%2E002%2C51%2E478%2C0%2E003%29%3B)):
+Das ist zumeist ein gewollter Effekt der [Ausgabebegrenzung](../full_data/bbox.md#crop) ([Beispiel](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=16&Q=CGI_STUB)):
 
     (
       way(51.475,-0.002,51.478,0.003)[highway=unclassified];
@@ -173,7 +173,7 @@ Das ist zumeist ein gewollter Effekt der [Ausgabebegrenzung](../full_data/bbox.m
 Es kann aber auch Folge einer Abfrage sein,
 die zu _Ways_ einige, aber nicht alle _Nodes_ geladen hat.
 Hier haben wir _Ways_ auf Basis von _Nodes_ geladen,
-aber [vergessen](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=%28%0A%20%20node%2851%2E475%2C%2D0%2E003%2C51%2E478%2C0%2E003%29%3B%0A%20%20way%28bn%29%3B%0A%29%3B%0Aout%3B), die fehlenden Nodes direkt oder indirekt nachzuladen:
+aber [vergessen](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=CGI_STUB), die fehlenden Nodes direkt oder indirekt nachzuladen:
 
     (
       node(51.475,-0.003,51.478,0.003);
@@ -181,7 +181,7 @@ aber [vergessen](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=%28%0A
     );
     out;
 
-Die Abfrage kann durch ``out geom`` [repariert](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=%28%0A%20%20node%2851%2E475%2C%2D0%2E003%2C51%2E478%2C0%2E003%29%3B%0A%20%20way%28bn%29%3B%0A%29%3B%0Aout%20geom%3B) werden;
+Die Abfrage kann durch `out geom` [repariert](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=CGI_STUB) werden;
 mehr Möglichkeiten sind im Abschnitt zu [Geometrien](../full_data/osm_types.md#nodes_ways) erklärt:
 
     (
@@ -196,11 +196,11 @@ mehr Möglichkeiten sind im Abschnitt zu [Geometrien](../full_data/osm_types.md#
 Overpass Turbo bietet einige Komfortfunktionen.
 
 Es kann die Bounding-Box des aktuellen Fensters automatisch in eine Query einfügen.
-Dazu ersetzt Overpass Turbo jedes Vorkommen der Zeichenfolge ``{{bbox}}`` durch die vier Ränder,
+Dazu ersetzt Overpass Turbo jedes Vorkommen der Zeichenfolge `{{bbox}}` durch die vier Ränder,
 so dass eine gültige Bounding-Box entsteht.
 
 Man kann die übertragene Bounding-Box sogar sehen,
-wenn man sie an einer anderen als der üblichen Stelle [einfügt](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=make%20Beispiel%20Infotext%3D%22Die%20aktuelle%20Bounding%2DBox%20ist%20%7B%7Bbbox%7D%7D%22%3B%0Aout%3B) (und nach dem Ausführen auf _Daten_ klickt):
+wenn man sie an einer anderen als der üblichen Stelle [einfügt](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=CGI_STUB) (und nach dem Ausführen auf _Daten_ klickt):
 
     make Beispiel Infotext="Die aktuelle Bounding-Box ist {{bbox}}";
     out;
@@ -224,7 +224,7 @@ Es gibt aber dennoch ein paar Grenzen:
 Pro Objekt-Id und -Typ zeigt Overpass Turbo nur ein Objekt an.
 Daher lassen sich [Diffs](index.md) nicht sinnvoll mit Overpass Turbo anzeigen.
 
-Overpass Turbo zeigt [GeoJSON](../targets/formats.md#json) direkt von der Overpass API nicht an.
+Overpass Turbo zeigt [GeoJSON](formats.md#json) direkt von der Overpass API nicht an.
 Overpass Turbo bringt sein eigenes Konvertierungsmodul für GeoJSON mit,
 und Martin hält die Benutzer-Verwirrung für zu groß,
 wenn beide Mechanismen parallel im Einsatz sind.
