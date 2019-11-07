@@ -102,75 +102,66 @@ I suggest you to put attention to two useful features:
 <a name="symbols"/>
 ## Symbols
 
-<!-- Not yet checked -->
+The [documentation of Overpass Turbo](https://wiki.openstreetmap.org/wiki/Overpass_turbo) already explains the colours.
+We put our attention rather to the interaction here:
+For a given object or type of object you have an idea
+whether it is a point, a line, a composition of both, something abstract or something with a fuzzy boundary.
+In the OpenStreetMap data structures it is modeled in some way;
+this can meet or differ from your expectation.
 
-<!--
-Die [Dokumentation](https://wiki.openstreetmap.org/wiki/DE:Overpass_turbo) erläutert die Farben bereits.
-Wir konzentrieren uns hier daher eher auf das Zusammenspiel:
-Zu einem konkreten Objekt oder Objektart haben Sie eine Vorstellung,
-ob es ein Punkt, Linie, Fläche, eine Zusammensetzung davon, etwas Abstraktes oder etwas mit unscharfen Grenzen ist.
-In den OpenStreetMap-Datenstrukturen ist es auf irgendeine Weise modelliert;
-diese kann, aber muss nicht zwingend mit ihrer Erwartung übereinstimmen.
+The Overpass API offers [tools](formats.md#extras)
+to change from the OpenStreetMap representation to a representation
+that better fits the presentation.
+This can happen by amending the coordinates, geometric simplification, or [by cropping](../full_data/bbox.md#crop).
+Overpass Turbo strives to always present in the best possible way,
+no matter whether the representation in OpenStreetMap makes sense,
+and also no matter whether the output format chosen in the request fits to the data or not.
 
-Die Overpass API bietet [Hilfsmittel](formats.md#extras),
-um von der OpenStreetMap-Modellierung zu einer zu wechseln,
-die besser zur Darstellung passt;
-sei es durch Beschaffen der Koordinaten oder auch geometrische Vereinfachung oder [Zuschnitt](../full_data/bbox.md#crop).
-Overpass Turbo muss nun in jedem Fall eine möglichst gute Darstellung liefern,
-egal, ob die Modellierung in OpenStreetMap noch naheliegend ist,
-und egal, ob das in der Abfrage gewählte Ausgabeformat sinnvoll zu den Daten passt.
+This section shall explain
+what presentation finally the given situation results in
+and how this is influenced by the request and the data.
 
-Dieser Abschnitt soll erläutern,
-was dann final in der Kartendarstellung herauskommt
-und wie dies mit der Abfrage und den Daten zusammenhängt.
+Objects appearing as points can have a yellow or a red interior.
+Those with yellow interior are _nodes_
+while those with red interior are _ways_.
 
-Punktobjekte können ein gelbes oder rotes Inneres haben.
-Mit gelbem Inneren sind es echte _Nodes_,
-mit rotem Inneren sind es _Ways_.
+Ways can be morphed to points due to their small extent
+because otherwise they may become too unremarkable:
+Please zoom out in [this example](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=19&Q=CGI_STUB)
+and observe how buildings and streets morph into points!
 
-Ways können entweder wegen ihrer geringen Länge zu Punkten werden,
-da sie sonst zu unauffällig wären:
-Zoomen Sie bitte in [diesem Beispiel](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=19&Q=way%28%7B%7Bbbox%7D%7D%29%5Bbuilding%5D%3B%0Aout%20geom%3B) heraus
-und beobachten, wie Gebäude und Straße zu Punkten werden!
--->
-
-    way({{bbox}})[building];
+    ( way({{bbox}})[building];
+      way({{bbox}})[highway=steps]; );
     out geom;
 
-<!--
-Wenn das bei einer konkreten Abfrage stört,
-können Sie es unter _Einstellungen_, _Karte_, _Kleine Features nicht wie POIs darstellen_ abschalten.
+If this hampers the presentation of a specific result,
+then you can turn that off at _Settings_, _Map_, _Don't display small features as POIs_.
+The setting comes into effect with the execution of the next request (or the same request again).
 
-Oder sie können als Punkte dargestellt werden,
-weil [die Abfrage](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=19&Q=way%28%7B%7Bbbox%7D%7D%29%5Bbuilding%5D%3B%0Aout%20center%3B) per ``out center`` ausgegeben hat:
--->
+Or the objects have been collapsed because [the request](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=19&Q=CGI_STUB) has asked only for points by `out center`:
 
     way({{bbox}})[building];
     out center;
 
-<!--
-Punktobjekte können ein blauen oder lilanen Rand haben;
-das gilt auch für als Linienzug oder Fläche gezeichnete Objekte.
-In allen solchen Fällen sind _Relations_ [beteiligt](https://overpass-turbo.eu/?lat=51.5045&lon=-0.0195&zoom=17&Q=rel%5Bname%3D%22Canary%20Wharf%22%5D%3B%0Aout%20geom%3B):
--->
+Point objects can have a blue or a purple border;
+and this applies also to line segments or areas.
+In all these cases, _relations_ are [involved](https://overpass-turbo.eu/?lat=51.5045&lon=-0.0195&zoom=16&Q=CGI_STUB):
 
     rel[name="Canary Wharf"];
     out geom;
 
-<!--
-Im Gegensatz zu _Nodes_ oder _Ways_ sind die Details der _Relation_ dann aber nicht per Klick aufs Objekt verfügbar,
-sondern in der Blase gibt es nur einen Link auf die _Relation_ auf dem Hauptserver.
-Unter gewöhnlichen Umständen ist dies kein Problem.
+Opposed to _nodes_ or _ways_, the details of the _relation_ then are not shown by a click on the object,
+but in the object's bubble there is just a link to the relation's presentation on the main server.
+Under normal circumstances, this is no problem.
 
-Hat man aber gezielt einen alten Versionsstand angefragt,
-so sind die Daten von der Hauptseite andere als die per Overpass API bezogenen Daten.
-Es führt dann kein Weg daran vorbei,
-in die zurückgelieferten Daten selbst per Reiter _Daten_ hineinzuschauen.
+But if you have asked for a museum version different from the current version,
+then the data from the main page is still the current version
+and thus differs from the data returned from your request.
+Rather, you need to look into the raw data shown in the tab _Data_.
 
-Ist dagegen die Linie oder Umrandung der Fläche gestrichelt,
-so ist die Geometrie des Objekts unvollständig.
-Das ist zumeist ein gewollter Effekt der [Ausgabebegrenzung](../full_data/bbox.md#crop) ([Beispiel](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=16&Q=%28%0A%20%20way%2851%2E475%2C%2D0%2E002%2C51%2E478%2C0%2E003%29%5Bhighway%3Dunclassified%5D%3B%0A%20%20rel%28bw%29%3B%0A%29%3B%0Aout%20geom%2851%2E475%2C%2D0%2E002%2C51%2E478%2C0%2E003%29%3B)):
--->
+If the line or boundary of the area is dashed,
+then the geometry of the object is incomplete.
+This is almost always an intended effect of the [output clipping](../full_data/bbox.md#crop) ([example](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=16&Q=CGI_STUB)):
 
     (
       way(51.475,-0.002,51.478,0.003)[highway=unclassified];
@@ -178,12 +169,11 @@ Das ist zumeist ein gewollter Effekt der [Ausgabebegrenzung](../full_data/bbox.m
     );
     out geom(51.475,-0.002,51.478,0.003);
 
-<!--
-Es kann aber auch Folge einer Abfrage sein,
-die zu _Ways_ einige, aber nicht alle _Nodes_ geladen hat.
-Hier haben wir _Ways_ auf Basis von _Nodes_ geladen,
-aber [vergessen](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=%28%0A%20%20node%2851%2E475%2C%2D0%2E003%2C51%2E478%2C0%2E003%29%3B%0A%20%20way%28bn%29%3B%0A%29%3B%0Aout%3B), die fehlenden Nodes direkt oder indirekt nachzuladen:
--->
+But it can also be the effect of a request
+that has added for a _way_ some but not all _nodes_.
+Here we have loaded _ways_ based on _nodes_,
+but we have [forgotten](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=CGI_STUB)
+to ask for the nodes referred by the ways but outside the bounding box:
 
     (
       node(51.475,-0.003,51.478,0.003);
@@ -191,10 +181,8 @@ aber [vergessen](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=%28%0A
     );
     out;
 
-<!--
-Die Abfrage kann durch ``out geom`` [repariert](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=%28%0A%20%20node%2851%2E475%2C%2D0%2E003%2C51%2E478%2C0%2E003%29%3B%0A%20%20way%28bn%29%3B%0A%29%3B%0Aout%20geom%3B) werden;
-mehr Möglichkeiten sind im Abschnitt zu [Geometrien](../full_data/osm_types.md#nodes_ways) erklärt:
--->
+The request [can be fixed](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=CGI_STUB) by `out geom`;
+more possibilities are listed in the section about [geometry](../full_data/osm_types.md#nodes_ways):
 
     (
       node(51.475,-0.003,51.478,0.003);
@@ -204,6 +192,8 @@ mehr Möglichkeiten sind im Abschnitt zu [Geometrien](../full_data/osm_types.md#
 
 <a name="convenience"/>
 ## Convenience
+
+<!-- Not yet checked -->
 
 <!--
 Overpass Turbo bietet einige Komfortfunktionen.

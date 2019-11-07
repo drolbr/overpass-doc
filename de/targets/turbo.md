@@ -132,11 +132,13 @@ da sie sonst zu unauffällig wären:
 Zoomen Sie bitte in [diesem Beispiel](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=19&Q=CGI_STUB) heraus
 und beobachten, wie Gebäude und Straße zu Punkten werden!
 
-    way({{bbox}})[building];
+    ( way({{bbox}})[building];
+      way({{bbox}})[highway=steps]; );
     out geom;
 
 Wenn das bei einer konkreten Abfrage stört,
 können Sie es unter _Einstellungen_, _Karte_, _Kleine Features nicht wie POIs darstellen_ abschalten.
+Die Änderung wirkt erst nach dem Ausführen der nächsten Abfrage.
 
 Oder sie können als Punkte dargestellt werden,
 weil [die Abfrage](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=19&Q=CGI_STUB) per `out center` ausgegeben hat:
@@ -146,7 +148,7 @@ weil [die Abfrage](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=19&Q=CGI_S
 
 Punktobjekte können ein blauen oder lilanen Rand haben;
 das gilt auch für als Linienzug oder Fläche gezeichnete Objekte.
-In allen solchen Fällen sind _Relations_ [beteiligt](https://overpass-turbo.eu/?lat=51.5045&lon=-0.0195&zoom=17&Q=CGI_STUB):
+In allen solchen Fällen sind _Relations_ [beteiligt](https://overpass-turbo.eu/?lat=51.5045&lon=-0.0195&zoom=16&Q=CGI_STUB):
 
     rel[name="Canary Wharf"];
     out geom;
