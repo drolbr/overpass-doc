@@ -193,46 +193,40 @@ more possibilities are listed in the section about [geometry](../full_data/osm_t
 <a name="convenience"/>
 ## Convenience
 
-<!-- Not yet checked -->
+Overpass Turbo offers some convenience features.
 
-<!--
-Overpass Turbo bietet einige Komfortfunktionen.
+It can inject the bounding box of the current viewport into a request.
+In particular, it replaces every occurrence of the substring `{{bbox}}` by the coordinates of the four edges
+such that the server sees a valid bounding box.
 
-Es kann die Bounding-Box des aktuellen Fensters automatisch in eine Query einfügen.
-Dazu ersetzt Overpass Turbo jedes Vorkommen der Zeichenfolge ``{{bbox}}`` durch die vier Ränder,
-so dass eine gültige Bounding-Box entsteht.
+You can make the sent bounding box visible
+if you [set this substring](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=CGI_STUB) in a different location than usual
+(and then press execute):
 
-Man kann die übertragene Bounding-Box sogar sehen,
-wenn man sie an einer anderen als der üblichen Stelle [einfügt](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=make%20Beispiel%20Infotext%3D%22Die%20aktuelle%20Bounding%2DBox%20ist%20%7B%7Bbbox%7D%7D%22%3B%0Aout%3B) (und nach dem Ausführen auf _Daten_ klickt):
--->
-
-    make Beispiel Infotext="Die aktuelle Bounding-Box ist {{bbox}}";
+    make example info_text="The current bounding box is {{bbox}}";
     out;
 
-<!--
-Eine zweite nützliche Funktion verbirgt sich hinter der Schaltfläche _Teilen_ oben links.
-Dies erzeugt einen Link,
-unter dem sich dauerhaft die zu dem Zeitpunkt eingegebene Abfrage abrufen lässt.
-Auch wenn jemand Drittes den Link aufruft und die Abfrage editiert,
-dann bleibt trotzdem die originale Abfrage unter dem Link erhalten.
+A second handy feature is controlled by the button _Share_ in the upper left corner.
+This creates a permanent link
+where you can get back the request written at the moment when the link has been created.
+Even if somebody else opens the link and edits the request,
+then the link still points to the originally stored request.
 
-Es lässt sich ebenfalls auch per Checkbox die aktuelle Kartenansicht mitgeben.
-Dies meint Zentrum der Ansicht und Zoomstufe,
-d.h. auf verschieden großen Bildschirmen sind verschiedene Kartenausschnitte sichtbar.
--->
+It is also possible, per checkbox, to convey the current map viewport.
+This manifests as center coordinate and zoom level,
+in particular the visible map differs between screens of different sizes.
 
 <a name="limitations"/>
 ## Limitations
 
-<!--
-Overpass Turbo beherrscht zwar nahezu alle Ausgabearten der Overpass API.
-Es gibt aber dennoch ein paar Grenzen:
+Overpass Turbo can make sense of almost all output options of Overpass API.
+Nonetheless there are some limitations:
 
-Pro Objekt-Id und -Typ zeigt Overpass Turbo nur ein Objekt an.
-Daher lassen sich [Diffs](index.md) nicht sinnvoll mit Overpass Turbo anzeigen.
+Per object id and type Overpass Turbo shows only one object.
+Thus, [diffs](index.md) cannot be visualized by Overpass Turbo in a meaningful way.
 
-Overpass Turbo zeigt [GeoJSON](../targets/formats.md#json) direkt von der Overpass API nicht an.
-Overpass Turbo bringt sein eigenes Konvertierungsmodul für GeoJSON mit,
-und Martin hält die Benutzer-Verwirrung für zu groß,
-wenn beide Mechanismen parallel im Einsatz sind.
-Vorläufig muss für diesen Fall daher auf die experimentelle Instanz [https://olbricht.nrw/ovt/](https://olbricht.nrw/ovt/) verwiesen werden.
+Overpass Turbo does not show [GeoJSON](../targets/formats.md#json) directly from the Overpass API.
+Overpass Turbo has its own conversion module for GeoJSON,
+and Martin is wary of the user confusion
+if both mechanisms are active in parallel.
+For the moment being, to show GeoJSON you need to use the experimental instance [https://olbricht.nrw/ovt/](https://olbricht.nrw/ovt/).
