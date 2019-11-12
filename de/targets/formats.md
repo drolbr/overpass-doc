@@ -23,13 +23,13 @@ ist [der Abschnitt zu Geometrien](../full_data/osm_types.md) im Kapitel [Räumli
 Zunächst zu den Detailgraden:
 Während die Ausgabeformate über eine pro Abfrage globale Einstellung gesteuert werden,
 werden die Detailgrade bei jedem Ausgabe-Kommando über dessen Parameter gesteuert.
-Dadurch ist es möglich, verschiedene Dateigrade in einer Anfrage zu mischen;
+Dadurch ist es möglich, verschiedene Detailgrade in einer Anfrage zu mischen;
 diese Fähigkeit wird für die jeweils optimale Datenmenge [einiger Geometrievarianten](../full_data/osm_types.md#full) benötigt.
 Bei den [Anwendungen](index.md) ist dies jeweils vermerkt.
 
 Wir geben zu den Detailgraden jeweils auch ein Beispiel rund um den Londoner Vorort Greenwich.
 Das Beispiel ist dabei hauptsächlich so gewählt, dass es nur überschaubar wenige Nodes, Ways und Relations liefert,
-damit man sich die Daten gut im Tab _Daten_ von OVerpass Turbo anschauen kann.
+damit man sich die Daten gut im Tab _Daten_ von Overpass Turbo anschauen kann.
 
 Für die originalen OpenStreetMap-Detailgrade gibt es eine Hierarchie sie zuzuschalten:
 

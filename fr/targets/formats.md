@@ -7,73 +7,73 @@ Nous présenterons tous les formats qui ont une application immédiate.
 <a name="scope"/>
 ## Démarcation
 
-...
-<!--
-Die Datentypen sind bereits im [passenden Abschnitt der Einleitung](../preface/osm_data_model.md) eingeführt worden.
-Sie sollten hier also bereits mit Nodes, Ways und Relations vertraut sein.
+Les types de données ont déjà été présentés dans [la section appropriée de l'introduction](../preface/osm_data_model.md).
+Vous devriez donc déjà être familier avec les _nœuds_, les _chemins_ et les _relations_.
 
-Dieser Abschnitt erläutert zum einen Ausgabeformate.
-Zum anderen werden die verschiedenen möglichen Detailgrade vorgestellt.
-Welches Tool welches Ausgabeformat benötigt ist jeweils im Abschnitt zum Tool erläutert.
+Cette section explique les formats de sortie.
+D'autre part, les différents degrés de détail possibles sont présentés.
+L'outil qui a besoin de quel format de sortie est expliqué dans la section sur l'outil.
 
-Dem häufigen Problem, die Geometrie von OpenStreetMap-Objekten zu Vervollständigen,
-ist [der Abschnitt zu Geometrien](../full_data/osm_types.md) im Kapitel [Räumliche Datenauswahl](../full_data/index.md) gewidmet.
--->
+Le problème commun de compléter la géométrie des objets OpenStreetMap,
+est dédié à [la section sur les géométries](../full_data/osm_types.md) dans le chapitre [Toutes les données dans une région](../full_data/index.md).
 
 <a name="faithful"/>
 ## Niveaux de verbosité traditionnels
 
-...
-<!--
-Zunächst zu den Detailgraden:
-Während die Ausgabeformate über eine pro Abfrage globale Einstellung gesteuert werden,
-werden die Detailgrade bei jedem Ausgabe-Kommando über dessen Parameter gesteuert.
-Dadurch ist es möglich, verschiedene Dateigrade in einer Anfrage zu mischen;
-diese Fähigkeit wird für die jeweils optimale Datenmenge [einiger Geometrievarianten](../full_data/osm_types.md#full) benötigt.
-Bei den [Anwendungen](index.md) ist dies jeweils vermerkt.
+D'abord au niveau de détail:
+Alors que les formats de sortie sont contrôlés par un paramètre global pour chaque requête,
+les niveaux de détail de chaque instruction de sortie sont contrôlés par ses paramètres.
+Il est ainsi possible de mélanger différents niveaux de détail dans une même requête;
+cette capacité est nécessaire pour une quantité optimale de données [de certaines variantes géométriques](../full_data/osm_types.md#full).
+C'est ce qui est noté pour [chaque application](index.md).
 
-Wir geben zu den Detailgraden jeweils auch ein Beispiel rund um den Londoner Vorort Greenwich.
-Das Beispiel ist dabei hauptsächlich so gewählt, dass es nur überschaubar wenige Nodes, Ways und Relations liefert,
-damit man sich die Daten gut im Tab _Daten_ von OVerpass Turbo anschauen kann.
+Nous donnons également un exemple autour de Greenwich, la banlieue de Londres.
+L'exemple est principalement choisi de telle sorte qu'il fournit seulement une quantité maitrisable des _nœuds_, _chemins_ et _relations_,
+pour bien voir les données de l'onglet _Données_ d'Overpass Turbo.
 
-Für die originalen OpenStreetMap-Detailgrade gibt es eine Hierarchie sie zuzuschalten:
+Pour les niveaux de détail originaux d'OpenStreetMap, il existe une hiérarchie pour les activer:
 
-Das Kommando _out ids_ [liefert](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%5Bname%3D%22Blackheath%20Avenue%22%5D%3B%0A%20%20node%28w%29%3B%0A%20%20relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aout%20ids%3B):
+L'instruction _out ids_ [revient](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB):
 
     ( way(51.477,-0.001,51.478,0.001)[name="Blackheath Avenue"];
       node(w);
       relation(51.477,-0.001,51.478,0.001); );
     out ids;
 
-* die Ids der Objekte
+* les identifiants des objets
 
-Das Kommando _out skel_ [liefert](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%5Bname%3D%22Blackheath%20Avenue%22%5D%3B%0A%20%20node%28w%29%3B%0A%20%20relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aout%20skel%3B) zusätzlich die nötigen Informationen,
-um die Geometrie aufzubauen:
+L'instruction _out skel_ [fournit](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB) en outre les informations nécessaires,
+pour construire la géométrie:
 
     ( way(51.477,-0.001,51.478,0.001)[name="Blackheath Avenue"];
       node(w);
       relation(51.477,-0.001,51.478,0.001); );
     out skel;
 
-* bei Nodes deren Koordinate
-* bei Ways und Relations die Liste der Member
+* aux _nœuds_, leurs coordonnées
+* à _chemins_ et _relations_ la liste des membres
 
-Das Kommando _out_ (ohne Zusätze) [liefert](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%5Bname%3D%22Blackheath%20Avenue%22%5D%3B%0A%20%20node%28w%29%3B%0A%20%20relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aout%3B) die vollständen Geodaten, also zusätzlich:
+<!--
+Das Kommando _out_ (ohne Zusätze) [liefert](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB) die vollständen Geodaten, also zusätzlich:
+-->
 
     ( way(51.477,-0.001,51.478,0.001)[name="Blackheath Avenue"];
       node(w);
       relation(51.477,-0.001,51.478,0.001); );
     out;
 
+<!--
 * die Tags aller Objekte
 
-Das Kommando _out meta_ [liefert](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%5Bname%3D%22Blackheath%20Avenue%22%5D%3B%0A%20%20node%28w%29%3B%0A%20%20relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aout%20meta%3B) zusätzlich:
+Das Kommando _out meta_ [liefert](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB) zusätzlich:
+-->
 
     ( way(51.477,-0.001,51.478,0.001)[name="Blackheath Avenue"];
       node(w);
       relation(51.477,-0.001,51.478,0.001); );
     out meta;
 
+<!--
 * die Version pro Objekt
 * den Zeitstempel pro Objekt
 
@@ -84,7 +84,7 @@ Schlussendlich liefert das Kommando _out attribution_ die folgenden Daten mit:
 * den Usernamen zu dieser User-Id
 
 Dieser letzte Detailgrad betrifft allerdings Daten, die nach herrschender Meinung unter den Datenschutz fallen.
-Daher ist dafür ein [erhöhter Aufwand](../analysis/per_user.md) nötig.
+Daher ist dafür ein [erhöhter Aufwand](../analysis/index.md) nötig.
 Da diese Daten für keines der in diesem Kapitel diskutierten Anwendungen erforderlich sind,
 verzichten wir hier auf ein Beispiel.
 -->
@@ -99,21 +99,21 @@ Alle Kombinationen zwischen den gerade vorgestellten Detailgraden und den zusät
 
 Das Flag _center_ schaltet pro Objekt eine einzelne Koordinate zu.
 Diese hat keine besondere mathematische Bedeutung,
-sondern liegt einfach in der Mitte der das Objekt einschließenden Bounding-Box: [Beispiel 1](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%5Bname%3D%22Blackheath%20Avenue%22%5D%3B%0A%20%20node%28w%29%3B%0A%20%20relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aout%20ids%20center%3B)
+sondern liegt einfach in der Mitte der das Objekt einschließenden Bounding-Box: [Beispiel 1](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     ( way(51.477,-0.001,51.478,0.001)[name="Blackheath Avenue"];
       node(w);
       relation(51.477,-0.001,51.478,0.001); );
     out ids center;
 
-[Beispiel 2](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%5Bname%3D%22Blackheath%20Avenue%22%5D%3B%0A%20%20node%28w%29%3B%0A%20%20relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aout%20center%3B)
+[Beispiel 2](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     ( way(51.477,-0.001,51.478,0.001)[name="Blackheath Avenue"];
       node(w);
       relation(51.477,-0.001,51.478,0.001); );
     out center;
 
-Das Flag _bb_ (für _Bounding-Box_) schaltet pro Objekt die einschließende Bounding-Box zu: [Beispiel](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%5Bname%3D%22Blackheath%20Avenue%22%5D%3B%0A%20%20node%28w%29%3B%0A%20%20relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aout%20ids%20bb%3B)
+Das Flag _bb_ (für _Bounding-Box_) schaltet pro Objekt die einschließende Bounding-Box zu: [Beispiel](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     ( way(51.477,-0.001,51.478,0.001)[name="Blackheath Avenue"];
       node(w);
@@ -122,7 +122,7 @@ Das Flag _bb_ (für _Bounding-Box_) schaltet pro Objekt die einschließende Boun
 
 Das Flag _geom_ (für _Geometrie_) ergänzt die vollen Koordinaten.
 Dafür ist als Mindest-Detailgrad die Stufe _skel_ notwendig,
-es funktioniert also bis einschließlich _attribution_: [Beispiel](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%5Bname%3D%22Blackheath%20Avenue%22%5D%3B%0A%20%20node%28w%29%3B%0A%20%20relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aout%20skel%20geom%3B)
+es funktioniert also bis einschließlich _attribution_: [Beispiel](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     ( way(51.477,-0.001,51.478,0.001)[name="Blackheath Avenue"];
       node(w);
@@ -136,14 +136,14 @@ Als Abhilfe gibt es eine Bounding-Box auch für das Ausgabe-Kommando, [siehe dor
 
 Zuletzt gibt es noch das Ausgabeformat _tags_.
 Dieses basiert auf _ids_ und zeigt zusätzlich Tags, aber keine Geometrien oder Strukturen an.
-Es ist vor allem nützlich, wenn man die Koordinaten im Ergebnis [nicht braucht](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%5Bname%3D%22Blackheath%20Avenue%22%5D%3B%0A%20%20node%28w%29%3B%0A%20%20relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aout%20tags%3B):
+Es ist vor allem nützlich, wenn man die Koordinaten im Ergebnis [nicht braucht](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB):
 
     ( way(51.477,-0.001,51.478,0.001)[name="Blackheath Avenue"];
       node(w);
       relation(51.477,-0.001,51.478,0.001); );
     out tags;
 
-Es ist aber auch mit den beiden Geometriestufen _center_ und _bb_ [kombinierbar](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%28%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%5Bname%3D%22Blackheath%20Avenue%22%5D%3B%0A%20%20node%28w%29%3B%0A%20%20relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aout%20tags%20center%3B):
+Es ist aber auch mit den beiden Geometriestufen _center_ und _bb_ [kombinierbar](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB):
 
     ( way(51.477,-0.001,51.478,0.001)[name="Blackheath Avenue"];
       node(w);
@@ -170,7 +170,7 @@ Als Lösung gibt es die Möglichkeit,
 GeoJSON-konforme Objekte aus den OpenStreetMap-Objekten zu erzeugen.
 Die originalen OpenStreetMap-Objekte werden jedoch originalgetreu in JSON abgebildet und sind kein GeoJSON.
 
-OpenStreetMap-Objekte [in JSON](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%5Bout%3Ajson%5D%3B%0A%28%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%5Bname%3D%22Blackheath%20Avenue%22%5D%3B%0A%20%20node%28w%29%3B%0A%20%20relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aout%20geom%3B):
+OpenStreetMap-Objekte [in JSON](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB):
 
     [out:json];
     ( way(51.477,-0.001,51.478,0.001)[name="Blackheath Avenue"];
@@ -178,7 +178,7 @@ OpenStreetMap-Objekte [in JSON](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&z
       relation(51.477,-0.001,51.478,0.001); );
     out geom;
 
-Abgeleitete Objekte [in GeoJSON](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%5Bout%3Ajson%5D%3B%0A%28%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%5Bname%3D%22Blackheath%20Avenue%22%5D%3B%0A%20%20node%28w%29%3B%0A%20%20relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aconvert%20item%20%3A%3A%3D%3A%3A%2C%3A%3Ageom%3Dgeom%28%29%2C_osm_type%3Dtype%28%29%3B%0Aout%20geom%3B):
+Abgeleitete Objekte [in GeoJSON](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB):
 
     [out:json];
     ( way(51.477,-0.001,51.478,0.001)[name="Blackheath Avenue"];
@@ -202,13 +202,14 @@ und eine Zeile je gefundenes Objekt.
 Die Auswahl der Spalten schränkt dabei für die meisten Objekte die über das Objekt verfügbare Information wieder ein.
 Z.B. werden nicht als Spalte angeforderte Tags nicht ausgegeben.
 Komplexere Geometrien als eine einfache Koordinate können ebenfalls nicht in diesem Format abgebildet werden.
-Dies unterscheidet dieses Format von XML und JSON.
+Dies unterscheidet dieses Format von den potentiell verlustfreien Formaten XML und JSON.
 
 Der Standardfall einer Spalte ist der Key eines Tags.
 Es wird dann zu jedem Objekt der Wert dieses Tags am Objekt ausgegeben.
 Hat das Objekt das Tag nicht, so wird ein leerer Wert ausgegeben.
-Für die weiteren Eigenschaften des Objekts gibt es spezielle Werte, die mit `::` beginnen.
-[Beispiel](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%5Bout%3Acsv%28%3A%3Atype%2C%3A%3Aid%2Cname%29%5D%3B%0A%28%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%5Bname%3D%22Blackheath%20Avenue%22%5D%3B%0A%20%20node%28w%29%3B%0A%20%20relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aout%20center%3B)
+Für die weiteren Eigenschaften des Objekts gibt es spezielle Werte;
+diese mit `::` beginnen.
+[Beispiel](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     [out:csv(::type,::id,name)];
     ( way(51.477,-0.001,51.478,0.001)[name="Blackheath Avenue"];
@@ -216,9 +217,9 @@ Für die weiteren Eigenschaften des Objekts gibt es spezielle Werte, die mit `::
       relation(51.477,-0.001,51.478,0.001); );
     out center;
 
-CSV selbst stand ursprünglich für _comma seaprated value_.
+CSV selbst stand ursprünglich für _comma separated value_.
 Allerdings haben die zahlreichen nutzenden Programme unterschiedliche Erwartungen an Trennzeichen entwickelt.
-Daher lässt sich sowohl das Trennzeichen konfigurieren als auch die Überschrift [ein- und ausschalten](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=%5Bout%3Acsv%28%3A%3Atype%2C%3A%3Aid%2Cname%3Bfalse%3B%22%7C%22%29%5D%3B%0A%28%20way%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%5Bname%3D%22Blackheath%20Avenue%22%5D%3B%0A%20%20node%28w%29%3B%0A%20%20relation%2851%2E477%2C%2D0%2E001%2C51%2E478%2C0%2E001%29%3B%20%29%3B%0Aout%20center%3B):
+Daher lässt sich sowohl das Trennzeichen konfigurieren als auch die Überschrift [ein- und ausschalten](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB):
 
     [out:csv(::type,::id,name;false;"|")];
     ( way(51.477,-0.001,51.478,0.001)[name="Blackheath Avenue"];
