@@ -194,7 +194,7 @@ Der Standardfall einer Spalte ist der Key eines Tags.
 Es wird dann zu jedem Objekt der Wert dieses Tags am Objekt ausgegeben.
 Hat das Objekt das Tag nicht, so wird ein leerer Wert ausgegeben.
 Für die weiteren Eigenschaften des Objekts gibt es spezielle Werte;
-diese mit `::` beginnen.
+diese beginnen mit `::`.
 [Beispiel](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 
     [out:csv(::type,::id,name)];
