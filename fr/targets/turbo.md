@@ -6,171 +6,166 @@ L'outil standard pour développer des requêtes.
 <a name="overview"/>
 ## Bref aperçu
 
-...
-<!--
-Overpass Turbo ist eine Website,
-um Overpass-API-Anfragen auszuführen
-und das Ergebnis auf einer Karte zu sehen.
+Overpass Turbo est un site Toile,
+d'exécuter des requêtes API Overpass
+et voir le résultat sur une carte.
 
-Viele Beispiele dieses Handbuchs verlinken auf Overpass Turbo mit einer passend vorbelegten Abfrage.
+De nombreux exemples de ce manuel créent des liens vers Overpass Turbo avec une requête prédéfinie appropriée.
 
-Eine öffentliche Instanz ist verfügbar unter [https://overpass-turbo.eu](https://overpass-turbo.eu).
-Der Quellcode liegt ebenso wie bei der Overpass API auf [Github](https://github.com/tyrasd/overpass-turbo).
-Martin Raifer hat Overpass Turbo entwickelt;
-an dieser Stelle möchte ich ihm ausdrücklich meinen Dank aussprechen.
+Une instance publique est disponible à l'adresse [https://overpass-turbo.eu](https://overpass-turbo.eu).
+Le code source se trouve sur [Github](https://github.com/tyrasd/overpass-turbo) ainsi que sur l'API Overpass.
+Martin Raifer a développé Overpass Turbo;
+je voudrais lui exprimer mes remerciements.
 
-Nahezu alle Ausgabeformate,
-die bei der Overpass API zur Verfügung stehen,
-können von Overpass Turbo auch verstanden werden.
-Schwierigkeiten gibt es bei Abfragen mit sehr großen Ergebnismengen;
-auch heute kommen dann die JavaScript-Engines der genutzten Browser an die Grenzen ihres Speichermanagements.
-Daher fragt Overpass Turbo nach,
-wenn es eine große Ergebnismenge erhalten hat,
-ob der Endbenutzer das Risiko eingehen will, den Browser einfrieren zu lassen.
+Presque tous les formats de sortie,
+qui sont disponibles à l'API Overpass, 
+peut également être compris par Overpass Turbo. 
+Il y a des difficultés avec les requêtes avec de très grands ensembles de résultats;
+aujourd'hui encore, les moteurs JavaScript des navigateurs utilisés atteignent les limites de leur gestion mémoire. 
+C'est pourquoi Overpass Turbo demande, 
+s'il a reçu un ensemble de résultats énorme, 
+si l'utilisateur final veut prendre le risque de geler le navigateur.
 
-Es gibt viele beliebte und sinnvolle Features,
-die aber den Rahmen dieses Handbuchs übersteigen.
-Dazu sei auf die [Dokumentation](https://wiki.openstreetmap.org/wiki/DE:Overpass_turbo) zu Overpass Turbo verwiesen.
-Dies gilt insbesondere für _Styles_ und zum Query-Generator _Wizard_.
-Dieses Handbuch beschränkt sich auf die unmittelbare Wechselwirkung mit der Abfragesprache.
--->
+Il y a beaucoup de caractéristiques populaires et utiles,
+mais qui dépassent le cadre de ce manuel.
+Veuillez consulter la [documentation](https://wiki.openstreetmap.org/wiki/FR:Overpass_turbo) sur Overpass Turbo.
+Ceci est particulièrement vrai pour _Styles_ et le générateur de requêtes _Wizard_. 
+Ce manuel se limite à l'interaction directe avec le langage de requête. 
 
 <a name="basics"/>
 ## Assises
 
-...
-<!--
-Die Sicht der Website ist in mehrere Teile aufgeteilt;
-sie unterscheiden sich in der Anordnung zwischen Desktop- und Mobilversion.
-Öffnen Sie [sie](https://overpass-turbo.eu) am besten jetzt in einem separaten Tab.
+La vue du site Toile est divisée en plusieurs parties;
+ils se distinguent par leur disposition entre la version de bureau et la version mobile.
+[Ouvrez le](https://overpass-turbo.eu) maintenant dans un onglet séparé.
 
-In der Desktop-Version ist links ein großes Textfeld;
-hier sollen Sie Ihre Abfrage eingeben.
-Rechts ist zunächst ein Kartenausschnitt.
-Über die beiden Reiter _Karte_ und _Daten_ kann zwischen dem Kartenausschnitt
-und einem Textfeld für die empfangenen Daten umgeschaltet werden.
+Dans la version de bureau, il y a une grande zone de texte à gauche;
+ici, vous devez entrer votre requête.
+Sur la droite se trouve une section de carte.
+Via les deux onglets _Carte_ et _Données_, vous pouvez choisir entre la carte
+et un champ texte pour les données reçues.
 
-In der Mobil-Version steht das Textfeld für die Abfrage über dem Kartenausschnitt.
-Das zweite Textfeld für die empfangenen Daten ist unter dem Kartenausschnitt;
-statt der Reiter kommt man durch beherztes Scrollen zwischen beiden Teilen hin und her.
+Dans la version mobile, le champ de texte représente la requête au-dessus de la section de carte.
+Le deuxième champ de texte pour les données reçues se trouve sous la section de carte.
+Au lieu des onglets, vous pouvez faire défiler les deux parties en faisant défiler courageusement.
 
-Wir üben den Standard-Anwendungsfall:
-Geben Sie
+Nous pratiquons le cas d'utilisation standard:
+Tapez
 
     nwr[name="Canary Wharf"];
     out geom;
 
-in das Textfeld ein (oder nutzen Sie [diesen Link](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=18&Q=nwr%5Bname%3D%22Canary%20Wharf%22%5D%3B%0Aout%20geom%3B))!
 
-Klicken Sie nun auf _Ausführen_.
-Es kommt kurz eine Fortschrittsmeldung,
-dann sehen Sie wieder das fast gleiche Bild wie vorher.
+dans la zone de texte (ou utilisez [ce lien](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=18&Q=CGI_STUB))!
 
-Klicken Sie daher nun auf die Lupe.
-Dies ist am linken Rand des Kartenausschnitts das dritte Symbol von oben, unter den Plus/Minus-Schaltern.
-Die Kartenansicht springt jetzt auf die feinste Auflösung,
-die noch alle Ergebnisse anzeigt.
+Cliquez maintenant sur _Exécuter_.
+Un message d'avancement apparaîtra sous peu,
+vous verrez presque la même image qu'avant.
 
-Die markierten Objekte im Kartenausschnitt sind jetzt exakt die Objekte,
-die die Abfrage gefunden hat.
+Cliquez maintenant sur la loupe.
+Il s'agit du troisième symbole à partir du haut à gauche de la section de carte, sous les boutons plus/moins.
+L'affichage de la carte passe maintenant à la résolution la plus fine,
+qui montre toujours tous les résultats.
 
-Oft ist es nützlich,
-sich die tatsächlich gelieferten Daten direkt anzuschauen.
-Das geht mit dem Reiter _Daten_ oben rechts oberhalb der Kartenansicht
-bzw. mit Herunterscrollen in der Mobilvariante.
+Les objets sélectionnés dans la section de carte sont maintenant exactement les objets,
+qui a trouvé la requête.
 
-Alle auf der Karte hervorgehobenen Objekte sind anklickbar und zeigen dann,
-je nach Umfang ihrer Daten,
-ihre Id, ihre Tags oder ihre Metadaten.
+C'est souvent utile,
+d'examiner directement les données effectivement fournies.
+Ceci peut être fait avec l'onglet _Données_ dans le coin supérieur droit au-dessus de la vue de la carte.
+ou avec défilement vers le bas dans la version mobile.
 
-Irgendwann wird Ihnen die Meldung begegnen,
-dass nicht zu allen Objekten die Geoetrie mitgeliefert worden ist.
-Sie können dann die Query-Änderung zur automatischen Vervollständig erproben.
-Oder Sie ersetzen alle Vorkommen von ``out`` durch ihre Gegenstücke mit Geometrie ``out geom``.
+Indépendamment de cela, tous les objets surlignés sur la carte peuvent être cliqués et ensuite affichés,
+en fonction de l'étendue de leurs données,
+leur identifiant, leurs attributs ou leurs métadonnées.
 
-Wenn Sie ein großes Ergebnis erwarten
-oder die Daten sowieso mit einem anderen Programm weiterverarbeiten wollen,
-dann können Sie die Daten auch ohne Anzeige direkt zum Abspeichern exportieren:
-Gehen Sie auf _Export_,
-bleiben Sie im erscheinenden Fenster im Reiter _Daten_
-und wählen Sie ``Rohdaten direkt von der Overpass API``.
-Bei langlaufenden Abfragen ist es normal,
-dass nach dem Klick erst einmal scheinbar nichts passiert.
+A un moment donné, vous rencontrerez le message,
+que tous les objets n'étaient pas fournis avec la géométrie.
+Vous pouvez ensuite tester la modification de la requête pour la compléter automatiquement.
+Ou vous pouvez remplacer toutes les occurrences de `out` par leurs contreparties avec la géométrie `out geom`.
 
-Auf zwei nützliche Extras sei hingewiesen:
+Si vous attendez un résultat énorme
+ou que vous souhaitez traiter les données avec un autre programme de toute façon,
+vous pouvez également exporter les données directement pour les télécharger sans les afficher:
+Tapez à _Exporter_,
+restent dans la fenêtre qui apparaît dans l'onglet _Données_.
+et sélectionnez `Données brutes depuis l'API Overpass`.
+Ceci est normal pour les requêtes de longue durée,
+qu'après le clic, rien ne semble se passer.
 
-- Unten rechts im Kartenausschnitt stehen Zähler,
-  wie viele Objekte welchen Typs bei der letzten Abfrage zurückgeliefert worden sind.
-- Oben links im Kartenausschnitt gibt es ein Suchfeld.
-  Dieses hat zwar eine geringere Leistungsfähigkeit als [Nominatim auf openstreetmap.org](../criteria/nominatim.md),
-  aber die verfügbare Suche nach Ortsnamen reicht in der Regel,
-  um den Kartenausschnitt schnell am richtigen Ort zu plazieren.
--->
+Deux extras utiles méritent d'être mentionnés :
+
+* En bas à droite de la carte se trouvent les compteurs,
+  combien d'objets de quel type ont été retournés dans la dernière requête.
+* Il y a un champ de recherche en haut à gauche de la section de carte.
+  Ceci a une performance inférieure à [Nominatim sur openstreetmap.org](../criteria/nominatim.md),
+  mais la recherche disponible pour les noms de lieux est généralement suffisante,
+  pour placer rapidement la section de carte au endroit pertinent.
 
 <a name="symbols"/>
 ## Légende
 
-...
-<!--
-Die [Dokumentation](https://wiki.openstreetmap.org/wiki/DE:Overpass_turbo) erläutert die Farben bereits.
-Wir konzentrieren uns hier daher eher auf das Zusammenspiel:
-Zu einem konkreten Objekt oder Objektart haben Sie eine Vorstellung,
-ob es ein Punkt, Linie, Fläche, eine Zusammensetzung davon, etwas Abstraktes oder etwas mit unscharfen Grenzen ist.
-In den OpenStreetMap-Datenstrukturen ist es auf irgendeine Weise modelliert;
-diese kann, aber muss nicht zwingend mit ihrer Erwartung übereinstimmen.
+La [documentation](https://wiki.openstreetmap.org/wiki/DE:Overpass_turbo) explique déjà les couleurs.
+C'est pourquoi nous nous concentrons davantage sur l'interaction:
+Vous avez une idée d'un objet concret ou d'un type d'objet,
+qu'il s'agisse d'un nœud, d'un chemin, d'une surface, d'une composition, de quelque chose d'abstrait ou de quelque chose aux frontières floues.
+Dans les structures de données OpenStreetMap, il est modélisé d'une certaine manière;
+il peut, mais ne correspond pas nécessairement à vos attentes.
 
-Die Overpass API bietet [Hilfsmittel](formats.md#extras),
-um von der OpenStreetMap-Modellierung zu einer zu wechseln,
-die besser zur Darstellung passt;
-sei es durch Beschaffen der Koordinaten oder auch geometrische Vereinfachung oder [Zuschnitt](../full_data/bbox.md#crop).
-Overpass Turbo muss nun in jedem Fall eine möglichst gute Darstellung liefern,
-egal, ob die Modellierung in OpenStreetMap noch naheliegend ist,
-und egal, ob das in der Abfrage gewählte Ausgabeformat sinnvoll zu den Daten passt.
+L'API Overpass fournit [outils](formats.md#extras),
+pour passer de la modélisation OpenStreetMap à une seule,
+qui s'adapte mieux à la représentation;
+soit en obtenant les coordonnées ou la simplification géométrique ou [restriction d'affichage](../full_data/bbox.md#crop).
+Overpass Turbo doit maintenant fournir la meilleure représentation possible dans tous les cas,
+peu importe si la modélisation dans OpenStreetMap est encore évidente,
+et que le format de sortie sélectionné dans la requête corresponde ou non aux données.
 
-Dieser Abschnitt soll erläutern,
-was dann final in der Kartendarstellung herauskommt
-und wie dies mit der Abfrage und den Daten zusammenhängt.
+Cette section a pour but d'expliquer
+qui finit par apparaître sur l'affichage de la carte
+et comment cela se rattache à la requête et aux données.
 
-Punktobjekte können ein gelbes oder rotes Inneres haben.
-Mit gelbem Inneren sind es echte _Nodes_,
-mit rotem Inneren sind es _Ways_.
+Les objets ponctuels peuvent avoir un intérieur jaune ou rouge.
+Avec un intérieur jaune, ce sont de vrais _nœuds_,
+avec un intérieur rouge, ce sont de _chemins_.
 
-Ways können entweder wegen ihrer geringen Länge zu Punkten werden,
-da sie sonst zu unauffällig wären:
-Zoomen Sie bitte in [diesem Beispiel](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=19&Q=way%28%7B%7Bbbox%7D%7D%29%5Bbuilding%5D%3B%0Aout%20geom%3B) heraus
-und beobachten, wie Gebäude und Straße zu Punkten werden!
+Les chemins peuvent devenir des points soit à cause de leur petite longueur,
+sinon ils seraient trop discrets:
+Veuillez effectuer un zoom arrière [dans cet exemple](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=19&Q=CGI_STUB)
+et regarder les bâtiments et les rues devenir des points!
 
-    way({{bbox}})[building];
+    ( way({{bbox}})[building];
+      way({{bbox}})[highway=steps]; );
     out geom;
 
-Wenn das bei einer konkreten Abfrage stört,
-können Sie es unter _Einstellungen_, _Karte_, _Kleine Features nicht wie POIs darstellen_ abschalten.
+Si cela interfère avec une requête spécifique,
+vous ne pouvez pas le désactiver sous _Paramètres_, _Carte_, _N'affiche pas les petits objets comme points d'intérêts_.
+La modification ne prend effet qu'après l'exécution de la requête suivante.
 
-Oder sie können als Punkte dargestellt werden,
-weil [die Abfrage](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=19&Q=way%28%7B%7Bbbox%7D%7D%29%5Bbuilding%5D%3B%0Aout%20center%3B) per ``out center`` ausgegeben hat:
+Ou ils peuvent être affichés sous forme de points,
+car [la requête](https://overpass-turbo.eu/?lat=51.477&lon=0.0&zoom=19&Q=CGI_STUB) sort via `out center`:
 
     way({{bbox}})[building];
     out center;
 
-Punktobjekte können ein blauen oder lilanen Rand haben;
-das gilt auch für als Linienzug oder Fläche gezeichnete Objekte.
-In allen solchen Fällen sind _Relations_ [beteiligt](https://overpass-turbo.eu/?lat=51.5045&lon=-0.0195&zoom=17&Q=rel%5Bname%3D%22Canary%20Wharf%22%5D%3B%0Aout%20geom%3B):
+Les objets ponctuels peuvent avoir une bordure bleue ou violette;
+Ceci s'applique également aux objets dessinés sous forme de polyligne ou de surface.
+Dans tous ces cas, _relations_ [sont impliqués](https://overpass-turbo.eu/?lat=51.5045&lon=-0.0195&zoom=16&Q=CGI_STUB):
 
     rel[name="Canary Wharf"];
     out geom;
 
-Im Gegensatz zu _Nodes_ oder _Ways_ sind die Details der _Relation_ dann aber nicht per Klick aufs Objekt verfügbar,
-sondern in der Blase gibt es nur einen Link auf die _Relation_ auf dem Hauptserver.
-Unter gewöhnlichen Umständen ist dies kein Problem.
+Contrairement à _nœuds_ ou _chemins_, les détails de la _relation_ ne sont pas disponibles en cliquant sur l'objet,
+mais dans la bulle il n'y a qu'un lien vers la _relation_ sur le serveur _openstreetmap.org_.
+Dans des circonstances normales, ce n'est pas un problème.
 
-Hat man aber gezielt einen alten Versionsstand angefragt,
-so sind die Daten von der Hauptseite andere als die per Overpass API bezogenen Daten.
-Es führt dann kein Weg daran vorbei,
-in die zurückgelieferten Daten selbst per Reiter _Daten_ hineinzuschauen.
+Mais si vous avez spécifiquement demandé une ancienne version,
+alors les données de la page principale sont différentes de celles obtenues via l'API Overpass.
+Alors il n'y a pas d'autre solution,
+pour examiner les données retournées elles-mêmes via l'onglet _Données_.
 
-Ist dagegen die Linie oder Umrandung der Fläche gestrichelt,
-so ist die Geometrie des Objekts unvollständig.
-Das ist zumeist ein gewollter Effekt der [Ausgabebegrenzung](../full_data/bbox.md#crop) ([Beispiel](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=16&Q=%28%0A%20%20way%2851%2E475%2C%2D0%2E002%2C51%2E478%2C0%2E003%29%5Bhighway%3Dunclassified%5D%3B%0A%20%20rel%28bw%29%3B%0A%29%3B%0Aout%20geom%2851%2E475%2C%2D0%2E002%2C51%2E478%2C0%2E003%29%3B)):
+Si, par contre, la ligne ou la bordure de la zone est en pointillés,
+la géométrie de l'objet est incomplète.
+C'est généralement un effet désiré de la [restriction d'affichage](../full_data/bbox.md#crop) ([exemple](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=16&Q=CGI_STUB)):
 
     (
       way(51.475,-0.002,51.478,0.003)[highway=unclassified];
@@ -178,10 +173,10 @@ Das ist zumeist ein gewollter Effekt der [Ausgabebegrenzung](../full_data/bbox.m
     );
     out geom(51.475,-0.002,51.478,0.003);
 
-Es kann aber auch Folge einer Abfrage sein,
-die zu _Ways_ einige, aber nicht alle _Nodes_ geladen hat.
-Hier haben wir _Ways_ auf Basis von _Nodes_ geladen,
-aber [vergessen](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=%28%0A%20%20node%2851%2E475%2C%2D0%2E003%2C51%2E478%2C0%2E003%29%3B%0A%20%20way%28bn%29%3B%0A%29%3B%0Aout%3B), die fehlenden Nodes direkt oder indirekt nachzuladen:
+Cependant, il peut aussi être le résultat d'une requête,
+qui a chargé certains _chemins_, mais pas tous _nœuds_ à _chemins_.
+Ici nous avons chargé _chemins_ basé sur _nœudes_,
+mais [oublié](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=CGI_STUB) pour demander les nœuds manquants directement ou indirectement:
 
     (
       node(51.475,-0.003,51.478,0.003);
@@ -189,58 +184,53 @@ aber [vergessen](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=%28%0A
     );
     out;
 
-Die Abfrage kann durch ``out geom`` [repariert](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=%28%0A%20%20node%2851%2E475%2C%2D0%2E003%2C51%2E478%2C0%2E003%29%3B%0A%20%20way%28bn%29%3B%0A%29%3B%0Aout%20geom%3B) werden;
-mehr Möglichkeiten sind im Abschnitt zu [Geometrien](../full_data/osm_types.md#nodes_ways) erklärt:
+La requête peut être [corrigée](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=CGI_STUB) par `out geom`;
+plus de possibilités sont expliquées dans la section [Géométries](../full_data/osm_types.md#nodes_ways):
 
     (
       node(51.475,-0.003,51.478,0.003);
       way(bn);
     );
     out geom;
--->
 
 <a name="convenience"/>
 ## Commodités
 
-...
-<!--
-Overpass Turbo bietet einige Komfortfunktionen.
+Overpass Turbo offre quelques fonctions de confort.
 
-Es kann die Bounding-Box des aktuellen Fensters automatisch in eine Query einfügen.
-Dazu ersetzt Overpass Turbo jedes Vorkommen der Zeichenfolge ``{{bbox}}`` durch die vier Ränder,
-so dass eine gültige Bounding-Box entsteht.
+Il peut insérer automatiquement la rectangle englobant de la fenêtre courante dans une requête.
+Overpass Turbo remplace chaque occurrence de la chaîne `{{bbox}}` par les quatre marges,
+pour qu'un rectangle englobant valide soit créée.
 
-Man kann die übertragene Bounding-Box sogar sehen,
-wenn man sie an einer anderen als der üblichen Stelle [einfügt](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=make%20Beispiel%20Infotext%3D%22Die%20aktuelle%20Bounding%2DBox%20ist%20%7B%7Bbbox%7D%7D%22%3B%0Aout%3B) (und nach dem Ausführen auf _Daten_ klickt):
+Vous pouvez même voir la boîte de délimitation transférée,
+si vous l'insérez [à un endroit autre](https://overpass-turbo.eu/?lat=51.4765&lon=0.0&zoom=17&Q=CGI_STUB) que l'endroit habituel (et cliquez sur _Données_ après exécution):
 
-    make Beispiel Infotext="Die aktuelle Bounding-Box ist {{bbox}}";
+    make Exemple info="Le rectangle englobant courant est {{bbox}}";
     out;
 
-Eine zweite nützliche Funktion verbirgt sich hinter der Schaltfläche _Teilen_ oben links.
-Dies erzeugt einen Link,
-unter dem sich dauerhaft die zu dem Zeitpunkt eingegebene Abfrage abrufen lässt.
-Auch wenn jemand Drittes den Link aufruft und die Abfrage editiert,
-dann bleibt trotzdem die originale Abfrage unter dem Link erhalten.
+Une deuxième fonction utile se trouve derrière le bouton _Partager_ dans le coin supérieur gauche.
+Cela crée un lien,
+où la requête saisie à ce moment-là peut être récupérée de façon permanente.
+Même si quelqu'un d'autre emprunte le lien et édite la requête,
+alors la requête originale sous le lien sera toujours conservée.
 
-Es lässt sich ebenfalls auch per Checkbox die aktuelle Kartenansicht mitgeben.
-Dies meint Zentrum der Ansicht und Zoomstufe,
-d.h. auf verschieden großen Bildschirmen sind verschiedene Kartenausschnitte sichtbar.
--->
+La vue actuelle de la carte peut également être ajoutée à lien via la case à cocher.
+Cela signifie le centre de la vue et le niveau de zoom,
+c'est-à-dire que différentes sections de carte sont visibles sur des écrans de tailles différentes.
 
 <a name="limitations"/>
 ## Limitations
 
-...
-<!--
-Overpass Turbo beherrscht zwar nahezu alle Ausgabearten der Overpass API.
-Es gibt aber dennoch ein paar Grenzen:
+Overpass Turbo peut gérer presque tous les types de sortie de l'API Overpass.
+Mais il y a encore quelques limites:
 
-Pro Objekt-Id und -Typ zeigt Overpass Turbo nur ein Objekt an.
-Daher lassen sich [Diffs](../target/diffs.md) nicht sinnvoll mit Overpass Turbo anzeigen.
+Overpass Turbo n'affiche qu'un seul objet par identifiant et type d'objet.
+Par conséquent, [diffs](index.md) ne peut pas judicieusement être affiché avec Overpass Turbo.
 
-Overpass Turbo zeigt [GeoJSON](../targets/formats.md#json) direkt von der Overpass API nicht an.
-Overpass Turbo bringt sein eigenes Konvertierungsmodul für GeoJSON mit,
-und Martin hält die Benutzer-Verwirrung für zu groß,
-wenn beide Mechanismen parallel im Einsatz sind.
-Vorläufig muss für diesen Fall daher auf die experimentelle Instanz [https://olbricht.nrw/ovt/](https://olbricht.nrw/ovt/) verwiesen werden.
--->
+Overpass Turbo n'affiche pas [GeoJSON](formats.md#json) directement depuis l'API Overpass.
+Overpass Turbo est livré avec son propre module de conversion pour GeoJSON,
+et Martin pense que la confusion des utilisateurs est trop grande,
+si les deux mécanismes sont utilisés en parallèle.
+Pour l'instant, l'[instance expérimentale](https://olbricht.nrw/ovt/) doit être invoquée dans ce cas.
+
+<!-- Traduit avec www.DeepL.com/Translator, partiellement redigé -->

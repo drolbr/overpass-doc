@@ -218,3 +218,5 @@ Ainsi, le séparateur peut être configuré et le titre peut [être activé et d
     out center;
 
 Les [applications respectives](index.md) indiquent quelle variante convient le mieux.
+
+<!-- Traduit avec www.DeepL.com/Translator, partiellement redigé -->

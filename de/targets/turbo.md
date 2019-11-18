@@ -79,7 +79,7 @@ je nach Umfang ihrer Daten,
 ihre Id, ihre Tags oder ihre Metadaten.
 
 Irgendwann wird Ihnen die Meldung begegnen,
-dass nicht zu allen Objekten die Geoetrie mitgeliefert worden ist.
+dass nicht zu allen Objekten die Geometrie mitgeliefert worden ist.
 Sie können dann die Query-Änderung zur automatischen Vervollständig erproben.
 Oder Sie ersetzen alle Vorkommen von `out` durch ihre Gegenstücke mit Geometrie `out geom`.
 
@@ -109,7 +109,7 @@ Wir konzentrieren uns hier daher eher auf das Zusammenspiel:
 Zu einem konkreten Objekt oder Objektart haben Sie eine Vorstellung,
 ob es ein Punkt, Linie, Fläche, eine Zusammensetzung davon, etwas Abstraktes oder etwas mit unscharfen Grenzen ist.
 In den OpenStreetMap-Datenstrukturen ist es auf irgendeine Weise modelliert;
-diese kann, aber muss nicht zwingend mit ihrer Erwartung übereinstimmen.
+diese kann, aber muss nicht zwingend mit Ihrer Erwartung übereinstimmen.
 
 Die Overpass API bietet [Hilfsmittel](formats.md#extras),
 um von der OpenStreetMap-Modellierung zu einer zu wechseln,
@@ -154,7 +154,7 @@ In allen solchen Fällen sind _Relations_ [beteiligt](https://overpass-turbo.eu/
     out geom;
 
 Im Gegensatz zu _Nodes_ oder _Ways_ sind die Details der _Relation_ dann aber nicht per Klick aufs Objekt verfügbar,
-sondern in der Blase gibt es nur einen Link auf die _Relation_ auf dem Hauptserver.
+sondern in der Blase gibt es nur einen Link auf die _Relation_ auf _openstreetmap.org_.
 Unter gewöhnlichen Umständen ist dies kein Problem.
 
 Hat man aber gezielt einen alten Versionsstand angefragt,

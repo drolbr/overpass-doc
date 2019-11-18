@@ -129,6 +129,8 @@ hier z.B. `area(3600065606)`.
 <a name="full"/>
 ## Wirklich Alles
 
+<!-- TODO: Timeout auf Curl und Wget -->
+
 Wir wollen nun wirklich alle Daten in einem Gebiet herunterladen.
 Das geht zwar mit fast der Abfrage, die wir [zum Üben](#per_tag) verwendet haben.
 Aber wir müssen das Werkzeug wechseln:

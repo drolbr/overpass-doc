@@ -287,3 +287,5 @@ et cela le prive de la plupart de ses avantages.
 
 C'est pourquoi j'ai l'intention de le faire maintenant,
 exécute également les opérations de surface directement sur les objets OpenStreetMap.
+
+<!-- Traduit avec www.DeepL.com/Translator, partiellement redigé -->
