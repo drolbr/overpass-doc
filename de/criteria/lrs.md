@@ -15,7 +15,7 @@ und dementsprechend in beiden Etagen Raum einzunehmen.
 
 Entsprechendes gilt für Straßen oder sonstige Verkehrswege,
 wenn der Betreiber für einen Abschnitt mehrere Nummern vergeben hat.
-Aber auch mehrere Hausnummern an einem Grundstück oder Gebäude [kommen vor](https://overpass-turbo.eu/?lat=51.5&lon=0.0&zoom=13&Q=nwr%5B%22addr%3Ahousenumber%22%7E%22%3B%22%5D%28%7B%7Bbbox%7D%7D%29%3B%0Aout%20center%3B):
+Aber auch mehrere Hausnummern an einem Grundstück oder Gebäude [kommen vor](https://overpass-turbo.eu/?lat=51.5&lon=0.0&zoom=13&Q=CGI_STUB):
 
     nwr["addr:housenumber"~";"]({{bbox}});
     out center;
@@ -31,10 +31,10 @@ Das muss nicht zwangsläufig noch in OSM passieren:
 In beliebten Formaten wie CSV wird gerne auch das Semikolon als Trennzeichen verwendet.
 
 Dann wirft die Aneinanderreihung die Frage auf, ob die Reihenfolge der Elemente eine Rolle spielt.
-Durch Beispiele wie den Values ``-2;-1`` und ``-1;-2`` für das Tag mit Key _level_
+Durch Beispiele wie den Values `-2;-1` und `-1;-2` für das Tag mit Key _level_
 drängt sich die Antwort Nein auf.
 Dagegen legen Keys wie für Seezeichen oder Wanderzeichen nahe,
-dass ``red;white;blue`` etwas anderes ist als ``blue;red;white``.
+dass `red;white;blue` etwas anderes ist als `blue;red;white`.
 
 Die Reihenfolge zu speichern ist aber aufwendig:
 Schon für 15 Dinge bräuchte man im Idealfall nur 2 Byte, um das Vorhandensein zu speichern,
@@ -68,8 +68,8 @@ Dies und der Umgang damit wird aber dort erläutert.
 ## Einen Wert finden
 
 Wir versuchen, an einer der wichtigsten U-Bahn-Stationen Londons (_Bank_ und _Monument_)
-alle Treppen zu finden, die Ebene ``-2`` berühren.
-Die Suche nach _nur dem Value_ [findet nichts](https://overpass-turbo.eu/?lat=51.512&lon=-0.0875&zoom=17&Q=way%5Bhighway%3Dsteps%5D%5Blevel%3D%2D2%5D%28%7B%7Bbbox%7D%7D%29%3B%0Aout%20center%3B):
+alle Treppen zu finden, die Ebene `-2` berühren.
+Die Suche nach _nur dem Value_ [findet nichts](https://overpass-turbo.eu/?lat=51.512&lon=-0.0875&zoom=17&Q=CGI_STUB):
 
     way[highway=steps][level=-2]({{bbox}});
     out center;
@@ -77,49 +77,50 @@ Die Suche nach _nur dem Value_ [findet nichts](https://overpass-turbo.eu/?lat=51
 Infrage käme an dieser Stelle zwar die Suche per regulären Ausdruck.
 Aber das ist bestenfalls äußerst unhandlich und wird hier nicht vertieft.
 Es sei darauf hingewiesen,
-dass ein solcher regulärer Ausdruck leicht auch die hier vorkommenden Werte ``-2.3`` oder ``-2.7`` ungewollt findet.
+dass ein solcher regulärer Ausdruck leicht auch die hier vorkommenden Werte `-2.3` oder `-2.7` ungewollt findet.
 
-Exakt die Objekte, die den Wert ``-2`` direkt oder in einer Semikolon-Liste haben,
-[selektiert](https://overpass-turbo.eu/?lat=51.512&lon=-0.0875&zoom=17&Q=way%5Bhighway%3Dsteps%5D%28%7B%7Bbbox%7D%7D%29%0A%20%20%28if%3Alrs%5Fin%28%22%2D2%22%2Ct%5B%22level%22%5D%29%29%3B%0Aout%20center%3B) dagegen die Semikolon-Funktion ``lrs_in``:
+Exakt die Objekte, die den Wert `-2` direkt oder in einer Semikolon-Liste haben,
+[selektiert](https://overpass-turbo.eu/?lat=51.512&lon=-0.0875&zoom=17&Q=CGI_STUB) dagegen die Semikolon-Funktion `lrs_in`:
 
     way[highway=steps]({{bbox}})
       (if:lrs_in("-2",t["level"]));
     out center;
 
-Objekte mit _Values_ wie ``-2;-1`` oder ``-3;-2`` findet der Request also ebenso wie den _Value_ ``-2`` alleine.
+Objekte mit _Values_ wie `-2;-1` oder `-3;-2` findet der Request also ebenso wie den _Value_ `-2` alleine.
 
 Im einzelnen:
 Zeile 1 und 2 sind zusammen ein _Query_-Statement mit insgesamt 3 Filtern;
-uns interessiert hier der Filter ``(if:lrs_in("-2",t["level"]))``.
-Dabei ist ``(if:...)`` zunächst einmal der generische Filter,
+uns interessiert hier der Filter `(if:lrs_in("-2",t["level"]))`.
+Dabei ist `(if:...)` zunächst einmal der generische Filter,
 der für jedes in Frage kommende Objekt [den Evaluator](../preface/design.md#evaluators) in seinem Inneren auswertet;
-es werden nur die Objekte selektiert, für den der Evaluator zu etwas anderem als ``0``, ``false`` oder dem leeren Wert auswertet.
-Wir untersuchen die Objekte mit dem Evaluator ``lrs_in("-2",t["level"])``;
+es werden nur die Objekte selektiert, für den der Evaluator zu etwas anderem als `0`, `false` oder dem leeren Wert auswertet.
+Wir untersuchen die Objekte mit dem Evaluator `lrs_in("-2",t["level"])`;
 dieser hat seinerseits zwei Argumente:
 
-* das erste Argument, hier die Konstante ``-2``, ist der zu findende Wert
-* das zweite Argument, hier ``t["level"]``, ist die zu durchsuchende Liste
+* das erste Argument, hier die Konstante `-2`, ist der zu findende Wert
+* das zweite Argument, hier `t["level"]`, ist die zu durchsuchende Liste
 
 Insgesamt steht hier also als Anweisung:
-Suche alle _Ways_ (``way``) innerhalb der Bounding-Box (``({{bbox}})``) mit _Value_ ``steps`` zum Key ``highway``,
-die zum Key ``level`` als Semikolon-getrennte Liste aufgefasst den Wert ``-2`` als Eintrag enthalten.
+Suche alle _Ways_ (`way`) innerhalb der Bounding-Box (`({{bbox}})`) mit _Value_ `steps` zum _Key_ `highway`,
+die zum Key `level` als Semikolon-getrennte Liste aufgefasst den Wert `-2` als Eintrag enthalten.
 
-Alle Semikolon-verarbeitenden Funktionen beginnen mit dem Präfix ``lrs_``;
+Alle Semikolon-verarbeitenden Funktionen beginnen mit dem Präfix `lrs_`;
 dieses steht für _List represented sets_ (durch Listen dargestellte Mengen).
 
-Der Filter ``(if:...)`` ist allerdings ein sogennanter _schwacher_ Filter
+Der Filter `(if:...)` ist allerdings ein sogennanter _schwacher_ Filter
 und kann nicht alleine als einziger Filter stehen, da dafür weltweit alle Objekte inspiziert werden müssten.
-Der folgende Versuch  weltweit zu suchen führt also [zu einer Fehlermeldung](https://overpass-turbo.eu/?lat=51.512&lon=-0.0875&zoom=17&Q=way%28if%3Alrs%5Fin%28%22%2D2%22%2Ct%5B%22level%22%5D%29%29%3B%0Aout%20center%3B):
+Der folgende Versuch  weltweit zu suchen führt also [zu einer Fehlermeldung](https://overpass-turbo.eu/?lat=51.512&lon=-0.0875&zoom=17&Q=CGI_STUB):
 
     way(if:lrs_in("-2",t["level"]));
     out center;
 
 Für die meisten Anwendungsfälle ist das kein Problem,
 denn es liegt schon über die Bounding-Box oder ein anderes räumliches Kriterium ein starker Filter vor.
-Für die meisten übrigen Fälle reicht dann der Filter ``[level]`` nach [nur dem Tag](todo.md) als zusätzlicher Filter.
-Für ``level`` speziell ist das Vorgehen nicht sinnvoll,
+Für die meisten übrigen Fälle reicht dann der Filter `[level]` nach [nur dem Tag](todo.md) als zusätzlicher Filter.
+Für `level` speziell ist das Vorgehen nicht sinnvoll,
 da wegen der hohen Häufigkeit dann immer noch sehr viele Objekte inspiziert werden müssen.
 Die Datenmenge ist dann zuletzt eine Herausforderung für den Browser:
+<!-- NO_QL_LINK -->
 
     way[level](if:lrs_in("-2",t["level"]));
     out center;
@@ -127,29 +128,29 @@ Die Datenmenge ist dann zuletzt eine Herausforderung für den Browser:
 Für andere Tags kann das dagegen eine angemessene Lösung sein.
 
 Wenn wir umgekehrt alle Treppen ausblenden wollen, die auf Ebene -2 enden,
-dann können wir dies direkt am Evaluator durch ``!`` für logische Verneinung [tun](https://overpass-turbo.eu/?lat=51.512&lon=-0.0875&zoom=17&Q=way%5Bhighway%3Dsteps%5D%28%7B%7Bbbox%7D%7D%29%0A%20%20%28if%3A%21lrs%5Fin%28%22%2D2%22%2Ct%5B%22level%22%5D%29%29%3B%0Aout%20center%3B):
+dann können wir dies direkt am Evaluator durch `!` für logische Verneinung [tun](https://overpass-turbo.eu/?lat=51.512&lon=-0.0875&zoom=17&Q=CGI_STUB):
 
     way[highway=steps]({{bbox}})
       (if:!lrs_in("-2",t["level"]));
     out center;
 
 Allerdings sollten wir dann darüber nachdenken,
-ob wir Treppen auswählen wollen, die gar kein Tag _level_ gesetzt haben. Nur Treppen [mit _level_](https://overpass-turbo.eu/?lat=51.512&lon=-0.0875&zoom=17&Q=way%5Bhighway%3Dsteps%5D%28%7B%7Bbbox%7D%7D%29%0A%20%20%28if%3A%21lrs%5Fin%28%22%2D2%22%2Ct%5B%22level%22%5D%29%29%0A%20%20%5Blevel%5D%3B%0Aout%20center%3B):
+ob wir Treppen auswählen wollen, die gar kein Tag _level_ gesetzt haben. Nur Treppen [mit _level_](https://overpass-turbo.eu/?lat=51.512&lon=-0.0875&zoom=17&Q=CGI_STUB):
 
     way[highway=steps]({{bbox}})
       (if:!lrs_in("-2",t["level"]))
       [level];
     out center;
 
-Der hierbei neu verwendete Filter ``[level]`` wird im [folgenden Abschnitt](misc_criteria.md#per_key) detailliert diskutiert.
+Der hierbei neu verwendete Filter `[level]` wird im [folgenden Abschnitt](misc_criteria.md#per_key) detailliert diskutiert.
 
 <a name="multiple"/>
 ## Mehrere Werte finden
 
 Wir wollen nun in London ein Restaurant mit landestypischer Küche finden.
-Dabei ist nicht so klar, ob wir nun nach ``british``, nach ``english`` oder nach ``regional`` suchen sollten.
+Dabei ist nicht so klar, ob wir nun nach `british`, nach `english` oder nach `regional` suchen sollten.
 
-Im Prinzip könnten wir dies mit einem [Union](union.md#union) über [alle möglichen Werte](https://overpass-turbo.eu/?lat=51.512&lon=-0.0875&zoom=14&Q=%28%0A%20%20nwr%5Bcuisine%5D%28%7B%7Bbbox%7D%7D%29%0A%20%20%20%20%28if%3Alrs%5Fin%28%22english%22%2Ct%5B%22cuisine%22%5D%29%29%3B%0A%20%20nwr%5Bcuisine%5D%28%7B%7Bbbox%7D%7D%29%0A%20%20%20%20%28if%3Alrs%5Fin%28%22british%22%2Ct%5B%22cuisine%22%5D%29%29%3B%0A%20%20nwr%5Bcuisine%5D%28%7B%7Bbbox%7D%7D%29%0A%20%20%20%20%28if%3Alrs%5Fin%28%22regional%22%2Ct%5B%22cuisine%22%5D%29%29%3B%0A%29%3B%0Aout%20center%3B) lösen:
+Im Prinzip könnten wir dies mit einem [Union](union.md#union) über [alle möglichen Werte](https://overpass-turbo.eu/?lat=51.512&lon=-0.0875&zoom=14&Q=CGI_STUB) lösen:
 
     (
       nwr[cuisine]({{bbox}})
@@ -164,30 +165,30 @@ Im Prinzip könnten wir dies mit einem [Union](union.md#union) über [alle mögl
 Das wird aber schnell unhandlich,
 und zwar sowohl bei einer größeren Zahl Werte als auch bei anderen Gründen für eine Oder-Verknpüfung.
 
-Wir nutzen daher die Semikolon-verarbeitende Funktion ``lrs_isect`` (von _intersection_ d.h. Schnittmenge),
-die die gemeinsamen Werte zweier Semikolon-Listen [findet](https://overpass-turbo.eu/?lat=51.512&lon=-0.0875&zoom=14&Q=nwr%5Bcuisine%5D%28%7B%7Bbbox%7D%7D%29%0A%20%20%20%28if%3Alrs%5Fisect%28t%5B%22cuisine%22%5D%2C%22english%3Bbritish%3Bregional%22%29%29%3B%0Aout%20center%3B):
+Wir nutzen daher die Semikolon-verarbeitende Funktion `lrs_isect` (von _intersection_ d.h. Schnittmenge),
+die die gemeinsamen Werte zweier Semikolon-Listen [findet](https://overpass-turbo.eu/?lat=51.512&lon=-0.0875&zoom=14&Q=CGI_STUB):
 
     nwr[cuisine]({{bbox}})
        (if:lrs_isect(t["cuisine"],"english;british;regional"));
     out center;
 
-Interessant ist am Request der Filter ``(if:lrs_isect(t["cuisine"],"english;british;regional")`` in Zeile 2:
-Dort wertet per Element ``(if:...)`` darauf aus,
-ob ein Wert verschieden von ``0``, ``false`` und dem leeren Wert ermittelt wird.
-Der Evaluator ``lrs_isect(t["cuisine"],"english;british;regional")`` hat wieder zwei Argumente,
+Interessant ist am Request der Filter `(if:lrs_isect(t["cuisine"],"english;british;regional")` in Zeile 2:
+Dort wertet per Element `(if:...)` darauf aus,
+ob ein Wert verschieden von `0`, `false` und dem leeren Wert ermittelt wird.
+Der Evaluator `lrs_isect(t["cuisine"],"english;british;regional")` hat wieder zwei Argumente,
 die er beide als Listen auffasst
 (eine Liste ohne Semikolon ist eine Liste mit dem Value als einzigem Eintrag).
 Er liefert die Einträge zurück, die in beiden Listen vorkommen;
 also genau dann einen nichtleeren Wert,
-wenn mindestens einer der Werte ``english``, ``british`` oder ``regional`` im Value zum Key ``cuisine`` vorkommt.
+wenn mindestens einer der Werte `english`, `british` oder `regional` im Value zum Key `cuisine` vorkommt.
 
-Ein vollständiger Request wird daraus, indem der Filter zusammen mit den Filtern auf die Bounding-Box und dem Filter auf den Key ``cuisine`` die zu selektierenden Objekte beschränkt.
+Ein vollständiger Request wird daraus, indem der Filter zusammen mit den Filtern auf die Bounding-Box und dem Filter auf den Key `cuisine` die zu selektierenden Objekte beschränkt.
 In Zeile 3 wird ausgegeben.
 
-Auch ``lrs_isect`` lässt sich verneinen, um logisch Wahr genau dann zu erhalten,
-wenn ``lrs_isect`` eine leere Liste geliefert hat.
+Auch `lrs_isect` lässt sich verneinen, um logisch Wahr genau dann zu erhalten,
+wenn `lrs_isect` eine leere Liste geliefert hat.
 
-Zu Illustration tabellieren wir [alle hier vorkommenden Werte](https://overpass-turbo.eu/?lat=51.512&lon=-0.0875&zoom=14&Q=%5Bout%3Acsv%28cuisine%2C%20isect%2C%20negated%29%5D%3B%0Anwr%5Bcuisine%5D%28%7B%7Bbbox%7D%7D%29%3B%0Afor%20%28t%5B%22cuisine%22%5D%29%0A%7B%0A%20%20make%20info%20cuisine%3D%5F%2Eval%2C%0A%20%20%20%20isect%3D%22%7B%22%2Blrs%5Fisect%28%5F%2Eval%2C%22english%3Bbritish%3Bregional%22%29%2B%22%7D%22%2C%0A%20%20%20%20negated%3D%22%7B%22%2B%21lrs%5Fisect%28%5F%2Eval%2C%22english%3Bbritish%3Bregional%22%29%2B%22%7D%22%3B%0A%20%20out%3B%0A%7D):
+Zu Illustration tabellieren wir [alle hier vorkommenden Werte](https://overpass-turbo.eu/?lat=51.512&lon=-0.0875&zoom=14&Q=CGI_STUB):
 
     [out:csv(cuisine, isect, negated)];
     nwr[cuisine]({{bbox}});
@@ -200,12 +201,12 @@ Zu Illustration tabellieren wir [alle hier vorkommenden Werte](https://overpass-
     }
 
 Die Details der Syntax werden im Kaptiel [Daten analysieren](../analysis/index.md) erklärt.
-Die Spalte ``cuisine`` enthält den jeweiligen Value des Tags _cuisine_.
-Die Spalte ``isect`` enthält, was ``lrs_isect(_.val,"english;british;regional")`` daraus macht.
+Die Spalte `cuisine` enthält den jeweiligen Value des Tags _cuisine_.
+Die Spalte `isect` enthält, was `lrs_isect(_.val,"english;british;regional")` daraus macht.
 Für nichtleere Werte müssen Sie ein wenig scrollen,
-aber spätestens bei den mit ``british`` beginnenden Einträgen gibt es sie.
-Die Spalte ``negated`` enthält, was der Negationsoperator ``!`` aus dem jeweiligen Eintrag bei ``isect`` macht.
-Der leere Eintrag liefert ``1``, ein wie auch immer gefüllter Eintrag liefert ``0``.
+aber spätestens bei den mit `british` beginnenden Einträgen gibt es sie.
+Die Spalte `negated` enthält, was der Negationsoperator `!` aus dem jeweiligen Eintrag bei `isect` macht.
+Der leere Eintrag liefert `1`, ein wie auch immer gefüllter Eintrag liefert `0`.
 
 <a name="all"/>
 ## Alle Werte
