@@ -17,10 +17,10 @@ Ein [Beispiel](https://overpass-turbo.eu/?lat=51.482&lon=-0.0&zoom=17&Q=CGI_STUB
     nwr[railway]({{bbox}});
     out geom;
 
-Der Filter ``[railway]`` lässt dabei nur Objekte zu, die ein Tag ``railway`` mit einem beliebigen Value tragen.
-Er ist hier kombiniert mit einem Key ``({{bbox}})``,
+Der Filter `[railway]` lässt dabei nur Objekte zu, die ein Tag `railway` mit einem beliebigen Value tragen.
+Er ist hier kombiniert mit einem Key `({{bbox}})`,
 so dass genau solche Objekte gefunden werden,
-die sowohl ein Tag mit Key ``railway`` besitzen
+die sowohl ein Tag mit Key `railway` besitzen
 als auch innerhalb der von [Overpass Turbo](../targets/turbo.md#convenience) übermittelten Bounding-Box liegen.
 
 Dabei kann jeder beliebige Key durch eckige Klammer als Filterbedingung genutzt werden.
@@ -40,11 +40,11 @@ Es können auch mehrere solche Filter [kombiniert werden](https://overpass-turbo
 Hier interessieren wir uns nur für Objekte,
 die sowohl eine Hausnummer als auch einen Straßennamen für die Adresse tragen.
 Dafür selektiert das Query-Statement in Zeile 1 genau solche Objekte,
-die ein Tag mit Key ``addr:housenumber`` und zusätzlich ein Tag mit Key ``addr:street`` besitzen.
+die ein Tag mit Key `addr:housenumber` und zusätzlich ein Tag mit Key `addr:street` besitzen.
 
 Da es zudem möglich ist, die Bedingung zu verneinen,
 ist auf diesem Wege auch die Suche nach bearbeitungsbedürftigen Objekten möglich.
-Wir suchen Objekte, die ein Tag mit Key ``addr:housenumber`` aber kein Tag zum Key ``addr:street`` [tragen](https://overpass-turbo.eu/?lat=51.482&lon=-0.0&zoom=15&Q=CGI_STUB):
+Wir suchen Objekte, die ein Tag mit Key `addr:housenumber` aber kein Tag zum Key `addr:street` [tragen](https://overpass-turbo.eu/?lat=51.482&lon=-0.0&zoom=15&Q=CGI_STUB):
 
     nwr["addr:housenumber"][!"addr:street"]({{bbox}});
     out geom;
@@ -75,11 +75,11 @@ Hier [für Ways](https://overpass-turbo.eu/?lat=51.482&lon=-0.0&zoom=15&Q=CGI_ST
 
 Beide Requests sind aber weniger nützlich als sie aussehen:
 Es gibt einerseits uninformative Tags
-(``created_by`` an Nodes, Ways oder Relations ist misbilligt, kann aber durchaus noch existieren)
+(`created_by` an Nodes, Ways oder Relations ist misbilligt, kann aber durchaus noch existieren)
 andererseits können Objekte zu Relationen gehören.
 
 Für Ways und Relations lässt sich auch die Anzahl der Member zählen, damit rechnen und vergleichen.
-Auch gibt es umfassende Beispiele im Kapitel [Objekte zählen](../counting/index.md).
+Auch dafür gibt es umfassende Beispiele im Kapitel [Objekte zählen](../counting/index.md).
 
 Wir können Ways [mit besonders vielen Members](https://overpass-turbo.eu/?lat=51.482&lon=-0.0&zoom=15&Q=CGI_STUB) finden:
 
@@ -87,7 +87,7 @@ Wir können Ways [mit besonders vielen Members](https://overpass-turbo.eu/?lat=5
     out geom;
 
 Oder Relationen darauf prüfen, ob alle Member plausible Rollen haben.
-Dazu verwenden wir den Evaluator ``count_by_role`` zusätzlich zum Evaluator ``count_members``,
+Dazu verwenden wir den Evaluator `count_by_role` zusätzlich zum Evaluator `count_members`,
 um dies für Abbiegebeschränkungen [anzuzeigen](https://overpass-turbo.eu/?lat=51.482&lon=-0.0&zoom=12&Q=CGI_STUB):
 
     rel[type=restriction]({{bbox}})
@@ -110,7 +110,7 @@ Ways oder Relations anhand ihrer Länge zu selektieren.
 Die Länge wird immer in Metern ausgewiesen.
 
 Ein zur Qualitätssicherung genutzes Beispiel sind Schornsteine gewesen,
-da das zugehörige Tag ``building=chimney`` gelegentlich für das gesamte Industriegebäude genutzt worden ist.
+da das zugehörige Tag `building=chimney` gelegentlich für das gesamte Industriegebäude genutzt worden ist.
 Wir suchen daher weltweit alle Schornsteine mit einem [Umfang von mehr als 62 Metern](https://overpass-turbo.eu/?lat=30.0&lon=-0.0&zoom=1&Q=CGI_STUB):
 
     way[building=chimney](if:length()>62);
@@ -134,9 +134,9 @@ aber aus Bequemlichkeit sei ein Ansatz für 2km Mindestlänge [hier skizziert](h
     }
 
 Zeilen 3 bis 10 sind eine Schleife,
-in der die Auswahl aus Zeile 2, nämlich alle Ways mit Keys ``highway`` und ``name``,
-nach ``name`` gruppiert werden.
-Daher können in Zeile 5 mit dem Ausdruck ``sum(length())`` die Länge aller Objekte jeweils eines Namens summiert werden.
+in der die Auswahl aus Zeile 2, nämlich alle Ways mit Keys `highway` und `name`,
+nach `name` gruppiert werden.
+Daher können in Zeile 5 mit dem Ausdruck `sum(length())` die Länge aller Objekte jeweils eines Namens summiert werden.
 In Zeile 6 bis 9 schreiben wir dann nur dann eine Ausgabe, wenn die dabei erreichte Länge 2000 Meter übersteigt.
 
 Ein Ansatz, der auch etwas anzeigt, ist dabei schwierig,
@@ -152,13 +152,13 @@ Es ist möglich, direkt per Typ und Id nach einem Objekt zu suchen,
     node(1);
     out;
 
-Dazu stehen sowohl der gezeigte Filter ``(...)`` mit der Id zwischen den Klammern
-als auch Evaluators ``id()`` und ``type()`` zur Verfügung.
+Dazu stehen sowohl der gezeigte Filter `(...)` mit der Id zwischen den Klammern
+als auch Evaluators `id()` und `type()` zur Verfügung.
 Direkte Anwendungsfälle sind mir nicht bekannt,
 aber einige größere Funktionen bei der [Datenanalyse](../analysis/index.md) nutzen diese Funktionalität.
 
 Für die Version steht dagegen nur ein Evaluator zur Verfügung,
-da ein Filter ohnehin nicht alleine stehen könnte.
+da ein Filter alleine ohnehin zu irrsinnigen Datenmengen führen würde.
 
 Ein beliebter Anwendungsfall ist es, unsinnige oder unzulässige Uploads zu identifizieren.
 Dazu kann es helfen, alle Objekte der Version 1 in einer Bounding-Box [auszuwählen](https://overpass-turbo.eu/?lat=51.478&lon=-0.0&zoom=17&Q=CGI_STUB):
@@ -167,16 +167,16 @@ Dazu kann es helfen, alle Objekte der Version 1 in einer Bounding-Box [auszuwäh
       (if:version()==1);
     out center;
 
-Dazu wird hier in Zeile 2 der Evaluator ``version()`` genutzt.
+Dazu wird hier in Zeile 2 der Evaluator `version()` genutzt.
 Wie bei allen _Evaluators_ als _Filter_ geschieht dies,
-indem im Rahmen des Filters ``(if:...)`` der Wert des Evaulators mit einem anderen Wert (hier ``1``) verglichen wird.
+indem im Rahmen des Filters `(if:...)` der Wert des Evaulators mit einem anderen Wert (hier `1`) verglichen wird.
 
-Auch für Timestamps steht im Wesentlichen ein Evaluator zur Verfügung, und zwar ``timestamp()``.
-Es gibt zwar einen Filter ``(changed:...)``,
+Auch für Timestamps steht im Wesentlichen ein Evaluator zur Verfügung, und zwar `timestamp()`.
+Es gibt zwar einen Filter `(changed:...)`,
 aber dieser ist für den Einsatz [mit Attic-Data](../analysis/index.md) bestimmt.
 
-Der Evaluator ``timestamp()`` liefert stets ein Datum im [internationalen Datumsformat](https://de.wikipedia.org/wiki/ISO_8601),
-z.B. ``2012-09-13`` für den 13. September 2012.
+Der Evaluator `timestamp()` liefert stets ein Datum im [internationalen Datumsformat](https://de.wikipedia.org/wiki/ISO_8601),
+z.B. `2012-09-13` für den 13. September 2012.
 Es sollte daher auch stets gegen ein Datum im ISO-Format verglichen werden.
 Wir listen z.B. alle nahe Greenwich [zuletzt vor dem 13. September 2012](https://overpass-turbo.eu/?lat=51.478&lon=-0.0&zoom=16&Q=CGI_STUB) geänderten Objekte auf:
 
