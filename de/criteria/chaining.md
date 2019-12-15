@@ -134,7 +134,7 @@ Das ganze funktioniert auch [mit Relations](https://overpass-turbo.eu/?lat=53.65
 ## Benutzte Objekte
 
 Einer völlig anderen Anwendung für Verkettung sind wir in Abschnitten [Relationen](../full_data/osm_types.md#rels) und [Relationen auf Relationen](../full_data/osm_types.md#rels_on_rels) in [Geometrien](../full_data/osm_types.md) begegnet:
-Da das traditionelle OSM-Datenmodell Koordinaten nur auf Nodes zulässt,
+Da das traditionelle OSM-Datenmodell Koordinaten nur auf _Nodes_ zulässt,
 aber auch an den anderen Objekten ihre Geometrie interessant ist,
 müssen im traditionellen OSM-Datenmodell _Ways_ und _Relations_ um die jeweiligen Hilfsobjekte ergänzt werden.
 
@@ -172,7 +172,7 @@ d.h. von einer oder mehreren _Relations_ in der Eingabe referenziert werden.
 Als Ergebnis schreibt es diese Ways nun in das Set `_`.
 Das Block-Statement _Union_ behält gemäß seiner Semantik eine Kopie davon für sein Ergebnis.
 
-Zeile 5 `node(w)` findet  also die Ways aus Zeile 4 als Eingabe im Set `_` vor.
+Zeile 5 `node(w)` findet also die Ways aus Zeile 4 als Eingabe im Set `_` vor.
 Es sucht nach _Nodes_, die dem Filter `(w)` genügen,
 d.h. von einer oder mehreren _Ways_ in der Eingabe referenziert werden.
 Als Ergebnis schreibt es diese Ways zwar in das Set `_`,
