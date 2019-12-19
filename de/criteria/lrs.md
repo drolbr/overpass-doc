@@ -127,6 +127,8 @@ Die Datenmenge ist dann zuletzt eine Herausforderung für den Browser:
 
 Für andere Tags kann das dagegen eine angemessene Lösung sein.
 
+Der hierbei neu verwendete Filter `[level]` wird im [folgenden Abschnitt](misc_criteria.md#per_key) detailliert diskutiert.
+
 Wenn wir umgekehrt alle Treppen ausblenden wollen, die auf Ebene -2 enden,
 dann können wir dies direkt am Evaluator durch `!` für logische Verneinung [tun](https://overpass-turbo.eu/?lat=51.512&lon=-0.0875&zoom=17&Q=CGI_STUB):
 
@@ -141,8 +143,6 @@ ob wir Treppen auswählen wollen, die gar kein Tag _level_ gesetzt haben. Nur Tr
       (if:!lrs_in("-2",t["level"]))
       [level];
     out center;
-
-Der hierbei neu verwendete Filter `[level]` wird im [folgenden Abschnitt](misc_criteria.md#per_key) detailliert diskutiert.
 
 <a name="multiple"/>
 ## Mehrere Werte finden

@@ -129,6 +129,8 @@ Finally, the amount of data is a challenge for the browser:
 
 By contrast, for other tags this can be an appropriate solution.
 
+The filter `[level]` used here for the first time is elaborated on in the [following section](misc_criteria.md#per_key).
+
 If we conversely want to hide all stairs that end on level `-2`
 then we [can request a logical negation](https://overpass-turbo.eu/?lat=51.512&lon=-0.0875&zoom=17&Q=CGI_STUB): by placing a shrek `!` in front of the evaluator:
 
@@ -144,8 +146,6 @@ Only stairs [with _level_](https://overpass-turbo.eu/?lat=51.512&lon=-0.0875&zoo
       (if:!lrs_in("-2",t["level"]))
       [level];
     out center;
-
-The filter `[level]` used here for the first time is elaborated on in the [following section](misc_criteria.md#per_key).
 
 <a name="multiple"/>
 ## Searching for Multiple Values
