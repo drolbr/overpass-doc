@@ -28,7 +28,7 @@ It would make sense to replace that statement by a filter in the transition proc
 
 But please do not understand this notice as an announcement.
 There are many more pressing issues in the project,
-thus is change may not happen anytime soon.
+thus this change may not happen anytime soon.
 
 <a name="per_tag"/>
 ## per Name or per Tag

@@ -6,47 +6,45 @@ Requêtes sur des objets via des attributs multiples.
 <a name="intersection"/>
 ## Opération ET
 
-...
-<!--
-Zunächst wollen wir zwei oder mehr Bedingungen so verknüpfen,
-dass nur Objekte gefunden werden, die alle Bedingungen erfüllen.
-Einige Beispiele für Und-Verknüpfungen haben wir bereits gesehen:
-[Tag und Bounding-Box](per_tag.md#local),
-[Tag und Gebiet, Tag und zwei Gebiete sowie zwei Tags](chaining.md#lateral)
+Tout d'abord, nous voulons lier deux ou plusieurs conditions de cette façon
+que seuls les objets qui remplissent toutes les conditions sont trouvés.
+Nous avons déjà vu quelques exemples de liens ET:
+[un attribut et un rectangle englobant](per_tag.md#local),
+[un attribut et une surface, un attribut et deux surfaces et deux attributs](chaining.md#lateral)
 
-Wir arbeiten und an dem Standardfall entlang,
-einen Geldautomaten finden zu wollen.
-Es gibt dafür das Tag ``amenity`` mit Wert ``atm``.
-Wegen der großen Anzahl hat das [Beispiel](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=nwr%5Bamenity%3Datm%5D%28%7B%7Bbbox%7D%7D%29%3B%0Aout%20center%3B) eine kleine Bounding-Box:
+Nous travaillons sur la mission assez typique
+de trouver un distributeur de billets.
+Il y a l'attribut `amenity` avec la valeur `atm` pour ce but.
+En raison du grand nombre, l'[exemple](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=CGI_STUB) a un petit rectangle englobant:
 
     nwr[amenity=atm]({{bbox}});
     out center;
 
-Es werden also ein Filter nach einem Tag (hier ``amenity=atm``) mit einem Filter nach einer Bounding-Box kombiniert,
-indem man beide Filter einfach hintereinander schreibt.
+Ainsi, un filtre après un attribut (ici `amenity=atm`) est combiné avec un filtre après un rectangle englobant,
+en écrivant simplement les deux filtres l'un après l'autre.
 
-Die Reihenfolge spielt dabei [keine Rolle](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=nwr%28%7B%7Bbbox%7D%7D%29%5Bamenity%3Datm%5D%3B%0Aout%20center%3B):
+L'ordre [n'a pas d'importance](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=CGI_STUB):
 
     nwr({{bbox}})[amenity=atm];
     out center;
 
-Es gibt aber eine weitere Möglichkeit Geldautomaten einzutragen:
-Oft sind sie Bestandteil einer Bankfiliale;
-sie werden dann als [Eigenschaft der Filiale](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=nwr%5Bamenity%3Dbank%5D%28%7B%7Bbbox%7D%7D%29%5Batm%3Dyes%5D%3B%0Aout%20center%3B) eingetragen:
+Mais il existe une autre possibilité d'enregistrer les distributeurs automatiques de billets:
+Ils font souvent partie d'une succursale bancaire;
+ils sont ensuite saisis en tant que [propriété de la succursale](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=CGI_STUB):
 
     nwr[amenity=bank]({{bbox}})[atm=yes];
     out center;
 
-Wie in allen anderen Beispielen können auch hier die Filter innerhalb der _Query_-Anweisung [beliebig gereiht](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=nwr%5Batm%3Dyes%5D%5Bamenity%3Dbank%5D%28%7B%7Bbbox%7D%7D%29%3B%0Aout%20center%3B) werden:
+Comme dans tous les autres exemples, les filtres peuvent être disposés [dans n'importe quel ordre](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=CGI_STUB) dans l'instruction _query_:
 
     nwr[atm=yes][amenity=bank]({{bbox}});
     out center;
 
-Wie man beide Mapping-Arten kombiniert, wird im [nächsten Abschnitt](union.md#union) erläutert.
-Erst soll noch klargestellt werden,
-dass beliebig viele Tags oder sonstige Kriterien kombiniert werden können:
-Lassen Sie zum Ausprobieren [im folgenden Beispiel](https://overpass-turbo.eu/?lat=50.95&lon=6.95&zoom=9&Q=way%0A%20%20%5Bname%3D%22Venloer%20Stra%C3%9Fe%22%5D%0A%20%20%5Bref%3D%22B%2059%22%5D%0A%20%20%2850%2E96%2C6%2E85%2C50%2E98%2C6%2E88%29%0A%20%20%5Bmaxspeed%3D50%5D%0A%20%20%5Blanes%3D2%5D%0A%20%20%5Bhighway%3Dsecondary%5D%0A%20%20%5Boneway%3Dyes%5D%3B%0Aout%20geom%3B) mal ein oder mehrere Filter weg;
-es wird sich immer das Ergebnis ändern, da jeder der sechs Tag-Filter und auch die Bounding-Box Einfluss hat:
+La façon de combiner les deux types de cartographie est expliquée dans [la section suivante](union.md#union).
+Tout d'abord, il sera clarifié,
+qu'un nombre quelconque d'attributs ou d'autres critères peuvent être combinés:
+Dans l'[exemple suivant](https://overpass-turbo.eu/?lat=50.95&lon=6.95&zoom=9&Q=CGI_STUB), omettez un ou plusieurs filtres pour l'essayer;
+le résultat changera toujours, parce que chacun des six filtres d'attributs et du rectangle englobant a une influence:
 
     way
       [name="Venloer Straße"]
@@ -58,47 +56,44 @@ es wird sich immer das Ergebnis ändern, da jeder der sechs Tag-Filter und auch 
       [oneway=yes];
     out geom;
 
-Auf überraschende Weise trifft das übrigens auch auf unser Geldautomaten-Beispiel zu:
-Oft reicht es, gezielt nach einem speziellen Tag zu suchen,
-denn an allen Objekten mit dem speziellen Tag steht auch das allgemeine Tag:
+Étonnamment, cela s'applique également à notre exemple de guichet automatique bancaire:
+Il suffit souvent de chercher un attribut subordonné,
+parce que sur tous les objets avec l'attribut subordonné il y a aussi l'attribut général:
 
-* An über 95% aller Objekte mit einem Tag ``admin_level`` steht [laut Taginfo](https://taginfo.openstreetmap.org/tags/boundary=administrative#combinations) (Zahl und Balken in den Spalten ganz rechts) das Tag ``boundary=administrative``.
-* An über 99% aller Objekte mit einem Tag ``fence_type`` steht [laut Taginfo](https://taginfo.openstreetmap.org/tags/barrier=fence#combinations) das Tag ``barrier=fence``.
+* Sur plus de 95% de tous les objets avec un attribut `admin_level` il y a l'attribut `boundary=administrative` selon [Taginfo](https://taginfo.openstreetmap.org/tags/boundary=administrative#combinations) (nombre et barre dans les colonnes à droite).
+* Plus de 99% de tous les objets avec un attribut `fence_type` ont l'attribut `barrier=fence` selon [Taginfo](https://taginfo.openstreetmap.org/tags/fence_type=wood#combinations).
 
-Eine [Suche nach](https://overpass-turbo.eu/?lat=51.473&lon=0.0&zoom=14&Q=nwr%5Bbarrier%3Dfence%5D%5Bfence%5Ftype%3Dwood%5D%28%7B%7Bbbox%7D%7D%29%3B%0Aout%20geom%3B) Zäunen (``barrier=fence``) mit Eigenschaft ``fence_type=wood`` liefert dann auch praktisch das gleiche Ergebnis ...
+Une [recherche](https://overpass-turbo.eu/?lat=51.473&lon=0.0&zoom=14&Q=CGI_STUB) de clôtures (`barrier=fence`) avec l'attribut `fence_type=wood` fournit alors pratiquement le même résultat ...
 
     nwr[barrier=fence][fence_type=wood]({{bbox}});
     out geom;
 
-... wie eine [Suche nach](https://overpass-turbo.eu/?lat=51.473&lon=0.0&zoom=14&Q=nwr%5Bfence%5Ftype%3Dwood%5D%28%7B%7Bbbox%7D%7D%29%3B%0Aout%20geom%3B) nur ``fence_type=wood``:
+... comme une [recherche](https://overpass-turbo.eu/?lat=51.473&lon=0.0&zoom=14&Q=CGI_STUB) à seulement `fence_type=wood`:
 
     nwr[fence_type=wood]({{bbox}});
     out geom;
 
-Bei den Geldautomaten haben wir dagegen mehr Treffer,
-wenn wir nur nach ``atm=yes`` [suchen](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=nwr%5Batm%3Dyes%5D%28%7B%7Bbbox%7D%7D%29%3B%0Aout%20center%3B):
+Au contraire, on a plus de résultats sur les distributeurs de billets,
+[si on cherche](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=CGI_STUB) juste `atm=yes`:
 
     nwr[atm=yes]({{bbox}});
     out center;
 
-Fachlich ist das durchaus überzeugend:
-Geldautomaten können eben auch an Tankstellen, in Einkaufszentren oder anderen Gebäuden stehen.
--->
+D'un point de vue sémantique, c'est très convaincant:
+Les distributeurs automatiques de billets peuvent également être installés dans les stations-service, les centres commerciaux ou d'autres bâtiments.
 
 <a name="union"/>
 ## Opération OU
 
-...
-<!--
-Wir wollen nun zwei oder mehr Bedingungen so verknüpfen,
-dass alle Objekte gefunden werden, die mindestens eine der Bedingungen erfüllen.
-Auch hier haben wir schon einige Beispiele gesehen:
-[Alle Objekte in Bounding-Boxen](../targets/formats.md#faithful),
-[Ergänzung benutzter Objekte](chaining.md#topdown),
-[Als Beispiel eines Block-Statements](../preface/design.md#block_statements)
+Nous voulons maintenant lier deux ou plusieurs conditions de cette façon,
+que tous les objets qui remplissent au moins une des conditions sont trouvés.
+Nous en avons déjà vu quelques exemples ici aussi:
+[Tous les objets dans des rectangles englobants](../targets/formats.md#faithful),
+[compléter les objets avec les objets usagés](chaining.md#topdown),
+[comme exemple d'instruction de bloc](../preface/design.md#block_statements)
 
-Für unser Beispiel von oben müssen wir das Problem lösen,
-sowohl alleine stehende Geldautomaten als auch solche in Banken [zu finden](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=%28%0A%20%20nwr%5Bamenity%3Datm%5D%28%7B%7Bbbox%7D%7D%29%3B%0A%20%20nwr%5Batm%3Dyes%5D%28%7B%7Bbbox%7D%7D%29%3B%0A%29%3B%0Aout%20center%3B):
+Pour notre exemple d'en haut, nous devons résoudre le problème,
+pour trouver [à la fois](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=CGI_STUB) les guichets automatiques autonomes et ceux des banques:
 
     (
       nwr[amenity=atm]({{bbox}});
@@ -106,25 +101,26 @@ sowohl alleine stehende Geldautomaten als auch solche in Banken [zu finden](http
     );
     out center;
 
-Unsere Verknpüfung übernimmt das _Union_-Statement in den Zeilen 1 bis 4.
-Es führt seinen inneren Block aus.
-Zeile 2 schreibt als Ergebnis in das Set ``_`` alle Objekte,
-die ein Tag ``amenity`` mit Wert ``atm`` haben und in der von [Overpass-Turbo](../targets/turbo.md#convenience) befüllten Bounding-Box liegen.
-_Union_ behält eine Kopie dieses Ergebnisses.
-Zeile 3 schreibt als Ergebnis in das Set ``_`` alle Objekte,
-die ein Tag ``atm`` mit Wert ``yes`` haben und in der erneut von _Overpass-Turbo_ befüllten Bounding-Box liegen.
-Danach schreibt _Union_ ins Set ``_`` als Ergebnis alle Objekte,
-die in mindestens einem der Teilergebnisse vorkommen - die gewünschte _Oder-Verknüpfung_.
+L'opération OU reprend l'instruction de bloc _union_ aux lignes 1 à 4.
+Elle exécute son bloc intérieur.
+L'instruction dans la ligne 2 écrit comme résultat tous les objets dans l'ensemble `_`,
+qui ont un attribut `amenity` avec la valeur `atm` et qui sont situés dans le rectangle englobant remplie par Overpass Turbo.
+L'instruction _union_ conserve une copie de ce résultat.
+La ligne 3 écrit comme résultat tous les objets dans l'ensemble `_`,
+qui portent un attribut `atm` avec la valeur `yes` et qui sont situés dans le rectangle englobant à nouveau remplis par Overpass-Turbo.
+L'instruction _union_ conserve une copie de ce résultat.
+Union écrit alors tous les objets dans l'ensemble `_`,
+qui apparaissent dans au moins un des résultats partiels - la liaison OU souhaitée.
 
-Ein gängiger Fall ist es,
-eine recht lange Liste an Werten eines Tags prüfen zu müssen.
-Möchte man z.B. alle PKW-tauglichen Straßen finden,
-so entsteht an Werten für ``highway`` eine Liste der Art
-``motorway``, ``motorway_link``,
-``trunk``, ``trunk_link``,
-``primary``, ``secondary``, ``tertiary``,
-``unclassified``, ``residential``.
-Mit _Union_ kann man dies [abfragen als](https://overpass-turbo.eu/?lat=51.473&lon=0.0&zoom=15&Q=%28%0A%20%20way%5Bhighway%3Dmotorway%5D%28%7B%7Bbbox%7D%7D%29%3B%0A%20%20way%5Bhighway%3Dmotorway%5Flink%5D%28%7B%7Bbbox%7D%7D%29%3B%0A%20%20way%5Bhighway%3Dtrunk%5D%28%7B%7Bbbox%7D%7D%29%3B%0A%20%20way%5Bhighway%3Dtrunk%5Flink%5D%28%7B%7Bbbox%7D%7D%29%3B%0A%20%20way%5Bhighway%3Dprimary%5D%28%7B%7Bbbox%7D%7D%29%3B%0A%20%20way%5Bhighway%3Dsecondary%5D%28%7B%7Bbbox%7D%7D%29%3B%0A%20%20way%5Bhighway%3Dtertiary%5D%28%7B%7Bbbox%7D%7D%29%3B%0A%20%20way%5Bhighway%3Dunclassified%5D%28%7B%7Bbbox%7D%7D%29%3B%0A%20%20way%5Bhighway%3Dresidential%5D%28%7B%7Bbbox%7D%7D%29%3B%0A%29%3B%0Aout%20geom%3B):
+C'est un cas courant
+de devoir accepter une liste assez longue de valeurs admissibles pour un attribut.
+Si vous voulez trouver par exemple toutes les routes adaptées aux voitures,
+puis une liste de valeurs pour `highway` se forme comme
+`motorway`, `motorway_link`,
+`trunk`, `trunk_link`,
+`primary`, `secondary`, `tertiary`,
+`unclassified`, `residential`.
+Avec l'instruction _union_ on [peut interroger](https://overpass-turbo.eu/?lat=51.473&lon=0.0&zoom=15&Q=CGI_STUB) ceci comme:
 
     (
       way[highway=motorway]({{bbox}});
@@ -139,69 +135,57 @@ Mit _Union_ kann man dies [abfragen als](https://overpass-turbo.eu/?lat=51.473&l
     );
     out geom;
 
-Man kann aber auch die im vorherigen Abschnitt vorgestellten [regulären Ausdrücke](per_tag.md#regex) benutzen
-und [braucht nur noch](https://overpass-turbo.eu/?lat=51.473&lon=0.0&zoom=15&Q=way%5Bhighway%7E%22%5E%28motorway%7Cmotorway%5Flink%7Ctrunk%7Ctrunk%5Flink%7Cprimary%7Csecondary%7Ctertiary%7Cunclassified%7Cresidential%29%24%22%5D%28%7B%7Bbbox%7D%7D%29%3B%0Aout%20geom%3B):
+Vous pouvez également utiliser les [expressions régulières](per_tag.md#regex) présentées dans la section précédente
+et en [a juste besoin](https://overpass-turbo.eu/?lat=51.473&lon=0.0&zoom=15&Q=CGI_STUB):
 
     way({{bbox}})
       [highway~"^(motorway|motorway_link|trunk|trunk_link|primary|secondary|tertiary|unclassified|residential)$"];
     out geom;
 
-Zeilen 1 und 2 bilden ein _Query_-Statement für _Ways_ mit zwei Filtern;
-der Filter ``({{bbox}})`` für Bounding-Boxen [ist bekannt](../full_data/bbox.md#filter).
-Vom anderen Filter ist die Tilde ``~`` das wichtigste Zeichen;
-sie passt auf Objekte, die ein Tag mit Key links von der Tilde, hier ``highway``, und mit einem Wert tragen,
-der auf den Ausdruck rechts von der Tilde passt.
+Les lignes 1 et 2 forment une instruction _query_ pour les chemins avec deux filtres;
+Le filtre `({{bbox}})` pour les boîtes de délimitation est [déjà connu](../full_data/bbox.md#filter).
+De l'autre filtre, le tilde `~` est le caractère le plus important;
+il accepte des objets qui ont un _attribut_ avec le _clé_ à gauche du tilde, ici `highway`, et une valeur,
+qui est admis par l'expression régulière à droite du tilde.
 
-Die Syntax mit Caret ``^`` am Anfang und ``$`` am Ende kennzeichnet,
-dass der Wert im Ganzen und nicht nur die bestmögliche Teilzeichenkette des Wertes passen muss.
-Der senkrechte Strich wiederum trennt verschiedene Alternativen voneinander,
-hier insgesamt 9 potentielle Werte für das Tag.
+La syntaxe avec l'accent circonflexe `^` au début et le symbole dollar `$` à la fin,
+que la valeur doit correspondre à l'ensemble de la valeur et pas seulement à une chaîne de caractères y compris.
+La ligne verticale sépare différentes alternatives les unes des autres,
+ici un total de 9 valeurs potentielles pour l'attribut.
 
-Der Abschnitt zu [regulären Ausdrücken](per_tag.md#regex) enthält mehr Beispiele.
+La section des [expressions régulières](per_tag.md#regex) contient d'autres exemples.
 
-In unserem Geldautomaten-Beispiel haben wir allerdings keinen gemeinsamen Key.
-Die Regulären Ausdrücke helfen uns daher hier nicht.
+Cependant, dans notre exemple des distributeurs, nous n'avons pas de clé commun.
+Les expressions régulières ne nous aident donc pas ici.
 
-Was sich aber wiederholt, ist die Bedingung auf die Bounding-Box.
-Will man die Wiederholung vermeiden,
-so kann man die gemeinsame Bedingung vorziehen und das Ergebnis in einem Set zwischenspeichern;
-``all`` ist ein sprechender Name dafür.
-Oft verkürzt es auch die Laufzeit der [Abfrage](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=nwr%28%7B%7Bbbox%7D%7D%29%2D%3E%2Eall%3B%0A%28%0A%20%20nwr%2Eall%5Bamenity%3Datm%5D%3B%0A%20%20nwr%2Eall%5Batm%3Dyes%5D%3B%0A%29%3B%0Aout%20center%3B):
+Mais ce qui se répète, c'est la condition sur le rectangle englobant.
+Si vous voulez éviter la répétition,
+vous pouvez avancher la condition commune et garder le résultat dans un ensemble;
+`tous` est un nom descriptif pour lui.
+Souvent, ça raccourcit également la durée d'exécution de [la requête](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=14&Q=CGI_STUB):
 
-    nwr({{bbox}})->.all;
+    nwr({{bbox}})->.tous;
     (
-      nwr.all[amenity=atm];
-      nwr.all[atm=yes];
+      nwr.tous[amenity=atm];
+      nwr.tous[atm=yes];
     );
     out center;
 
-Dem _Union_-Statement in den Zeile 2 bis 5 ist jetzt ein _Query_-Statement in Zeile 1 vorangestellt.
-Dort werden alle Objekte, die in der Bounding-Box liegen, im Set ``all`` abgelegt.
-Dieses Set wird im _Union_-Block zweimal benutzt:
-In Zeile 3 und Zeile 4 ist jeweils ``.all`` ein Filter, der das Ergebnis auf den Inhalt von ``all`` beschränkt.
-Es werden also in Zeile 3 genau die Objekte gefunden,
-die im Set ``all`` liegen und die ein Tag ``amenity`` mit Wert ``atm`` besitzen.
-In Zeile 4 werden genau die Objekte gefunden,
-die im Set ``all`` liegen und die ein Tag ``atm`` mit Wert ``yes`` besitzen.
+L'instruction de bloc _union_ des lignes 2 à 5 est maintenant précédée d'une instruction _query_ à la ligne 1.
+Là, tous les objets du rectangle englobant sont stockés dans l'ensemble `tous`.
+Cet ensemble est utilisé deux fois dans le bloc _union_:
+la ligne 3 et à la ligne 4, `.tous` est un filtre qui limite le résultat au contenu de `tous`.
+Dans la ligne 3, on trouve exactement les objets,
+qui sont dans l'ensemble `tous` et ont un attribut `amenity` avec la valeur `atm`.
+Dans la ligne 4, on trouve exactement les objets,
+qui sont dans l'ensemble `tous` et ont un attribut `atm` avec la valeur `yes`.
 
-Warum nehmen wir nicht einfach das Set ``_``?
-Zwar wäre dies technisch möglich.
-Allerdings müssten wir dann bei jeder Zeile im Block daran denken, die Ausgabe umzuleiten.
-Das zu vergessen ist dann eine beliebte Quelle von Fehlern.
--->
+Et si on prenait l'ensemble `_`?
+Cela serait techniquement possible.
+Mais alors nous devrions nous rappeler de rediriger la sortie à chaque ligne du bloc.
+Oublier cela est une source populaire d'erreurs.
 
 <a name="full"/>
 ## Logique d'assemblage
 
 ...
-<!--
-highway mixed + name
--->
-
-<!-- Hinweis auf Evals -->
-<!-- [](../preface/design.md#evaluators) -->
-
-<!-- Around, mehrere Areas -->
-
-<!-- Normalformen -->
-<!-- Negation? -->
