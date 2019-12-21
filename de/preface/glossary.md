@@ -100,3 +100,5 @@ Ein spezifischer Typ von Objekt im Datenmodell von OpenStreetMap.
 Repräsentiert einen Linienzug.
 Falls es sich um einen geschlossenen Linienzug handelt,
 kann dies auch eine Fläche sein.
+
+<!-- TODO: id, Member, Rolle -->

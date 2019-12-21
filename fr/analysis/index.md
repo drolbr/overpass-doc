@@ -4,6 +4,7 @@ Analyser des données
 Des méthodes pour analyser des données d'OpenStreetMap plus en détail.
 Cela permet par exemple de chercher des erreurs ou de les suivre pour trouver leur cause.
 
+<!--
 [QA-Tools](qa_tools.md)  
 Tous les problèmes ne doivent ou ne peuvent pas être résolus avec l'API Overpass.
 Aperçu des utilitaires pour les tests de qualité (QA) courants qui peuvent appliquer des critères particuliers respectivement sur les points.
@@ -25,3 +26,4 @@ ils peuvent indiquer que il faudrait revisiter/améliorer cet endroit.
 Examiner toutes les versions d'un objet:
 En plus de la fonctionnalité déjà disponible sur le [site principal](https://openstreetmap.org/),
 cela permet de trouver la version qui a crée un changement problématique.
+-->

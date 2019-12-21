@@ -15,6 +15,3 @@ Trouver des données par des critères commes possédant un tag particulier, sit
 [LINK_STUB](lrs.md)
 
 [LINK_STUB](misc_criteria.md)
-<!--
-Encore plus des criterions comme cherchant par longeur, par version d'objet, par nombre d'changeset ou nombre des members.
--->

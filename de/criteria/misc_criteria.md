@@ -18,7 +18,7 @@ Ein [Beispiel](https://overpass-turbo.eu/?lat=51.482&lon=-0.0&zoom=17&Q=CGI_STUB
     out geom;
 
 Der Filter `[railway]` lässt dabei nur Objekte zu, die ein Tag `railway` mit einem beliebigen Value tragen.
-Er ist hier kombiniert mit einem Key `({{bbox}})`,
+Er ist hier kombiniert mit einem Filter `({{bbox}})`,
 so dass genau solche Objekte gefunden werden,
 die sowohl ein Tag mit Key `railway` besitzen
 als auch innerhalb der von [Overpass Turbo](../targets/turbo.md#convenience) übermittelten Bounding-Box liegen.

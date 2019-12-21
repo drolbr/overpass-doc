@@ -72,8 +72,8 @@ et dont la longitude se situe entre les deux spécifications de longitude.
 ### Relation
 
 Un type d'objet spécifique dans le modèle de données d'OpenStreetMap.
-Modélise des choses,
-qui ne peut pas être modélisé avec des noeuds et des moyens seuls.
+Modélise des trucs,
+qui ne peut pas être modélisé avec des _noeuds_ et des _chemins_ seuls.
 
 ### Requête
 
