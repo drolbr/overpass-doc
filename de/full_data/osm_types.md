@@ -193,6 +193,8 @@ Dazu ergänzen wir die letzte Abfrage aus dem Absatz _Relationen_ um die Rückw�
 
 Wir stellen hier die am ehesten sinnvollen Varianten zusammen.
 
+<!-- TODO: out center (Verweis?) -->
+
 Wenn Ihr Zielprogramm mit Koordinaten am Objekt umgehen kann,
 dann können Sie alle Nodes, Ways und Relations in der Bounding Box komplett wie folgt bekommen: [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB)
 

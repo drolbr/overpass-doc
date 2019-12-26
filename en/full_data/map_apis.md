@@ -7,6 +7,7 @@ The majority of them exists for the purpose of backwards compatibility,
 and all of them are emulated by executing the corresponding Overpass QL request.
 They thus only need coordinates.
 
+<a name="map"/>
 ## The Export of the Main Site
 
 In the [export tab](https://openstreetmap.org/export) of the [OSM main site](https://openstreetmap.org),
@@ -49,6 +50,7 @@ Not contained are ways that cross the bounding box without having any node insid
 How to fix that problem is explained in the [preceding subsection](osm_types.md#full),
 in particular in the section _Grand Total_.
 
+<a name="xapi"/>
 ## Xapi
 
 ...

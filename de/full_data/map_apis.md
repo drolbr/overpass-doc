@@ -6,6 +6,7 @@ Die meisten von diesen erfüllen jediglich Zwecke der Rückwärtskompatibilität
 und alle werden emuliert, indem die semantisch äquivalenten Overpass-QL-Abfragen ausgeführt werden.
 Diese API-Aufrufe brauchen daher nur Koordinaten.
 
+<a name="map"/>
 ## Der Export der Main Site
 
 Im [Export-Tab](https://openstreetmap.org/export) der [OSM Main Site](https://openstreetmap.org) gibt es eine Funktionalität,
@@ -48,6 +49,7 @@ Nicht enthalten sind Ways, die die Bounding-Box nur durchlaufen ohne dort einen 
 Wie man dieses Problem behebt,
 ist im [vorhergehenden Unterkapitel](osm_types.md#full) erläutert, insbesondere im Abschnitt _Alles zusammen_.
 
+<a name="xapi"/>
 ## Xapi
 
 ...

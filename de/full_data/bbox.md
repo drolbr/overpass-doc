@@ -6,6 +6,8 @@ Der einfachste Weg, um an OpenStreetMap-Daten in einem Ausschnitt zu kommen.
 <a name="filter"/>
 ## Suchkriterium
 
+<!-- TODO: out center -->
+
 Der einfachste Weg, an alle Daten in einer Bounding-Box zu kommen, ist,
 dies explizit so zu formulieren [(Link)](https://overpass-turbo.eu/?lat=51.4775&lon=0.0&zoom=16&Q=CGI_STUB):
 

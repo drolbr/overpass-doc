@@ -6,6 +6,7 @@ il y a aussi quelques requêtes d'API
 qui marchent déjà avec seulement des cordonnées
 et qui retournent des données dans une configuration particulière.
 
+<a name="map"/>
 ## L'export du site openstreetmap.org
 
 Il y a une fonctionnalité dans le [onglet Exportation](https://openstreetmap.org/export) du [site principal de l'OSM](https://openstreetmap.org),
@@ -48,6 +49,7 @@ Ne sont pas inclus les chemins qui ne passent que par le rectangle englobant san
 Comment résoudre ce problème,
 est expliqué dans le [sous-chapitre précédent](osm_types.md#full), surtout dans la section _Tous les objets ensemble_.
 
+<a name="xapi"/>
 ## Xapi
 
 ...
