@@ -64,7 +64,7 @@ As [an example](https://overpass-turbo.eu/?lat=0.0&lon=0.0&zoom=2&Q=nwr%5Bname%3
     out center;
 
 For this purpose, the text from above is put into the input field on the left hand side,
-and then the reuqest is sent to Overpass API per click on the _Execute_ button.
+and then the request is sent to Overpass API per click on the _Execute_ button.
 The query language is versatile but also huge.
 Thus this whole handbook aims at explaining the query language.
 
