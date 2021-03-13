@@ -166,7 +166,7 @@ and most mappers can record their point of view without substantial distortions.
 Another often expected structures are categories,
 no matter whether very general like all branches of a fast food chain
 or all post boxes in Scotland.
-OpenStreetMap is a spatial databasem but
+OpenStreetMap is a spatial database but
 lists of all objects with a special property in a limited area can be computed.
 Overpass API is one of the tools intended to deliver that,
 and the chapter [Find Objects](../criteria/index.md) explains how to do that.
