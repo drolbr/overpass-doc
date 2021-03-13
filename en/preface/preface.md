@@ -2,39 +2,39 @@ OpenStreetMap and the Overpass API
 ==================================
 
 How does the ecosystem of OpenStreetMap work?
-Which role plays Overpass API there?
+Which role does the Overpass API play there?
 
 <a name="osm"/>
 ## What is OpenStreetMap?
 
 OpenStreetMap primarily is a database of worldwide geographic data.
-The data is geographic base data,
-e.g. streets, roads, railways, waterways should be completely present,
-but adding shops and restaurants with their names and opening hours also is highly appreciated.
+The data is geographic base data and streets, roads, railways, and waterways
+should be completely present. adding shops and restaurants with their names
+and opening hours is also highly appreciated.
 
 In general, everything that is observable on the ground can be added to OpenStreetMap.
 A street usually has a name sign, and a restaurant typically annouces its name as well.
-For a river or a railway line, their names can almost always be read off sign refering to the respective features.
+For a river or a railway line, their names can almost always be read off sign refering
+to the respective features.
 
-Some but rare exceptions to the requirement of being observable exist.
-The only universally accepted exemption are bounadaries of countries, counties, and municipalities.
+Exceptions to the requirement of being observable exist but are rare. The only universally
+accepted exceptions are bounadaries of countries, counties, and municipalities.
 
-Personal data is never added to the database:
-It is forbidden in OpenStreetMap
-to copy names from bell plates to the database.
+Personal data is never added to the database. For example, it is forbidden to copy names
+from bell plates to the database.
 
 Being free from personal data restrictions and [license](https://wiki.osmfoundation.org/wiki/Licence) restrictions
-allows to make the OpenStreetMap data downloadable in its entirety.
-From that it is in principle possible to answer questions like
+allows us to make the OpenStreetMap data downloadable in its entirety.
+It is then possible, in principle, answer questions like
 
 1. Where is city X, river Y, restaurant Z?
 1. What is situated close to X or inside X?
 1. How do I get as a pedestrian, a cyclist or by using a car from location X to location Y?
 
-Also this data enables to draw a map of the world in many different ways.
+Also this data enables us to draw a map of the world in many different ways.
 To enable assessing the data,
 in addition to the [sample map](https://openstreetmap.org) also a sample tool for _geocoding_ is operated.
-It is called [Nominatim](https://wiki.openstreetmap.org/wiki/Nominatim),
+It is called [Nominatim](https://wiki.openstreetmap.org/wiki/Nominatim) and it
 answers question (1) from the last paragraph,
 and it can in addition figure out for a given coordinate the most like postal address.
 This is called _reverse geocoding_.
@@ -43,7 +43,7 @@ These tools answer the question how to get from location X to location Y.
 
 The database has an already challenging size
 and every minute more updates and enhancements are performed by the mappers.
-To download the data en bloc is impractical for that reason.
+To download the data <i>en bloc</i> is impractical for that reason.
 This is mitigated by making available in addition to the [complete database](https://planet.openstreetmap.org/) every minute a distinct file with the data changes having taken place that very minute.
 
 <a name="overpass"/>

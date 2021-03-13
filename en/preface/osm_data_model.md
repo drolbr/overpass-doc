@@ -8,7 +8,7 @@ In this section we introduce the basic data structures of OpenStreetMap.
 OpenStreetMap foremost contains three kinds of data:
 
 * Geometries, more precisely coordinates and references to the coordinates, locate the objects on Earth's surface.
-* Short bits of text give each object a semantical meaning.
+* Short bits of text giving each object a semantical meaning.
 * Meta data facilitates to attribute the sources to the data.
 
 All selection criteria of the query language deal with properties of these data structures.
@@ -16,27 +16,27 @@ All selection criteria of the query language deal with properties of these data 
 In addition, multiple data formats can represent the data.
 These data formats are presented in the section [Data Formats](../targets/formats.md).
 
-Handling the different object type such that it results in manageable geometry deserves a tutorial.
+Handling the different object type so that it results in manageable geometry deserves a tutorial.
 This tutorial is the section [Geometries](../full_data/osm_types.md).
 
 <a name="tags"/>
 ## Tags
 
-The semantical data of OpenStreetMap are encoded in short bits of text, so called _tags_.
+The semantical data of OpenStreetMap are encoded in short bits of text, called _tags_.
 _Tags_ always consist of a _key_ and a _value_.
 Each object can have for each _key_ at most one _value_.
 Beside a length restriction to 255 characters for each key and value no further constraints apply.
 
 The data model does not distinguish any particular tag or key.
-Tags can be chosen spontaneously and to best expedience;
+Tags can be chosen at any time and for any reason;
 this policy is highly likely to have promoted the success of OpenStreetMap.
 
-Latin lowercase letters and rarely the special characters `:` and `\_` virtually exclusively prevail amongst the keys.
+Tags contain Latin lowercase letters and, rarely, the special characters `:` and `\_`.
 The tags fall into the two informal categories:
 
 _Classifying tags_ have one of a few keys,
-and for each key only few values exist.
-Deviating values are perceived as erroneous.
+and for each key only a few values exist.
+Deviating values are perceived as errors.
 For example, the public road grid for motorized vehicles is identified by the key [highway](https://taginfo.openstreetmap.org/keys/highway) and one of fewer than 20 customary values.
 
 In such tags, a value occasionally accommodates multiple customary values concatenated by semicolon.
@@ -73,9 +73,9 @@ Because nodes are the only type of object that has a coordinate,
 most of the nodes serve only as a coordinate for an intermediate point within a way
 and carry no tags.
 
-_Ways_ consists of a sequence of references to nodes in addition to the id and tags.
-This way ways get a geometry by using the coordinates of the referenced nodes.
-But they also get a topology:
+_Ways_ consist of a sequence of references to nodes in addition to the id and tags.
+In this manner ways get a geometry by using the coordinates of the referenced nodes.
+But they also have a topology:
 two ways are connected if both point at a position to the same node.
 
 Ways can refer to the same node multiple times.
@@ -85,22 +85,22 @@ All other cases are syntactically correct but semantically deprecated.
 _Relations_ have a sequence of members in addition to the id and tags.
 Each member is a pair of a reference to a node, a way or a relation and a so-called role.
 The role is a text string.
-Relations have been invented to represent turn restrictions
-thus having few members.
-Nowadays, they also serve as boundaries of countries, counties, multipolygons, and routes.
-Therefore, their formal structure wildly varies,
-and in particular boundary and route relations can extend over hundreds or thousands of kilometers.
+Relations were invented to represent turn restrictions and this have few required members.
+They now also serve as boundaries of countries, counties, multipolygons, and routes.
+Therefore, their formal structure varies wildly,
+and, for example, boundary and route relations can extend over hundreds or thousands of kilometers.
 
-The geometry of relations only manifests by the interpretation of the data user.
-The multipolygon interpretation has found general acclaim:
-like for ways, such relations are understood as an area if the members form closed rings.
+Relations only have geometries if a data user interprets them to have geometries. A
+relation is not required to represent a geometry.
+It is common for relations to represent multipolygons.
+For example, if the ways in a relation fo a closed ring, such relations are understood as an area.
 Interpretations start at the question whether the presence of the tag _area_=_yes_ is required for this.
-Other relations like routes or turn restrictions obtain their geometry as the sum of the geometries of their members of type node and way.
+Other relationsm, such as routes or turn restrictions, obtain their geometry as the sum of the geometries of their members of type node and way.
 
 Relations on top of relations are technically possible,
 but have little practical relevance.
-With relations on relations the risk is further elevated
-to end up with large amounts of data already if just the members of a single relation are resolved.
+Relations on relations also create a risk that, if the members of a single relation are modified,
+large amounts of data may be inadvertently affected.
 For that reason there are so many different approaches depending on context to resolve references of relations partially
 that a [whole section](../full_data/osm_types.md#rels_on_rels) is dedicated to that.
 
@@ -120,8 +120,8 @@ Beside holes and disjoint parts this also happens
 when the boundary of the area is supposed to be assembled of multiple ways.
 This is applicable virtually only to boundaries of large areas (cities, counties, countries).
 
-Like with ways the area is defined by its boundary.
-The in the relation referenced ways therefore must fit and sum up to closed rings.
+As with ways, an area is defined by its boundary.
+The ways of the relation referenced must therefore fit and sum up to closed rings.
 More information on the [conventions](https://github.com/osmlab/fixing-polygons-in-osm/blob/master/doc/background.md).
 
 <a name="metas"/>
@@ -130,10 +130,10 @@ More information on the [conventions](https://github.com/osmlab/fixing-polygons-
 OpenStreetMap is a full-fledged version control system.
 Old versions are retained as well as all the data necessary to assign changes to users.
 
-There always is per object and state a _version number_ and _timestamp_.
+There is always, per object and state, a _version number_ and _timestamp_.
 Old states with old version numbers are retained.
-Therefore the Overpass API is capable by [special methods](../analysis/index.md) to access old states.
-Unless on special request, it always operates on current data.
+Therefore the Overpass API allows access, via [special methods](../analysis/index.md), to old states.
+But by default, unless a special request is made, it always operates on current data.
 
 In addition, changed are grouped to _changesets_.
 These are associated to the uploading mapper.
@@ -143,7 +143,7 @@ and in general one changeset per upload event is created.
 _Changesets_ again carry tags and it is possible to discuss changesets with multiple mappers.
 These texts are not processed by the Overpass API.
 
-This way each object as a whole is at any moment assigned to a single mapper.
+In this manner each object as a whole is at any moment assigned to a single mapper.
 That mapper is always the mapper who has uploaded the most recent version.
 Objects with higher version number than 1 therefore usually keep properties from earlier versions,
 although those properties are not attributable to the current mapper.
@@ -153,35 +153,34 @@ although those properties are not attributable to the current mapper.
 
 By contrast, thematic layers do not exist in OpenStreetMap,
 and they are absent for a reason.
-For some people supermarkets are together with post offices, banks and ATMs are locations
+For some people, supermarkets are classed together with post offices, banks and ATMs as locations
 where one can obtain cash.
-For other mappers, supermarkets constitute a group rather together with bakeries and butchers
+For other mappers, supermarkets constitute a group with bakeries and butchers
 because one can buy food there.
 
 Therefore, classification plays only a marginal role in OpenStreetMap.
 It is rather preferable to record objective properties.
-Disputes at large have been prevented,
+Many disputes have been thus prevented
 and most mappers can record their point of view without substantial distortions.
 
 Another often expected structures are categories,
 no matter whether very general like all branches of a fast food chain
 or all post boxes in Scotland.
-OpenStreetMap is a spatial database.
-Lists of all objects with a special property in a limited area can be computed.
-By the way, Overpass API is one of the tools intended to deliver that,
-the chapter [Find Objects](../criteria/index.md) explains how to do that.
+OpenStreetMap is a spatial databasem but
+lists of all objects with a special property in a limited area can be computed.
+Overpass API is one of the tools intended to deliver that,
+and the chapter [Find Objects](../criteria/index.md) explains how to do that.
 
-Lists of worldwidely all objects with a property have at best a weak spatial relevance.
-Although each branch has a location,
-the fast food chain as a whole obtains its spatial information solely through its branches.
+Lists of all objects in the world with a property have at best a weak spatial relevance.
+Although each object has a location, a category like "fast food chain" will be accurate
+and consistent with itself within a defined area, such as a country with common cultural norms.
 
-Finally, the concept of identity leaves precedence to its spatial manifestation.
-Similar to the issue with layers, different mappers have different ideas
+Finally, the concept of identity has less importance than spatial manifestations.
+As with thematic layers, different mappers have different ideas of
 what belongs to a thing as complex as a large railway station.
-Only tracks and platforms?
-The reception building as well, or only if it caters passengers needs,
-or only if the railway company owns the building?
-The place before the station, the bus stop that is named after the railway station?
+Only tracks and platforms? The reception building as well? Only if it
+caters to passengers needs or only if the railway company owns the building?
+A place in front ot the station? The bus stop that is named after the railway station?
 The points that by railway operating rules are associated with the station even if substantially far away?
 
 If one needs an anchor to point at a certain object on the ground,
