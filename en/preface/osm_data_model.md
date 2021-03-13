@@ -93,7 +93,7 @@ and, for example, boundary and route relations can extend over hundreds or thous
 Relations only have geometries if a data user interprets them to have geometries. A
 relation is not required to represent a geometry.
 It is common for relations to represent multipolygons.
-For example, if the ways in a relation fo a closed ring, such relations are understood as an area.
+For example, if the ways in a relation form a closed ring, such relations are understood as an area.
 Interpretations start at the question whether the presence of the tag _area_=_yes_ is required for this.
 Other relationsm, such as routes or turn restrictions, obtain their geometry as the sum of the geometries of their members of type node and way.
 
