@@ -21,7 +21,7 @@ Exceptions to the requirement of being observable exist but are rare. The only u
 accepted exceptions are bounadaries of countries, counties, and municipalities.
 
 Personal data is never added to the database.
-For example, it is forbidden in OpenStreetMap to copy names from bell plates to the database.
+For example, it is forbidden to copy names from bell plates to the database.
 
 Being free from personal data restrictions and [license](https://wiki.osmfoundation.org/wiki/Licence) restrictions
 allows us to make the OpenStreetMap data downloadable in its entirety.
@@ -43,7 +43,7 @@ These tools answer the question how to get from location X to location Y.
 
 The database has an already challenging size
 and every minute more updates and enhancements are performed by the mappers.
-To download the data en bloc is impractical for that reason.
+To download the data <i>en bloc</i> is impractical for that reason.
 This is mitigated by making available in addition to the [complete database](https://planet.openstreetmap.org/) every minute a distinct file with the data changes having taken place that very minute.
 
 <a name="overpass"/>

@@ -85,15 +85,15 @@ All other cases are syntactically correct but semantically deprecated.
 _Relations_ have a sequence of members in addition to the id and tags.
 Each member is a pair of a reference to a node, a way or a relation and a so-called role.
 The role is a text string.
-Relations were invented to represent turn restrictions and thus have few members.
+Relations were invented to represent turn restrictions and these have few required members.
 They now also serve as boundaries of countries, counties, multipolygons, and routes.
 Therefore, their formal structure varies wildly,
-and, in particular, boundary and route relations can extend over hundreds or thousands of kilometers.
+and, for example, boundary and route relations can extend over hundreds or thousands of kilometers.
 
 Relations only have geometries if a data user interprets them to have geometries.
 A relation is not required to represent a geometry.
 Multipolygons as a type of relations are now understood almost everywhere:
-If the ways in a relation form closed rings, such relations are understood as an area.
+For example, if the ways in a relation form closed rings, such relations are understood as an area.
 Interpretations start at the question whether the presence of the tag _area_=_yes_ is required for this.
 Other relations, such as routes or turn restrictions, obtain their geometry as the sum of the geometries of their members of type node and way.
 
@@ -169,12 +169,12 @@ no matter whether very general like all branches of a fast food chain
 or all post boxes in Scotland.
 OpenStreetMap is a spatial database,
 thus lists of all objects with a special property in a limited area can be computed.
-By the way, Overpass API is one of the tools intended to deliver that,
+Overpass API is one of the tools intended to deliver that,
 and the chapter [Find Objects](../criteria/index.md) explains how to do that.
 
 Lists of all objects in the world with a property have at best a weak spatial relevance.
 Although each branch of e.g. a fast food chain has a location,
-the whole fast food chain's only spatial information are these locations,
+the only spatial information of the fast food chain as a whole are these locations,
 thus it does not add anything spatial on top of the branches.
 
 Finally, the concept of identity has less importance than spatial manifestations.
