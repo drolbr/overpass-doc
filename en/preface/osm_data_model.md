@@ -85,22 +85,23 @@ All other cases are syntactically correct but semantically deprecated.
 _Relations_ have a sequence of members in addition to the id and tags.
 Each member is a pair of a reference to a node, a way or a relation and a so-called role.
 The role is a text string.
-Relations were invented to represent turn restrictions and this have few required members.
+Relations were invented to represent turn restrictions and thus have few members.
 They now also serve as boundaries of countries, counties, multipolygons, and routes.
 Therefore, their formal structure varies wildly,
-and, for example, boundary and route relations can extend over hundreds or thousands of kilometers.
+and, in particular, boundary and route relations can extend over hundreds or thousands of kilometers.
 
-Relations only have geometries if a data user interprets them to have geometries. A
-relation is not required to represent a geometry.
-It is common for relations to represent multipolygons.
-For example, if the ways in a relation form a closed ring, such relations are understood as an area.
+Relations only have geometries if a data user interprets them to have geometries.
+A relation is not required to represent a geometry.
+Multipolygons as a type of relations are now understood almost everywhere:
+If the ways in a relation form closed rings, such relations are understood as an area.
 Interpretations start at the question whether the presence of the tag _area_=_yes_ is required for this.
-Other relationsm, such as routes or turn restrictions, obtain their geometry as the sum of the geometries of their members of type node and way.
+Other relations, such as routes or turn restrictions, obtain their geometry as the sum of the geometries of their members of type node and way.
 
 Relations on top of relations are technically possible,
 but have little practical relevance.
-Relations on relations also create a risk that, if the members of a single relation are modified,
-large amounts of data may be inadvertently affected.
+Relations on relations also create a risk that
+if the members of the members are also resolved until the ultimately referenced nodes,
+then one gets insane amounts of data.
 For that reason there are so many different approaches depending on context to resolve references of relations partially
 that a [whole section](../full_data/osm_types.md#rels_on_rels) is dedicated to that.
 
@@ -166,21 +167,24 @@ and most mappers can record their point of view without substantial distortions.
 Another often expected structures are categories,
 no matter whether very general like all branches of a fast food chain
 or all post boxes in Scotland.
-OpenStreetMap is a spatial database but
-lists of all objects with a special property in a limited area can be computed.
-Overpass API is one of the tools intended to deliver that,
+OpenStreetMap is a spatial database,
+thus lists of all objects with a special property in a limited area can be computed.
+By the way, Overpass API is one of the tools intended to deliver that,
 and the chapter [Find Objects](../criteria/index.md) explains how to do that.
 
 Lists of all objects in the world with a property have at best a weak spatial relevance.
-Although each object has a location, a category like "fast food chain" will be accurate
-and consistent with itself within a defined area, such as a country with common cultural norms.
+Although each branch of e.g. a fast food chain has a location,
+the whole fast food chain's only spatial information are these locations,
+thus it does not add anything spatial on top of the branches.
 
 Finally, the concept of identity has less importance than spatial manifestations.
 As with thematic layers, different mappers have different ideas of
 what belongs to a thing as complex as a large railway station.
-Only tracks and platforms? The reception building as well? Only if it
-caters to passengers needs or only if the railway company owns the building?
-A place in front ot the station? The bus stop that is named after the railway station?
+Only tracks and platforms?
+The reception building as well?
+Only if it caters to passengers needs or only if the railway company owns the building?
+A place in front ot the station?
+The bus stop that is named after the railway station?
 The points that by railway operating rules are associated with the station even if substantially far away?
 
 If one needs an anchor to point at a certain object on the ground,
