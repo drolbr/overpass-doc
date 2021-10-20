@@ -70,7 +70,7 @@ Mit dem Wert ``no`` bleibt es bei den Sachdaten,
 ``meta`` lädt zusätzlich auch die Metadaten der Bearbeiter
 und ``attic`` lädt sowohl Metadaten als auch alle alten Datenstände.
 
-Die Sachdaten sind datschutzrechtlich unkritisch.
+Die Sachdaten sind datenschutzrechtlich unkritisch.
 Die Meta- und/oder alten Datenstände dagegen dürfen Sie nur laden,
 wenn Sie ein berechtigtes Interesse haben.
 
