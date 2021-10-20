@@ -19,12 +19,15 @@ La planification et la mise en œuvre concrètes prendront certainement des ann�
 Cependant, à la fin de ce processus, certaines des variantes syntaxiques énumérées ici seront probablement dépassées.
 Dans le cadre de la [rétrocompatibilité](../preface/assertions.md#infrastructure), aussi peu de requêtes que possible seront déclarées obsolètes.
 
-Actuellement, c'est l'intention,
-que _area_ est alors utilisé comme synonyme de _chemin_ plus _relation_ plus un évaluateur `is\_closed()`.
-Inversement, `is\_in` trouvera probablement ces types de données;
-il sera logique de remplacer cette _instruction_ par un filtre.
+Depuis la version 0.7.57, les _chemins fermés_ ont déjà été convertis,
+Les _relations_ reste pour l'instant avec le type de données généré.
 
-Inversement, je vous demande de ne pas vous méprendre sur le fait qu'il s'agit d'une annonce concrète.
+L'instruction `is_in` et la rêquete de type `area` délivrent maintenant des _chemins fermés_ et des surfaces générées à partir des _relations_.
+À l'inverse, le _filtre_ `(area)` évalue à la fois les _chemins fermés_ et les surfaces générées.
+Le filtre `(pivot)` et l'instruction `map_to_area` passent les chemins fermées inchangées à travers
+et convertir uniquement entre les _relations_ et les surfaces générées par ceux-ci.
+
+Il n'y a pas de calendrier spécifique pour convertir également les _relations_.
 Il y a d'autres préoccupations dans le projet avec une plus grande pression de souffrance.
 
 <a name="per_tag"/>
@@ -287,5 +290,6 @@ et cela le prive de la plupart de ses avantages.
 
 C'est pourquoi j'ai l'intention de le faire maintenant,
 exécute également les opérations de surface directement sur les objets OpenStreetMap.
+Pour des _chemins fermés_ c'est deja parti depuis version la version 0.7.57.
 
 <!-- Traduit avec www.DeepL.com/Translator, partiellement redigé -->

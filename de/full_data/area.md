@@ -15,16 +15,19 @@ Mittlerweile bin ich sehr sicher, dass dies nicht mehr passieren wird.
 
 Daher plane ich nun,
 Flächen direkt ab den etablierten Typen _geschlossener Way_ und _Relations_ anzubieten.
-Die konkrete Planung und Umsetzung wird sicherlich eher Jahre in Anspruch nehmen.
+Die konkrete Umsetzung wird sicherlich eher Jahre in Anspruch nehmen.
 Am Ende diese Prozesses werden aber einige der hier aufgeführten Syntax-Varianten wohl veraltet sein.
 Im Rahmen der [Rückwärtskompatibilität](../preface/assertions.md#infrastructure) werden möglichst wenige Abfragen für veraltet erklärt.
 
-Derzeit ist beabsichtigt,
-dass _area_ dann als Synonym für _Way_ plus _Relation_ plus einen Evaluator `is\_closed()` verwendet wird.
-Umgekehrt wird `is\_in` dann wohl ebendiese Datentypen finden;
-es wird sich anbieten, dieses _Statement_ dabei durch einen Filter abzulösen.
+Seit Version 0.7.57 sind dabei _Ways_ bereits umgestellt,
+_Relations_ bleiben vorläufig beim generierten Datentypen.
 
-Umgekehrt bitte ich Sie, dies nicht als eine konkrete Ankündigung misszuverstehen.
+Das Statement `is_in` und Abfragen mit Typ `area` liefern nun geschlossene Ways und aus _Relations_ generierte Flächen.
+Umgekehrt wertet das Kriterium `(area)` sowohl geschlossene Ways als generierte Flächen aus.
+Das Kriterium `(pivot)` und das Statement `map_to_area` reichen geschlossene Ways unverändert durch
+und konvertieren nur zwischen den _Relations_ und den aus ihnen generierten Flächen.
+
+Einen konkreten Zeitplan für auch die Umstellung der _Relations_ gibt es nicht.
 Es gibt andere Anliegen im Projekt mit größerem Leidensdruck.
 
 <a name="per_tag"/>
@@ -278,7 +281,7 @@ Der große Vorteil ist aber, dass die Suche Punkt-in-Fläche effizient und zuver
 Als Nachteil hat sich herausgestellt, dass nicht alle nachgefragten _Area_-Objekte existieren:
 mittlerweile wird fast jedes Objekt in OpenStreetMap, das von seiner Geometrie her eine Fläche ergibt,
 auch als Fläche genutzt.
-Wenn aber gemäßg den Tagging-Regeln der Hintergrundprozess das Objekt nicht für eine Fläche hält,
+Wenn aber gemäß den Tagging-Regeln der Hintergrundprozess das Objekt nicht für eine Fläche hält,
 gibt es kein korrespondierendes _Area_-Objekt.
 
 Umgekehrt ist mir in den letzten 10 Jahren keine Instanz begegnet,
@@ -290,3 +293,4 @@ und dies beraubt ihn der meisten seiner Vorteile.
 
 Daher beabsichtige ich mittlerweile,
 auch die Flächenoperationen direkt auf den OpenStreetMap-Objekten auszuführen.
+Für _Ways_ ist das mit Version 0.7.57 umgesetzt.

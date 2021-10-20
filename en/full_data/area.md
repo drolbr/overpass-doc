@@ -20,13 +20,15 @@ but in the end some of the syntax variants listed here will become outdated.
 For the sake of [backwards compatibility](../preface/assertions.md#infrastructure),
 as few syntax variants as possible will be removed.
 
-Currently it is planned
-that _area_ is then used as a label for _ways_ or_relations_
-for which the evaluator `is\_closed()` returns true.
-Conversely, the statement `is\_in` will find these kind of OpenStreetMap objects.
-It would make sense to replace that statement by a filter in the transition process.
+Since version 0.7.57, _ways_ have already been changed,
+but _relations_ remain with the generated data type for the time being.
 
-But please do not understand this notice as an announcement.
+The statement `is_in` and queries with type `area` now return closed ways and areas generated from _relations_.
+Conversely, the criterion `area` evaluates both closed ways and generated areas.
+The criterion `(pivot)` and the statement `map_to_area` pass closed _ways_ unchanged through
+and only convert between the _relations_ and the areas generated from them.
+
+There is no specific timetable for also converting the _relations_.
 There are many more pressing issues in the project,
 thus this change may not happen anytime soon.
 
@@ -295,3 +297,4 @@ and this defeats most of the advantages of the approach.
 
 For this reason, I meanwhile intend to
 also perform the area operations directly on the raw OpenStreetMap objects.
+For ways this has been implemented since version 0.7.57.
