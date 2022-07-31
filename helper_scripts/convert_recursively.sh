@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if [[ -z $2 ]]; then
+  echo "Usage: $0 source_index_filename target_directory"
+  exit 1
+fi
+
 SOURCE="$1"
 TARGET="$2/"$(dirname "$1")/$(basename "$1" .md).html
 PARENT_AUX_TARGET="$2/"$(dirname "$1")/../index.aux

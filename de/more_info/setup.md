@@ -15,9 +15,11 @@ Die Schritte 1 und 2 sind getrennt,
 da die Datenmengen so groß sind,
 dass die meisten Nutzer ihr Vorgehen daran ausrichten werden wollen.
 
+Alternativ kann die Overpass API auch [mit Docker-Containern](https://github.com/drolbr/docker-overpass) installiert werden.
+
 ## Software installieren
 
-Stelle Sie sicher, dass die GNU-Autotools, ein C++-Compiler, das Hilfsprogramm _wget_ und die Bibliotheken _expat_ und _zlib_ installiert sind.
+Stellen Sie sicher, dass die GNU-Autotools, ein C++-Compiler, das Hilfsprogramm _wget_ und die Bibliotheken _expat_ und _zlib_ installiert sind.
 Versionen dieser Programme spielen keine Rolle;
 die Overpass API nutzt ausdrücklich nur deren versionsunabhängige Kernfunktionen.
 
@@ -25,10 +27,11 @@ Unter z.B. Ubuntu erreichen Sie wie folgt, dass alle benötigen Programme instal
 
     sudo apt-get install wget g++ make expat libexpat1-dev zlib1g-dev
 
-Von der Overpass API laden Sie bitte das jeweils [neueste Release](https://dev.overpass-api.de/releases/) herunter
-und packen Sie das Archiv aus.
+Von der Overpass API laden Sie bitte das jeweils [neueste Release](https://dev.overpass-api.de/releases/) herunter.
 Mit älteren Releases funktioniert dies auch;
 wegen der Rückwärtskompatibilität wird es aber eigentlich nie einen Grund für ältere Releases geben.
+
+Packen Sie die heruntergeladene Gzip-Datei aus und wechseln Sie in das angelegte Verzeichnis.
 
 Es wird an der Kommandozeile mit
 
@@ -55,8 +58,8 @@ Daher sollten Sie die Verzeichnisse ``bin`` und ``cgi-bin`` vollständig und gem
 ## Daten laden
 
 Im Gegensatz zu der relativ kleinen Datenmenge für die Software sind die OpenStreetMap-Daten sehr groß.
-Weltweite Daten füllen auch mit nur den aktuellsten Geodaten bereits 100 GB (Stand 2019).
-Mit allen alten Datenständen und Metadaten sind 300 GB notwendig.
+Weltweite Daten füllen auch mit nur den aktuellsten Geodaten bereits 150 GB (Stand 2022).
+Mit allen alten Datenständen und Metadaten sind 360 GB notwendig.
 
 Die Daten können aus einem öffentlich zugänglichen, täglich aktualisierten Datenbestand eins zu eins kopiert werden.
 Dieser Vorgang heißt auch _klonen_:

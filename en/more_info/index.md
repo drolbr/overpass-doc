@@ -22,8 +22,7 @@ Outages and bugs can be reported here as well.
 Special subjects are covered in more depth there.
 Also the features of new versions are presented there.
 
-[Installation of an Own Instance](https://dev.overpass-api.de/no_frills.html)  
-How to install your own private instance.
+[LINK_STUB](setup.md)
 
 [Source Code](https://github.com/drolbr/Overpass-API)  
 Source code of Overpass API.
