@@ -20,8 +20,7 @@ Liste de diffusion pour poser des questions ou signaler des interruptions de ser
 [Blog (anglais)](https://dev.overpass-api.de/blog/)  
 Blog de Roland. Il y approfondit des sujets particuliers et présente les fonctions des nouvelles versions.
 
-[Déploiement d'un instance propre (anglais)](https://dev.overpass-api.de/no_frills.html)  
-Mode d'emploi pour déployer une instance propre et indépendante des instances publiques.
+[LINK_STUB](setup.md)
 
 [Code source](https://github.com/drolbr/Overpass-API)  
 Code source de l'API Overpass.
