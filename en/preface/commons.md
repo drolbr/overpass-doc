@@ -40,8 +40,8 @@ to give the first few requests per user precedence over the then numerous reques
 A manual load shedding therefore will start with the most heavy users
 and the following estimations for maximum use give us a broad safety margin.
 
-It can be performed by the public servers for heavy users an amount of requests
-that neither surpasses 10000 requests per day nor 1 GB as the total download volume.
+It is expected by the public servers that also heavy users an perform
+is below 10000 requests per day and download volume is below 1 GB per day.
 
 Amongst the expressed goals of the Overpass API project is to make running your own instance really simple.
 If you expect a higher demand than the above sketched usage limits,
