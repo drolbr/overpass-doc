@@ -34,14 +34,13 @@ In the cases 2 and 3, one better ought use a [planet dump](https://wiki.openstre
 In the last cast, only running your own instance sustainably serves your mission.
 Setting up your own instance is subject of a [dedicated section](../more_info/setup.md).
 
-In fact, the most users pose only a few requests.
-The automatic load shedding thus aims
-to give the first few requests per user precedence over the then numerous requests of heavy users.
-A manual load shedding therefore will start with the most heavy users
-and the following estimations for maximum use give us a broad safety margin.
+Most users send only a few requests.
+For fairness reasons, the first few requests of users are given priority over frequent requests by heavy users.
+Load shedding will therefore start with heavy users first.
 
-It can be performed by the public servers for heavy users an amount of requests
-that neither surpasses 10000 requests per day nor 1 GB as the total download volume.
+As a broad guideline to stay within safety margins,
+users are expected to send a maximum of about 10000 requests per day
+and keep their download volume below about 1 GB per day.
 
 Amongst the expressed goals of the Overpass API project is to make running your own instance really simple.
 If you expect a higher demand than the above sketched usage limits,
