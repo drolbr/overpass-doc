@@ -56,8 +56,14 @@ The automatic load shedding keeps track which (anonymized) user puts which reque
 and assures that moderate users still can access the service
 if the total volume of requests exceeds server capacity.
 
-There are currently two independent public instances,
-[z.overpass-api.de](https://z.overpass-api.de/api/status) and [lz4.overpass-api.de](https://lz4.overpass-api.de/api/status).
+As the public instance there are currently two distinct servers
+that both can be reached by [overpass-api.de](https://overpass-api.de/api/status).
+Usually you should not try to connect to one of the two explicitly.
+The only exception is as a workaround if the other instance is broken in a way
+such that DNS round robin would not help.
+The current individual server names are [gall.openstreetmap.de](https://gall.openstreetmap.de/api/status) and [lambert.openstreetmap.de](https://lambert.openstreetmap.de/api/status).
+These servers both maintain their rate limiting indenpendently from each other.
+
 We start with the explanation of and with the help of the status request.
 
 ### Rate Limit

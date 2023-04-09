@@ -57,8 +57,14 @@ La limitation automatique de la charge assigne des requêtes aux utilisateurs (a
 et assure l'accessibilité pour des utilisateurs rationnants,
 si le volume de requêtes de tous les utilisateurs dépasse la capacité du serveur.
 
-Il existe actuellement deux instances publiques indépendantes,
-[z.overpass-api.de](https://z.overpass-api.de/api/status) et [lz4.overpass-api.de](https://lz4.overpass-api.de/api/status).
+En tant qu'instance publique, il existe actuellement deux serveurs distincts
+qui peuvent tous deux être atteints par [overpass-api.de](https://overpass-api.de/api/status).
+En général, vous ne devriez pas essayer de vous connecter explicitement à l'un des deux serveurs.
+La seule exception est une solution de contournement si l'autre instance est cassée d'une manière
+de telle sorte que le DNS round robin ne serait d'aucune utilité.
+Les noms des serveurs individuels actuels sont [gall.openstreetmap.de](https://gall.openstreetmap.de/api/status) et [lambert.openstreetmap.de](https://lambert.openstreetmap.de/api/status).
+Ces serveurs maintiennent tous deux leur limitation de débit indépendamment l'un de l'autre.
+
 Nous commençons par l'explication de ces questions d'état.
 
 ### Nombre de requêtes

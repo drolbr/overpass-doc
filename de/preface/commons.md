@@ -57,8 +57,14 @@ Die automatische Lastbegrenzung ordnet Abfragen (anonymen) Benutzern zu
 und stellt die Erreichbarkeit für Wenignutzer sicher,
 wenn das Abfragevolumen aller Nutzer die Serverkapazität übersteigt.
 
-Es gibt derzeit zwei voneinander unabhängige öffentliche Instanzen,
-[z.overpass-api.de](https://z.overpass-api.de/api/status) und [lz4.overpass-api.de](https://lz4.overpass-api.de/api/status).
+Die öffentliche Instanz wird von zwei Servern gebildet,
+die beide unter [overpass-api.de](https://overpass-api.de/api/status) erreicht werden können.
+Normalerweise sollten Sie nicht versuchen, sich davon zu einem spezifischen Server zu verbinden.
+Die einzige Ausnahme davon ist als Workaround, wenn die jeweils andere Instanz auf eine Weise gestört ist,
+die nicht durch DNS-Round-Robin bereits behoben wird.
+Die gegenwärtigen Namen der einzelnen Server sind [gall.openstreetmap.de](https://gall.openstreetmap.de/api/status) und [lambert.openstreetmap.de](https://lambert.openstreetmap.de/api/status).
+Beide Server pflegen ihre Lastbegrezung voneinander unabhängig.
+
 Wir beginnen mit der Erläuterung dieser Status-Abfragen.
 
 ### Rate-Limit
