@@ -25,7 +25,7 @@ The Overpass API only uses their version-independent core functionality.
 
 For e.g. Ubuntu you can ensure as follows that all required programs are installed:
 
-    sudo apt-get install wget g++ make expat libexpat1-dev zlib1g-dev \
+    sudo apt-get install wget g++ make expat libexpat1-dev zlib1g-dev \\
         liblz4-dev
 
 Please download for the Overpass API the [newest release](https://dev.overpass-api.de/releases/).
