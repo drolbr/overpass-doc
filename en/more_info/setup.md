@@ -19,13 +19,14 @@ Alternatively, the Overpass API also can be installed [with Docker containers](h
 
 ## Install the software
 
-Please ensure that the GNU autotools, a C++ compiler, the auxiliary program _wget_ and the libraries _expat_ and _zlib_ are installed.
+Please ensure that the GNU autotools, a C++ compiler, the auxiliary program _wget_ and the libraries _expat_, _zlib_, and _lz4_ are installed.
 The versions of the programs do not matter.
 The Overpass API only uses their version-independent core functionality.
 
 For e.g. Ubuntu you can ensure as follows that all required programs are installed:
 
-    sudo apt-get install wget g++ make expat libexpat1-dev zlib1g-dev
+    sudo apt-get install wget g++ make expat libexpat1-dev zlib1g-dev \
+        liblz4-dev
 
 Please download for the Overpass API the [newest release](https://dev.overpass-api.de/releases/).
 Older releases also do work but
@@ -35,7 +36,7 @@ Unpack the downloaded gzip file and change into the created directory.
 
 Then compile on the command line with
 
-    ./configure
+    ./configure --enable-lz4
     make
     chmod 755 bin/*.sh cgi-bin/*
 

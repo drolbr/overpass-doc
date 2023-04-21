@@ -19,13 +19,14 @@ Il est également possible d'installer l'API Overpass avec des [conteneurs Docke
 
 ## Install les logiciels
 
-Assurez-vous que les autotools GNU, un compilateur C++, l'utilitaire _wget_ et les bibliothèques _expat_ et _zlib_ sont installés.
+Assurez-vous que les autotools GNU, un compilateur C++, l'utilitaire _wget_ et les bibliothèques _expat_, _zlib_ et _lz4_ sont installés.
 Les versions de ces programmes n'ont aucune importance;
 l'API Overpass n'utilise explicitement que leurs fonctions principales, indépendantes de la version.
 
 Sous Ubuntu, par exemple, vous pouvez vous assurer que tous les programmes nécessaires sont installés:
 
-    sudo apt-get install wget g++ make expat libexpat1-dev zlib1g-dev
+    sudo apt-get install wget g++ make expat libexpat1-dev zlib1g-dev \
+        liblz4-dev
 
 Téléchargez [la dernière version](https://dev.overpass-api.de/releases/) de l'API Overpass.
 Cela fonctionne également avec les anciennes versions;
@@ -35,7 +36,7 @@ Décompressez le fichier Gzip téléchargé et allez dans le répertoire que ça
 
 Il est compilé et installé sur la ligne de commande avec
 
-    ./configure
+    ./configure --enable-lz4
     make
     chmod 755 bin/*.sh cgi-bin/*
 
