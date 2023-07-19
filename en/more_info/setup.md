@@ -4,7 +4,21 @@ Installation of an Own Instance
 How can I set up my own instance of the Overpass API
 to be able to execute an arbitrary number of requests?
 
-A [brief](https://overpass-api.de/no_frills.html) and a [detailed](https://overpass-api.de/full_installation.html) how to is available.
+// Mention: wiki, blog
+This installation guide assumes that
+
+- You have already acquired a server with enough disk space (500 GB to 1 TB recommended).
+- You have at least a basic understanding of the Bash and Linux or another POSIX compliant operating system.
+
+You might want to look into alternative installation guides if either not both are true or you are just curious.
+I've recommended two especially helpful ones in [this blog post](/blog/more_install_instructions_60.html).
+
+There is also an [Installation Guide](https://wiki.openstreetmap.org/wiki/OSM3S/install) on the OpenStreetMap wiki,
+although it has rather the character of troubleshooting.
+Beware that many parts there might be outdated.
+
+To complete cross-references, the Overpass API also can be installed [with Docker containers](https://github.com/drolbr/docker-overpass).
+
 The essential three steps are:
 
 1. install the software
@@ -15,7 +29,8 @@ The steps 1 and 2 should be distinct steps
 because the amount of payload data is so big
 that the most users will want to align their apporach on that.
 
-Alternatively, the Overpass API also can be installed [with Docker containers](https://github.com/drolbr/docker-overpass).
+There is also an extra section below to explain how the components work together.
+This shall make it easier for you to write your own control scripts.
 
 ## Install the software
 
@@ -28,9 +43,12 @@ For e.g. Ubuntu you can ensure as follows that all required programs are install
     sudo apt-get install wget g++ make expat libexpat1-dev zlib1g-dev \\
         liblz4-dev
 
-Please download for the Overpass API the [newest release](https://dev.overpass-api.de/releases/).
+Please download for the Overpass API the [latest release](https://dev.overpass-api.de/releases/),
+called [`osm-3s_latest.tar.gz`](https://dev.overpass-api.de/releases/osm-3s_latest.tar.gz).
 Older releases also do work but
 due to the backward compatibility there will be next to never a reason to use an old release.
+The installation and maintenance of the software has improved over time,
+and older versions often will need special attention.
 
 Unpack the downloaded gzip file and change into the created directory.
 
@@ -40,7 +58,7 @@ Then compile on the command line with
     make
     chmod 755 bin/*.sh cgi-bin/*
 
-This already has included the installation.
+The command in the third line constitutes the installation.
 The rationale for enabling the build directory instead of installing to the system path
 is to avoid needing root permissions.
 
@@ -56,9 +74,11 @@ For this reason it is highly recommended to only move the directories `bin` and 
 
 ## Load the data
 
+You can skip this step and create your own database if you want to use a local extract instead.
+
 In contrast to the comparably little size of the software installation, the OpenStreetMap data is big.
-All data worldwide need also with only the geodata and only the current one already 150 GB (as of 2022).
-Together with all the attic data 360 GB are needed.
+All data worldwide need also with only the geodata and only the current one already 350 GB to 400 GB (as of 2023).
+Together with all the attic data 800 GB to 1 TB are needed.
 
 The data can be copied from a public accessible, daily updated snapshot of the database.
 This action is called _cloning_:
@@ -72,6 +92,9 @@ With the value `no`, it remains with the factual data,
 `meta` additionally loads the metadata of the editors
 and `attic` loads both metadata and all now outdated data.
 
+The transferred data is only 50% to 70% of the above mentioned amount,
+because some temporary data for transaction insulation and the cache of areas does not need to be transferred.
+
 The factual data are not critical in terms of privacy.
 The metadata and/or outdated data records, on the other hand, you may only load,
 if you have a legitimate interest.
@@ -83,6 +106,8 @@ After successful cloning, you can already make queries via
 by passing the request on the standard input.
 
 ## Create an Own Database
+
+You can skip this step if you have just cloned the global data.
 
 If you only want to work with a local extract of the OpenStreetMap data,
 then you can also create a database yourself from [an extract in OSM XML format](https://download.geofabrik.de).
@@ -120,12 +145,15 @@ by passing the request on the standard input.
 
 To apply updates, you need three permanently running processes.
 
-Script `fetch_osc.sh` downloads the updates every minute,
+The script `fetch_osc.sh` downloads the updates every minute,
 as soon as they become available;
 they are stored in a designated directory.
-Script `apply_osc_to_db.sh` applies the files found in this directory to the database.
+The script `apply_osc_to_db.sh` applies the files found in this directory to the database.
 
-Daemon `dispatcher` takes care
+An alternative to these both is the single script `fetch_osc_and_apply.sh`.
+This script both fetches minute updates, immediately applies them, and removes the downloaded minute diffs afterwards.
+
+The first instance of the daemon `dispatcher` takes care
 that the writing and reading processes don't get in each other's way -
 otherwise a process could want to read data
 that has already been changed to a later status by an update.
@@ -134,21 +162,51 @@ a shared memory with a fixed name helps the processes to find the `dispatcher`,
 the socket in the data directory is used for communication.
 
 With the following commands, the required processes can be started permanently.
-The label `$DB_DIR` must be replaced by the name of the data directory,
-and `$ID` must be replaced by the content of `$DB_DIR/replicate_id`.
+The label `$DB_DIR` must be replaced by the name of the data directory.
 
-    nohup bin/dispatcher --osm-base --meta --db-dir="$DB_DIR/" &
-    chmod 666 "$DB_DIR"/osm3s_v*_osm_base
-    nohup bin/fetch_osc.sh $ID \\
+Variant that only applies then discards the downloaded minute diffs:
+
+    nohup bin/dispatcher --osm-base --db-dir="$DB_DIR/" &
+    chmod 666 "$DB_DIR"/osm3s_osm_base
+    nohup bin/fetch_osc_and_apply.sh "https://planet.openstreetmap.org/replication/minute/" &
+
+Variant that retains the downloaded minute diffs.
+Here `$DIFF_DIR` must be replaced by the directory to store the diffs in:
+
+    nohup bin/dispatcher --osm-base --db-dir="$DB_DIR/" &
+    chmod 666 "$DB_DIR"/osm3s_osm_base
+    nohup bin/fetch_osc.sh auto \\
         "https://planet.openstreetmap.org/replication/minute/" \\
-        "diffs/" &
-    nohup bin/apply_osc_to_db.sh "diffs/" auto --meta=yes &
+        "$DIFF_DIR/" &
+    nohup bin/apply_osc_to_db.sh "$DIFF_DIR/" auto --meta=yes &
 
 You should now be able to execute queries with
 
     bin/osm3s_query
 
 by passing the query on standard input.
+
+Catching-up may take some time.
+On a magnetic hard disk, a speedup of 6 to real time is quite usual.
+So if you have downloaded a two days old clone, which is a usual delay,
+then catching up may take up to 12 hours.
+SSDs tend to be a lot faster.
+
+The next step is to enable areas.
+Areas [are not](../../preface/osm_data_model.html#areas) a native data type of OpenStreetMap,
+thus its entire implementation in Overpass API is [a huge workaround](../../full_data/area.html).
+
+While there is effort to integrate areas into the main workflow,
+for the moment being areas require to build some extra data structures.
+
+It is necessary to run a second instance of the `dispatcher`
+and to run a script that periodically updates the area cache:
+
+    nohup bin/dispatcher --areas --db-dir="$DB_DIR/" &
+    chmod 666 "$DB_DIR"/osm3s_areas
+    nohup bin/rules_delta_loop.sh "$DB_DIR" &
+
+See below for more details.
 
 ## Configure the Web Server
 
