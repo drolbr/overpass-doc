@@ -29,7 +29,7 @@ The steps 1 and 2 should be distinct steps
 because the amount of payload data is so big
 that the most users will want to align their apporach on that.
 
-There is also an extra section below to explain how the components work together.
+There is also an [extra page](components.md) to explain how the components work together.
 This shall make it easier for you to write your own control scripts.
 
 ## Install the software
@@ -166,14 +166,14 @@ The label `$DB_DIR` must be replaced by the name of the data directory.
 
 Variant that only applies then discards the downloaded minute diffs:
 
-    nohup bin/dispatcher --osm-base --db-dir="$DB_DIR/" &
+    nohup bin/dispatcher --osm-base --db-dir="$DB_DIR/" --allow-duplicate-queries=yes &
     chmod 666 "$DB_DIR"/osm3s_osm_base
     nohup bin/fetch_osc_and_apply.sh "https://planet.openstreetmap.org/replication/minute/" &
 
 Variant that retains the downloaded minute diffs.
 Here `$DIFF_DIR` must be replaced by the directory to store the diffs in:
 
-    nohup bin/dispatcher --osm-base --db-dir="$DB_DIR/" &
+    nohup bin/dispatcher --osm-base --db-dir="$DB_DIR/" --allow-duplicate-queries=yes &
     chmod 666 "$DB_DIR"/osm3s_osm_base
     nohup bin/fetch_osc.sh auto \\
         "https://planet.openstreetmap.org/replication/minute/" \\
@@ -202,7 +202,8 @@ for the moment being areas require to build some extra data structures.
 It is necessary to run a second instance of the `dispatcher`
 and to run a script that periodically updates the area cache:
 
-    nohup bin/dispatcher --areas --db-dir="$DB_DIR/" &
+    cp -pR rules "$DB_DIR/"
+    nohup bin/dispatcher --areas --db-dir="$DB_DIR/" --allow-duplicate-queries=yes &
     chmod 666 "$DB_DIR"/osm3s_areas
     nohup bin/rules_delta_loop.sh "$DB_DIR" &
 
