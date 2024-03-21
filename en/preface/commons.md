@@ -62,7 +62,7 @@ Usually you should not try to connect to one of the two explicitly.
 The only exception is as a workaround if the other instance is broken in a way
 such that DNS round robin would not help.
 The current individual server names are [gall.openstreetmap.de](https://gall.openstreetmap.de/api/status) and [lambert.openstreetmap.de](https://lambert.openstreetmap.de/api/status).
-These servers both maintain their rate limiting indenpendently from each other.
+These servers both maintain their rate limiting independently from each other.
 
 We start with the explanation of and with the help of the status request.
 
