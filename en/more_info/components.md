@@ -12,10 +12,37 @@ TODO
 
 ## Running Processes
 
-TODO
-dispatcher
-fetch_osc, apply_osc_to_db
-fetch_osc_and_apply
+For an Overpass API endpoint that is accessible over HTTPS (or HTTP) you need two things:
+
+- Daemons that enable access to the database files and coordinate that with updates, thus constitute the database engine.
+- A web server that terminates the HTTPS connections and forwards them by CGI to the database engine.
+
+The `dispatcher` is a permanently running daemon.
+It coordinates requests and updates and prevents requests from reading inconsistent data,
+i.e. basically all other processes are unable to start if the dispatcher is down.
+A sole exception is running `osm3s_query` with an extra `--db-dir=$DIR` parameter:
+in that case the `osm3s_query` is run against the database in the given directory under the assumption that no concurrent updates take place.
+
+The dispatcher can be shut down by calling `dispatcher --osm-base --terminate` on the command line or by sending a SIGTERM to it.
+In both cases it will notify a running `update_database` to shutdown to ensure a proper shutdown of everything.
+
+It is quite common that two `dispatcher` are running. The second instance needs to be started to coordinate the creation and upates of areas.
+The two can be discerned by that one runs with the argument `--osm-base` and the other with `--areas`.
+This dispatcher can be shut down by calling `dispatcher --areas --terminate` on the command line or by sending a SIGTERM to it.
+
+The update process is performed by having the bash scripts `fetch_osc.sh` and `apply_osc_to_db.sh` run permanently.
+An alternative update process is performed by the having the bash script `fetch_osc_and_apply.sh` run permanently.
+The former pair keeps the minute diffs while the latter single process discards the downloaded OSC files after successfully applying them.
+These processes call `update_database` to apply the downloaded files to the database.
+All of these processes can be safely shutdown by sending a SIGTERM to one of them.
+The process `update_database` get notified by `apply_osc_to_db.sh` resp. `fetch_osc_and_apply.sh` when those are shutdown,
+and in turn `apply_osc_to_db.sh` resp. `fetch_osc_and_apply.sh` watch whether `update_database` has been shutdown and follow that suit.
+
+The permanent process for the area updates is `rules_loop.sh` or `rules_delta_loop.sh`.
+Both of them periodically start an worker process `osm3s_query --rules`, and that process does the actual area updates.
+
+You may see a couple of usually short lived processes called `interpreter`.
+These are the worker processes called from the web server by CGI to run the actual requests.
 
 ## Files in *bin*
 
