@@ -274,7 +274,7 @@ Similarly [with the chevron](https://overpass-turbo.eu/?lat=51.5&lon=-0.1&zoom=1
     out;
 
 <a name="difference"/>
-## Differece
+## Difference
 
 ...
 

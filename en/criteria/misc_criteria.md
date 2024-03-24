@@ -191,7 +191,91 @@ Please note some pitfalls:
 * The most properties of objects come from earlier versions,
   i.e. a seemingly recent change date does not necessarily indicate an up-to-date object.
 
-<a name="attribution"/>
-## Attribution
+<a name="by_user"/>
+## By user
 
-...
+How can one get all edits by a specific user?
+The answer to this question is more difficult than one might expect.
+
+Whenever someone edits an element then a new version of that element is created.
+The OSM database shows the uploading user of that most recent version in the user field of the element,
+i.e. that user may be different from the user that performed the change you are interested in.
+
+There is a good chance that you can find [edits by me](https://overpass-turbo.eu/?lat=51.245&lon=7.25&zoom=14&Q=CGI_STUB) in this part of my home city:
+
+    nw({{bbox}})(user:"drolbr");
+    out geom;
+
+The relevant criterion is `(user:"drolbr")` in line 2.
+This selects from all elements in the bounding box only those that are last touched by me.
+
+Please note that you cannot verify this in the raw data because these are not showing any meta data.
+Attach `meta` to `out` in line 3 of [the request](https://overpass-turbo.eu/?lat=51.245&lon=7.25&zoom=14&Q=CGI_STUB):
+
+    nw({{bbox}})(user:"drolbr");
+    out geom meta;
+
+Now you can see the meta data including the user attribute in the raw data, and process it further if necessary.
+It is also present in the JSON output variant. In the CSV output variant, the special expression `::user` [can be used](https://overpass-turbo.eu/?lat=51.245&lon=7.25&zoom=14&Q=CGI_STUB) as a column header:
+
+    [out:csv(::type,::id,::user,highway)];
+    nw({{bbox}})(user:"drolbr");
+    out geom meta;
+
+It is possible that a given user has different user names over time.
+For example, I had *Roland Olbricht* as user name until it became impractical to have whitespace in the user name.
+Now I use *drolbr*.
+So if you search for `drolbr`
+then you will find even those of my changes I made when my user name had been *Roland Olbricht*.
+
+Consequently, you cannot find my edits if you search by `(user:"Roland Olbricht")`.
+This is in particular an issue with users that vandalized then deleted their accounts.
+A second move observed in the wild is that vandals delete their accounts
+then create another account with the same user name.
+This means that `(user:$VANDAL)` will find the vandalism no longer after the action,
+mitigated by the fact that usually vandalism is reverted anyway, thus carrying different user fields in line with the respective new version.
+
+For that reason, there is a second set of operators which is based on the user id.
+The user id is a numerical unique identifier for an account.
+For example, the user id of my account is 65282.
+This number can be found in the raw data of every object version of that respective user
+but also by tools like [Who's That](http://whosthat.osmz.ru/).
+
+One can use `uid` in [a request](https://overpass-turbo.eu/?lat=51.245&lon=7.25&zoom=14&Q=CGI_STUB) to search by user id:
+
+    nw({{bbox}})(uid:65282);
+    out geom meta;
+
+The respective column identifier for [CSV output](https://overpass-turbo.eu/?lat=51.245&lon=7.25&zoom=14&Q=CGI_STUB) is `::uid`:
+
+    [out:csv(::type,::id,::uid,highway)];
+    nw({{bbox}})(uid:65282);
+    out geom meta;
+
+Quite often it is desireable to select more elements than just those where a given user has been the last user.
+Have for example a look at [this station](https://overpass-turbo.eu/?lat=51.239&lon=6.775&zoom=18&Q=CGI_STUB):
+
+    nw({{bbox}})(user:"drolbr_mdv");
+    out geom;
+
+Apparently, I have not been involved in the mapping of this station at all.
+The constraint `(user_touched:"drolbr_mdv")` helps [discover more details](https://overpass-turbo.eu/?lat=51.239&lon=6.775&zoom=18&Q=CGI_STUB).
+It selects objects of which at least one version has been by me:
+
+    nw({{bbox}})(user_touched:"drolbr_mdv");
+    out geom;
+
+Now you see that I have mapped quite a lot at this station.
+The corresponding constraint [for the user id](https://overpass-turbo.eu/?lat=51.239&lon=6.775&zoom=18&Q=CGI_STUB) is `(uid_touched:65282)`:
+
+    nw({{bbox}})(uid_touched:65282);
+    out geom;
+
+There are still some issues left.
+When a way is split then only one half will be associated with the users that have touched the way.
+This is a general problem with element history.
+Sometimes mappers delete and redraw things.
+This again does remove the association with the users that have touched the way.
+
+And of course, if the elements the user touched simply no longer exist then they are not found.
+This is a selector on recent elements (or those of the selected date) and not a discovery tool for museum data.

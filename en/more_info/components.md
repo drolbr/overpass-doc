@@ -6,10 +6,12 @@ which files exist in Overpass related directories,
 which processes run during executing an Overpass API instance,
 and how the parts work together.
 
+<a name="directories"/>
 ## Directories and Overview
 
 TODO
 
+<a name="processes"/>
 ## Running Processes
 
 For an Overpass API endpoint that is accessible over HTTPS (or HTTP) you need two things:
@@ -44,6 +46,7 @@ Both of them periodically start an worker process `osm3s_query --rules`, and tha
 You may see a couple of usually short lived processes called `interpreter`.
 These are the worker processes called from the web server by CGI to run the actual requests.
 
+<a name="bin"/>
 ## Files in *bin*
 
 The files in the `bin` directory are those
@@ -99,6 +102,7 @@ and have been used on the French public instance.
 The script `reboot.sh` has been used in the past to enable an automated restart after a reboot
 but is currently unmaintained.
 
+<a name="cgi-bin"/>
 ## Files in *cgi-bin*
 
 The files in the `cgi-bin` subdirectory are exactly those
@@ -154,16 +158,19 @@ The other three endpoints do so as well, but are rarely used.
 The endpoint `trigger_clone` shows the directory you can start to download a clone from.
 This works only if the server is configured to offer clone, i.e. only for the [dev instance](https://dev.overpass-api.de/).
 
+<a name="database-dir"/>
 ## Files in the Database Directory
 
 TODO
 
+<a name="other_files"/>
 ## Other Files
 
 osc
 munin
 TODO
 
+<a name="other_other"/>
 ## Other Objects
 
 TODO
