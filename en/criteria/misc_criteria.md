@@ -266,9 +266,9 @@ It selects objects of which at least one version has been by me:
     out geom;
 
 Now you see that I have mapped quite a lot at this station.
-The corresponding constraint [for the user id](https://overpass-turbo.eu/?lat=51.239&lon=6.775&zoom=18&Q=CGI_STUB) is `(uid_touched:65282)`:
+The corresponding constraint [for the user id](https://overpass-turbo.eu/?lat=51.239&lon=6.775&zoom=18&Q=CGI_STUB) is `(uid_touched:2448982)`:
 
-    nw({{bbox}})(uid_touched:65282);
+    nw({{bbox}})(uid_touched:2448982);
     out geom;
 
 There are still some issues left.
