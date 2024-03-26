@@ -161,7 +161,112 @@ This works only if the server is configured to offer clone, i.e. only for the [d
 <a name="database-dir"/>
 ## Files in the Database Directory
 
-TODO
+During normal operations, more than 100 files are in the database directory.
+They can be grouped most easily by looking at their extensions:
+
+- files with file extension `bin` contain the actual payload data.
+  They are read by `interpreter` and `osm3s_query` and written by `update_database` and `update_from_dir`.
+  Those of the *bin* files that store derived area data are also read by `interpreter` and `osm3s_query`,
+  but written by `osm3s_query --rules` with the updated areas.
+
+- files with file extension `map` contain index data
+  such that from any element (node, way, relation) id the geographical index of the full element can be found.
+  These files are also read by `interpreter` and `osm3s_query` and written by `update_database` and `update_from_dir`.
+
+- files with extension `idx` contain index data to allow finding the right file data box for a given geographical index.
+  Each *idx* file corresponds to exactly one *bin* or *map* file by having the file extension `.idx` attached.
+  The *idx* files are also read by `interpreter` and `osm3s_query` but only and fully on startup.
+  A running update process (i.e. `update_database` or `update_from_dir`) does not write directly to these files
+  but instead the dispatcher moves the temporary *shadow* files (see below) in place once an update succeeded.
+
+- files with extension `shadow` are temporary files during an update process.
+  These files are used by the updating process to ensure that no conflicts with concurrent reading processes arise.
+
+We discuss the other file types further below.
+
+### The Update Mechanics
+
+...
+
+### Payload vs Meta vs Museum vs Areas
+
+````
+area_blocks.bin
+areas.bin
+area_tags_global.bin
+area_tags_local.bin
+node_attic_indexes.bin
+node_changelog.bin
+node_frequent_tags_attic.bin
+node_frequent_tags.bin
+node_keys.bin
+nodes_attic.bin
+nodes_attic_undeleted.bin
+nodes.bin
+nodes_meta_attic.bin
+nodes_meta.bin
+node_tags_global_attic.bin
+node_tags_global.bin
+node_tags_local_attic.bin
+node_tags_local.bin
+relation_attic_indexes.bin
+relation_changelog.bin
+relation_frequent_tags_attic.bin
+relation_frequent_tags.bin
+relation_keys.bin
+relation_roles.bin
+relations_attic.bin
+relations_attic_undeleted.bin
+relations.bin
+relations_meta_attic.bin
+relations_meta.bin
+relation_tags_global_attic.bin
+relation_tags_global.bin
+relation_tags_local_attic.bin
+relation_tags_local.bin
+user_data.bin
+user_indices.bin
+way_attic_indexes.bin
+way_changelog.bin
+way_frequent_tags_attic.bin
+way_frequent_tags.bin
+way_keys.bin
+ways_attic.bin
+ways_attic_undeleted.bin
+ways.bin
+ways_meta_attic.bin
+ways_meta.bin
+way_tags_global_attic.bin
+way_tags_global.bin
+way_tags_local_attic.bin
+way_tags_local.bin
+
+nodes_attic.map
+nodes.map
+relations_attic.map
+relations.map
+ways_attic.map
+ways.map
+````
+
+### Other Files in the Database Directory
+
+````
+apply_osc_to_db.log
+area_version
+augmented_diffs
+base-url
+database.log
+osm3s_areas
+osm3s_osm_base
+osm_base_shadow.status
+osm_base_version
+replicate_id
+rules
+server_name
+templates
+transactions.log
+````
 
 <a name="other_files"/>
 ## Other Files
