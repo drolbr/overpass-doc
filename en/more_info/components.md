@@ -179,10 +179,10 @@ They can be grouped most easily by looking at their extensions:
   A running update process (i.e. `update_database` or `update_from_dir`) does not write directly to these files
   but instead the dispatcher moves the temporary *shadow* files (see below) in place once an update succeeded.
 
-- files with extension `shadow` are temporary files during an update process.
+- files with extension `shadow` are temporary files during an [update run](#update-mechs).
   These files are used by the updating process to ensure that no conflicts with concurrent reading processes arise.
 
-We discuss the other file types further below.
+We discuss the other file types [further below](#db-other).
 
 <a name="update-mechs"/>
 ### The Update Mechanics
@@ -192,84 +192,68 @@ We discuss the other file types further below.
 <a name="layers"/>
 ### Payload vs Meta vs Museum vs Areas
 
-````
-area_blocks.bin
-areas.bin
-area_tags_global.bin
-area_tags_local.bin
-node_attic_indexes.bin
-node_changelog.bin
-node_frequent_tags_attic.bin
-node_frequent_tags.bin
-node_keys.bin
-nodes_attic.bin
-nodes_attic_undeleted.bin
-nodes.bin
-nodes_meta_attic.bin
-nodes_meta.bin
-node_tags_global_attic.bin
-node_tags_global.bin
-node_tags_local_attic.bin
-node_tags_local.bin
-relation_attic_indexes.bin
-relation_changelog.bin
-relation_frequent_tags_attic.bin
-relation_frequent_tags.bin
-relation_keys.bin
-relation_roles.bin
-relations_attic.bin
-relations_attic_undeleted.bin
-relations.bin
-relations_meta_attic.bin
-relations_meta.bin
-relation_tags_global_attic.bin
-relation_tags_global.bin
-relation_tags_local_attic.bin
-relation_tags_local.bin
-user_data.bin
-user_indices.bin
-way_attic_indexes.bin
-way_changelog.bin
-way_frequent_tags_attic.bin
-way_frequent_tags.bin
-way_keys.bin
-ways_attic.bin
-ways_attic_undeleted.bin
-ways.bin
-ways_meta_attic.bin
-ways_meta.bin
-way_tags_global_attic.bin
-way_tags_global.bin
-way_tags_local_attic.bin
-way_tags_local.bin
+The Overpass API database can be operated in three different levels of data depth.
 
-nodes_attic.map
-nodes.map
-relations_attic.map
-relations.map
-ways_attic.map
-ways.map
-````
+In the recommended *base* mode it contains only the geographical data, i.e. coordinates, element ids and refs, and the tags of the elements.
+It then consists of the files:
+
+- for nodes `nodes.bin`, `node_frequent_tags.bin`, `node_keys.bin`, `node_tags_global.bin`, `node_tags_local.bin`, `nodes.map`, and for each one corresponding *idx* file.
+- for ways `ways.bin`, `way_frequent_tags.bin`, `way_keys.bin`, `way_tags_global.bin`, `way_tags_local.bin`, `ways.map`, and for each one corresponding *idx* file.
+- for relations `relations.bin`, `relation_roles.bin`, `relation_frequent_tags.bin`, `relation_keys.bin`, `relation_tags_global.bin`, `relation_tags_local.bin`, `relations.map`, and for each one corresponding *idx* file.
+
+In the *meta* mode which you only may run if you have a legitimate interest, it contains also per element the changeset id, timestamp, newest version, and the user id and user name of the uploading user of that newwest version.
+It then encompasses the following additional files over the *base* mode:
+
+- for nodes `nodes_meta.bin` and one corresponding *idx* file.
+- for ways `ways_meta.bin` and one corresponding *idx* file.
+- for relations `relations_meta.bin` and one corresponding *idx* file.
+- for users in general `user_data.bin`, `user_indices.bin`, and for each one corresponding *idx* file.
+
+In the *attic* mode which includes in addition to the *meta* and *base* mode data (and which also may only be run for a legitimate interest),
+the database stores in addition the full history of elements at any timestamp.
+It then encompasses the following additional files over the *meta* mode:
+
+- for nodes `nodes_attic.bin`, `nodes_attic_undeleted.bin`, `nodes_meta_attic.bin`, `node_frequent_tags_attic.bin`, `node_tags_global_attic.bin`, `node_tags_local_attic.bin`, `node_changelog.bin`, `node_attic_indexes.bin`, `nodes_attic.map`, and for each one corresponding *idx* file.
+- for ways `ways_attic.bin`, `ways_attic_undeleted.bin`, `ways_meta_attic.bin`, `way_frequent_tags_attic.bin`, `way_tags_global_attic.bin`, `way_tags_local_attic.bin`, `way_changelog.bin`, `way_attic_indexes.bin`, `ways_attic.map`, and for each one corresponding *idx* file.
+- for relations `relations_attic.bin`, `relations_attic_undeleted.bin`, `relations_meta_attic.bin`, `relation_frequent_tags_attic.bin`, `relation_tags_global_attic.bin`, `relation_tags_local_attic.bin`, `relation_changelog.bin`, `relation_attic_indexes.bin`, `relations_attic.map`, and for each one corresponding *idx* file.
+
+Indepently of the chosen mode it is possible to have areas enabled.
+In that case the following files are present in the database directory:
+`areas.bin`, `area_blocks.bin`, `area_tags_global.bin`, `area_tags_local.bin`, and for each one corresponding *idx* file.
 
 <a name="db-other"/>
 ### Other Files in the Database Directory
 
-````
-apply_osc_to_db.log
-area_version
-augmented_diffs
-base-url
-database.log
-osm3s_areas
-osm3s_osm_base
-osm_base_shadow.status
-osm_base_version
-replicate_id
-rules
-server_name
-templates
-transactions.log
-````
+See [above](#update-mechs) for the files `osm_base_shadow.lock` and `area_shadow.lock`.
+These two are temporary files for running updates.
+
+Also, the two files `osm3s_areas` and `osm3s_osm_base` are sockets managed by the dispatcher
+and deleted during its shutdown.
+A starting dispatcher detects by their presence that another dispatcher is already running and refuses to start.
+All other processes connect to the *dispatcher* by opening a socket on this file,
+i.e. refuse to start in the absence of these sockets.
+
+The files `area_version` and `osm_base_version` contain the timestamp of the last update.
+This is the timestamp transmitted along the update and not the time at which the update completed.
+Similarly, the file `replicate_id` contains the number of the latest *osc* minute diff that has been applied.
+
+The file `base-url` contains the URL of the used clone instance to help track back anomalies in the data.
+
+The file `server_name` is what `server_status` shows as the name of the server
+to ensure that end users can discern different instances behind a load balancer.
+
+The file `osm_base_shadow.status` is a temporary file created by the dispatcher when it is queried for the status.
+
+The log file `database.log` is jointly written by the dispatcher as well as reading and writing processes.
+It contains information whether the communication between *dispatcher* and its clients is working.
+The log file `apply_osc_to_db.log` contains a log of which diffs have been attempted to be applied to the database
+and whether the update attempts have succeeded.
+The log file `transactions.log` contains the requests, client ids and resource consumption per request.
+
+The `rules` subdirectory usually contains two files, one for `rules_loop.sh` and one for `rules_delta_loop.sh`.
+These files specify the rules according to which it is decided which relations are converted to areas.
+
+The `augmented_diffs` and `templates` directories exist now only for historical reasons.
 
 <a name="other_files"/>
 ## Other Files
