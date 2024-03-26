@@ -50,6 +50,7 @@ echo '  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>'
 echo '<style>' >>$TARGET
 echo 'pre { background-color:#ccffff; padding: 0.5em; counter-reset: line; }' >>$TARGET
 echo 'div[type=sibling] { text-indent:1em; }' >>$TARGET
+echo 'div[type=subsubsection] { text-indent:1em; }' >>$TARGET
 echo 'codeline::before { counter-increment: line; content: counter(line)" "; color: #99cccc; }' >>$TARGET
 echo '</style>' >>$TARGET
 echo '  <title>'$TITLE'</title>' >>$TARGET

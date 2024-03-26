@@ -184,10 +184,12 @@ They can be grouped most easily by looking at their extensions:
 
 We discuss the other file types further below.
 
+<a name="update-mechs"/>
 ### The Update Mechanics
 
 ...
 
+<a name="layers"/>
 ### Payload vs Meta vs Museum vs Areas
 
 ````
@@ -249,6 +251,7 @@ ways_attic.map
 ways.map
 ````
 
+<a name="db-other"/>
 ### Other Files in the Database Directory
 
 ````

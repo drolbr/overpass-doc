@@ -5,10 +5,15 @@
       mode = "seek_file";
     else if (index($0," ") > 0)
     {
-      if (substr($0,1,1) == "#")
+      if (substr($0,1,2) == "# ")
       {
-        pos = index($0," ");
-        toc_lines = toc_lines "<div type=\"subsection\"><a href=\""substr($0,1,pos-1)"\">"substr($0,pos+1)"</a></div>\n";
+        pos = index(substr($0,3)," ")+2;
+        toc_lines = toc_lines "<div type=\"subsection\"><a href=\"#"substr($0,3,pos-3)"\">"substr($0,pos+1)"</a></div>\n";
+      }
+      else if (substr($0,1,3) == "## ")
+      {
+        pos = index(substr($0,4)," ")+3;
+        toc_lines = toc_lines "<div type=\"subsubsection\"><a href=\"#"substr($0,4,pos-4)"\">"substr($0,pos+1)"</a></div>\n";
       }
       else
       {
