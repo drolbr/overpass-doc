@@ -55,7 +55,7 @@ echo 'codeline::before { counter-increment: line; content: counter(line)" "; col
 echo '</style>' >>$TARGET
 echo '  <title>'$TITLE'</title>' >>$TARGET
 echo '</head>' >>$TARGET
-echo '<body style="font-family:sans-serif; max-width:32em">' >>$TARGET
+echo '<body style="font-family:sans-serif; max-width:35em">' >>$TARGET
 echo >>$TARGET
 
 {

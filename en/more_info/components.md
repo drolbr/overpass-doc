@@ -187,7 +187,38 @@ We discuss the other file types [further below](#db-other).
 <a name="update-mechs"/>
 ### The Update Mechanics
 
-...
+The update process is designed to ensure integrity to all processes
+that are reading during one or more update cycles.
+
+This is ensured on the level of file blocks within the payload (the *map* and *bin*) files.
+During an update run changed blocks are rewritten as new blocks,
+and there are then two or more views of file blocks to form a complete index.
+The existing one is in the corresponding *idx* file while the newly constructed view is in the *shadow* file.
+
+Further valid views can exist when the bookkeeping of the *dispatcher* indicates
+that one or more long running process has been based on an even older block list than the current *idx* file.
+The *dispatcher* releases a block for overwriting only if it knows that no reading process has any reference to it.
+These blocks are at the beginng of the update cycle written to the files ending in `.bin.shadow` or `.map.shadow`.
+
+At the end of the update cycle the update process notifies the *dispatcher* of its completion.
+The *dispatcher* then sets a lock which prevents reading processes from starting,
+and then it moves the `.idx.shadow` files to the `.idx` files to become the new current idx list.
+
+If the dispatcher finds its own lock file at startup then it concludes that moving the files has been failed
+and reperforms that before admitting reading processes.
+With that beheaviour, the update process is truly atomic.
+
+The update process for areas is similar.
+
+Some other update processes exist for special cases but are not discussed in detail here:
+
+If a migration of the file format is necessary
+then that migration copies the payload to a new payload file with `.next` in its name and an *idx* file
+and finally moves that pair of files in place.
+
+If the database is initialized from such a large source file that an in-memory sort is impossible
+then it creates temporary files with numbers in the file name that are finally merge-sorted.
+This allows for a faster import.
 
 <a name="layers"/>
 ### Payload vs Meta vs Museum vs Areas
@@ -258,9 +289,26 @@ The `augmented_diffs` and `templates` directories exist now only for historical 
 <a name="other_files"/>
 ## Other Files
 
-osc
-munin
-TODO
+There are some files outside the `bin`, `cgi-bin`, and database directory.
+These are non-essential in the sense of that an Overpass API instnce can be brought back on track without them
+but they are temporarily necessary and otherwise may by their content help to figure out what has happened.
+
+If the twin scripts `fetch_osc.sh` and `apply_osc_to_db.sh` perform the updates
+then the `fetch_osc.sh` stores a partial replication of the minute diffs from remote in the *diff* directory.
+The *diff* directory can be found as the third argument to `fetch_osc.sh`.
+It contains the minute diffs itselfs as `.osc.gz` file and one corresponding `.state.txt` file per minute diff,
+all arranged in the three-level directory hierarchy known from upstream.
+
+In addition, at the root of the *diff* directory the file `state.txt` is the newest state file found.
+The presence of this file upstream is the indicator whether the corresponding diffs files are actually valid.
+Finally, a `fetch_osc.log` contains a log of which file has when been downloaded.
+
+The entire directory is neither needed nor created if the script `fetch_osc_and_apply.sh` is used instead.
+It fully relies on storing the diffs only temporarily.
+
+There is a bunch of munin scripts in the `munin/` subdirectory
+which you might want to move to `/etc/munin/plugins/` directory and adapt the file paths to the database directory
+or directory of the executables (parent of `bin/` and `cgi-bin/`) to get munin monitoring.
 
 <a name="other_other"/>
 ## Other Objects
