@@ -6,11 +6,6 @@ which files exist in Overpass related directories,
 which processes run during executing an Overpass API instance,
 and how the parts work together.
 
-<a name="directories"/>
-## Directories and Overview
-
-TODO
-
 <a name="processes"/>
 ## Running Processes
 
@@ -313,6 +308,17 @@ or directory of the executables (parent of `bin/` and `cgi-bin/`) to get munin m
 <a name="other_other"/>
 ## Other Objects
 
-TODO
-/dev/shm
-OVERPASS_X_DIR
+There are only few artifacts outside the file system that are relevant to the Overpass API.
+
+In the standard configuration, two shared memory entries are maintained by the *dispatcher*.
+This is `osm3s_osm_base` for the OSM data *dispatcher*, and `osm3s_areas` for the area *dispatcher*.
+On Linux they can be found under `/dev/shm`, but other POSIX compliant operating systems may have them elsewhere.
+They are deleted on shutdown of the respective *dispatcher*,
+and if present convey to a starting *dispatcher* that another instance is already running,
+i.e. the *dispatcher* subsequently does not start.
+Reading and writing clients use these shared memories to find the location of the database directory.
+
+This is impractical under some circumstances, e.g. on a Docker volume.
+Therefore, one can alternatively set the environment variable `OVERPASS_SOCKET_DIR` or `OVERPASS_DB_DIR`
+to let the client process instead look there for the socket.
+In that case the shared memory is not used at all.
