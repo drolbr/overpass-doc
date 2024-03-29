@@ -133,10 +133,10 @@ Old versions are retained as well as all the data necessary to assign changes to
 
 There is always, per object and state, a _version number_ and _timestamp_.
 Old states with old version numbers are retained.
-Therefore the Overpass API allows access, via [special methods](../analysis/index.md), to old states.
+Therefore the Overpass API allows access, via [special methods](../analysis/museum.md), to old states.
 But by default, unless a special request is made, it always operates on current data.
 
-In addition, changed are grouped to _changesets_.
+In addition, changes are grouped to _changesets_.
 These are associated to the uploading mapper.
 The grouping is done automatically by the editing software
 and in general one changeset per upload event is created.
