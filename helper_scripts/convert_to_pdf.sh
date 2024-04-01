@@ -28,6 +28,7 @@ process_entire_directory preface
 process_entire_directory targets
 process_entire_directory full_data
 process_entire_directory criteria
+process_entire_directory analysis
 process_entire_directory more_info
 
-cat _ | pandoc --toc --toc-depth=3 -N --from=markdown --output=test.pdf
+cat _ | pandoc --toc --toc-depth=2 -N --from=markdown --output=test.pdf
