@@ -109,14 +109,15 @@ This is more than 15% of all ways.
 
 To safely determine the geomtry of a way and changes to it, version numbers are unfit.
 
-Remarkably, relations suffer from the opposite problem when trying to trck changes on them:
+Remarkably, relations suffer from the opposite problem when trying to track changes on them:
 If someone splits a way which is member of a relation for whatever reason
 then this creates a new version of the relation.
 At least a somewhat justified new version is created when a minor geometry change happens somewhere on a relation.
-If one tracks change in a local area of some kilometers diameter then there is a close-to-one chance
-that those minor geomtrey changes have happened on a long relation elsewhere drastically outnumber relevant changes.
+If one tracks change in a local area of some kilometers diameter then there is almost sure
+that those minor geometry changes
+that have happened on a long relation elsewhere drastically outnumber relevant changes.
 
-In other words: treating relations for change tracking as modified by their version number has an extremely bad signal-to-noise ratio.
+In other words: treating relations for change tracking as modified by their version number has a bad signal-to-noise ratio.
 On top of this, relations inherit the problem that changes to the way
 that do not result in a changed relation member list do not increment the relation version.
 In other words, the problem is both a lot of noise and the absence of the desired signal.
@@ -124,17 +125,63 @@ In other words, the problem is both a lot of noise and the absence of the desire
 <a name="timestamps"/>
 ### Timestamps
 
+For the reasons mentioned before, the Overpass API relies for museum data on timestamps.
+
+As [shown above](#date), one can add the prefix `[date:"YYYY-MM-DDThh:mm:ssZ"]` before the query
+to run the query towards the data as of the provided date.
+The `T` and `Z` are fixed markers and indicate that always UTC is used as reference;
+the `YYYY-MM-DD` is the date in exactly that order and `hh:mm:ss` is the time in exactly that format.
+Please note that you need exactly one single semicolon at the end of the one or more prefixes,
+and that multiple prefixes like `[date:...]`, `[timeout:...]`, and `[out:...]` [are not separated](https://overpass-turbo.eu/?lat=51.525&lon=-0.25&zoom=16&Q=CGI_STUB) by semicolons:
+
+    [date:"2013-01-01T00:00:00Z"][timeout:30];
+    (
+      way[highway]({{bbox}});
+      way[building]({{bbox}});
+    );
+    out geom;
+
+The advantage of the timestamp paradigm is that it is conceptually simple:
+You see the geometry of ways (and state of relation members) in a then consistent combination,
+nonwithstanding whether asynchronous changes mean that a different geomtry applies to the same way version at a different point in time.
+
+The data of the timestamp when a mapper has started a changeset is what they have started working on.
+The data of the timestamp when a mapper has finished a changeset usually is what they have deemed complete,
+but there is no guarantee that the mapper has actually reviewed what they had produced.
+
+In principle, it is possible that edits of multiple mappers within an area and the short time span of a changeset overlap.
+But in practice this has hardly been ever observed.
+Either it is so close that a conflict prevented the second mapper from completing the upload
+or the edits of the two mappers have been separated enough to tell the apart.
+
+While it is in principle also possible to spot a change by downloading two data states of the points in time before and after a change or a reference period,
+there are server side tools available to reduce the amount of data to handle,
+see next section.
+
+<a name="diff-adiff"/>
+## Select Changed Data
+
 ...
 
-<a name="foo"/>
-## Foo
+<a name="diff-only"/>
+### Patch Data
 
 ...
 
-Diff
-Adiff
-compare
+<a name="adiff"/>
+### Whereabouts
 
+...
+
+<a name="compare"/>
+### Specific Differences
+
+...
+
+<a name="timeline"/>
+## Plot an Element over Time
+
+...
 timeline
 retro
 
