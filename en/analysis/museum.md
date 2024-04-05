@@ -32,7 +32,7 @@ There are quite a number of data structures that seemingly interrelate with data
 
 First of all, each node, way, and relation has a version number,
 and older versions of elements are in general available through the main API or other data sources.
-Then there are changesets including meat information and comments.
+Then there are changesets including meta information and comments.
 Finally, each element version has attached a timestamp to it.
 
 <a name="changesets"/>
@@ -49,11 +49,30 @@ as one absolutely might have aligned element A to element B in changeset X,
 while element B itself comes from changeset Y.
 Then there is no formal, but well a factual dependency of A on B, thus X on Y.
 
-Multiple changesets can be entangled, i.e. changeset A contains say version 1 of an object, then changeset B contains version 2 of an object, and finally again changeset A contains version 3 of the same object.
-As a result, it is usually but not always possible at all to revert a single changeset
-even if one were to accepting the other problems of the stack metaphor.
+Multiple changesets can be entangled. Have a look at [node 6551935928](https://overpass-turbo.eu/?lat=51.49824&lon=-0.06385&zoom=20&Q=CGI_STUB):
+Go to the data tab and scroll through the versions of date 2021-08-13.
+The query itslef is explained alongside *timeline* and *retro* further below.
 
-... Interrelated changesets? ...
+    timeline(node,6551935928);
+    for (t["created"])
+    {
+      retro (_.val)
+      {
+        node(6551935928);
+        out meta;
+      }
+    }
+
+Version 7 belongs to changeset 109621973.
+Then versions 8 and 9 belong to changeset 109622477.
+Versions 10 and 11 again belong to changeset 109621973, while finally version 12 belongs to changeset 109622477.
+I.e. changeset 109621973 depends on changeset 109622477, but changeset 109622477 also depends on changeset 109621973.
+
+There exist at least over a thousand of such simply mutual interpendencies on the same element.
+But there exist also circular dependencies or dependencies involving multiple elements.
+
+As a consequence of this, it is usually but not always possible at all to revert a single changeset
+even if one were to accept the other problems of the stack metaphor.
 
 Changesets comment may still be instructive on what was intended with a changeset.
 However, the quality of changeset comments varies wildly.
