@@ -107,7 +107,7 @@ It is widespread: I've made an analysis based on the data as of 2023-01-26 21:48
 and 147 447 805 of 916 422 831 ways have at least one version with multiple geometries.
 This is more than 15% of all ways.
 
-To safely determine the geomtry of a way and changes to it, version numbers are unfit.
+To safely determine the geometry of a way and changes to it, version numbers are unfit.
 
 Remarkably, relations suffer from the opposite problem when trying to track changes on them:
 If someone splits a way which is member of a relation for whatever reason
@@ -143,7 +143,7 @@ and that multiple prefixes like `[date:...]`, `[timeout:...]`, and `[out:...]` [
 
 The advantage of the timestamp paradigm is that it is conceptually simple:
 You see the geometry of ways (and state of relation members) in a then consistent combination,
-nonwithstanding whether asynchronous changes mean that a different geomtry applies to the same way version at a different point in time.
+nonwithstanding whether asynchronous changes mean that a different geometry applies to the same way version at a different point in time.
 
 The data of the timestamp when a mapper has started a changeset is what they have started working on.
 The data of the timestamp when a mapper has finished a changeset usually is what they have deemed complete,
@@ -155,6 +155,7 @@ Either it is so close that a conflict prevented the second mapper from completin
 or the edits of the two mappers have been separated enough to tell the apart.
 
 While it is in principle also possible to spot a change by downloading two data states of the points in time before and after a change or a reference period,
+then doing a text diff,
 there are server side tools available to reduce the amount of data to handle,
 see next section.
 
@@ -166,7 +167,44 @@ see next section.
 <a name="diff-only"/>
 ### Patch Data
 
-...
+There is a prefix `[diff:...]` that fulfills the promise
+that Overpass API can compare literally the states at two different time stamps.
+
+Please note that *Overpass Turbo* does not show the results.
+A user interface to show minor differences in geometry is a difficult thing to do,
+and *Overpass Turbo* does not have such a user interface.
+One of the difficulties to solve is that one usually wants to see the old geometry, the new geometry,
+and that in many cases these two differ only in a very minuscule way.
+
+After that warning, you are invited to have a look at [an instructive example](https://overpass-turbo.eu/?lat=51.525&lon=-0.25&zoom=16&Q=CGI_STUB):
+
+    [diff:"2018-04-01T00:00:00Z","2018-07-01T00:00:00Z"];
+    (
+      way[highway]({{bbox}});
+      way[building]({{bbox}});
+    );
+    out geom meta;
+
+This is a three-month-period during which enough changes happened to have all phenomena in one example.
+Go to the data tab, and copy-paste the full text to elsewhere to enable full-text search.
+There are XML nodes `action` with one of the following three types:
+
+- The type `modify` announces updates to elements.
+  For ways this includes the case where the underlying nodes have moved but no new version created.
+  For nodes and relations a change is detected only in case of moved nodes.
+- The type `create` announces a newly created or relevant element.
+  Note that the element may have existed before elsewhere but has not met the selection criteria so far.
+- The type `delete` announces that an existing element ceased to exist or ceased to meet the selection criteria.
+
+The degree of verbosity is exactly the one you have chosen in the output statement.
+This means that the result may contain seemingly unchanged elements
+unless you use `out geom meta` as the degree of verbosity.
+
+If you want to patch a downstream database of filtered elements then
+this should be exactly what you need to update that database.
+However, there is no information about the Whereabouts of deleted elements.
+For many applications this is a shortcoming,
+for exampe if you search for the changeset of an element that caused the apparent or real deletion.
 
 <a name="adiff"/>
 ### Whereabouts
