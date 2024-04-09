@@ -202,14 +202,44 @@ unless you use `out geom meta` as the degree of verbosity.
 
 If you want to patch a downstream database of filtered elements then
 this should be exactly what you need to update that database.
-However, there is no information about the Whereabouts of deleted elements.
+However, there is no information about the whereabouts of deleted elements.
 For many applications this is a shortcoming,
-for exampe if you search for the changeset of an element that caused the apparent or real deletion.
+for example if you search for the changeset of an element that caused the apparent or real deletion.
 
 <a name="adiff"/>
 ### Whereabouts
 
+The `adiff` variant is shorthand for Augmented Diff.
+It returns everything the `diff` setting returns, and in addition
+it shows for any Delete action the whereabouts of the element in a distinct new subsection of the action.
+
+Scroll through the raw data in the data tab for the well known [example](https://overpass-turbo.eu/?lat=51.525&lon=-0.25&zoom=16&Q=CGI_STUB):
+
+    [adiff:"2018-01-01T00:00:00Z","2019-01-01T00:00:00Z"];
+    (
+      way[highway](51.51,-0.27,51.54,-0.23);
+      way[building](51.51,-0.27,51.54,-0.23);
+    );
+    out geom meta;
+
+You will find that not only for every deleted way there is a follow-up entry for that way
+that gives the meta data but also has a flag `visible="false"` or `visible="true"`.
+
+An [example](https://overpass-turbo.eu/?lat=51.53345&lon=-0.2471&zoom=18&Q=CGI_STUB) for `visible="false"`:
+
+    [adiff:"2018-01-01T00:00:00Z","2019-01-01T00:00:00Z"];
+    way(229832127);
+    out geom meta;
+
+This way has truly been deleted in version 10, hence has the flag `visible="false"`.
+
 ...
+TODO: visible true with different version
+TODO: visible true with same version
+
+Please note that the Augmented Diff mode only makes sense with output flag `out meta` (or `out geom meta`).
+Otherwise, the meta information is simply not contained in the result,
+and you get no difference to the simpler Diff mode.
 
 <a name="compare"/>
 ### Specific Differences
