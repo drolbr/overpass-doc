@@ -233,13 +233,62 @@ An [example](https://overpass-turbo.eu/?lat=51.53345&lon=-0.2471&zoom=18&Q=CGI_S
 
 This way has truly been deleted in version 10, hence has the flag `visible="false"`.
 
-...
-TODO: visible true with different version
-TODO: visible true with same version
+An [example](https://overpass-turbo.eu/?lat=51.5223&lon=-0.2715&zoom=18&Q=CGI_STUB) for `visible="true"`:
+
+    [adiff:"2018-01-01T00:00:00Z","2019-01-01T00:00:00Z"];
+    way(8206624)(51.51,-0.27,51.54,-0.23);
+    out geom meta;
+
+This way has been cut back radically, see [old](https://overpass-turbo.eu/?lat=51.5223&lon=-0.2715&zoom=18&Q=CGI_STUB) ...
+
+    [date:"2018-01-01T00:00:00Z"];
+    way(8206624);
+    out geom meta;
+
+... and [new](https://overpass-turbo.eu/?lat=51.5223&lon=-0.2715&zoom=18&Q=CGI_STUB) variant:
+
+    [date:"2019-01-01T00:00:00Z"];
+    way(8206624);
+    out geom meta;
+
+Thus it got literally out of scope, i.e. the requested bounding box. But still exists.
+
+And an [example](https://overpass-turbo.eu/?lat=51.458&lon=-0.237&zoom=16&Q=CGI_STUB) for a way that exhibits the same data and version,
+
+    [adiff:"2018-04-01T00:00:00Z","2018-07-01T00:00:00Z"];
+    way(3687939)(51.457,-0.235,51.459,-0.231);
+    out geom meta;
+
+but got out of scope because the underlying nodes have moved [from](https://overpass-turbo.eu/?lat=51.458&lon=-0.237&zoom=16&Q=CGI_STUB)
+
+    [date:"2018-04-01T00:00:00Z"];
+    way(3687939);
+    out geom meta;
+
+to the [geometry](https://overpass-turbo.eu/?lat=51.458&lon=-0.237&zoom=16&Q=CGI_STUB)
+
+    [date:"2018-07-01T00:00:00Z"];
+    way(3687939);
+    out geom meta;
+
+   
+Depending on your use case for the data, you need to treat all of these cases differently.
+
+If you want to patch the database, then already the [diff](#diff-only) from the previous section is enough,
+and you can treat all cases of `visible` the same way.
+
+If you want to point people towards the changeset that has the context for the change then
+- the `visible="false"` is striahgtforward because it is guaranteed that the way has been deleted in that changeset.
+- the same way version case (and in principle also same relation version case) has for sure a different changeset that caused the change, and you have to ensure that you explicitly see and connect the nodes (members) to figure out the actually responsible change.
+- the different way version, but `visible="true"` case can be either of the two.
+
+When you use more sophisticated queries than a bounding box
+then there are even more possibilities how changes to used but not printed elements indirectly govern elements to fall out of the result.
+Make sure you understand your problem domain, and that your end users do that, too.
 
 Please note that the Augmented Diff mode only makes sense with output flag `out meta` (or `out geom meta`).
 Otherwise, the meta information is simply not contained in the result,
-and you get no difference to the simpler Diff mode.
+and you get no difference to the simpler [diff](#diff-only) mode.
 
 <a name="compare"/>
 ### Specific Differences
