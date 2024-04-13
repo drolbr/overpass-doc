@@ -293,14 +293,36 @@ and you get no difference to the simpler [diff](#diff-only) mode.
 <a name="compare"/>
 ### Specific Differences
 
+If you intend to track changes to a certain tag or tagging
+then it will often happen that you get way too much by-catch of data
+that changed in a way irrelevant to you.
+
+The statement `compare` reduces results to only those where a certain expression changed,
+like [for example](https://overpass-turbo.eu/?lat=51.525&lon=-0.25&zoom=15&Q=CGI_STUB) the value of the tag `maxspeed`:
+
+    [adiff:"2018-01-01T00:00:00Z","2019-01-01T00:00:00Z"];
+    way[highway](51.51,-0.27,51.54,-0.23);
+    compare(delta:t["maxspeed"]);
+    out geom meta;
+
+...
+<!-- shrinks tenfold -->
+<!-- discuss: [highway][maxspeed], t["maxspeed"] + t["foo"], "x" + t["maxspeed"] -->
+<!-- apparently created, deleted -->
+
+<a name="initial-final"/>
+### Different Output for Old and New Data
+
 ...
 
 <a name="timeline"/>
 ## Plot an Element over Time
 
 ...
+<!--
 timeline
 retro
+-->
 
 <a name="josm"/>
 ## Unearthing with JOSM

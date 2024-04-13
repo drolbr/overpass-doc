@@ -6,7 +6,8 @@ if [[ -z $2 ]]; then
 fi
 
 SOURCE="$1"
-TARGET="$2/"$(dirname "$1")/$(basename "$1" .md).html
+TARGET="$2/"$(dirname "$1")/$(basename "$1" .md).html.temp
+TARGET_FINAL="$2/"$(dirname "$1")/$(basename "$1" .md).html
 PARENT_AUX_TARGET="$2/"$(dirname "$1")/../index.aux
 AUX_TARGET="$2/"$(dirname "$1")/index.aux
 SCRIPT_DIR=$(dirname $0)
@@ -110,6 +111,12 @@ echo '</html>' >>$TARGET
 for I in $(cat <$1 | grep -E '^\[LINK_STUB\]\(' | awk '{ print substr($0,13,length($0)-13); }'); do
   $0 "$(dirname $1)/$I" "$2" "$PARENT"
 done
+
+if [[ ! -f "$TARGET_FINAL" || $(diff "$TARGET_FINAL" "$TARGET") ]]; then
+  mv "$TARGET" "$TARGET_FINAL"
+else
+  rm "$TARGET"
+fi
 
 if [[ $(basename "$1") == "index.md" ]]; then
   rm -f "$AUX_TARGET"
