@@ -305,9 +305,33 @@ like [for example](https://overpass-turbo.eu/?lat=51.525&lon=-0.25&zoom=15&Q=CGI
     compare(delta:t["maxspeed"]);
     out geom meta;
 
+This result is more than ten times smaller than the original result.
+
+Does it make sense to instead result the initial query [to only maxspeed](https://overpass-turbo.eu/?lat=51.525&lon=-0.25&zoom=15&Q=CGI_STUB)?
+
+    [adiff:"2018-01-01T00:00:00Z","2019-01-01T00:00:00Z"];
+    way[highway][maxspeed](51.51,-0.27,51.54,-0.23);
+    compare(delta:t["maxspeed"]);
+    out geom meta;
+
+This result is even slightly smaller.
+It does not contain the old or new elements without a maxspeed tag.
+As we use `adiff`, we get for elements with deleted `maxspeed` tag at least the `visible` flag and meta data.
+Whether this is an improvement or not again depends on your use case:
+in many cases, knowing that an element has been a highway in the bounding box already gives insight.
+
+It is in principle possible to ask for multiple tags in parallel.
+You can just use an arbitrary expression after delta, for example [two tags](https://overpass-turbo.eu/?lat=51.525&lon=-0.25&zoom=15&Q=CGI_STUB):
+
+    [adiff:"2018-01-01T00:00:00Z","2019-01-01T00:00:00Z"];
+    way[highway](51.51,-0.27,51.54,-0.23);
+    compare(delta:t["maxspeed"] + t["sidewalk"]);
+    out geom meta;
+
+Now the result contains all elements that have a change in the `maxspeed` tag or the `sidewalk` tag.
+
 ...
-<!-- shrinks tenfold -->
-<!-- discuss: [highway][maxspeed], t["maxspeed"] + t["foo"], "x" + t["maxspeed"] -->
+<!-- discuss: "x" + t["maxspeed"] -->
 <!-- apparently created, deleted -->
 
 <a name="initial-final"/>
