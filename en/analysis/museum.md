@@ -330,9 +330,41 @@ You can just use an arbitrary expression after delta, for example [two tags](htt
 
 Now the result contains all elements that have a change in the `maxspeed` tag or the `sidewalk` tag.
 
-...
-<!-- discuss: "x" + t["maxspeed"] -->
-<!-- apparently created, deleted -->
+In principle, it could happen that a value of the tag `maxspeed` is conflated with a value of the tag `sidewalk`.
+This would happen for an element to changes from `maxspeed=X`, no `sidewalk` to `sidewalk=X`, no "maxspeed` or back.
+While this is ruled out for *maxspeed* and *sidewalk* because the values have no overlap,
+a good workaround attempt is to [place a delimiter](https://overpass-turbo.eu/?lat=51.525&lon=-0.25&zoom=15&Q=CGI_STUB) between the two expressions:
+
+    [adiff:"2018-01-01T00:00:00Z","2019-01-01T00:00:00Z"];
+    way[highway](51.51,-0.27,51.54,-0.23);
+    compare(delta:t["maxspeed"] + ";" + t["sidewalk"]);
+    out geom meta;
+
+Unfortunately this has the side effect that elements
+which have been deleted or created
+are now always contained in the result, although they have not changed the respective tag.
+
+Why?
+
+The expression `t["maxspeed"] + ";" + t["sidewalk"]` is for an existing element without *maxspeed* and *sidewalk* tag evaluated to `;`.
+On the non-existing counterpart the expression is evaluated to the empty string, which is different from `;`.
+
+Hence a better workaround is to make [the semicolon depending on the *maxspeed* key](https://overpass-turbo.eu/?lat=51.525&lon=-0.25&zoom=15&Q=CGI_STUB):
+
+    [adiff:"2018-01-01T00:00:00Z","2019-01-01T00:00:00Z"];
+    way[highway](51.51,-0.27,51.54,-0.23);
+    compare(delta:t["maxspeed"]
+        + (is_tag("sidewalk") ? ";" : "") + t["sidewalk"]);
+    out geom meta;
+
+You can also directly aim to [get only the created and deleted objects](https://overpass-turbo.eu/?lat=51.525&lon=-0.25&zoom=15&Q=CGI_STUB):
+
+    [adiff:"2018-01-01T00:00:00Z","2019-01-01T00:00:00Z"];
+    way[highway](51.51,-0.27,51.54,-0.23);
+    compare(delta:1);
+    out geom meta;
+
+Any non-empty constant expression will work here.
 
 <a name="initial-final"/>
 ### Different Output for Old and New Data
