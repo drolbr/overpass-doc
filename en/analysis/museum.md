@@ -162,7 +162,9 @@ see next section.
 <a name="diff-adiff"/>
 ## Select Changed Data
 
-...
+There are variants that cater for the differing needs of different use cases.
+Choose the variant that fits your use case with the minimal possible amount of data
+because this relieves both you in term of processing resources as the server in terms of retrieval effort.
 
 <a name="diff-only"/>
 ### Patch Data
@@ -349,7 +351,7 @@ Why?
 The expression `t["maxspeed"] + ";" + t["sidewalk"]` is for an existing element without *maxspeed* and *sidewalk* tag evaluated to `;`.
 On the non-existing counterpart the expression is evaluated to the empty string, which is different from `;`.
 
-Hence a better workaround is to make [the semicolon depending on the *maxspeed* key](https://overpass-turbo.eu/?lat=51.525&lon=-0.25&zoom=15&Q=CGI_STUB):
+Hence a better workaround is to make [the semicolon depending on the *sidewalk* key](https://overpass-turbo.eu/?lat=51.525&lon=-0.25&zoom=15&Q=CGI_STUB):
 
     [adiff:"2018-01-01T00:00:00Z","2019-01-01T00:00:00Z"];
     way[highway](51.51,-0.27,51.54,-0.23);
@@ -366,19 +368,51 @@ You can also directly aim to [get only the created and deleted objects](https://
 
 Any non-empty constant expression will work here.
 
-<a name="initial-final"/>
-### Different Output for Old and New Data
-
-...
+<!--
+< name="initial-final"/>
+-### Different Output for Old and New Data
+-->
 
 <a name="timeline"/>
 ## Plot an Element over Time
 
 ...
-<!--
-timeline
-retro
--->
+
+<a name="timeline-alone"/>
+### The Timeline Statement
+
+Museum requests always work on timestamps [for a reason](#museum_model).
+But sometimes one has rather an element and maybe a version number.
+It is then possible to get [a specific version](https://www.openstreetmap.org/api/0.6/node/1/11) or [the entire element history](https://www.openstreetmap.org/api/0.6/node/1/history) to programtically parse the timestamp from this.
+However, this means a back and forth between the main API and the Overpass API instead of a single request answering all questions.
+
+As the purpose of the Overpass API is to lower the barrier,
+it has its own function to get a timestamp directly [for a given version](https://overpass-turbo.eu/?lat=-31.6387570&lon=-60.6938530&zoom=18&Q=CGI_STUB) ...
+
+    timeline(node,1,11);
+    out;
+
+... or for the [entire history](https://overpass-turbo.eu/?lat=-31.6387570&lon=-60.6938530&zoom=18&Q=CGI_STUB) of an element:
+
+    timeline(node,1);
+    out;
+
+You must look at the data tab to see the result ...
+
+...
+<!-- meta data -->
+
+<a name="timeline-retro"/>
+### The Timeline-Retro Loop
+
+...
+<!-- retro: plot tag value, #members, length, ids connected -->
+
+<a name="retro-alone"/>
+### Advanced Retro Usage
+
+...
+<!-- retro Way-Splitting -->
 
 <a name="josm"/>
 ## Unearthing with JOSM
