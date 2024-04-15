@@ -387,26 +387,50 @@ It is then possible to get [a specific version](https://www.openstreetmap.org/ap
 However, this means a back and forth between the main API and the Overpass API instead of a single request answering all questions.
 
 As the purpose of the Overpass API is to lower the barrier,
-it has its own function to get a timestamp directly [for a given version](https://overpass-turbo.eu/?lat=-31.6387570&lon=-60.6938530&zoom=18&Q=CGI_STUB) ...
+it has its own function to get a timestamp directly [for a given version](https://overpass-turbo.eu/?lat=-31.6387570&lon=-60.6938530&zoom=18&Q=CGI_STUB) (in this example of node 1 the version 11) ...
 
     timeline(node,1,11);
     out;
 
-... or for the [entire history](https://overpass-turbo.eu/?lat=-31.6387570&lon=-60.6938530&zoom=18&Q=CGI_STUB) of an element:
+... or for the [entire history](https://overpass-turbo.eu/?lat=-31.6387570&lon=-60.6938530&zoom=18&Q=CGI_STUB) of an element (in this example node 1):
 
     timeline(node,1);
     out;
 
-You must look at the data tab to see the result ...
+You must look at the data tab to see the result.
+The output are *derived elements*.
+They can be used to [tabulate](https://overpass-turbo.eu/?lat=-31.6387570&lon=-60.6938530&zoom=18&Q=CGI_STUB) some interesting info.
 
-...
-<!-- meta data -->
+    [out:csv(refversion,created)];
+    timeline(node,1);
+    out;
 
 <a name="timeline-retro"/>
 ### The Timeline-Retro Loop
 
-...
-<!-- retro: plot tag value, #members, length, ids connected -->
+But it is far more powerful in the idiom combining `timeline`, `foreach`, and `retro`.
+The loop `foreach` executes its body once for every element in its input set,
+and retro sets the timestamp to the date from the given expression.
+
+This way we can for example [plot the value of a certain tag](https://overpass-turbo.eu/?lat=56.0&lon=18.0&zoom=6&Q=CGI_STUB) over the course of the element's versions:
+
+    [out:csv(::timestamp,::version,::changeset,::user,name)];
+    timeline(node,305640277);
+    foreach
+    {
+      retro (u(t["created"]))
+      {
+        node(305640277);
+        out meta;
+      }
+    }
+
+The construct is based on repeating a request for a bunch  of in the context of the given element interesting timestamps.
+So you can in principle combine a timeline of element A with a request body starting of element B,
+but it usually does not make sense.
+
+Some examples that do make sense: ...
+<!-- retro: plot #members, length, ids connected -->
 
 <a name="retro-alone"/>
 ### Advanced Retro Usage

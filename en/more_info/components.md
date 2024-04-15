@@ -268,6 +268,8 @@ The file `base-url` contains the URL of the used clone instance to help track ba
 The file `server_name` is what `server_status` shows as the name of the server
 to ensure that end users can discern different instances behind a load balancer.
 
+<!-- TODO v0.7.63: copyright_notice -->
+
 The file `osm_base_shadow.status` is a temporary file created by the dispatcher when it is queried for the status.
 
 The log file `database.log` is jointly written by the dispatcher as well as reading and writing processes.
