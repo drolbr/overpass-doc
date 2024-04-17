@@ -422,21 +422,67 @@ This way we can for example [plot the value of a certain tag](https://overpass-t
       {
         node(305640277);
         out meta;
-      }
-    }
+      };
+    };
+
+Line 1 sets the output to CSV to have a more well-arranged result.
+The id of the node is both in line 2 and line 7:
+in line 2 it is part of the `timeline` syntax while in line 7 it is the start of a standard simple request.
+
+The block statement `foreach` executes the block in lines 5 to 9 once for each element in the result of the timestamp statement.
+The `retro` statement now moves the timestamp under which the core request in lines 7 and 8 operates
+to the value of the respective `created` tag of each executed element.
+To do so, the expression `t["created"]` must point to tag value of the single element in the default set,
+and this is accomplished by `u(...)`.
 
 The construct is based on repeating a request for a bunch  of in the context of the given element interesting timestamps.
 So you can in principle combine a timeline of element A with a request body starting of element B,
 but it usually does not make sense.
 
-Some examples that do make sense: ...
-<!-- retro: plot #members, length, ids connected -->
+An example that does make sense: [find ways that might have been split off](https://overpass-turbo.eu/?lat=51.2335&lon=7.236&zoom=16&Q=CGI_STUB) a given way:
 
-<a name="retro-alone"/>
-### Advanced Retro Usage
+    [out:csv(date,version,user,length,spinoffs)];
+    timeline(way,241135851);
+    foreach
+    {
+      retro(u(t["created"]))
+      {
+        way(241135851)->.main;
+        node(w.main)->.n;
+        way(bn.n)(if:version()==1)->.spinoffs;
+        make stat
+            date=main.u(timestamp()),
+            version=main.u(version()),
+            user=main.u(user()),
+            length=main.u(length()),
+            spinoffs=spinoffs.set(id()+ " " + timestamp());
+        out;
+      };
+    };
 
-...
-<!-- retro Way-Splitting -->
+In line 1, we define the columns to use.
+We want to output only derived elements, so this simply matches the columns defined in lines 11 to 15.
+Lines 2 to 7 together with lines 17 and 18 are the same `timeline`-`retro` idiom as seen before.
+The only change is that we redirect the way of interest into the set named `main`.
+As we have to work with multiple sets in parallel, it makes the request more comprehensible
+to have everything in a named set.
+
+In lines 8 and 9 we take advantage of that we can use the full syntax within the `retro` block:
+we navigate from the nodes of the way to all ways using one or more of those nodes,
+thus select all ways topologically selected.
+This is restricted in line 9 by `(if:version()==1)` to only version 1
+to expose the most likely candidates for split off ways.
+
+Lines 11 to 14 use properties of the main way stored in `main`.
+Thus we need to refer to the way through its variable name
+and use `u(...)` to address properties of the single element instead of aggregated properties of the set as a whole.
+By contrast, `set(...)` in line 15 produces the usual semicolon separated list of the expression thereafter.
+This makes sense as `main` is known to have exactly one element,
+but `spinoffs` could have any number of members from zero to many.
+
+Now we can spot in the result that version 18 is significantly shorter than version 17,
+and way 1160159397 with a timestamp coincident to this version's timestamp is a very likely candidate for a split-off way.
+Likewise, the way got even shorter in version 20, and way 1257085209 is by timestamp coincidence also a candidate for a split-off way.
 
 <a name="josm"/>
 ## Unearthing with JOSM
