@@ -376,7 +376,11 @@ Any non-empty constant expression will work here.
 <a name="timeline"/>
 ## Plot an Element over Time
 
-...
+When tracing a strange state of the data back to the origin
+then it is quite painful to try-and-error through many dates until one has identified the relevant change.
+
+For this reason the Overpass API also offers a pair of the statement `timeline` and the block statement `retro` to iterate through salient points in time,
+most likely revealing the point in time where the relevant change happend a lot quicker.
 
 <a name="timeline-alone"/>
 ### The Timeline Statement
