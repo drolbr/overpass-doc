@@ -1,5 +1,5 @@
-Per Tag
-=======
+Per Tag or Key
+==============
 
 Request all objects that bear a chosen tag.
 
@@ -240,6 +240,108 @@ that the full _value_ and not only a substring is a match to the search term.
 The pipe sign `|` represents the logical _or_,
 and the parentheses cater for
 that caret and dollar sign apply to the full expression and not only one of the alternatives.
+
+<a name="per_key"/>
+## Per Key
+
+It is also possible to search for the presence of a key only.
+
+In most cases there are so many objects with a given key
+that it makes sense to combine the criterion with a spatial criterion,
+e.g. [all named objects in inner London](https://overpass-turbo.eu/?lat=51.51&lon=-0.1&zoom=14&Q=CGI_STUB):
+
+    nw[name](51.5,-0.11,51.52,-0.09);
+    out geom;
+
+We make the spatial selection by the bounding box `(51.5,-0.11,51.52,-0.09)`.
+The criterion for the key is `[name]`, i.e.
+the key in brackets.
+It usually shall be in quotation marks.
+But it can be written without if the key name does not contain special characters.
+So many many large relations have a `name` tag as well
+that on purpose only nodes and ways are selected.
+This is accomplished by `nw`.
+
+The criterion to search for a key can be freely combined with any other criterion.
+
+For the sake of completeness, an example for a key criterion [without](https://overpass-turbo.eu/?lat=15&lon=0&zoom=2&Q=CGI_STUB) a spatial criterion:
+
+    nw["not:name:note"];
+    out geom;
+
+We need quotation marks here because the key contains the special character `:` (double colon).
+
+There is a certain convention in OpenStreetMap to construct special keys with double colons,
+and it can be hard to list all possible variants and verify that the list is complete.
+As a remedy, it is possible to use regular expressions to match keys as well.
+
+We make a first attempt to find all objects that have multilingual names,
+i.e. have a key that starts with `name`,
+again in [inner London](https://overpass-turbo.eu/?lat=51.51&lon=-0.1&zoom=14&Q=CGI_STUB):
+
+    nw[~"^name"~"."](51.5,-0.11,51.52,-0.09);
+    out geom;
+
+The most important characters here are the two tildes `~`.
+The first tilde before the first string indicates
+that we want to match the key by the regular expression in the first string,
+and the second tilde between the two strings indicates
+that the second string is a regular expression to match the value.
+There is no syntax variant to have a regular expression for the key only,
+but the single dot `.` will anyway match any actual value.
+
+We want to match only keys that start with `name`.
+Thus there is a caret at the head of the first string as the usual syntax rule for regular expressions.
+The result looks quite similar to the previous result.
+
+The reson for this is that `name` is of course also a key that starts with `name`,
+and few objects have multilingual names but no `name` tag.
+Fortunately, the multilingual names have the form `name:XXX`,
+i.e. it is asserted that `name` is followed by a double colon.
+This outlines the [multilingually named objects](https://overpass-turbo.eu/?lat=51.51&lon=-0.1&zoom=14&Q=CGI_STUB):
+
+    nw[~"^name:"~"."](51.5,-0.11,51.52,-0.09);
+    out geom;
+
+The colon does not have a special meaning in regular expression syntax
+thus can simply be appended to `name`.
+
+The value part of the syntax can be used to actually restrict the allowed values.
+We can e.g. select all objects that have [some bicycle prohibition](https://overpass-turbo.eu/?lat=51.51&lon=-0.1&zoom=14&Q=CGI_STUB):
+
+    nw[~"bicycle"~"^no$"](51.5,-0.11,51.52,-0.09);
+    out geom;
+
+Again, the two tilde syntax is used.
+Now the value part `^no$` start with a caret and ends with a dollar sign
+to restrict the allowed values to exactly `no`.
+
+The majority of the results are oneway that are open to bicycles, i.e. the tag `oneway:bicycle=no`.
+Or in other words, not a bicycle restriction at all.
+To exclude objects that have a tag with key `oneway`, it is possible to [use the negated key criterion](https://overpass-turbo.eu/?lat=51.51&lon=-0.1&zoom=14&Q=CGI_STUB):
+
+    nw[~"bicycle"~"^no$"][!oneway](51.5,-0.11,51.52,-0.09);
+    out geom;
+
+This differs from the positive key criterion
+by having a shrek after the opening bracket and before the string specifying the key.
+
+In principle, it is possible to relax the criterion to match case insensitive.
+This is [switched for both](https://overpass-turbo.eu/?lat=51.51&lon=-0.1&zoom=14&Q=CGI_STUB) key and value expression together:
+
+    nw[~"^name:"~".",i](51.5,-0.11,51.52,-0.09);
+    out geom;
+
+The `,i` at the end of the criterion is the switch.
+However, there is no discernible difference.
+
+This is somewhat expected as keys by convention are made of lower case letters in OpenStreetMap.
+We can nonetheless search for [objects with keys that contain uppercase letters](https://overpass-turbo.eu/?lat=51.51&lon=-0.1&zoom=14&Q=CGI_STUB):
+
+    nw[~"[A-Z]"~"."](51.5,-0.11,51.52,-0.09);
+    out geom;
+
+The regular expression `[A-Z]` matches all strings that contain at least one uppercase letter.
 
 <a name="numbers"/>
 ## Per Number
