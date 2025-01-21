@@ -241,6 +241,108 @@ Der senkrechte Strich `|` steht für _oder_,
 und die Klammern sorgen dafür,
 dass Caret und Dollarzeichen nicht nur auf einen Wert wirken.
 
+<a name="per_key"/>
+## Per Key
+
+Es ist auch möglich, nach dem Vorhandensein eines Keys zu selektieren.
+
+In den meisten Fällen gibt es dabei so viele Objekte mit dem gegebenen Key,
+dass es Sinn ergibt, den Filter mit einem räumlichen Filter zu kombinieren,
+z.B. [alle benannten Objekte im Stadtkern von London](https://overpass-turbo.eu/?lat=51.51&lon=-0.1&zoom=14&Q=CGI_STUB):
+
+    nw[name](51.5,-0.11,51.52,-0.09);
+    out geom;
+
+Wir führen die räumliche Selektion mit der Bounding-Box `(51.5,-0.11,51.52,-0.09)` durch.
+Der Filter für den Key ist der Ausdruck `[name]`, d.h. der Key in eckigen Klammern.
+Üblicherweise soll der Key dabei in Anführungszeichen stehen.
+Aber er kann ohne geschrieben werden, wenn der Name des Keys keine Sonderzeichen enthält.
+Es haben so viele große Relationen ein Tag `name`,
+dass hier gewollt nur Nodes und Ways selektiert worden sind.
+Doies wird mit `nw` erreicht.
+
+Der Filter für die Suche nach einem Key kann frei mit allen anderen Filtern kombiniert werden.
+
+Der Vollständigkeit halber soll auch ein Beispiel für einen Key-Filter [ohne](https://overpass-turbo.eu/?lat=15&lon=0&zoom=2&Q=CGI_STUB) räumlichen Filter gegeben werden:
+
+    nw["not:name:note"];
+    out geom;
+
+Wir brauchen hier Anführungszeichen, denn der Key enthält die Sonderzeichen `:` (Doppelpunkt).
+
+Es gibt eine gewisse Konvention, Keys per Doppelpunkt aus mehreren Teilen zusammenzusetzen,
+und es kann schwierig sein, alle möglichen Varianten abzudecken und sicherzustellen, dass die Liste vollständig ist.
+Als Gegenmittel ist es auch möglich, Keys mit Regulären Ausdrücken auszuwählen.
+
+Wir wagen einen ersten Versuch alle Objekte zu finden, die Namen in mehreren Sprachen haben,
+d.h. die einen Key haben, der mit `name` startet,
+wiederum im [Stadtkern von London](https://overpass-turbo.eu/?lat=51.51&lon=-0.1&zoom=14&Q=CGI_STUB):
+
+    nw[~"^name"~"."](51.5,-0.11,51.52,-0.09);
+    out geom;
+
+Die wichtigsten Zeichen hier sind die beiden Tilden `~`.
+Die erste Tilde vor der ersten Zeichenkette legt fest,
+dass wir den Key mit dem Regulären Ausdruck aus der ersten Zeichenkette auswählen wollen.
+Und die zweite Tilde zwischen den beiden Zeichenketten zeigt an,
+dass die zweite Zeichenkette ein Regulärer Ausdruck für den Value ist.
+Es gibt keine Syntaxvariante mit einem Regulären Ausdruck nur für den Key,
+aber der einzelne Punkt `.` trifft ohnehin alle tatsächlich verwendeten Werte.
+
+Wir wollen nur Keys auswählen, die mit `name` starten.
+Daher gibt es ein Caret an der Spitze der Zeichenkette als die übliche Syntax für Reguläre Ausdrücke dafür.
+Das Ergebnis ähnelt aber sehr stark dem vorhergehenden Ergebnis.
+
+Der Grund dafür ist, dass `name` ebenfalls ein Key ist, der mit `name` startet,
+und wenige Objekte haben Namen in mehreren Sprachen, aber kein `name`-Tag.
+Zum Glück haben die Keys für Namen in anderen Sprachen stets die Form `name:XXX`,
+d.h. es ist sichergestellt, dass auf `name` ein Doppelpunkt folgt.
+Diese Abfrage zeigt die [Objekte mit Namen in mehreren Sprachen](https://overpass-turbo.eu/?lat=51.51&lon=-0.1&zoom=14&Q=CGI_STUB):
+
+    nw[~"^name:"~"."](51.5,-0.11,51.52,-0.09);
+    out geom;
+
+Der Doppelpunkt hat keine besondere Bedeutung in der Syntax Regulärer Ausdrücke
+und kann daher einfach an `name` angefügt werden.
+
+Der Value-Teil der Syntax kann auch genutzt werden, um den Wert des Vaues tatsächlich einzuschränken.
+Wir können z.B. alle Objekte wählen, die [irgendein Fahrrad-Verbot](https://overpass-turbo.eu/?lat=51.51&lon=-0.1&zoom=14&Q=CGI_STUB) haben:
+
+    nw[~"bicycle"~"^no$"](51.5,-0.11,51.52,-0.09);
+    out geom;
+
+Erneut ist die Zwei-Tilden-Syntax genutzt.
+Nun beginnt der Vaue-Teil `^no$` mit einem Caret und endet mit einem Dollar-Zeichen
+um die erlaubten Values auf exakt `no` einzuschränken.
+
+Die meisten Ergebnisse sind für Radfahrer geöffnete Einbahnstraßen, d.h. das Tag `oneway:bicycle=no`.
+Oder ander ausgedrückt: es ist gar keine Fahrrad-Einschränkung.
+Um Objekte auszuschließen, die ein Tag mit Key `oneway` haben,
+ist es möglich, den [Negierter-Key-Filter](https://overpass-turbo.eu/?lat=51.51&lon=-0.1&zoom=14&Q=CGI_STUB) zu benutzen:
+
+    nw[~"bicycle"~"^no$"][!oneway](51.5,-0.11,51.52,-0.09);
+    out geom;
+
+Dieser unterscheidet sich vom positiven Key-Filter durch das Ausrufezeichen hinter der öffnenden Klammer
+und vor der Key-Zeichenkette.
+
+Im Prinzip ist es möglich, den Filter Groß-Klein-Schreibung ignorieren zu lassen.
+Dies wird [für Key und Value gleichzeitig](https://overpass-turbo.eu/?lat=51.51&lon=-0.1&zoom=14&Q=CGI_STUB) umgeschaltet:
+
+    nw[~"^name:"~".",i](51.5,-0.11,51.52,-0.09);
+    out geom;
+
+Das `,i` am Ende des Filters ist der Schalter.
+Es gibt alerdings keinen wahrnehmbaren Unterschied.
+
+Die ist insofern erwartet als dass Keys per Konvention in OpenStreetMap aus Kleinbuchstaben bestehen.
+Wir können trotzdem auch [nach Objekten mit Großbuchstaben in Keys](https://overpass-turbo.eu/?lat=51.51&lon=-0.1&zoom=14&Q=CGI_STUB) suchen:
+
+    nw[~"[A-Z]"~"."](51.5,-0.11,51.52,-0.09);
+    out geom;
+
+Der Reguläre Ausdruck `[A-Z]` selektiert alle Zeichenketten, die mindestens einen Großbuchstaben enthalten.
+
 <a name="numbers"/>
 ## Per Zahlwert
 
